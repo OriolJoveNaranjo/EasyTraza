@@ -1,0 +1,300 @@
+= EasyTraza - Recollida de requisits i disseny inicial
+
+== Recollida de requisits i disseny inicial
+
+Prototip de tracabilitat per a Saint Honore S.C.P.  
+Projecte 4 - Curs 2025-2026 (2DAMM)
+
+Alumne/a:: [COMPLETAR]
+
+Equip docent::
+- Esther Sanchez Batllo
+- Manel Oros Cuenca
+- Eduard Santamaria Barnadas
+
+Institut:: Institut Nicolau Copernic  
+Client:: Rafa Morante - Responsable de produccio  
+
+Versio del document::
+v1.0 - consolidada a partir de l'enunciat i les actes disponibles
+
+<<<
+
+== Index
+
+. Fonts i criteri de consolidacio
+. Acta consolidada de la reunio amb el client
+. Introduccio i context del projecte
+. Abast del prototip i suposits de treball
+. Fase d'analisi de requisits
+.. Requisits funcionals
+.. Requisits no funcionals
+.. Definicions i nomenclatura
+.. Especificacions de negoci
+.. Guions per actors
+.. Serveis OCR al nuvol
+. Fase de disseny
+. Annex de fonts
+
+<<<
+
+== 1. Fonts i criteri de consolidacio
+
+Aquest document s'ha elaborat combinant l'enunciat oficial del Projecte 4 i una consolidacio de diferents actes redactades pels alumnes despres de la reunio amb el client.
+
+Criteris:
+
+* Confirmat (C): allò que apareix a l'enunciat o es repeteix en diverses actes
+* Decisio de disseny (D): proposta necessaria per completar el prototip
+* Dubtes: es deixen explicitament indicats
+
+<<<
+
+== 2. Acta consolidada de la reunio amb el client
+
+Data:: 16/03/2026  
+Hora aproximada:: 11:30 - 13:30  
+Lloc:: Institut Nicolau Copernic  
+Client:: Rafa Morante - responsable de produccio  
+Assistents:: Client, alumnat de DAM i equip docent  
+
+=== Objectiu
+
+Recollir necessitats per dissenyar un prototip de tracabilitat per a obrador artesa.
+
+=== Resum executiu
+
+* Eliminar registre manual en paper
+* Entrada de dades des del mobil amb fotografies
+* OCR amb validacio manual
+* Identificacio simple d'usuaris
+* Relacio entre lots, productes i clients
+* Control de caducitats
+* Control del pH de l'aigua
+* Generacio d'informes i llistes de clients afectats
+
+<<<
+
+== 3. Introduccio i context del projecte
+
+Saint Honore es un obrador artesanal que subministra productes de fleca i pastisseria.
+
+La tracabilitat es critica per relacionar:
+
+* Ingredients (proveidor)
+* Productes finals
+* Clients
+
+Situacio actual:
+
+* Sistema manual en paper
+* Lent
+* Poc eficient en incidencies sanitaries
+
+Solucio EasyTraza:
+
+* Digitalitzar lots
+* Registrar produccio
+* Consultar tracabilitat
+* Generar avisos sanitaris
+
+<<<
+
+== 4. Abast del prototip
+
+* MVP en una sola ubicacio
+* Android com a principal plataforma
+* Web per consultes i informes
+* No es gestiona inventari per unitats
+* Control centrat en lots
+* OCR integrat via backend
+
+<<<
+
+== 5. Fase d'analisi de requisits
+
+=== 5.1 Requisits funcionals
+
+* RF01: Identificacio d'usuari sense contrasenya
+* RF02: Gestio de treballadors
+* RF03: Gestio de clients
+* RF04: Gestio de proveidors
+* RF05: Cataleg d'articles i productes
+* RF06: Captura d'albarans i etiquetes
+* RF07: Extraccio OCR
+* RF08: Validacio manual OCR
+* RF09: Guardar document original
+* RF10: Registre manual de lots
+* RF11: Albarans amb multiples lots
+* RF12: Fitxa de lot proveidor
+* RF13: Compres d'emergencia
+* RF14: Estats del lot
+* RF15: Inici d'us del lot
+* RF16: Finalitzacio del lot
+* RF17: Unic lot actiu per article
+* RF18: Cerca i filtres
+* RF19: Registre d'elaboracions
+* RF20: Relacio elaboracio-lots
+* RF21: Tracabilitat ascendent
+* RF22: Tracabilitat descendent
+* RF23: Clients afectats
+* RF24: Control de caducitat
+* RF25: Control del pH
+* RF26: Recordatoris de pH
+* RF27: Observacions
+* RF28: Informe mensual
+* RF29: Exportacio
+* RF30: Historial d'activitat
+* RF31: Doble idioma
+* RF32: Panell d'avisos
+
+=== 5.2 Requisits no funcionals
+
+* Usabilitat alta
+* Temps d'operacio < 30s
+* Android + web
+* Funcionament en xarxa local
+* Mode offline parcial
+* Retencio minima de dades
+* Seguretat basica
+* Escalabilitat
+* Bilinguisme
+* OCR amb validacio humana
+* Exportabilitat
+* Arquitectura mantenible
+* Auditoria d'accions
+* Compatibilitat documental
+
+=== 5.3 Definicions
+
+* Treballador
+* Client
+* Proveidor
+* Article
+* Document
+* Lot proveidor
+* Producte final
+* Elaboracio
+* Consum de lot
+* Lliurament
+* Control pH
+* Alerta
+* Log activitat
+
+=== 5.4 Especificacions de negoci
+
+Flux 1: Recepcio de mercaderia
+
+. Foto document
+. OCR
+. Validacio
+. Creacio de lots
+
+Flux 2: Gestio de lots
+
+. Iniciar lot
+. Finalitzar lot
+. Control de conflictes
+
+Flux 3: Elaboracions
+
+. Registrar produccio
+. Assignar lots
+. Assignar clients
+
+Flux 4: Control sanitari
+
+. Alertes de caducitat
+. Control pH
+. Recordatoris
+
+Flux 5: Incidencies
+
+. Cerca de lot
+. Consulta de clients afectats
+. Generacio d'informes
+
+=== 5.5 Actors
+
+Treballador::
+- Captura dades
+- Gestiona lots
+- Registra elaboracions
+
+Responsable::
+- Gestiona catalegs
+- Consulta informes
+- Controla incidencies
+
+Sistema::
+- OCR
+- Alertes
+- Informes
+
+=== 5.6 OCR
+
+Serveis possibles:
+
+* Google Cloud Vision
+* Google Document AI
+* Azure Document Intelligence
+* AWS Textract
+
+<<<
+
+== 6. Fase de disseny
+
+=== 6.1 Casos d'us
+
+Separacio de:
+
+* App mobil
+* Web
+* Sistema automatic
+
+=== 6.2 Model E-R
+
+Entitats principals:
+
+* Lots
+* Elaboracions
+* Clients
+* Proveidors
+* Documents
+
+=== 6.4 Arquitectura
+
+Components:
+
+* App Android (Kotlin)
+* Backend (Spring Boot)
+* Base de dades (MySQL)
+* Servei OCR
+
+Flux:
+
+App -> Backend -> OCR -> Base de dades
+
+=== 6.5 Mockups
+
+Interficie:
+
+* Rapida
+* Simple
+* Orientada a operari
+
+Web:
+
+* Consultes
+* Informes
+
+<<<
+
+== 7. Annex de fonts
+
+Referencies OCR:
+
+* Google Cloud Vision
+* Google Document AI
+* Azure Document Intelligence
+* AWS Textract
