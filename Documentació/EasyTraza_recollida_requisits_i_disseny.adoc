@@ -5,7 +5,7 @@
 Prototip de tracabilitat per a Saint Honore S.C.P.  
 Projecte 4 - Curs 2025-2026 (2DAMM)
 
-Alumne/a:: [COMPLETAR]
+Alumne/a:: Oriol Jové Naranjo
 
 Equip docent::
 - Esther Sanchez Batllo
@@ -14,9 +14,6 @@ Equip docent::
 
 Institut:: Institut Nicolau Copernic  
 Client:: Rafa Morante - Responsable de produccio  
-
-Versio del document::
-v1.0 - consolidada a partir de l'enunciat i les actes disponibles
 
 <<<
 
@@ -52,11 +49,25 @@ Criteris:
 
 == 2. Acta consolidada de la reunio amb el client
 
-Data:: 16/03/2026  
-Hora aproximada:: 11:30 - 13:30  
-Lloc:: Institut Nicolau Copernic  
-Client:: Rafa Morante - responsable de produccio  
-Assistents:: Client, alumnat de DAM i equip docent  
+[cols="1,2",options="header"]
+|===
+| Camp | Valor
+
+| Data
+| 16/03/2026
+
+| Hora aproximada
+| 11:30 - 13:30
+
+| Lloc
+| Institut Nicolau Copernic
+
+| Client
+| Rafa Morante - responsable de produccio
+
+| Assistents
+| Client, alumnat de DAM i equip docent
+|===
 
 === Objectiu
 
@@ -115,71 +126,124 @@ Solucio EasyTraza:
 
 === 5.1 Requisits funcionals
 
-* RF01: Identificacio d'usuari sense contrasenya
-* RF02: Gestio de treballadors
-* RF03: Gestio de clients
-* RF04: Gestio de proveidors
-* RF05: Cataleg d'articles i productes
-* RF06: Captura d'albarans i etiquetes
-* RF07: Extraccio OCR
-* RF08: Validacio manual OCR
-* RF09: Guardar document original
-* RF10: Registre manual de lots
-* RF11: Albarans amb multiples lots
-* RF12: Fitxa de lot proveidor
-* RF13: Compres d'emergencia
-* RF14: Estats del lot
-* RF15: Inici d'us del lot
-* RF16: Finalitzacio del lot
-* RF17: Unic lot actiu per article
-* RF18: Cerca i filtres
-* RF19: Registre d'elaboracions
-* RF20: Relacio elaboracio-lots
-* RF21: Tracabilitat ascendent
-* RF22: Tracabilitat descendent
-* RF23: Clients afectats
-* RF24: Control de caducitat
-* RF25: Control del pH
-* RF26: Recordatoris de pH
-* RF27: Observacions
-* RF28: Informe mensual
-* RF29: Exportacio
-* RF30: Historial d'activitat
-* RF31: Doble idioma
-* RF32: Panell d'avisos
+[cols="1,2,5,1",options="header"]
+|===
+| ID | Modul | Descripcio | Origen
+
+| RF01 | Identificacio usuari | Seleccio de nom sense contrasenya | C
+| RF02 | Treballadors | Alta, edicio i baixa de treballadors | C
+| RF03 | Clients | Gestio de dades de clients | C
+| RF04 | Proveidors | Gestio de proveidors | C
+| RF05 | Cataleg | Gestio d'articles i productes | C
+| RF06 | Captura documents | Foto d'albarans i etiquetes | C
+| RF07 | OCR | Extraccio automatica de dades | C
+| RF08 | Validacio OCR | Revisio manual abans de guardar | C
+| RF09 | Documents | Guardar fitxer original | C
+| RF10 | Lots manuals | Crear lot manualment | C
+| RF11 | Multi-lot | Albarans amb diversos lots | C
+| RF12 | Lot proveidor | Informacio completa del lot | C
+| RF13 | Compra emergencia | Registre de compres puntuals | C
+| RF14 | Estat lot | rebut, en us, acabat, bloquejat | C
+| RF15 | Inici lot | Marcar inici | C
+| RF16 | Final lot | Marcar final | C
+| RF17 | Unic lot actiu | Evitar duplicats | D
+| RF18 | Cerca | Filtres de lots | C
+| RF19 | Elaboracions | Registre produccio | C
+| RF20 | Relacions | Enllaç elaboracio-lots | C
+| RF21 | Tracabilitat ascendent | De producte a lots | C
+| RF22 | Tracabilitat descendent | De lot a clients | C
+| RF23 | Clients afectats | Llista per incidencies | C
+| RF24 | Caducitat | Control de dates | C
+| RF25 | pH | Registre manual | C
+| RF26 | Recordatoris pH | Avisos periodics | C
+| RF27 | Observacions | Camps de notes | C
+| RF28 | Informe mensual | Resum produccio | C
+| RF29 | Exportacio | PDF o impressio | C
+| RF30 | Log activitat | Registre d'accions | C
+| RF31 | Idioma | Castellà i catala | C
+| RF32 | Panell avisos | Alertes i estat sistema | D
+|===
 
 === 5.2 Requisits no funcionals
 
-* Usabilitat alta
-* Temps d'operacio < 30s
-* Android + web
-* Funcionament en xarxa local
-* Mode offline parcial
-* Retencio minima de dades
-* Seguretat basica
-* Escalabilitat
-* Bilinguisme
-* OCR amb validacio humana
-* Exportabilitat
-* Arquitectura mantenible
-* Auditoria d'accions
-* Compatibilitat documental
+[cols="1,2,5,1",options="header"]
+|===
+| ID | Categoria | Descripcio | Origen
+
+| RN01 | Usabilitat | Interficie simple i rapida | C
+| RN02 | Rendiment | Alta de lot < 30 segons | D
+| RN03 | Plataformes | Android + web | C
+| RN04 | Connectivitat | Xarxa local i tolerancia errors | C
+| RN05 | Offline | Mode degradat amb sincronitzacio | D
+| RN06 | Retencio | Min 5 mesos | C
+| RN07 | Seguretat | Identificacio i logs | C
+| RN08 | Escalabilitat | Creixement futur | C
+| RN09 | Idioma | Castellà i catala | C
+| RN10 | OCR | Validacio humana obligatoria | D
+| RN11 | Exportacio | Documents imprimibles | C
+| RN12 | Arquitectura | Separacio components | D
+| RN13 | Auditoria | Registre accions | C
+| RN14 | Documents | Formats heterogenis | C
+|===
 
 === 5.3 Definicions
 
-* Treballador
-* Client
-* Proveidor
-* Article
-* Document
-* Lot proveidor
-* Producte final
-* Elaboracio
-* Consum de lot
-* Lliurament
-* Control pH
-* Alerta
-* Log activitat
+[cols="2,4,4",options="header"]
+|===
+| Entitat | Descripcio | Atributs clau
+
+| Treballador
+| Usuari del sistema
+| id, nom, actiu
+
+| Client
+| Receptor de productes
+| id, nom, telefon, observacions
+
+| Proveidor
+| Subministra ingredients
+| id, nom, telefon, email
+
+| Article
+| Ingredient
+| id, nom, unitat
+
+| Document
+| Albara o factura
+| id, tipus, imatge, data
+
+| Lot proveidor
+| Lot rebut
+| id, numero_lot, caducitat, estat
+
+| Producte final
+| Producte elaborat
+| id, nom, familia
+
+| Elaboracio
+| Produccio
+| id, data, quantitat
+
+| Consum
+| Relacio lots-elaboracio
+| id, id_lot, id_elaboracio
+
+| Lliurament
+| Assignacio a client
+| id, id_client, data
+
+| Control pH
+| Mesura d'aigua
+| id, valor, data
+
+| Alerta
+| Avis del sistema
+| id, tipus, estat
+
+| Log
+| Registre accions
+| id, usuari, accio, data
+|===
 
 === 5.4 Especificacions de negoci
 
