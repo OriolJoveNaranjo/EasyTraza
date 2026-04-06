@@ -1,37 +1,37 @@
-= EasyTraza - Recollida de requisits i disseny inicial
+
+= EasyTraza
+:toc:
+:toclevels: 3
+:imagesdir: Imatges
+
+Tracabilitat digital per a obrador artesa
 
 == Recollida de requisits i disseny inicial
 
-Prototip de tracabilitat per a Saint Honore S.C.P.  
+Prototip de tracabilitat per a Saint Honore S.C.P. +
 Projecte 4 - Curs 2025-2026 (2DAMM)
 
-Alumne/a:: Oriol Jové Naranjo
+[cols="1,2",options="header"]
+|===
+| Alumne/a | Oriol Jové Naranjo
 
-Equip docent::
-- Esther Sanchez Batllo
-- Manel Oros Cuenca
-- Eduard Santamaria Barnadas
+| Equip docent
+| Esther Sanchez Batllo +
+  Manel Oros Cuenca +
+  Eduard Santamaria Barnadas
 
-Institut:: Institut Nicolau Copernic  
-Client:: Rafa Morante - Responsable de produccio  
+| Institut
+| Institut Nicolau Copernic
+
+| Client
+| Rafa Morante - Responsable de produccio
+
+| Versio del document
+| v1.0 - consolidada a partir de l'enunciat i les actes disponibles
+|===
 
 <<<
 
-== Index
-
-. Fonts i criteri de consolidacio
-. Acta consolidada de la reunio amb el client
-. Introduccio i context del projecte
-. Abast del prototip i suposits de treball
-. Fase d'analisi de requisits
-.. Requisits funcionals
-.. Requisits no funcionals
-.. Definicions i nomenclatura
-.. Especificacions de negoci
-.. Guions per actors
-.. Serveis OCR al nuvol
-. Fase de disseny
-. Annex de fonts
 
 <<<
 
@@ -39,11 +39,13 @@ Client:: Rafa Morante - Responsable de produccio
 
 Aquest document s'ha elaborat combinant l'enunciat oficial del Projecte 4 i una consolidacio de diferents actes redactades pels alumnes despres de la reunio amb el client.
 
-Criteris:
+Com que les actes provenen de diversos redactors, hi ha alguns punts amb matisos diferents. Per aixo s'ha aplicat aquest criteri:
 
-* Confirmat (C): allò que apareix a l'enunciat o es repeteix en diverses actes
-* Decisio de disseny (D): proposta necessaria per completar el prototip
-* Dubtes: es deixen explicitament indicats
+* Es considera Confirmat (C) tot allo que apareix a l'enunciat o que es repeteix de manera consistent a diverses actes.
+* Es considera Decisio de disseny (D) una proposta raonable necessaria per completar el prototip quan el client no ho ha tancat del tot.
+* Les contradiccions o dubtes no resolts es deixen recollits explicitament a l'apartat 8.
+
+image::Imatges/ImatgesActa.png[]
 
 <<<
 
@@ -69,56 +71,43 @@ Criteris:
 | Client, alumnat de DAM i equip docent
 |===
 
-=== Objectiu
+[cols="1,2",options="header"]
+|===
+| Camp | Valor
 
-Recollir necessitats per dissenyar un prototip de tracabilitat per a obrador artesa.
+| Data
+| 16/03/2026
 
-=== Resum executiu
+| Objectiu
+| Recollir necessitats per dissenyar un prototip de tracabilitat per a obrador artesa
+|===
 
-* Eliminar registre manual en paper
-* Entrada de dades des del mobil amb fotografies
-* OCR amb validacio manual
-* Identificacio simple d'usuaris
-* Relacio entre lots, productes i clients
-* Control de caducitats
-* Control del pH de l'aigua
-* Generacio d'informes i llistes de clients afectats
+=== Resum executiu de la reunio
+
+* La necessitat principal es eliminar el registre manual sobre paper i poder localitzar en segons quins lots, productes i clients estan afectats en cas d'incidencia sanitaria.
+* L'entrada de dades s'ha de fer sobretot des del mobil, amb fotografia d'albarans, factures o etiquetes, i una validacio manual dels camps que detecti l'OCR.
+* Tots els treballadors han de poder utilitzar l'aplicacio amb una identificacio simple basada en la seleccio del nom, sense contrasenyes complexes.
+* El sistema ha de relacionar lots de proveidor, elaboracions propies i clients als quals s'ha lliurat el producte final.
+* Cal controlar especialment lots amb caducitat curta i registrar el pH de l'aigua amb recordatoris periodics.
+* S'han de generar informes mensuals i llistes de clients afectats, principalment per facilitar la gestio d'inspeccions i retirades de producte.
 
 <<<
 
 == 3. Introduccio i context del projecte
 
-Saint Honore es un obrador artesanal que subministra productes de fleca i pastisseria.
+Saint Honore es un obrador artesanal que subministra productes de fleca o pastisseria a altres forns i establiments. La tracabilitat es critica perque cada ingredient rebut del proveidor ha de poder relacionar-se amb el producte final i amb el client que l'ha rebut.
 
-La tracabilitat es critica per relacionar:
+El context actual es principalment manual: s'anoten numeros de lot, dates, proveidors i albarans sobre paper. Aquesta operativa es lenta, complica les inspeccions sanitaries i allarga molt la resposta davant d'una incidencia amb un ingredient o un producte elaborat.
 
-* Ingredients (proveidor)
-* Productes finals
-* Clients
+EasyTraza es planteja com un prototip multiplataforma que digitalitza la recepcio de lots, el registre de produccio, la consulta de tracabilitat i els avisos sanitaris basics. El valor del projecte es doble: reduir temps administratiu i millorar la capacitat de reaccio davant una retirada de producte.
 
-Situacio actual:
+== 4. Abast del prototip i suposits de treball
 
-* Sistema manual en paper
-* Lent
-* Poc eficient en incidencies sanitaries
-
-Solucio EasyTraza:
-
-* Digitalitzar lots
-* Registrar produccio
-* Consultar tracabilitat
-* Generar avisos sanitaris
-
-<<<
-
-== 4. Abast del prototip
-
-* MVP en una sola ubicacio
-* Android com a principal plataforma
-* Web per consultes i informes
-* No es gestiona inventari per unitats
-* Control centrat en lots
-* OCR integrat via backend
+* L'MVP es centra en una unica ubicacio operativa, encara que el model de dades es prepara per creixer a diverses seus.
+* La interficie principal d'operacio es Android; la web es reserva per a consulta avancada, manteniment de catalegs i informes.
+* No es desenvolupa una gestio d'inventari per unitats, sino un control de lots, estats i tracabilitat.
+* No s'automatitzen les comandes a proveidors; l'objectiu es registrar recepcio, us, incidencies i consulta posterior.
+* Per seguretat i mantenibilitat es recomana integrar el servei OCR des del backend i no cridar directament les APIs del proveidor des de l'app Android.
 
 <<<
 
@@ -130,38 +119,165 @@ Solucio EasyTraza:
 |===
 | ID | Modul | Descripcio | Origen
 
-| RF01 | Identificacio usuari | Seleccio de nom sense contrasenya | C
-| RF02 | Treballadors | Alta, edicio i baixa de treballadors | C
-| RF03 | Clients | Gestio de dades de clients | C
-| RF04 | Proveidors | Gestio de proveidors | C
-| RF05 | Cataleg | Gestio d'articles i productes | C
-| RF06 | Captura documents | Foto d'albarans i etiquetes | C
-| RF07 | OCR | Extraccio automatica de dades | C
-| RF08 | Validacio OCR | Revisio manual abans de guardar | C
-| RF09 | Documents | Guardar fitxer original | C
-| RF10 | Lots manuals | Crear lot manualment | C
-| RF11 | Multi-lot | Albarans amb diversos lots | C
-| RF12 | Lot proveidor | Informacio completa del lot | C
-| RF13 | Compra emergencia | Registre de compres puntuals | C
-| RF14 | Estat lot | rebut, en us, acabat, bloquejat | C
-| RF15 | Inici lot | Marcar inici | C
-| RF16 | Final lot | Marcar final | C
-| RF17 | Unic lot actiu | Evitar duplicats | D
-| RF18 | Cerca | Filtres de lots | C
-| RF19 | Elaboracions | Registre produccio | C
-| RF20 | Relacions | Enllaç elaboracio-lots | C
-| RF21 | Tracabilitat ascendent | De producte a lots | C
-| RF22 | Tracabilitat descendent | De lot a clients | C
-| RF23 | Clients afectats | Llista per incidencies | C
-| RF24 | Caducitat | Control de dates | C
-| RF25 | pH | Registre manual | C
-| RF26 | Recordatoris pH | Avisos periodics | C
-| RF27 | Observacions | Camps de notes | C
-| RF28 | Informe mensual | Resum produccio | C
-| RF29 | Exportacio | PDF o impressio | C
-| RF30 | Log activitat | Registre d'accions | C
-| RF31 | Idioma | Castellà i catala | C
-| RF32 | Panell avisos | Alertes i estat sistema | D
+| RF01
+| Identificacio d'usuari
+| En iniciar l'aplicacio, l'operari ha de poder seleccionar el seu nom d'una llista per identificar qui fa cada accio, sense contrasenya.
+| C
+
+| RF02
+| Alta de treballadors
+| Qualsevol treballador autoritzat en el prototip ha de poder donar d'alta, editar o desactivar treballadors.
+| C
+
+| RF03
+| Alta de clients
+| El sistema ha de permetre mantenir la fitxa de clients amb dades basiques de contacte i observacions.
+| C
+
+| RF04
+| Alta de proveidors
+| El sistema ha de permetre mantenir la fitxa de proveidors i consultar-ne l'historial de lots.
+| C
+
+| RF05
+| Cataleg d'articles i productes
+| El sistema ha de permetre afegir, editar i retirar articles/ingredients i productes finals.
+| C
+
+| RF06
+| Captura d'albarans i etiquetes
+| Des del mobil s'ha de poder fer una fotografia d'un albara, factura o etiqueta de sac/envas.
+| C
+
+| RF07
+| Extraccio OCR
+| El sistema ha d'extreure automaticament text i camps rellevants dels documents capturats.
+| C
+
+| RF08
+| Validacio manual de l'OCR
+| Abans de desar, l'usuari ha de poder revisar, confirmar i corregir qualsevol camp detectat.
+| C
+
+| RF09
+| Desament del document original
+| El sistema ha de conservar la imatge o fitxer original associat al registre d'entrada.
+| C
+
+| RF10
+| Registre manual de lots
+| S'ha de poder crear un lot manualment quan no hi hagi document escanejat o l'OCR no sigui suficient.
+| C
+
+| RF11
+| Albara amb diversos lots
+| Un mateix albara d'entrada ha de poder contenir diversos lots o linies de producte.
+| C
+
+| RF12
+| Fitxa del lot proveidor
+| Cada lot proveidor ha de guardar article, proveidor, numero de lot, data de recepcio, caducitat, quantitat, estat i document d'origen.
+| C
+
+| RF13
+| Compra d'emergencia
+| El sistema ha de permetre registrar compres puntuals en supermercats o proveidors no habituals.
+| C
+
+| RF14
+| Estat del lot
+| El lot ha de poder passar com a minim pels estats rebut, en us, acabat i bloquejat/retornat.
+| C
+
+| RF15
+| Inici d'us del lot
+| L'usuari ha de poder marcar manualment l'inici d'us d'un lot mitjancant un boto.
+| C
+
+| RF16
+| Finalitzacio del lot
+| L'usuari ha de poder marcar manualment la finalitzacio d'un lot mitjancant un boto.
+| C
+
+| RF17
+| Coherencia d'un unic lot actiu
+| Quan s'inicia un nou lot del mateix article, el sistema ha d'avisar i proposar el tancament de l'anterior per evitar duplicitats.
+| D
+
+| RF18
+| Cerca i filtres de lots
+| S'ha de poder cercar per numero de lot, article, proveidor, client, data, estat i caducitat.
+| C
+
+| RF19
+| Registre d'elaboracions
+| El sistema ha de permetre registrar cada elaboracio o lot intern de produccio amb data, producte final, quantitat i desti/client.
+| C
+
+| RF20
+| Relacio elaboracio-lots
+| Cada elaboracio ha de poder vincular-se amb un o mes lots d'ingredients utilitzats.
+| C
+
+| RF21
+| Tracabilitat ascendent
+| Des d'un producte final o elaboracio s'han de poder consultar tots els lots d'ingredients relacionats.
+| C
+
+| RF22
+| Tracabilitat descendent
+| Des d'un lot proveidor s'han de poder obtenir les elaboracions i clients afectats.
+| C
+
+| RF23
+| Llista de clients afectats
+| En cas d'incidencia sanitaria, el sistema ha de generar una llista de clients a contactar, principalment per telefon.
+| C
+
+| RF24
+| Control de caducitat
+| El sistema ha de registrar dates de caducitat i destacar lots propers a caducar o caducats.
+| C
+
+| RF25
+| Control del pH de l'aigua
+| S'ha de poder registrar manualment el valor del pH de l'aigua, la data, el responsable i observacions.
+| C
+
+| RF26
+| Recordatori de pH
+| El sistema ha d'enviar recordatoris periodics per al control del pH fins que la comprovacio quedi registrada.
+| C
+
+| RF27
+| Observacions
+| Clients, proveidors, lots i controls han de disposar d'un camp d'observacions.
+| C
+
+| RF28
+| Informe mensual
+| El sistema ha de generar un resum mensual del produit, del consumit i de l'activitat de produccio.
+| C
+
+| RF29
+| Exportacio / impressio
+| Els informes i consultes de tracabilitat han de poder exportar-se a PDF o format imprimible.
+| C
+
+| RF30
+| Historial d'activitat
+| El sistema ha de conservar un log de les accions realitzades per cada treballador.
+| C
+
+| RF31
+| Doble idioma
+| La interficie ha d'estar disponible en castella i catala, amb preferencia inicial pel castella.
+| C
+
+| RF32
+| Panell d'avisos
+| L'usuari ha de veure lots actius, alertes de caducitat, controls pendents i incidencies recents.
+| D
 |===
 
 === 5.2 Requisits no funcionals
@@ -170,139 +286,265 @@ Solucio EasyTraza:
 |===
 | ID | Categoria | Descripcio | Origen
 
-| RN01 | Usabilitat | Interficie simple i rapida | C
-| RN02 | Rendiment | Alta de lot < 30 segons | D
-| RN03 | Plataformes | Android + web | C
-| RN04 | Connectivitat | Xarxa local i tolerancia errors | C
-| RN05 | Offline | Mode degradat amb sincronitzacio | D
-| RN06 | Retencio | Min 5 mesos | C
-| RN07 | Seguretat | Identificacio i logs | C
-| RN08 | Escalabilitat | Creixement futur | C
-| RN09 | Idioma | Castellà i catala | C
-| RN10 | OCR | Validacio humana obligatoria | D
-| RN11 | Exportacio | Documents imprimibles | C
-| RN12 | Arquitectura | Separacio components | D
-| RN13 | Auditoria | Registre accions | C
-| RN14 | Documents | Formats heterogenis | C
+| RN01
+| Usabilitat
+| La interficie ha de ser molt simple, amb pocs passos, botons grans i us rapid en un entorn d'obrador.
+| C
+
+| RN02
+| Rendiment operatiu
+| Una alta de lot estandard s'hauria de poder completar en menys de 30 segons un cop feta la foto.
+| D
+
+| RN03
+| Plataformes
+| El prototip ha de prioritzar Android per a operacions de planta i oferir una vista web de consulta i administracio.
+| C
+| RN04
+| Connectivitat
+| El sistema ha de funcionar sobre la xarxa local del negoci i tolerar interrupcions puntuals de connexio.
+| C
+
+| RN05
+| Mode degradat / cua local
+| Quan no hi hagi connexio, les captures s'han de poder desar localment i sincronitzar-se despres.
+| D
+
+| RN06
+| Retencio
+| La informacio operativa s'ha de conservar com a minim 5 mesos i l'historic s'ha d'arxivar per a consultes posteriors.
+| C
+
+| RN07
+| Seguretat proporcionada
+| No es requereixen mesures avancades d'autenticacio, pero si identificacio d'usuari, registre d'accions i copies de seguretat.
+| C
+
+| RN08
+| Escalabilitat
+| La solucio ha de poder creixer a mes productes, mes clients i potencialment mes ubicacions.
+| C
+
+| RN09
+| Bilinguisme
+| El text de la interficie s'ha de preparar per a castella i catala, sense traduir codis interns o denominacions propies.
+| C
+
+| RN10
+| Qualitat d'OCR supervisada
+| Cap dada capturada per OCR s'ha de considerar definitiva sense validacio humana.
+| D
+
+| RN11
+| Exportabilitat
+| Les consultes clau i els informes han de ser imprimibles i exportables.
+| C
+
+| RN12
+| Mantenibilitat
+| L'arquitectura ha de separar frontend, backend, persistencia i servei OCR per facilitar canvis futurs.
+| D
+
+| RN13
+| Tracabilitat d'auditoria
+| Cada operacio rellevant ha de quedar associada a data/hora i treballador.
+| C
+
+| RN14
+| Compatibilitat documental
+| El sistema ha de gestionar etiquetes, albarans i factures de formats heterogenis.
+| C
 |===
 
-=== 5.3 Definicions
+=== 5.3 Definicions i nomenclatura
 
 [cols="2,4,4",options="header"]
 |===
-| Entitat | Descripcio | Atributs clau
+| Entitat / terme | Descripcio | Atributs clau
 
 | Treballador
-| Usuari del sistema
-| id, nom, actiu
+| Persona que utilitza l'aplicacio a l'obrador.
+| id_treballador, nom, actiu, foto_perfil (opc.)
 
 | Client
-| Receptor de productes
-| id, nom, telefon, observacions
+| Forn, botiga o establiment que rep productes elaborats.
+| id_client, nom, telefon, observacions, actiu
 
 | Proveidor
-| Subministra ingredients
-| id, nom, telefon, email
+| Empresa que subministra ingredients o material.
+| id_proveidor, nom, telefon, email (opc.), observacions, habitual
 
-| Article
-| Ingredient
-| id, nom, unitat
+| Article ingredient
+| Materia primera o article d'entrada que es rep d'un proveidor.
+| id_article, nom, unitat, categoria, actiu
 
-| Document
-| Albara o factura
-| id, tipus, imatge, data
+| Document d'entrada
+| Albara, factura o etiqueta fotografiada o adjuntada.
+| id_document, tipus, imatge_url, data_captura, origen_ocr
 
 | Lot proveidor
-| Lot rebut
-| id, numero_lot, caducitat, estat
+| Lot rebut d'un proveidor i identificat principalment pel numero de lot.
+| id_lot, id_article, id_proveidor, numero_lot, data_recepcio, caducitat, quantitat, estat
 
 | Producte final
-| Producte elaborat
-| id, nom, familia
+| Producte elaborat i subministrat al client.
+| id_producte_final, nom, familia, actiu
 
 | Elaboracio
-| Produccio
-| id, data, quantitat
+| Registre d'una produccio feta en una data determinada.
+| id_elaboracio, data_produccio, id_producte_final, quantitat, codi_lot_intern
 
-| Consum
-| Relacio lots-elaboracio
-| id, id_lot, id_elaboracio
+| Consum de lot
+| Relacio entre una elaboracio i els lots d'ingredients utilitzats.
+| id_consum, id_elaboracio, id_lot, quantitat_usada
 
 | Lliurament
-| Assignacio a client
-| id, id_client, data
+| Assignacio d'una elaboracio o part d'ella a un client.
+| id_lliurament, id_elaboracio, id_client, quantitat, data_lliurament
 
-| Control pH
-| Mesura d'aigua
-| id, valor, data
+| Control de pH
+| Mesura periodica del control de l'aigua.
+| id_control_ph, data_control, valor_ph, id_treballador, observacions
 
 | Alerta
-| Avis del sistema
-| id, tipus, estat
+| Avis generat automaticament pel sistema.
+| id_alerta, tipus, severitat, estat, data_generacio, referencia
 
-| Log
-| Registre accions
-| id, usuari, accio, data
+| Log d'activitat
+| Traca d'accions realitzades pels usuaris.
+| id_log, id_treballador, accio, entitat, id_entitat, data_hora
 |===
 
 === 5.4 Especificacions de negoci
 
-Flux 1: Recepcio de mercaderia
+==== Flux 1. Recepcio de mercaderia i alta del lot
 
-. Foto document
-. OCR
-. Validacio
-. Creacio de lots
+. L'operari rep la mercaderia i obre el flux de captura des del mobil.
+. Fa una foto de l'albara o de l'etiqueta del sac/envas.
+. El sistema envia la imatge al servei OCR i recupera text/camps detectats.
+. L'usuari valida o corregeix el resultat i guarda el document.
+. Es creen una o diverses linies de lot proveidor en estat Rebut.
 
-Flux 2: Gestio de lots
+==== Flux 2. Obertura i tancament de lots
 
-. Iniciar lot
-. Finalitzar lot
-. Control de conflictes
+. Quan es comenca a consumir un lot, l'usuari prem *Iniciar lot*.
+. El sistema marca el lot com *En us* i l'inclou com a opcio prioritaria al registre d'elaboracions.
+. Quan s'esgota o deixa d'utilitzar-se, l'usuari prem *Finalitzar lot*.
+. Si es vol obrir un altre lot del mateix article amb un lot encara obert, el sistema avisa i proposa resoldre el conflicte.
 
-Flux 3: Elaboracions
+==== Flux 3. Registre d'elaboracio i tracabilitat
 
-. Registrar produccio
-. Assignar lots
-. Assignar clients
+. L'operari registra el producte final, la quantitat i la data de produccio.
+. Selecciona els lots d'ingredients utilitzats o be el sistema els suggereix pels lots en us.
+. El backend crea el lot intern de produccio i relaciona l'elaboracio amb els lots proveidor consumits.
+. Si hi ha lliurament, l'elaboracio queda assignada al client destinatari.
 
-Flux 4: Control sanitari
+==== Flux 4. Control sanitari
 
-. Alertes de caducitat
-. Control pH
-. Recordatoris
+. Un proces programat revisa caducitats i crea avisos visibles al panell principal.
+. El control del pH es registra manualment i tanca el recordatori pendent.
+. Si no hi ha control de pH en el termini configurat, el recordatori continua o s'eleva de severitat.
 
-Flux 5: Incidencies
+==== Flux 5. Incidencia i retirades
 
-. Cerca de lot
-. Consulta de clients afectats
-. Generacio d'informes
+. El responsable cerca el numero de lot afectat.
+. El sistema retorna elaboracions, dates i clients relacionats.
+. Es genera una llista de clients a contactar per telefon i un informe imprimible.
 
-=== 5.5 Actors
+.Regles de negoci consolidades
 
-Treballador::
-- Captura dades
-- Gestiona lots
-- Registra elaboracions
+[cols="1,6",options="header"]
+|===
+| Codi | Regla
 
-Responsable::
-- Gestiona catalegs
-- Consulta informes
-- Controla incidencies
+| RN-01
+| La tracabilitat principal s'ha de basar en el numero de lot del proveidor i no unicament en la data.
 
-Sistema::
-- OCR
-- Alertes
-- Informes
+| RN-02
+| Un albara o document d'entrada pot contenir diverses linies i diversos lots.
 
-=== 5.6 OCR
+| RN-03
+| Un lot proveidor pot intervenir en multiples elaboracions i una elaboracio pot consumir multiples lots.
 
-Serveis possibles:
+| RN-04
+| El sistema no pretén substituir un inventari per unitats; el focus es la tracabilitat dels lots i el seu estat.
 
-* Google Cloud Vision
-* Google Document AI
-* Azure Document Intelligence
-* AWS Textract
+| RN-05
+| La notificacio als clients afectats es principalment telefonica; el prototip ha de generar el llistat i les dades de contacte.
+
+| RN-06
+| Els camps extrets per OCR s'han de validar abans del desament perque els formats d'albara son heterogenis.
+
+| RN-07
+| Els lots de caducitat curta (ou liquid, mantega, lactics) s'han de destacar a la interficie.
+
+| RN-08
+| La periodicitat del control del pH s'ha de poder configurar, perque a les actes apareix entre 2-3 dies i setmanal.
+
+| RN-09
+| L'abast inicial del prototip es centra en una ubicacio, pero el model s'ha de poder estendre a mes centres.
+
+| RN-10
+| No s'automatitzen les comandes als proveidors; nomes es registra la informacio de recepcio i us.
+
+| RN-11
+| Els treballadors comparteixen funcionalitats operatives, pero el sistema conserva el registre de qui ha fet cada accio.
+
+| RN-12
+| El lot intern de produccio s'ha de poder generar de forma consistent (proposta: prefix del client o desti + data + sequencia).
+|===
+
+=== 5.5 Guions per actors
+
+[cols="2,5",options="header"]
+|===
+| Actor | Funcions principals (RF associats)
+
+| Treballador d'obrador
+| Seleccionar usuari, fotografiar albara o etiqueta, validar OCR, crear lots, iniciar/finalitzar lots, registrar elaboracions, registrar pH, consultar alertes, afegir observacions.
+
+| Responsable de produccio / encarregat
+| Totes les accions de l'operari mes: mantenir catalegs, revisar tracabilitat completa, consultar incidencies, generar informes mensuals i exportacions, revisar historic d'activitat.
+
+| Sistema automatic
+| Processar OCR, generar alertes de caducitat, generar recordatoris de pH, construir la llista de clients afectats, preparar resums i informes.
+
+| Servei OCR al nuvol
+| Retornar text, blocs, taules o camps detectats a partir de la imatge o PDF enviat pel backend.
+|===
+
+=== 5.6 Serveis d'OCR al nuvol
+
+Atesa la variabilitat dels documents d'entrada, convé analitzar serveis OCR al nuvol que admetin fotografies, etiquetes, albarans i PDFs escanejats, i que es puguin integrar facilment amb una app Android a traves d'un backend.
+
+[cols="2,4,3,3,4",options="header"]
+|===
+| Servei | Funcionalitats rellevants | Condicions compte gratuit | Integracio amb Android | Valoracio per al projecte
+
+| Google Cloud Vision API
+| OCR de text i document text detection, suport per imatges, PDF i TIFF; resultats amb text, linies i coordenades.
+| Primeres 1000 unitats/mes gratis per Text Detection i Document Text Detection; nous clients disposen de credit inicial.
+| REST/Java client; opcions amb Firebase/ML Kit per mobil.
+| Molt simple per MVP i molt bo per etiquetes de sacs i fotos soltes.
+
+| Google Document AI
+| OCR avancat, layout, taules, clau-valor, Form Parser i processadors predefinits.
+| No es documenta un nivell gratuit mensual especific; credit inicial disponible.
+| REST amb integracio via backend recomanada.
+| Mes potent si es vol passar de text pla a camps estructurats.
+
+| Azure AI Document Intelligence
+| Models Read, Layout i prebuilt (invoice, receipt, contracte, etc.).
+| Tier gratuit amb limit de pagines/mes i restriccions de mida.
+| SDK i REST oficials compatibles amb backend i Android.
+| Molt bon equilibri per al prototip.
+
+| AWS Textract
+| OCR, taules, formularis, queries i AnalyzeExpense.
+| Nivell gratuit limitat en temps i volum.
+| SDKs oficials i integracio via S3 per PDFs.
+| Interessant per tractament de factures i flux AWS.
+|===
 
 <<<
 
@@ -310,55 +552,75 @@ Serveis possibles:
 
 === 6.1 Casos d'us
 
-Separacio de:
+El diagrama seguent diferencia funcions operatives del mobil, funcions de consulta/administracio web i funcions automatiques del sistema, tal com demana l'enunciat.
 
-* App mobil
-* Web
-* Sistema automatic
+.Diagrama de casos d'us
+image::Imatges/DiagragaCasosDUs.PNG[]
 
-=== 6.2 Model E-R
+=== 6.2 Disseny del diagrama E-R
 
-Entitats principals:
+El model proposat separa clarament recepcio de lots, elaboracions propies, lliuraments a clients i control sanitari. D'aquesta manera es pot consultar la tracabilitat en ambdos sentits sense duplicar informacio.
 
-* Lots
-* Elaboracions
-* Clients
-* Proveidors
-* Documents
+.Diagrama E-R
+image::Imatges/ModelE-R.PNG[]
 
-=== 6.4 Arquitectura
+=== 6.3 Diagrama d'arquitectura
 
-Components:
+L'arquitectura proposta busca separar clarament captura de dades, regles de negoci i integracions externes. Aixo simplifica canvis de servei OCR o de frontend sense reescriure tota la solucio.
 
-* App Android (Kotlin)
-* Backend (Spring Boot)
-* Base de dades (MySQL)
-* Servei OCR
+.Diagrama d'arquitectura
+image::Imatges/DiagramaArquitectura.PNG[]
 
 Flux:
-
 App -> Backend -> OCR -> Base de dades
 
-=== 6.5 Mockups
+=== 6.4 Mockups
 
-Interficie:
+Es proposa una interficie orientada a operacions molt rapides: captura, validacio, canvi d'estat del lot i consulta d'avisos. La web concentra la consulta avancada i els informes.
 
-* Rapida
-* Simple
-* Orientada a operari
+==== Mockups pc
 
-Web:
+Enllac al figma on estan totes les pantalles d'ordinador: +
+link:https://www.figma.com/design/SRKMAauxh0t8F2OKvgWzx8/EasyTraza-Mockups-PC?node-id=3-2&t=RifIBqGl5V3HW4ci-1[Veure tots els mockups de PC]
 
-* Consultes
-* Informes
+image::Imatges/Login_PC.PNG[]
 
+image::Imatges/PaginaPrincipalPC.PNG[]
+
+image::Imatges/ProveedoresPC.PNG[]
+
+image::Imatges/TrazabilidadPC.PNG[]
+
+image::Imatges/LotesPC.PNG[]
+
+==== Mockups mobil
+
+Enllac al figma on estan totes les pantalles del mobil: +
+link:https://www.figma.com/design/vtQOvxKjcQu3euNnmBPr4P/Mockups-movil?node-id=6-566&t=HIHNqlwFc59WQVEj-1[Veure tots els mockups de mobil]
+
+image::Imatges/loginMovil.PNG[]
+
+image::Imatges/paginaPrincipalMovil.PNG[]
+
+image::Imatges/RegistrarLote.PNG[]
+
+image::Imatges/RegistrarLoteManual.PNG[]
+
+image::Imatges/Alertas.PNG[]
 <<<
 
 == 7. Annex de fonts
 
-Referencies OCR:
+=== Referencies OCR
 
-* Google Cloud Vision
-* Google Document AI
-* Azure Document Intelligence
-* AWS Textract
+* link:https://cloud.google.com/vision/pricing[Google Cloud Vision pricing]
+* link:https://cloud.google.com/vision/docs/pdf[Google Cloud Vision OCR for PDF/TIFF]
+* link:https://cloud.google.com/document-ai/docs/overview[Google Cloud Document AI overview]
+* link:https://cloud.google.com/document-ai/pricing[Google Cloud Document AI pricing]
+* link:https://cloud.google.com/free[Google Cloud free trial]
+* link:https://azure.microsoft.com/en-us/pricing/details/document-intelligence/[Azure AI Document Intelligence pricing]
+
+* link:https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/service-limits?view=doc-intel-4.0.0[Azure AI Document Intelligence limits]
+* link:https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/versioning/sdk-overview-v4-0?view=doc-intel-4.0.0[Azure AI Document Intelligence SDK overview]
+* link:https://aws.amazon.com/es/textract/pricing/[Amazon Textract pricing]
+* link:https://docs.aws.amazon.com/es_es/textract/latest/dg/sdk-general-information-section.html[Amazon Textract SDK overview]
