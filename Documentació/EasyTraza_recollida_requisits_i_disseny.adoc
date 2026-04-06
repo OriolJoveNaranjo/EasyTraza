@@ -30,10 +30,6 @@ Projecte 4 - Curs 2025-2026 (2DAMM)
 | v1.0 - consolidada a partir de l'enunciat i les actes disponibles
 |===
 
-<<<
-
-
-<<<
 
 == 1. Fonts i criteri de consolidacio
 
@@ -45,7 +41,7 @@ Com que les actes provenen de diversos redactors, hi ha alguns punts amb matisos
 * Es considera Decisio de disseny (D) una proposta raonable necessaria per completar el prototip quan el client no ho ha tancat del tot.
 * Les contradiccions o dubtes no resolts es deixen recollits explicitament a l'apartat 8.
 
-image::Imatges/ImatgesActa.png[]
+image::ImatgesActa.png[]
 
 <<<
 
@@ -91,7 +87,6 @@ image::Imatges/ImatgesActa.png[]
 * Cal controlar especialment lots amb caducitat curta i registrar el pH de l'aigua amb recordatoris periodics.
 * S'han de generar informes mensuals i llistes de clients afectats, principalment per facilitar la gestio d'inspeccions i retirades de producte.
 
-<<<
 
 == 3. Introduccio i context del projecte
 
@@ -109,7 +104,7 @@ EasyTraza es planteja com un prototip multiplataforma que digitalitza la recepci
 * No s'automatitzen les comandes a proveidors; l'objectiu es registrar recepcio, us, incidencies i consulta posterior.
 * Per seguretat i mantenibilitat es recomana integrar el servei OCR des del backend i no cridar directament les APIs del proveidor des de l'app Android.
 
-<<<
+
 
 == 5. Fase d'analisi de requisits
 
@@ -280,6 +275,8 @@ EasyTraza es planteja com un prototip multiplataforma que digitalitza la recepci
 | D
 |===
 
+<<<
+
 === 5.2 Requisits no funcionals
 
 [cols="1,2,5,1",options="header"]
@@ -356,6 +353,8 @@ EasyTraza es planteja com un prototip multiplataforma que digitalitza la recepci
 | C
 |===
 
+<<<
+
 === 5.3 Definicions i nomenclatura
 
 [cols="2,4,4",options="header"]
@@ -414,6 +413,8 @@ EasyTraza es planteja com un prototip multiplataforma que digitalitza la recepci
 | Traca d'accions realitzades pels usuaris.
 | id_log, id_treballador, accio, entitat, id_entitat, data_hora
 |===
+
+<<<
 
 === 5.4 Especificacions de negoci
 
@@ -494,6 +495,8 @@ EasyTraza es planteja com un prototip multiplataforma que digitalitza la recepci
 | El lot intern de produccio s'ha de poder generar de forma consistent (proposta: prefix del client o desti + data + sequencia).
 |===
 
+<<<
+
 === 5.5 Guions per actors
 
 [cols="2,5",options="header"]
@@ -512,6 +515,8 @@ EasyTraza es planteja com un prototip multiplataforma que digitalitza la recepci
 | Servei OCR al nuvol
 | Retornar text, blocs, taules o camps detectats a partir de la imatge o PDF enviat pel backend.
 |===
+
+<<<
 
 === 5.6 Serveis d'OCR al nuvol
 
@@ -555,24 +560,25 @@ Atesa la variabilitat dels documents d'entrada, convé analitzar serveis OCR al 
 El diagrama seguent diferencia funcions operatives del mobil, funcions de consulta/administracio web i funcions automatiques del sistema, tal com demana l'enunciat.
 
 .Diagrama de casos d'us
-image::Imatges/DiagragaCasosDUs.PNG[]
+image::DiagragaCasosDUs.PNG[]
 
 === 6.2 Disseny del diagrama E-R
 
 El model proposat separa clarament recepcio de lots, elaboracions propies, lliuraments a clients i control sanitari. D'aquesta manera es pot consultar la tracabilitat en ambdos sentits sense duplicar informacio.
 
 .Diagrama E-R
-image::Imatges/ModelE-R.PNG[]
+image::ModelE-R.PNG[]
 
 === 6.3 Diagrama d'arquitectura
 
 L'arquitectura proposta busca separar clarament captura de dades, regles de negoci i integracions externes. Aixo simplifica canvis de servei OCR o de frontend sense reescriure tota la solucio.
 
 .Diagrama d'arquitectura
-image::Imatges/DiagramaArquitectura.PNG[]
+image::DiagramaArquitectura.PNG[]
 
 Flux:
 App -> Backend -> OCR -> Base de dades
+
 
 === 6.4 Mockups
 
@@ -583,31 +589,31 @@ Es proposa una interficie orientada a operacions molt rapides: captura, validaci
 Enllac al figma on estan totes les pantalles d'ordinador: +
 link:https://www.figma.com/design/SRKMAauxh0t8F2OKvgWzx8/EasyTraza-Mockups-PC?node-id=3-2&t=RifIBqGl5V3HW4ci-1[Veure tots els mockups de PC]
 
-image::Imatges/Login_PC.PNG[]
+image::Login_PC.PNG[]
 
-image::Imatges/PaginaPrincipalPC.PNG[]
+image::PaginaPrincipalPC.PNG[]
 
-image::Imatges/ProveedoresPC.PNG[]
+image::ProveedoresPC.PNG[]
 
-image::Imatges/TrazabilidadPC.PNG[]
+image::TrazabilidadPC.PNG[]
 
-image::Imatges/LotesPC.PNG[]
+image::LotesPC.PNG[]
 
 ==== Mockups mobil
 
 Enllac al figma on estan totes les pantalles del mobil: +
 link:https://www.figma.com/design/vtQOvxKjcQu3euNnmBPr4P/Mockups-movil?node-id=6-566&t=HIHNqlwFc59WQVEj-1[Veure tots els mockups de mobil]
 
-image::Imatges/loginMovil.PNG[]
+image::loginMovil.PNG[]
 
-image::Imatges/paginaPrincipalMovil.PNG[]
+image::paginaPrincipalMovil.PNG[]
 
-image::Imatges/RegistrarLote.PNG[]
+image::RegistrarLote.PNG[]
 
-image::Imatges/RegistrarLoteManual.PNG[]
+image::RegistrarLoteManual.PNG[]
 
-image::Imatges/Alertas.PNG[]
-<<<
+image::Alertas.PNG[]
+
 
 == 7. Annex de fonts
 
