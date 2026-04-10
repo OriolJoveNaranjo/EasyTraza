@@ -1,0 +1,19 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+package cat.copernic.easytraza_pc;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+/**
+ *
+ * @author orjon
+ */
+@SpringBootApplication
+public class EasyTraza {
+
+    public static void main(String[] args) {
+        SpringApplication.run(EasyTraza.class, args);
+    }
+}
