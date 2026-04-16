@@ -1,49 +1,37 @@
 <!DOCTYPE html>
-<html lang="ca" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>Nova matèria primera</title>
-        <link rel="stylesheet" th:href="@{/css/cataleg.css}">
-    </head>
-    <body>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nova matèria primera</title>
+    <link rel="stylesheet" th:href="@{/css/forms.css}">
+    <link rel="stylesheet" th:href="@{/css/buttons.css}">
+</head>
+<body>
+<div class="standalone-form-page">
+    <div class="form-card">
+        <h1 th:text="${materiaPrimera.id != null} ? 'Editar matèria primera' : 'Afegir matèria primera'"></h1>
+        <p class="form-subtitle">Afegeix un ingredient o producte base al catàleg</p>
+
         <p th:if="${error}" th:text="${error}" class="error-message"></p>
-        <div class="form-page">
-            <div class="form-card">
-                <div class="form-header">
-                    <div>
-                        <h1 th:text="${materiaPrimera.id} != null ? 'Editar matèria primera' : 'Afegir matèria primera'"></h1>
-                        <p>Afegeix un ingredient o producte final</p>
-                    </div>
-                    <a th:href="@{/cataleg}" class="close-btn">×</a>
-                </div>
 
-                <form th:action="@{/cataleg/materies-primeres/guardar}" th:object="${materiaPrimera}" method="post">
-                     <input type="hidden" th:field="*{id}">
-                    <div class="field">
-                        <label>Tipus *</label>
-                        <div class="type-selector">
-                            <button type="button" class="type-btn active">Matèria primera</button>
-                            <button type="button" class="type-btn" disabled>Producte fabricat</button>
-                        </div>
-                    </div>
-                   
+        <form th:action="@{/cataleg/materies-primeres/guardar}" th:object="${materiaPrimera}" method="post">
+            <input type="hidden" th:field="*{id}"/>
 
-                    <div class="field">
-                        <label for="nom">Nom *</label>
-                        <input type="text" id="nom" th:field="*{nom}" required>
-                    </div>
-
-                    <div class="field">
-                        <label for="descripcio">Descripció</label>
-                        <input type="text" id="descripcio" th:field="*{descripcio}">
-                    </div>
-
-                    <div class="actions">
-                        <a th:href="@{/cataleg}" class="btn-secondary">Cancel·lar</a>
-                        <button type="submit" class="btn-primary">Guardar</button>
-                    </div>
-                </form>
+            <div class="field">
+                <label>Nom *</label>
+                <input type="text" th:field="*{nom}" required>
             </div>
-        </div>
-    </body>
+
+            <div class="field">
+                <label>Descripció</label>
+                <textarea th:field="*{descripcio}"></textarea>
+            </div>
+
+            <div class="form-actions">
+                <a th:href="@{/cataleg}" class="btn-secondary">Cancel·lar</a>
+                <button type="submit" class="btn-primary">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
 </html>

@@ -1,0 +1,92 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f3ef;
+    color: #3f2d1f;
+}
+
+.standalone-form-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+}
+
+.form-card {
+    width: 100%;
+    max-width: 760px;
+    background: #fffdfa;
+    border: 1px solid #e5d7c8;
+    border-radius: 22px;
+    padding: 28px;
+    box-shadow: 0 8px 24px rgba(95, 58, 26, 0.08);
+}
+
+.form-card h1 {
+    font-size: 34px;
+    color: #5f3a1a;
+    margin-bottom: 8px;
+}
+
+.form-subtitle {
+    color: #7b6a5b;
+    font-size: 17px;
+    margin-bottom: 24px;
+}
+
+.field {
+    margin-bottom: 20px;
+    max-width: 640px;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #4e3520;
+    font-size: 16px;
+}
+
+.field input,
+.field textarea {
+    width: 100%;
+    border: 1px solid #decebe;
+    border-radius: 14px;
+    padding: 14px 16px;
+    background: #f8f4ef;
+    font-size: 15px;
+    color: #3d2f25;
+    outline: none;
+}
+
+.field input:focus,
+.field textarea:focus {
+    border-color: #c59662;
+    box-shadow: 0 0 0 3px rgba(197, 150, 98, 0.15);
+}
+
+.field textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.error-message {
+    background: #f8d7da;
+    color: #842029;
+    border: 1px solid #f1aeb5;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 18px;
+}

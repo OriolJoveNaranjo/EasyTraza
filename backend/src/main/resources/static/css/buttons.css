@@ -1,0 +1,44 @@
+.btn-primary,
+.btn-edit,
+.btn-delete {
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: #9a5514;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-edit {
+    background: #d8b07a;
+    color: white;
+    margin-right: 8px;
+}
+
+.btn-delete {
+    background: #c65a5a;
+    color: white;
+}
+.btn-secondary {
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-size: 14px;
+    border: 1px solid #d9cdbf;
+    background: #fffdfa;
+    color: #5f3a1a;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-secondary:hover {
+    background: #f3ebe2;
+}

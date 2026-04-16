@@ -1,62 +1,38 @@
 <!DOCTYPE html>
-<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
-        <title>EasyTraza - Catàleg</title>
+        <title>Catàleg</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}">
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+        <link rel="stylesheet" th:href="@{/css/table.css}">
         <link rel="stylesheet" th:href="@{/css/cataleg.css}">
     </head>
     <body>
-        <div class="layout">
+        <div class="app-layout">
 
-            <aside class="sidebar">
-                <div class="brand">
-                    <img th:src="@{/images/LogoEasyTraza.PNG}" alt="Logo EasyTraza" class="logo">
-                    <div>
-                        <h2>EasyTraza</h2>
-                        <p>Traçabilitat</p>
-                    </div>
-                </div>
+            <div th:replace="~{fragments/sidebar :: sidebar('cataleg')}"></div>
 
-                <nav class="menu">
-                    <a href="#">Panel</a>
-                    <a href="#">Clients</a>
-                    <a href="#">Proveïdors</a>
-                    <a class="active" th:href="@{/cataleg}">Catàleg</a>
-                    <a href="#">Albarans</a>
-                    <a href="#">Lots proveïdor</a>
-                    <a href="#">Albarà client</a>
-                    <a href="#">Traçabilitat</a>
-                    <a href="#">Controls</a>
-                    <a href="#">Informes</a>
-                </nav>
-            </aside>
-
-            <main class="content">
-                <div class="header">
+            <main class="page-content">
+                <div class="page-header">
                     <div>
                         <h1>Catàleg</h1>
                         <p>Catàleg d'articles i productes</p>
                     </div>
 
-                    <a th:href="@{/cataleg/materies-primeres/nova}" class="btn-primary">
-                        + Afegir
-                    </a>
+                    <a th:href="@{/cataleg/materies-primeres/nova}" class="btn-primary">+ Afegir</a>
                 </div>
 
-                <div class="search-box">
+                <div class="search-bar">
                     <input type="text" placeholder="Buscar...">
                 </div>
 
-                <div class="tabs">
-                    <button class="tab active">Matèries primeres</button>
-                    <button class="tab">Productes fabricats</button>
+                <div class="catalog-tabs">
+                    <button class="tab-btn active">Matèries primeres</button>
+                    <button class="tab-btn">Productes fabricats</button>
                 </div>
 
-                <div class="card">
-                    <div th:if="${#lists.isEmpty(materiesPrimeres)}" class="empty-state">
-                        No hi ha matèries primeres registrades
-                    </div>
-
+                <div class="content-card">
                     <table th:if="${not #lists.isEmpty(materiesPrimeres)}">
                         <thead>
                             <tr>
@@ -72,22 +48,20 @@
                                 <td th:text="${materia.nom}"></td>
                                 <td th:text="${materia.descripcio}"></td>
                                 <td>
-                                    <a th:href="@{/cataleg/materies-primeres/editar/{id}(id=${materia.id})}" class="btn-edit">
-                                        Editar
-                                    </a>
+                                    <a th:href="@{/cataleg/materies-primeres/editar/{id}(id=${materia.id})}" class="btn-edit">Editar</a>
                                     <a th:href="@{/cataleg/materies-primeres/eliminar/{id}(id=${materia.id})}"
                                        class="btn-delete"
-                                       onclick="return confirm('Segur que vols eliminar aquesta matèria primera?')">
-                                        Eliminar
-                                    </a>
+                                       onclick="return confirm('Segur que vols eliminar aquesta matèria primera?')">Eliminar</a>
                                 </td>
                             </tr>
-
                         </tbody>
                     </table>
+
+                    <div th:if="${#lists.isEmpty(materiesPrimeres)}" class="empty-state">
+                        No hi ha matèries primeres registrades
+                    </div>
                 </div>
             </main>
-
         </div>
     </body>
 </html>

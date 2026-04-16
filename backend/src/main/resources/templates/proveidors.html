@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Proveïdors</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}">
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+        <link rel="stylesheet" th:href="@{/css/table.css}">
+        <link rel="stylesheet" th:href="@{/css/proveidors.css}">
+    </head>
+    <body>
+        <div class="app-layout">
+
+            <div th:replace="~{fragments/sidebar :: sidebar('proveidors')}"></div>
+
+            <main class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1>Proveïdors</h1>
+                        <p>Gestión de proveedores</p>
+                    </div>
+
+                    <a th:href="@{/proveidors/nou}" class="btn-primary">+ Afegir proveïdor</a>
+                </div>
+
+                <div class="search-bar">
+                    <input type="text" placeholder="Cercar proveedors...">
+                </div>
+
+                <div class="content-card">
+                    <table th:if="${not #lists.isEmpty(proveidors)}">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>CIF</th>
+                                <th>Telèfon</th>
+                                <th>Email</th>
+                                <th>Accions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="proveidor : ${proveidors}">
+                                <td th:text="${proveidor.nom}"></td>
+                                <td th:text="${proveidor.cif}"></td>
+                                <td th:text="${proveidor.telefon}"></td>
+                                <td th:text="${proveidor.email}"></td>
+                                <td>
+                                    <a th:href="@{'/proveidors/editar/' + ${proveidor.id}}" class="btn-edit">Editar</a>
+                                    <a th:href="@{'/proveidors/eliminar/' + ${proveidor.id}}"
+                                       class="btn-delete"
+                                       onclick="return confirm('Segur que vols eliminar aquest proveïdor?')">Eliminar</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div th:if="${#lists.isEmpty(proveidors)}" class="empty-state">
+                        No hi ha proveïdors registrats
+                    </div>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>
