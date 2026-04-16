@@ -1,13 +1,14 @@
 = SPRINT - 1
 :toc:
 :toc-title: Índex de continguts
+:imagesdir: Imatges/Sprints
 
 == 1. Planificació Inicial
 
 === 1.1. Planificació (Inicial)
 
 ==== Board inicial
-image::images/PrincipiSprint1Oriol.PNG[Board inicial — Oriol Jové Naranjo]
+image::PlanificacioInicialSprint1.PNG[Board inicial]
 
 
 == 2. Daily Stand Up
@@ -46,11 +47,17 @@ image::images/PrincipiSprint1Oriol.PNG[Board inicial — Oriol Jové Naranjo]
 === 3.1. Planificació (Final de Sprint)
 
 ==== Board final — Grup 3
-image::images/Board_Final_Grup3.png[Board_Final]
+image::PlanificacioFinalSprint1[Board_Final]
 
 == 4. Retrospective Meeting
 
 
 [cols="1,4"]
 |===
-|
+|En aquest sprint he començat el projecte des de zero, primer entenent l’enunciat i preparant el repositori. Després he anat muntant l’estructura del projecte i he pogut completar el CRUD de matèries primeres, que ha sigut la part principal d’aquest sprint. També he començat amb el CRUD de proveïdors i a pensar en la gestió d’usuaris.
+
+En general, crec que he avançat bé, sobretot tenint en compte que era l’inici del projecte. Tot i això, he tingut alguns dubtes, sobretot amb les relacions entre entitats i decisions com la gestió de contrasenyes o la validació del CIF. A més, m'he possat malalt durant la setmana, cosa que ha fet baixar una mica el ritme i no poder asistir a classe.
+
+De cara al següent sprint, vull tenir més clars alguns aspectes abans de programar-los per no perdre temps amb dubtes, i seguir avançant amb la resta de funcionalitats.
+
+En resum, ha estat un bon inici de projecte, amb alguns petits problemes però amb una base ja feta per continuar treballant.
