@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nova matèria primera</title>
+    <link rel="stylesheet" th:href="@{/css/forms.css}">
+    <link rel="stylesheet" th:href="@{/css/buttons.css}">
+</head>
+<body>
+<div class="standalone-form-page">
+    <div class="form-card">
+        <h1 th:text="${materiaPrimera.id != null} ? 'Editar matèria primera' : 'Afegir matèria primera'"></h1>
+        <p class="form-subtitle">Afegeix un ingredient o producte base al catàleg</p>
+
+        <p th:if="${error}" th:text="${error}" class="error-message"></p>
+
+        <form th:action="@{/cataleg/materies-primeres/guardar}" th:object="${materiaPrimera}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+
+            <div class="field">
+                <label>Nom *</label>
+                <input type="text" th:field="*{nom}" required>
+            </div>
+
+            <div class="field">
+                <label>Descripció</label>
+                <textarea th:field="*{descripcio}"></textarea>
+            </div>
+
+            <div class="form-actions">
+                <a th:href="@{/cataleg}" class="btn-secondary">Cancel·lar</a>
+                <button type="submit" class="btn-primary">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

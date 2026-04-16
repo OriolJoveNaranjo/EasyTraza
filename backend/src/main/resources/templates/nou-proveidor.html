@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Proveïdor</title>
+        <link rel="stylesheet" th:href="@{/css/forms.css}">
+        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+    </head>
+    <body>
+        <div class="standalone-form-page">
+            <div class="form-card">
+                <h1 th:text="${mode == 'view'} ? 'Veure proveïdor' : (${proveidor.id != null} ? 'Editar proveïdor' : 'Afegir proveïdor')"></h1>
+                <p class="form-subtitle">Informació del proveïdor</p>
+
+                <p th:if="${error}" th:text="${error}" class="error-message"></p>
+
+                <form th:if="${mode != 'view'}"
+                      th:action="@{/proveidors/guardar}"
+                      th:object="${proveidor}"
+                      method="post">
+
+                    <input type="hidden" th:field="*{id}"/>
+
+                    <div class="field">
+                        <label>Nom *</label>
+                        <input type="text" th:field="*{nom}" required>
+                    </div>
+
+                    <div class="field">
+                        <label>CIF *</label>
+                        <input type="text" th:field="*{cif}" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Telèfon</label>
+                        <input type="text" th:field="*{telefon}">
+                    </div>
+
+                    <div class="field">
+                        <label>Email</label>
+                        <input type="email" th:field="*{email}">
+                    </div>
+
+                    <div class="field">
+                        <label>Adreça</label>
+                        <input type="text" th:field="*{adreca}">
+                    </div>
+
+                    <div class="field">
+                        <label>Observacions</label>
+                        <textarea th:field="*{observacions}"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <a th:href="@{/proveidors}" class="btn-secondary">Cancel·lar</a>
+                        <button type="submit" class="btn-primary">Guardar</button>
+                    </div>
+                </form>
+
+                <div th:if="${mode == 'view'}">
+                    <div class="field">
+                        <label>Nom</label>
+                        <input type="text" th:value="${proveidor.nom}" readonly>
+                    </div>
+
+                    <div class="field">
+                        <label>CIF</label>
+                        <input type="text" th:value="${proveidor.cif}" readonly>
+                    </div>
+
+                    <div class="field">
+                        <label>Telèfon</label>
+                        <input type="text" th:value="${proveidor.telefon}" readonly>
+                    </div>
+
+                    <div class="field">
+                        <label>Email</label>
+                        <input type="text" th:value="${proveidor.email}" readonly>
+                    </div>
+
+                    <div class="field">
+                        <label>Adreça</label>
+                        <input type="text" th:value="${proveidor.adreca}" readonly>
+                    </div>
+
+                    <div class="field">
+                        <label>Observacions</label>
+                        <textarea readonly th:text="${proveidor.observacions}"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <a th:href="@{/proveidors}" class="btn-secondary">Tornar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
