@@ -1,0 +1,56 @@
+= SPRINT - 1
+:toc:
+:toc-title: Índex de continguts
+
+== 1. Planificació Inicial
+
+=== 1.1. Planificació (Inicial)
+
+==== Board inicial
+image::images/PrincipiSprint1Oriol.PNG[Board inicial — Oriol Jové Naranjo]
+
+
+== 2. Daily Stand Up
+
+=== DIA 1 - 10/04
+[cols="1,2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| Llegir l'enunciat i preparar el git | Començar a fer l'estructura del projecte i començar amb el CRUD de materies primeres |  | 5h
+|===
+
+=== DIA 2 - 13/04
+[cols="1,2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+|Crear l'arquitectura del projecte i començar amb la funcionalitat de crear les materies primeres | Acabar amb el CRUD complet de les materies primeres i començar el CRUD de proveidors | Com fer les relacions de materia primera a Producte fabricat | 3h
+|===
+
+=== DIA 3 - 15/04
+[cols="1,2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| Acabar el CRUD de materies primeres | Començar el CRUD de proveidors i acabar-lo | M'he possat malalt i no he pgut fer molt  | 1h
+
+|===
+
+=== DIA 4 - 16/04
+[cols="1,2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| Començar el CRUD de proveidors | Fer el CRUD de proveidors i el CRUD de usuaris  | A l'hora de editar un usuari no se si la contrassenya s'he de poder editar directamnet o amb una opció de recuperar la contrassenya i un altre dubte es que si el camp CIF dels proveïdors ha de validar que sugui un CIF de veritat  | 4h
+|===
+
+== 3. Planificació Final
+
+=== 3.1. Planificació (Final de Sprint)
+
+==== Board final — Grup 3
+image::images/Board_Final_Grup3.png[Board_Final]
+
+== 4. Retrospective Meeting
+
+
+[cols="1,4"]
+|===
+|
