@@ -21,6 +21,7 @@
         <a href="#" class="menu-item">Traçabilitat</a>
         <a href="#" class="menu-item">Controls</a>
         <a href="#" class="menu-item">Informes</a>
+        <a th:href="@{/usuaris}" th:class="'menu-item' + (${activePage} == 'usuaris' ? ' active' : '')">Usuaris</a>
     </nav>
 
     <div class="sidebar-footer">

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Usuaris</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}">
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+        <link rel="stylesheet" th:href="@{/css/table.css}">
+    </head>
+    <body>
+        <div class="app-layout">
+
+            <div th:replace="~{fragments/sidebar :: sidebar('usuaris')}"></div>
+
+            <main class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1>Usuaris</h1>
+                        <p>Gestió d'usuaris del sistema</p>
+                    </div>
+
+                    <a th:href="@{/usuaris/nou}" class="btn-primary">+ Afegir usuari</a>
+                </div>
+
+                <div class="search-bar">
+                    <input type="text" placeholder="Cercar usuaris...">
+                </div>
+
+                <div class="content-card">
+                    <table th:if="${not #lists.isEmpty(usuaris)}">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Email</th>
+                                <th>Rol</th>
+                                <th>Actiu</th>
+                                <th>Accions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="usuari : ${usuaris}">
+                                <td th:text="${usuari.nom}"></td>
+                                <td th:text="${usuari.email}"></td>
+                                <td th:text="${usuari.rol}"></td>
+                                <td th:text="${usuari.actiu ? 'Sí' : 'No'}"></td>
+                                <td>
+                                    <a th:href="@{'/usuaris/editar/' + ${usuari.id}}" class="btn-edit">Editar</a>
+                                    <a th:href="@{'/usuaris/eliminar/' + ${usuari.id}}"
+                                       class="btn-delete"
+                                       onclick="return confirm('Segur que vols eliminar aquest usuari?')">Eliminar</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div th:if="${#lists.isEmpty(usuaris)}" class="empty-state">
+                        No hi ha usuaris registrats
+                    </div>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>
