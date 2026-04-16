@@ -14,29 +14,29 @@ image::PlanificacioInicialSprint1.PNG[Board inicial]
 == 2. Daily Stand Up
 
 === DIA 1 - 10/04
-[cols="1,2,2,2,1", options="header"]
+[cols="2,2,2,1", options="header"]
 |===
 | Què va fer ahir | Què farà avui | Problemes | Hores
 | Llegir l'enunciat i preparar el git | Començar a fer l'estructura del projecte i començar amb el CRUD de materies primeres |  | 5h
 |===
 
 === DIA 2 - 13/04
-[cols="1,2,2,2,1", options="header"]
+[cols="2,2,2,1", options="header"]
 |===
 | Què va fer ahir | Què farà avui | Problemes | Hores
 |Crear l'arquitectura del projecte i començar amb la funcionalitat de crear les materies primeres | Acabar amb el CRUD complet de les materies primeres i començar el CRUD de proveidors | Com fer les relacions de materia primera a Producte fabricat | 3h
 |===
 
 === DIA 3 - 15/04
-[cols="1,2,2,2,1", options="header"]
+[cols="2,2,2,1", options="header"]
 |===
 | Què va fer ahir | Què farà avui | Problemes | Hores
-| Acabar el CRUD de materies primeres | Començar el CRUD de proveidors i acabar-lo | M'he possat malalt i no he pgut fer molt  | 1h
+|Acabar el CRUD de materies primeres | Començar el CRUD de proveidors i acabar-lo | M'he possat malalt i no he pgut fer molt  | 1h
 
 |===
 
 === DIA 4 - 16/04
-[cols="1,2,2,2,1", options="header"]
+[cols="2,2,2,1", options="header"]
 |===
 | Què va fer ahir | Què farà avui | Problemes | Hores
 | Començar el CRUD de proveidors | Fer el CRUD de proveidors i el CRUD de usuaris  | A l'hora de editar un usuari no se si la contrassenya s'he de poder editar directamnet o amb una opció de recuperar la contrassenya i un altre dubte es que si el camp CIF dels proveïdors ha de validar que sugui un CIF de veritat  | 4h
@@ -47,14 +47,11 @@ image::PlanificacioInicialSprint1.PNG[Board inicial]
 === 3.1. Planificació (Final de Sprint)
 
 ==== Board final — Grup 3
-image::PlanificacioFinalSprint1[Board_Final]
+image::PlanificacioFinalSprint1.PNG[Board_Final]
 
 == 4. Retrospective Meeting
 
-
-[cols="1,4"]
-|===
-|En aquest sprint he començat el projecte des de zero, primer entenent l’enunciat i preparant el repositori. Després he anat muntant l’estructura del projecte i he pogut completar el CRUD de matèries primeres, que ha sigut la part principal d’aquest sprint. També he començat amb el CRUD de proveïdors i a pensar en la gestió d’usuaris.
+En aquest sprint he començat el projecte des de zero, primer entenent l’enunciat i preparant el repositori. Després he anat muntant l’estructura del projecte i he pogut completar el CRUD de matèries primeres, que ha sigut la part principal d’aquest sprint. També he començat amb el CRUD de proveïdors i a pensar en la gestió d’usuaris.
 
 En general, crec que he avançat bé, sobretot tenint en compte que era l’inici del projecte. Tot i això, he tingut alguns dubtes, sobretot amb les relacions entre entitats i decisions com la gestió de contrasenyes o la validació del CIF. A més, m'he possat malalt durant la setmana, cosa que ha fet baixar una mica el ritme i no poder asistir a classe.
 
