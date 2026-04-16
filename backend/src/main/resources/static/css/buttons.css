@@ -42,3 +42,15 @@
 .btn-secondary:hover {
     background: #f3ebe2;
 }
+.btn-view {
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    background: #7a8aa0;
+    color: white;
+    margin-right: 8px;
+}

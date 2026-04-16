@@ -37,6 +37,7 @@ public class ProveidorController {
     @GetMapping("/proveidors/nou")
     public String mostrarFormulariNouProveidor(Model model) {
         model.addAttribute("proveidor", new Proveidor());
+        model.addAttribute("mode", "create");
         return "nou-proveidor";
     }
 
@@ -67,6 +68,7 @@ public class ProveidorController {
         }
 
         model.addAttribute("proveidor", proveidor);
+        model.addAttribute("mode", "edit");
         return "nou-proveidor";
     }
 
@@ -74,5 +76,18 @@ public class ProveidorController {
     public String eliminar(@PathVariable Long id) {
         proveidorService.deleteById(id);
         return "redirect:/proveidors";
+    }
+
+    @GetMapping("/proveidors/veure/{id}")
+    public String veure(@PathVariable Long id, Model model) {
+        Proveidor proveidor = proveidorService.findById(id).orElse(null);
+
+        if (proveidor == null) {
+            return "redirect:/proveidors";
+        }
+
+        model.addAttribute("proveidor", proveidor);
+        model.addAttribute("mode", "view");
+        return "nou-proveidor";
     }
 }

@@ -45,6 +45,7 @@
                                 <td th:text="${proveidor.telefon}"></td>
                                 <td th:text="${proveidor.email}"></td>
                                 <td>
+                                    <a th:href="@{'/proveidors/veure/' + ${proveidor.id}}" class="btn-view">Veure</a>
                                     <a th:href="@{'/proveidors/editar/' + ${proveidor.id}}" class="btn-edit">Editar</a>
                                     <a th:href="@{'/proveidors/eliminar/' + ${proveidor.id}}"
                                        class="btn-delete"
