@@ -1,0 +1,20 @@
+
+.catalog-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.tab-btn {
+    border: 1px solid #ddd2c5;
+    background: white;
+    border-radius: 14px;
+    padding: 10px 14px;
+    cursor: pointer;
+}
+
+.tab-btn.active {
+    background: #f3e3bb;
+    color: #7f4a12;
+    font-weight: bold;
+}
