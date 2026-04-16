@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>EasyTraza - Catàleg</title>
+        <link rel="stylesheet" th:href="@{/css/cataleg.css}">
+    </head>
+    <body>
+        <div class="layout">
+
+            <aside class="sidebar">
+                <div class="brand">
+                    <img th:src="@{/images/LogoEasyTraza.PNG}" alt="Logo EasyTraza" class="logo">
+                    <div>
+                        <h2>EasyTraza</h2>
+                        <p>Traçabilitat</p>
+                    </div>
+                </div>
+
+                <nav class="menu">
+                    <a href="#">Panel</a>
+                    <a href="#">Clients</a>
+                    <a href="#">Proveïdors</a>
+                    <a class="active" th:href="@{/cataleg}">Catàleg</a>
+                    <a href="#">Albarans</a>
+                    <a href="#">Lots proveïdor</a>
+                    <a href="#">Albarà client</a>
+                    <a href="#">Traçabilitat</a>
+                    <a href="#">Controls</a>
+                    <a href="#">Informes</a>
+                </nav>
+            </aside>
+
+            <main class="content">
+                <div class="header">
+                    <div>
+                        <h1>Catàleg</h1>
+                        <p>Catàleg d'articles i productes</p>
+                    </div>
+
+                    <a th:href="@{/cataleg/materies-primeres/nova}" class="btn-primary">
+                        + Afegir
+                    </a>
+                </div>
+
+                <div class="search-box">
+                    <input type="text" placeholder="Buscar...">
+                </div>
+
+                <div class="tabs">
+                    <button class="tab active">Matèries primeres</button>
+                    <button class="tab">Productes fabricats</button>
+                </div>
+
+                <div class="card">
+                    <div th:if="${#lists.isEmpty(materiesPrimeres)}" class="empty-state">
+                        No hi ha matèries primeres registrades
+                    </div>
+
+                    <table th:if="${not #lists.isEmpty(materiesPrimeres)}">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Descripció</th>
+                                <th>Accions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="materia : ${materiesPrimeres}">
+                                <td th:text="${materia.id}"></td>
+                                <td th:text="${materia.nom}"></td>
+                                <td th:text="${materia.descripcio}"></td>
+                                <td>
+                                    <a th:href="@{/cataleg/materies-primeres/editar/{id}(id=${materia.id})}" class="btn-edit">
+                                        Editar
+                                    </a>
+                                    <a th:href="@{/cataleg/materies-primeres/eliminar/{id}(id=${materia.id})}"
+                                       class="btn-delete"
+                                       onclick="return confirm('Segur que vols eliminar aquesta matèria primera?')">
+                                        Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+
+        </div>
+    </body>
+</html>
