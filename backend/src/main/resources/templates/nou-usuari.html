@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Nou usuari</title>
+        <link rel="stylesheet" th:href="@{/css/forms.css}">
+        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+    </head>
+    <body>
+        <div class="standalone-form-page">
+            <div class="form-card">
+                <h1 th:text="${usuari.id != null} ? 'Editar usuari' : 'Afegir usuari'"></h1>
+                <p class="form-subtitle">Introdueix les dades de l'usuari</p>
+
+                <p th:if="${error}" th:text="${error}" class="error-message"></p>
+
+                <form th:action="@{/usuaris/guardar}" th:object="${usuari}" method="post">
+                    <input type="hidden" th:field="*{id}"/>
+
+                    <div class="field">
+                        <label>Nom *</label>
+                        <input type="text" th:field="*{nom}" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Email *</label>
+                        <input type="email" th:field="*{email}" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Contrasenya *</label>
+                        <input type="password" th:field="*{password}" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Rol *</label>
+                        <select th:field="*{rol}" required>
+                            <option value="">Selecciona un rol</option>
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="OPERARI">OPERARI</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Actiu *</label>
+                        <select th:field="*{actiu}" required>
+                            <option value="true">Sí</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <a th:href="@{/usuaris}" class="btn-secondary">Cancel·lar</a>
+                        <button type="submit" class="btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
