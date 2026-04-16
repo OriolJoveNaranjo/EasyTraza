@@ -37,6 +37,10 @@ public class MateriaPrimeraServiceImpl implements MateriaPrimeraService {
 
     @Override
     public MateriaPrimera save(MateriaPrimera materiaPrimera) {
+        if (materiaPrimeraRepository.existsByNom(materiaPrimera.getNom())) {
+            throw new RuntimeException("Ja existeix una matèria primera amb aquest nom");
+        }
+
         return materiaPrimeraRepository.save(materiaPrimera);
     }
 
@@ -44,14 +48,19 @@ public class MateriaPrimeraServiceImpl implements MateriaPrimeraService {
     public MateriaPrimera update(Long id, MateriaPrimera materiaPrimera) {
         Optional<MateriaPrimera> existent = materiaPrimeraRepository.findById(id);
 
-        if (existent.isPresent()) {
-            MateriaPrimera actual = existent.get();
-            actual.setNom(materiaPrimera.getNom());
-            actual.setDescripcio(materiaPrimera.getDescripcio());
-            return materiaPrimeraRepository.save(actual);
+        if (existent.isEmpty()) {
+            throw new RuntimeException("La matèria primera no existeix");
         }
 
-        return null;
+        if (materiaPrimeraRepository.existsByNomAndIdNot(materiaPrimera.getNom(), id)) {
+            throw new RuntimeException("Ja existeix una matèria primera amb aquest nom");
+        }
+
+        MateriaPrimera actual = existent.get();
+        actual.setNom(materiaPrimera.getNom());
+        actual.setDescripcio(materiaPrimera.getDescripcio());
+
+        return materiaPrimeraRepository.save(actual);
     }
 
     @Override

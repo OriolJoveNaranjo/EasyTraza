@@ -54,4 +54,9 @@ public class MateriaPrimera {
     public void setDescripcio(String descripcio) {
         this.descripcio = descripcio;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
 }

@@ -63,6 +63,7 @@
                                 <th>ID</th>
                                 <th>Nom</th>
                                 <th>Descripció</th>
+                                <th>Accions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -70,7 +71,18 @@
                                 <td th:text="${materia.id}"></td>
                                 <td th:text="${materia.nom}"></td>
                                 <td th:text="${materia.descripcio}"></td>
+                                <td>
+                                    <a th:href="@{/cataleg/materies-primeres/editar/{id}(id=${materia.id})}" class="btn-edit">
+                                        Editar
+                                    </a>
+                                    <a th:href="@{/cataleg/materies-primeres/eliminar/{id}(id=${materia.id})}"
+                                       class="btn-delete"
+                                       onclick="return confirm('Segur que vols eliminar aquesta matèria primera?')">
+                                        Eliminar
+                                    </a>
+                                </td>
                             </tr>
+
                         </tbody>
                     </table>
                 </div>

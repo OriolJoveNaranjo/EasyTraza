@@ -268,3 +268,34 @@ th {
     gap: 14px;
     margin-top: 30px;
 }
+.btn-delete {
+    background-color: #c94c4c;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.btn-delete:hover {
+    background-color: #a63a3a;
+}
+.btn-edit {
+    background-color: #d6a96c;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    margin-right: 6px;
+}
+
+.btn-edit:hover {
+    background-color: #b88c55;
+}
+.error-message {
+    background-color: #f8d7da;
+    color: #842029;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}

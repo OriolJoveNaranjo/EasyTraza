@@ -24,4 +24,5 @@ public interface MateriaPrimeraService {
     MateriaPrimera update(Long id, MateriaPrimera materiaPrimera);
 
     void deleteById(Long id);
+    
 }

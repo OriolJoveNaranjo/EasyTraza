@@ -6,17 +6,19 @@
         <link rel="stylesheet" th:href="@{/css/cataleg.css}">
     </head>
     <body>
+        <p th:if="${error}" th:text="${error}" class="error-message"></p>
         <div class="form-page">
             <div class="form-card">
                 <div class="form-header">
                     <div>
-                        <h1>Afegir al catàleg</h1>
+                        <h1 th:text="${materiaPrimera.id} != null ? 'Editar matèria primera' : 'Afegir matèria primera'"></h1>
                         <p>Afegeix un ingredient o producte final</p>
                     </div>
                     <a th:href="@{/cataleg}" class="close-btn">×</a>
                 </div>
 
                 <form th:action="@{/cataleg/materies-primeres/guardar}" th:object="${materiaPrimera}" method="post">
+                     <input type="hidden" th:field="*{id}">
                     <div class="field">
                         <label>Tipus *</label>
                         <div class="type-selector">
@@ -24,6 +26,7 @@
                             <button type="button" class="type-btn" disabled>Producte fabricat</button>
                         </div>
                     </div>
+                   
 
                     <div class="field">
                         <label for="nom">Nom *</label>

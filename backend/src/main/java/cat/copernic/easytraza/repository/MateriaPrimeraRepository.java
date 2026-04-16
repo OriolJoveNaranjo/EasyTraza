@@ -14,4 +14,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 
 public interface MateriaPrimeraRepository extends JpaRepository<MateriaPrimera, Long> {
+    boolean existsByNom(String nom);
+    boolean existsByNomAndIdNot(String nom, Long id);
 }
