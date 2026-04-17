@@ -21,4 +21,6 @@ public interface ProducteFinalService {
     ProducteFinal save(ProducteFinal producteFinal);
 
     ProducteFinal update(Long id, ProducteFinal producteFinal);
+
+    void deleteById(Long id);
 }

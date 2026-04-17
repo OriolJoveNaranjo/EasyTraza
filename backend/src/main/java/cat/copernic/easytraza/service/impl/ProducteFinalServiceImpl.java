@@ -61,4 +61,9 @@ public class ProducteFinalServiceImpl implements ProducteFinalService {
     public Optional<ProducteFinal> findById(Long id) {
         return producteFinalRepository.findById(id);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        producteFinalRepository.deleteById(id);
+    }
 }

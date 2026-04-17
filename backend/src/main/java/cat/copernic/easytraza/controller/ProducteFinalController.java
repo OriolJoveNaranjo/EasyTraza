@@ -66,4 +66,10 @@ public class ProducteFinalController {
         model.addAttribute("producteFinal", producteFinal);
         return "nou-producte";
     }
+
+    @GetMapping("/productes-finals/eliminar/{id}")
+    public String eliminar(@PathVariable Long id) {
+        producteFinalService.deleteById(id);
+        return "redirect:/productes-finals";
+    }
 }
