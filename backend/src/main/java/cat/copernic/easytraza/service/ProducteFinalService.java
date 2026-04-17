@@ -6,6 +6,7 @@ package cat.copernic.easytraza.service;
 
 import cat.copernic.easytraza.entities.ProducteFinal;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -15,6 +16,11 @@ public interface ProducteFinalService {
 
     List<ProducteFinal> findAll();
 
+    Optional<ProducteFinal> findById(Long id);
+
     ProducteFinal save(ProducteFinal producteFinal);
 
+    ProducteFinal update(Long id, ProducteFinal producteFinal);
+
+    void deleteById(Long id);
 }

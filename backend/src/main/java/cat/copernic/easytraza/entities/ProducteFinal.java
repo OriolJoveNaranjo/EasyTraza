@@ -10,30 +10,33 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
-
-
+import jakarta.validation.constraints.Size;
 
 /**
  *
  * @author orjon
  */
 @Entity
-public class ProducteFinal {    
-   @Id
+public class ProducteFinal {
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
     @Column(nullable = false, unique = true)
     private String nom;
+    @NotBlank
+    @Size(max = 255)
+    @Column(nullable = false, length = 255)
     private String descripcio;
-    
-    
-    public ProducteFinal(){
-        
+
+    public ProducteFinal() {
+
     }
-    public ProducteFinal(String nom, String descripcio){
-        
+
+    public ProducteFinal(String nom, String descripcio) {
+
         this.nom = nom;
         this.descripcio = descripcio;
     }
@@ -61,6 +64,5 @@ public class ProducteFinal {
     public void setDescripcio(String descripcio) {
         this.descripcio = descripcio;
     }
-    
-    
+
 }

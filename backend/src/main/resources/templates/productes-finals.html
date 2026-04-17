@@ -39,6 +39,7 @@
                                 <th>ID</th>
                                 <th>Nom</th>
                                 <th>Descripció</th>
+                                <th>Accions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,6 +47,12 @@
                                 <td th:text="${producte.id}"></td>
                                 <td th:text="${producte.nom}"></td>
                                 <td th:text="${producte.descripcio}"></td>
+                                <td>
+                                    <a th:href="@{'/productes-finals/editar/' + ${producte.id}}" class="btn-edit">Editar</a>
+                                    <a th:href="@{'/productes-finals/eliminar/' + ${producte.id}}"
+                                       class="btn-delete"
+                                       onclick="return confirm('Segur que vols eliminar aquest producte final?')">Eliminar</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

@@ -46,6 +46,9 @@ public class ProveidorServiceImpl implements ProveidorService {
         if (!CifValidator.validarCIF(proveidor.getCif())) {
             throw new IllegalArgumentException("El CIF no és vàlid");
         }
+        if (proveidor.getObservacions() != null && proveidor.getObservacions().length() > 500) {
+            throw new IllegalArgumentException("El text és massa gran. Com a màxim 500 caràcters");
+        }
 
         return proveidorRepository.save(proveidor);
     }
@@ -63,6 +66,9 @@ public class ProveidorServiceImpl implements ProveidorService {
         }
         if (!CifValidator.validarCIF(proveidor.getCif())) {
             throw new IllegalArgumentException("El CIF no és vàlid");
+        }
+        if (proveidor.getObservacions() != null && proveidor.getObservacions().length() > 500) {
+            throw new IllegalArgumentException("El text és massa gran. Com a màxim 500 caràcters");
         }
 
         Proveidor actual = existent.get();
