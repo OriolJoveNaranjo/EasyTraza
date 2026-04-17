@@ -23,35 +23,42 @@
 
                     <div class="field">
                         <label>Email *</label>
-                        <input type="email" th:field="*{email}" required>
+                        <input type="email"
+                               th:field="*{email}"
+                               th:readonly="${usuari.id != null}"
+                               required>
                     </div>
 
                     <div class="field">
                         <label>Contrasenya *</label>
-                        <input type="password" th:field="*{password}" required>
-                    </div>
+                        <div class="field">
+                            <input type="password"
+                                   th:field="*{password}"
+                                   th:required="${usuari.id == null}"
+                                   th:placeholder="${usuari.id != null} ? 'Deixa-ho buit per mantenir la contrasenya actual' : 'Introdueix una contrasenya'">
+                        </div>
 
-                    <div class="field">
-                        <label>Rol *</label>
-                        <select th:field="*{rol}" required>
-                            <option value="">Selecciona un rol</option>
-                            <option value="ADMIN">ADMIN</option>
-                            <option value="OPERARI">OPERARI</option>
-                        </select>
-                    </div>
+                        <div class="field">
+                            <label>Rol *</label>
+                            <select th:field="*{rol}" required>
+                                <option value="">Selecciona un rol</option>
+                                <option value="ADMIN">ADMIN</option>
+                                <option value="OPERARI">OPERARI</option>
+                            </select>
+                        </div>
 
-                    <div class="field">
-                        <label>Actiu *</label>
-                        <select th:field="*{actiu}" required>
-                            <option value="true">Sí</option>
-                            <option value="false">No</option>
-                        </select>
-                    </div>
+                        <div class="field">
+                            <label>Actiu *</label>
+                            <select th:field="*{actiu}" required>
+                                <option value="true">Sí</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
 
-                    <div class="form-actions">
-                        <a th:href="@{/usuaris}" class="btn-secondary">Cancel·lar</a>
-                        <button type="submit" class="btn-primary">Guardar</button>
-                    </div>
+                        <div class="form-actions">
+                            <a th:href="@{/usuaris}" class="btn-secondary">Cancel·lar</a>
+                            <button type="submit" class="btn-primary">Guardar</button>
+                        </div>
                 </form>
             </div>
         </div>

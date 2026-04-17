@@ -27,7 +27,9 @@
 
                     <div class="field">
                         <label>CIF *</label>
-                        <input type="text" th:field="*{cif}" required>
+                        <input type="text" th:field="*{cif}" name="cif" maxlength="9"
+                               pattern="[A-HJNP-SUVW][0-9]{7}[0-9A-J]"
+                               required>
                     </div>
 
                     <div class="field">
