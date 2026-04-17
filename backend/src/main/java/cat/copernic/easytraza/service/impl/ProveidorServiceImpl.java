@@ -7,6 +7,7 @@ package cat.copernic.easytraza.service.impl;
 import cat.copernic.easytraza.entities.Proveidor;
 import cat.copernic.easytraza.repository.ProveidorRepository;
 import cat.copernic.easytraza.service.ProveidorService;
+import cat.copernic.easytraza.validation.CifValidator;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,9 @@ public class ProveidorServiceImpl implements ProveidorService {
         if (proveidorRepository.existsByCif(proveidor.getCif())) {
             throw new RuntimeException("Ja existeix un proveïdor amb aquest CIF");
         }
+        if (!CifValidator.validarCIF(proveidor.getCif())) {
+            throw new IllegalArgumentException("El CIF no és vàlid");
+        }
 
         return proveidorRepository.save(proveidor);
     }
@@ -56,6 +60,9 @@ public class ProveidorServiceImpl implements ProveidorService {
 
         if (proveidorRepository.existsByCifAndIdNot(proveidor.getCif(), id)) {
             throw new RuntimeException("Ja existeix un proveïdor amb aquest CIF");
+        }
+        if (!CifValidator.validarCIF(proveidor.getCif())) {
+            throw new IllegalArgumentException("El CIF no és vàlid");
         }
 
         Proveidor actual = existent.get();

@@ -1,6 +1,6 @@
 .sidebar {
     width: 320px;
-    background: #f0ebe4;
+    background: #B0381E;
     border-right: 1px solid #ddd2c5;
     display: flex;
     flex-direction: column;
@@ -23,11 +23,11 @@
 
 .brand-text h2 {
     font-size: 28px;
-    color: #0e2347;
+    color: #FCFCFC;
 }
 
 .brand-text p {
-    color: #6d6a66;
+    color: #EDDDDD;
     font-size: 14px;
     margin-top: 4px;
 }
@@ -41,7 +41,7 @@
 
 .menu-item {
     text-decoration: none;
-    color: #334155;
+    color: #F7F0F0;
     padding: 14px 16px;
     border-radius: 14px;
     transition: 0.2s;
