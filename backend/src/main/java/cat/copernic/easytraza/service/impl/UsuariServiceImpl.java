@@ -56,11 +56,12 @@ public class UsuariServiceImpl implements UsuariService {
         }
 
         Usuari actual = existent.get();
-        actual.setNom(usuari.getNom());
-        actual.setEmail(usuari.getEmail());
-        actual.setPassword(usuari.getPassword());
+        actual.setNom(usuari.getNom());    
         actual.setRol(usuari.getRol());
         actual.setActiu(usuari.isActiu());
+        if (usuari.getPassword() != null && !usuari.getPassword().trim().isEmpty()) {
+            actual.setPassword(usuari.getPassword());
+        }
 
         return usuariRepository.save(actual);
     }
