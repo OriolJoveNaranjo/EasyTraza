@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Nou producte final</title>
+        <link rel="stylesheet" th:href="@{/css/forms.css}">
+        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+    </head>
+    <body>
+        <div class="standalone-form-page">
+            <div class="form-card">
+                <h1>Afegir producte final</h1>
+                <p class="form-subtitle">Introdueix les dades del producte final</p>
+
+                <p th:if="${error}" th:text="${error}" class="error-message"></p>
+
+                <form th:action="@{/productes-finals/guardar}" th:object="${producteFinal}" method="post">
+                    <div class="field">
+                        <label>Nom *</label>
+                        <input type="text" th:field="*{nom}" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Descripció *</label>
+                        <textarea th:field="*{descripcio}" required></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <a th:href="@{/productes-finals}" class="btn-secondary">Cancel·lar</a>
+                        <button type="submit" class="btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
