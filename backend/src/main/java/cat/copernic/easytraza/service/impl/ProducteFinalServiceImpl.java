@@ -8,6 +8,7 @@ import cat.copernic.easytraza.entities.ProducteFinal;
 import cat.copernic.easytraza.repository.ProducteFinalRepository;
 import cat.copernic.easytraza.service.ProducteFinalService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 /**
@@ -37,4 +38,27 @@ public class ProducteFinalServiceImpl implements ProducteFinalService {
         return producteFinalRepository.save(producteFinal);
     }
 
+    @Override
+    public ProducteFinal update(Long id, ProducteFinal producteFinal) {
+        Optional<ProducteFinal> existent = producteFinalRepository.findById(id);
+
+        if (existent.isEmpty()) {
+            throw new RuntimeException("El producte final no existeix");
+        }
+
+        if (producteFinalRepository.existsByNomAndIdNot(producteFinal.getNom(), id)) {
+            throw new RuntimeException("Ja existeix un producte final amb aquest nom");
+        }
+
+        ProducteFinal actual = existent.get();
+        actual.setNom(producteFinal.getNom());
+        actual.setDescripcio(producteFinal.getDescripcio());
+
+        return producteFinalRepository.save(actual);
+    }
+
+    @Override
+    public Optional<ProducteFinal> findById(Long id) {
+        return producteFinalRepository.findById(id);
+    }
 }

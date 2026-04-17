@@ -8,12 +8,14 @@
     <body>
         <div class="standalone-form-page">
             <div class="form-card">
-                <h1>Afegir producte final</h1>
+                <h1 th:text="${producteFinal.id != null} ? 'Editar producte final' : 'Afegir producte final'"></h1>
                 <p class="form-subtitle">Introdueix les dades del producte final</p>
 
                 <p th:if="${error}" th:text="${error}" class="error-message"></p>
 
                 <form th:action="@{/productes-finals/guardar}" th:object="${producteFinal}" method="post">
+                    <input type="hidden" th:field="*{id}"/>
+
                     <div class="field">
                         <label>Nom *</label>
                         <input type="text" th:field="*{nom}" required>
@@ -21,7 +23,7 @@
 
                     <div class="field">
                         <label>Descripció *</label>
-                        <textarea th:field="*{descripcio}" required></textarea>
+                        <textarea th:field="*{descripcio}" required maxlength="255"></textarea>
                     </div>
 
                     <div class="form-actions">

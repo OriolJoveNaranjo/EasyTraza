@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 /**
  *
@@ -25,6 +26,9 @@ public class MateriaPrimera {
     @NotBlank
     @Column(nullable = false, unique = true)
     private String nom;
+    
+    @Size(max = 255)
+    @Column(length = 255)
     private String descripcio;
 
     public MateriaPrimera() {

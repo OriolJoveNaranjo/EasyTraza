@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -40,12 +41,29 @@ public class ProducteFinalController {
     @PostMapping("/productes-finals/guardar")
     public String guardar(@ModelAttribute ProducteFinal producteFinal, Model model) {
         try {
-            producteFinalService.save(producteFinal);
+            if (producteFinal.getId() != null) {
+                producteFinalService.update(producteFinal.getId(), producteFinal);
+            } else {
+                producteFinalService.save(producteFinal);
+            }
+
             return "redirect:/productes-finals";
         } catch (RuntimeException e) {
             model.addAttribute("error", e.getMessage());
             model.addAttribute("producteFinal", producteFinal);
             return "nou-producte";
         }
+    }
+
+    @GetMapping("/productes-finals/editar/{id}")
+    public String editar(@PathVariable Long id, Model model) {
+        ProducteFinal producteFinal = producteFinalService.findById(id).orElse(null);
+
+        if (producteFinal == null) {
+            return "redirect:/productes-finals";
+        }
+
+        model.addAttribute("producteFinal", producteFinal);
+        return "nou-producte";
     }
 }

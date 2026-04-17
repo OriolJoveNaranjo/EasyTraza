@@ -1,60 +1,64 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Productes finals</title>
-        <link rel="stylesheet" th:href="@{/css/layout.css}">
-        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
-        <link rel="stylesheet" th:href="@{/css/table.css}">
-        <link rel="stylesheet" th:href="@{/css/cataleg.css}">
-    </head>
-    <body>
-        <div class="app-layout">
+<head>
+    <title>Productes finals</title>
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/buttons.css}">
+    <link rel="stylesheet" th:href="@{/css/table.css}">
+    <link rel="stylesheet" th:href="@{/css/cataleg.css}">
+</head>
+<body>
+<div class="app-layout">
 
-            <div th:replace="~{fragments/sidebar :: sidebar('cataleg')}"></div>
+    <div th:replace="~{fragments/sidebar :: sidebar('cataleg')}"></div>
 
-            <main class="page-content">
-                <div class="page-header">
-                    <div>
-                        <h1>Productes finals</h1>
-                        <p>Catàleg de productes finals</p>
-                    </div>
+    <main class="page-content">
+        <div class="page-header">
+            <div>
+                <h1>Productes finals</h1>
+                <p>Catàleg de productes finals</p>
+            </div>
 
-                    <a th:href="@{/productes-finals/nou}" class="btn-primary">+ Afegir</a>
-                </div>
-
-                <div class="search-bar">
-                    <input type="text" placeholder="Buscar...">
-                </div>
-
-                <div class="catalog-tabs">
-                    <a th:href="@{/cataleg}" class="tab-btn">Matèries primeres</a>
-                    <a th:href="@{/productes-finals}" class="tab-btn active">Productes finals</a>
-                </div>
-
-                <div class="content-card">
-                    <table th:if="${not #lists.isEmpty(productesFinals)}">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nom</th>
-                                <th>Descripció</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="producte : ${productesFinals}">
-                                <td th:text="${producte.id}"></td>
-                                <td th:text="${producte.nom}"></td>
-                                <td th:text="${producte.descripcio}"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div th:if="${#lists.isEmpty(productesFinals)}" class="empty-state">
-                        No hi ha productes finals registrats
-                    </div>
-                </div>
-            </main>
+            <a th:href="@{/productes-finals/nou}" class="btn-primary">+ Afegir</a>
         </div>
-    </body>
+
+        <div class="search-bar">
+            <input type="text" placeholder="Buscar...">
+        </div>
+
+        <div class="catalog-tabs">
+            <a th:href="@{/cataleg}" class="tab-btn">Matèries primeres</a>
+            <a th:href="@{/productes-finals}" class="tab-btn active">Productes finals</a>
+        </div>
+
+        <div class="content-card">
+            <table th:if="${not #lists.isEmpty(productesFinals)}">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Descripció</th>
+                        <th>Accions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="producte : ${productesFinals}">
+                        <td th:text="${producte.id}"></td>
+                        <td th:text="${producte.nom}"></td>
+                        <td th:text="${producte.descripcio}"></td>
+                        <td>
+                            <a th:href="@{'/productes-finals/editar/' + ${producte.id}}" class="btn-edit">Editar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div th:if="${#lists.isEmpty(productesFinals)}" class="empty-state">
+                No hi ha productes finals registrats
+            </div>
+        </div>
+    </main>
+</div>
+</body>
 </html>

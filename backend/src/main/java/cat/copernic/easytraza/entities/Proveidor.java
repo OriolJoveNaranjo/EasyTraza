@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Size;
 
 /**
  *
@@ -35,7 +36,8 @@ public class Proveidor {
 
     private String adreca;
 
-    @Column(length = 1000)
+
+    @Column(length = 500)
     private String observacions;
 
     public Proveidor() {
