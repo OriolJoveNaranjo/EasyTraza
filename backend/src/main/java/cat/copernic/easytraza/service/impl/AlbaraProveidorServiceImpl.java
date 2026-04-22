@@ -15,7 +15,6 @@ import cat.copernic.easytraza.repository.MateriaPrimeraRepository;
 import cat.copernic.easytraza.repository.ProveidorRepository;
 import cat.copernic.easytraza.repository.LotProveidorRepository;
 import cat.copernic.easytraza.service.AlbaraProveidorService;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -175,6 +174,13 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
     @Override
     @Transactional
     public AlbaraProveidor save(AlbaraProveidor albaraProveidor) {
+
+        albaraProveidor.setNumeroAlbara(albaraProveidor.getNumeroAlbara().trim());
+
+        if (albaraRepo.existsByNumeroAlbara(albaraProveidor.getNumeroAlbara())) {
+            throw new RuntimeException("Ja existeix un albarà amb aquest número");
+        }
+
         if (albaraProveidor.getProveidor() == null || albaraProveidor.getProveidor().getId() == null) {
             throw new RuntimeException("El proveïdor és obligatori");
         }
@@ -210,7 +216,7 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
             }
 
             if (lotRepo.existsByIdentificadorLotAndProveidorId(
-                    linia.getLot().getIdentificadorLot(),
+                    linia.getLot().getIdentificadorLot().trim(),
                     proveidor.getId())) {
                 throw new RuntimeException("Ja existeix un lot amb aquest identificador per aquest proveïdor");
             }
@@ -219,6 +225,7 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
             linia.setMateriaPrimera(materia);
 
             LotProveidor lot = linia.getLot();
+            lot.setIdentificadorLot(lot.getIdentificadorLot().trim());
             lot.setAlbaraProveidor(albaraProveidor);
             lot.setProveidor(proveidor);
             lot.setMateriaPrimera(materia);
@@ -236,6 +243,22 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
         AlbaraProveidor existent = albaraRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("L'albarà no existeix"));
 
+        String numeroAlbaraNet = null;
+
+        if (albaraProveidor.getNumeroAlbara() != null && !albaraProveidor.getNumeroAlbara().trim().isEmpty()) {
+            numeroAlbaraNet = albaraProveidor.getNumeroAlbara().trim();
+
+            if (albaraRepo.existsByNumeroAlbaraAndIdNot(numeroAlbaraNet, id)) {
+                throw new RuntimeException("Ja existeix un albarà amb aquest número");
+            }
+        }
+
+        existent.setNumeroAlbara(numeroAlbaraNet);
+
+        if (albaraProveidor.getDataRecepcio() != null) {
+            existent.setDataRecepcio(albaraProveidor.getDataRecepcio());
+        }
+
         if (albaraProveidor.getProveidor() == null || albaraProveidor.getProveidor().getId() == null) {
             throw new RuntimeException("El proveïdor és obligatori");
         }
@@ -243,9 +266,6 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
         Proveidor proveidor = proveidorRepo.findById(albaraProveidor.getProveidor().getId())
                 .orElseThrow(() -> new RuntimeException("El proveïdor no existeix"));
 
-        if (albaraProveidor.getDataRecepcio() != null) {
-            existent.setDataRecepcio(albaraProveidor.getDataRecepcio());
-        }
         existent.setProveidor(proveidor);
         existent.getLinies().clear();
 
@@ -254,10 +274,12 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
                 if (liniaForm == null || liniaForm.getMateriaPrimera() == null || liniaForm.getMateriaPrimera().getId() == null) {
                     continue;
                 }
+
                 if (liniaForm.getLot() == null || liniaForm.getLot().getIdentificadorLot() == null
                         || liniaForm.getLot().getIdentificadorLot().trim().isEmpty()) {
                     continue;
                 }
+
                 if (liniaForm.getQuantitat() == null || liniaForm.getQuantitat() <= 0) {
                     continue;
                 }
@@ -272,7 +294,7 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
                 linia.setUnitat(liniaForm.getUnitat());
 
                 LotProveidor lot = new LotProveidor();
-                lot.setIdentificadorLot(liniaForm.getLot().getIdentificadorLot());
+                lot.setIdentificadorLot(liniaForm.getLot().getIdentificadorLot().trim());
                 lot.setDataCaducitat(liniaForm.getLot().getDataCaducitat());
                 lot.setProveidor(proveidor);
                 lot.setMateriaPrimera(materia);

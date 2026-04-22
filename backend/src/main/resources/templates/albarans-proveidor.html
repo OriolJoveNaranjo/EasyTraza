@@ -7,6 +7,13 @@
         <link rel="stylesheet" th:href="@{/css/buttons.css}">
         <link rel="stylesheet" th:href="@{/css/table.css}">
     </head>
+    <style>
+        .inline-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+    </style>
     <body>
         <div class="app-layout">
 
@@ -20,8 +27,8 @@
                     </div>
 
                     <a th:href="@{/albarans-proveidor/nou}" class="btn-primary">+ Nou albarà</a>
-                </div>
-
+                    <a th:href="@{/albarans-proveidor/ocr}" class="btn-secondary">Albarà amb OCR</a>
+                </div>              
                 <div class="content-card">
                     <table th:if="${not #lists.isEmpty(albarans)}">
                         <thead>
@@ -29,6 +36,7 @@
                                 <th>ID</th>
                                 <th>Data recepció</th>
                                 <th>Proveïdor</th>
+                                <th>Núm. albarà
                                 <th>Núm. línies</th>
                                 <th>Accions</th>
                             </tr>
@@ -36,8 +44,9 @@
                         <tbody>
                             <tr th:each="albara : ${albarans}">
                                 <td th:text="${albara.id}"></td>
-                                <td th:text="${albara.dataRecepcio}"></td>
+                                <td th:text="${albara.dataRecepcio}"></td>                                
                                 <td th:text="${albara.proveidor != null ? albara.proveidor.nom : '-'}"></td>
+                                <td th:text="${albara.numeroAlbara != null ? albara.numeroAlbara : '-'}"></td>
                                 <td th:text="${albara.linies != null ? #lists.size(albara.linies) : 0}"></td>
                                 <td>
                                     <a th:href="@{'/albarans-proveidor/veure/' + ${albara.id}}" class="btn-view">Veure</a>
@@ -57,4 +66,40 @@
             </main>
         </div>
     </body>
+    <script>
+        async function processarOCR() {
+            const fileInput = document.getElementById('ocrFile');
+            const resultArea = document.getElementById('ocrResult');
+
+            if (!fileInput.files.length) {
+                alert('Selecciona una imatge');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            resultArea.value = 'Processant OCR...';
+
+            try {
+                const response = await fetch('/api/ocr/albara-proveidor', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const error = await response.text();
+                    resultArea.value = 'Error: ' + error;
+                    return;
+                }
+
+                const data = await response.json();
+                resultArea.value = data.textDetectat;
+
+            } catch (error) {
+                resultArea.value = 'Error: ' + error.message;
+            }
+        }
+    </script>
 </html>
+

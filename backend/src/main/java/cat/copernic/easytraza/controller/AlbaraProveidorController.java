@@ -69,7 +69,12 @@ public class AlbaraProveidorController {
     }
 
     @PostMapping("/albarans-proveidor/guardar")
-    public String guardar(@ModelAttribute AlbaraProveidor albaraProveidor, Model model) {
+    public String guardar(
+            @ModelAttribute AlbaraProveidor albaraProveidor,
+            @org.springframework.web.bind.annotation.RequestParam(name = "formSource", defaultValue = "manual") String formSource,
+            @org.springframework.web.bind.annotation.RequestParam(name = "ocrTextHidden", required = false) String ocrTextHidden,
+            Model model) {
+
         try {
             netejarLiniesBuides(albaraProveidor);
 
@@ -86,6 +91,13 @@ public class AlbaraProveidorController {
             model.addAttribute("albaraProveidor", albaraProveidor);
             model.addAttribute("proveidors", proveidorService.findAll());
             model.addAttribute("materiesPrimeres", materiaPrimeraService.findAll());
+
+            if ("ocr".equals(formSource)) {
+                model.addAttribute("mode", "ocr");
+                model.addAttribute("ocrTextHidden", ocrTextHidden);
+                return "nou-albara-proveidor-ocr"; // usa aquí el nombre REAL de tu archivo
+            }
+
             model.addAttribute("mode", albaraProveidor.getId() != null ? "edit" : "create");
             return "nou-albara-proveidor";
         }
@@ -178,5 +190,26 @@ public class AlbaraProveidorController {
         }
 
         albaraProveidor.setLinies(liniesNetes);
+    }
+
+    @GetMapping("/albarans-proveidor/ocr")
+    public String mostrarFormulariOcr(Model model) {
+        AlbaraProveidor albara = new AlbaraProveidor();
+        albara.setDataRecepcio(LocalDate.now());
+
+        if (albara.getLinies() == null) {
+            albara.setLinies(new ArrayList<>());
+        }
+
+        LiniaAlbaraProveidor linia = new LiniaAlbaraProveidor();
+        linia.setLot(new LotProveidor());
+        albara.getLinies().add(linia);
+
+        model.addAttribute("albaraProveidor", albara);
+        model.addAttribute("proveidors", proveidorService.findAll());
+        model.addAttribute("materiesPrimeres", materiaPrimeraService.findAll());
+        model.addAttribute("mode", "ocr");
+
+        return "nou-albara-proveidor-ocr";
     }
 }

@@ -1,0 +1,57 @@
+
+.ocr-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.ocr-card,
+.form-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.ocr-preview {
+    width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fafafa;
+    margin-top: 10px;
+}
+
+.ocr-textarea {
+    width: 100%;
+    min-height: 220px;
+    resize: vertical;
+}
+
+.linia-card {
+    margin-bottom: 18px;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fafafa;
+}
+
+.linia-card h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.inline-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 1000px) {
+    .ocr-layout {
+        grid-template-columns: 1fr;
+    }
+}

@@ -12,4 +12,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author orjon
  */
 public interface AlbaraProveidorRepository extends JpaRepository<AlbaraProveidor, Long> {
+
+    boolean existsByNumeroAlbara(String numeroAlbara);
+
+    boolean existsByNumeroAlbaraAndIdNot(String numeroAlbara, Long id);
 }

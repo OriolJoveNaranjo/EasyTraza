@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Albarà amb OCR</title>
+        <link rel="stylesheet" th:href="@{/css/forms.css}">
+        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+        <link rel="stylesheet" th:href="@{/css/layout.css}">
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+        <link rel="stylesheet" th:href="@{/css/ocr.css}">
+    </head>
+    <body>
+        <div class="app-layout">
+
+            <div th:replace="~{fragments/sidebar :: sidebar('albarans-proveidor')}"></div>
+
+            <main class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1>Albarà amb OCR</h1>
+                        <p>Importa una imatge i completa automàticament el formulari</p>
+                    </div>
+                </div>
+
+                <div class="ocr-layout">
+
+                    <!-- PANEL OCR -->
+                    <section class="ocr-card">
+                        <h2>Processar imatge</h2>
+
+                        <div class="field">
+                            <label>Selecciona una imatge</label>
+                            <input type="file" id="ocrFile" accept="image/*">
+                        </div>
+
+                        <div class="inline-actions">
+                            <button type="button" class="btn-primary" onclick="processarOCR()">Processar OCR</button>
+                            <a th:href="@{/albarans-proveidor}" class="btn-secondary">Tornar</a>
+                        </div>
+
+                        <img id="ocrPreview" class="ocr-preview" style="display:none;" alt="Vista prèvia de la imatge">
+
+                        <div class="field" style="margin-top: 18px;">
+                            <label>Text detectat</label>
+                            <textarea id="ocrResult" class="ocr-textarea" readonly></textarea>
+                        </div>
+                    </section>
+
+                    <!-- FORMULARIO -->
+                    <section class="form-card">
+                        <h2>Dades de l'albarà</h2>
+                        <p th:if="${error}" th:text="${error}" class="error-message"></p>
+                        <form th:action="@{/albarans-proveidor/guardar}"
+                              th:object="${albaraProveidor}"
+                              method="post">
+
+                            <input type="hidden" th:field="*{id}"/>
+                            <input type="hidden" name="formSource" value="ocr">
+                            <input type="hidden" id="ocrTextHidden" name="ocrTextHidden" th:value="${ocrTextHidden}">
+
+                            <div class="field">
+                                <label>Data recepció *</label>
+                                <input type="date"
+                                       id="dataRecepcio"
+                                       name="dataRecepcio"
+                                       th:value="${albaraProveidor.dataRecepcio != null ? #temporals.format(albaraProveidor.dataRecepcio, 'yyyy-MM-dd') : ''}"
+                                       required>
+                            </div>
+
+                            <div class="field">
+                                <label>Proveïdor *</label>
+                                <select id="proveidorSelect" name="proveidor.id" required>
+                                    <option value="">-- Selecciona proveïdor --</option>
+                                    <option th:each="proveidor : ${proveidors}"
+                                            th:value="${proveidor.id}"
+                                            th:text="${proveidor.nom}">
+                                    </option>
+                                </select>
+                                <small id="proveidorOcrInfo"></small>
+                            </div>
+
+                            <div class="field">
+                                <label>Número d'albarà</label>
+                                <input type="text"
+                                       name="numeroAlbara"
+                                       th:value="${albaraProveidor.numeroAlbara != null ? albaraProveidor.numeroAlbara : ''}">
+                            </div>
+
+                            <div style="margin-top: 24px;">
+                                <div class="inline-actions" style="justify-content: space-between;">
+                                    <h2 style="margin: 0;">Lots detectats</h2>
+                                    <button type="button" class="btn-secondary" onclick="afegirLinia()">+ Afegir lot</button>
+                                </div>
+
+                                <div id="liniesContainer" style="margin-top: 16px;">
+                                    <div class="linia-card">
+                                        <h3>Lot 1</h3>
+
+                                        <div class="field">
+                                            <label>Matèria primera</label>
+                                            <select name="linies[0].materiaPrimera.id" class="materia-select">
+                                                <option value="">-- Selecciona matèria primera --</option>
+                                                <option th:each="materia : ${materiesPrimeres}"
+                                                        th:value="${materia.id}"
+                                                        th:text="${materia.nom}">
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="field">
+                                            <label>Descripció OCR</label>
+                                            <input type="text" class="materia-text-ocr">
+                                        </div>
+
+                                        <div class="field">
+                                            <label>Quantitat</label>
+                                            <input type="number" step="0.01" min="0" name="linies[0].quantitat" class="quantitat-input">
+                                        </div>
+
+                                        <div class="field">
+                                            <label>Unitat</label>
+                                            <input type="text" name="linies[0].unitat" value="kg" class="unitat-input">
+                                        </div>
+
+                                        <div class="field">
+                                            <label>Identificador lot</label>
+                                            <input type="text" name="linies[0].lot.identificadorLot" class="lot-input">
+                                        </div>
+
+                                        <div class="field">
+                                            <label>Data caducitat</label>
+                                            <input type="date" name="linies[0].lot.dataCaducitat" class="caducitat-input">
+                                        </div>
+
+                                        <div class="inline-actions">
+                                            <button type="button" class="btn-secondary" onclick="eliminarLinia(this)">Eliminar lot</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions" style="margin-top: 24px;">
+                                <a th:href="@{/albarans-proveidor}" class="btn-secondary">Cancel·lar</a>
+                                <button type="submit" class="btn-primary">Guardar albarà</button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </main>
+        </div>
+
+        <template id="liniaTemplate">
+            <div class="linia-card">
+                <h3>Lot __INDEX_VISUAL__</h3>
+
+                <div class="field">
+                    <label>Matèria primera</label>
+                    <select name="linies[__INDEX__].materiaPrimera.id" class="materia-select">
+                        <option value="">-- Selecciona matèria primera --</option>
+                        <option th:each="materia : ${materiesPrimeres}"
+                                th:value="${materia.id}"
+                                th:text="${materia.nom}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Descripció OCR</label>
+                    <input type="text" name="linies[__INDEX__].unitat" class="materia-text-ocr">
+                </div>
+
+                <div class="field">
+                    <label>Quantitat</label>
+                    <input type="number" step="0.01" min="0" name="linies[__INDEX__].quantitat" class="quantitat-input">
+                </div>
+
+                <div class="field">
+                    <label>Unitat</label>
+                    <input type="text" name="linies[__INDEX__].unitat" value="kg" class="unitat-input">
+                </div>
+
+                <div class="field">
+                    <label>Identificador lot</label>
+                    <input type="text" name="linies[__INDEX__].lot.identificadorLot" class="lot-input">
+                </div>
+
+                <div class="field">
+                    <label>Data caducitat</label>
+                    <input type="date" name="linies[__INDEX__].lot.dataCaducitat" class="caducitat-input">
+                </div>
+
+                <div class="inline-actions">
+                    <button type="button" class="btn-secondary" onclick="eliminarLinia(this)">Eliminar lot</button>
+                </div>
+            </div>
+        </template>
+
+        <script>
+            document.getElementById('ocrFile').addEventListener('change', function () {
+                const file = this.files[0];
+                const preview = document.getElementById('ocrPreview');
+
+                if (!file) {
+                    preview.style.display = 'none';
+                    preview.src = '';
+                    return;
+                }
+
+                preview.src = URL.createObjectURL(file);
+                preview.style.display = 'block';
+            });
+
+            async function processarOCR() {
+                const fileInput = document.getElementById('ocrFile');
+                const resultArea = document.getElementById('ocrResult');
+
+                if (!fileInput.files.length) {
+                    alert('Selecciona una imatge');
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+
+                resultArea.value = 'Processant OCR...';
+
+                try {
+                    const response = await fetch('/api/ocr/albara-proveidor', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        const error = await response.text();
+                        resultArea.value = 'Error: ' + error;
+                        return;
+                    }
+
+                    const data = await response.json();
+                    resultArea.value = data.textDetectat || '';
+
+                    omplirCapcalera(data);
+                    omplirLinies(data.linies || []);
+
+                } catch (error) {
+                    resultArea.value = 'Error: ' + error.message;
+                }
+            }
+
+            function omplirCapcalera(data) {
+                const proveidorInfo = document.getElementById('proveidorOcrInfo');
+
+                console.log("OCR DATA:", data);
+
+                if (proveidorInfo) {
+                    if (data.proveidorId) {
+                        proveidorInfo.textContent = 'Proveïdor detectat automàticament (confiança: ' + (data.proveidorConfidence || 0) + ')';
+                    } else if (data.proveidorNom) {
+                        proveidorInfo.textContent = 'OCR suggereix: ' + data.proveidorNom + ' (revisa-ho manualment)';
+                    } else {
+                        proveidorInfo.textContent = 'No s’ha pogut detectar el proveïdor automàticament';
+                    }
+                }
+
+                if (data.dataRecepcio) {
+                    document.getElementById('dataRecepcio').value = convertirData(data.dataRecepcio);
+                }
+
+                if (data.proveidorId) {
+                    document.getElementById('proveidorSelect').value = String(data.proveidorId);
+                }
+
+                if (data.numeroAlbara) {
+                    document.getElementById('numeroAlbaraOcr').value = data.numeroAlbara;
+                }
+            }
+
+            function omplirLinies(linies) {
+                const container = document.getElementById('liniesContainer');
+                container.innerHTML = '';
+
+                if (!linies.length) {
+                    afegirLinia();
+                    return;
+                }
+
+                linies.forEach((linia, index) => {
+                    afegirLiniaAmbDades(index, linia);
+                });
+            }
+
+            function afegirLinia() {
+                const container = document.getElementById('liniesContainer');
+                const template = document.getElementById('liniaTemplate').innerHTML;
+                const index = container.querySelectorAll('.linia-card').length;
+
+                let html = template
+                        .replaceAll('__INDEX__', index)
+                        .replaceAll('__INDEX_VISUAL__', index + 1);
+
+                container.insertAdjacentHTML('beforeend', html);
+            }
+
+            function afegirLiniaAmbDades(index, linia) {
+                const container = document.getElementById('liniesContainer');
+                const template = document.getElementById('liniaTemplate').innerHTML;
+
+                let html = template
+                        .replaceAll('__INDEX__', index)
+                        .replaceAll('__INDEX_VISUAL__', index + 1);
+
+                container.insertAdjacentHTML('beforeend', html);
+
+                const card = container.querySelectorAll('.linia-card')[index];
+
+                const materiaText = card.querySelector('.materia-text-ocr');
+                const quantitat = card.querySelector('.quantitat-input');
+                const lot = card.querySelector('.lot-input');
+                const caducitat = card.querySelector('.caducitat-input');
+                const selectMateria = card.querySelector('.materia-select');
+
+                console.log("LINIA OCR:", linia);
+
+                if (materiaText && linia.materiaPrimeraText) {
+                    materiaText.value = linia.materiaPrimeraText;
+                }
+
+                if (selectMateria && linia.materiaPrimeraId) {
+                    selectMateria.value = String(linia.materiaPrimeraId);
+                }
+
+                if (quantitat && linia.quantitatText) {
+                    quantitat.value = netejarNumero(linia.quantitatText);
+                }
+
+                if (lot && linia.identificadorLot) {
+                    lot.value = linia.identificadorLot;
+                }
+
+                if (caducitat && linia.dataCaducitat) {
+                    caducitat.value = convertirData(linia.dataCaducitat);
+                }
+            }
+
+            function eliminarLinia(button) {
+                const container = document.getElementById('liniesContainer');
+                const targetCard = button.closest('.linia-card');
+
+                if (container.querySelectorAll('.linia-card').length === 1) {
+                    alert('L\'albarà ha de tenir almenys un lot.');
+                    return;
+                }
+
+                targetCard.remove();
+                reindexarLinies();
+            }
+
+            function reindexarLinies() {
+                const cards = document.querySelectorAll('#liniesContainer .linia-card');
+
+                cards.forEach((card, index) => {
+                    card.querySelector('h3').textContent = 'Lot ' + (index + 1);
+
+                    const elements = card.querySelectorAll('input, select');
+
+                    elements.forEach(el => {
+                        if (el.name) {
+                            el.name = el.name.replace(/linies\[\d+\]/g, 'linies[' + index + ']');
+                        }
+                    });
+                });
+            }
+
+            function convertirData(text) {
+                if (!text)
+                    return '';
+
+                if (/^\d{4}-\d{2}-\d{2}$/.test(text)) {
+                    return text;
+                }
+
+                if (/^\d{2}\/\d{2}\/\d{4}$/.test(text)) {
+                    const parts = text.split('/');
+                    return parts[2] + '-' + parts[1] + '-' + parts[0];
+                }
+
+                return '';
+            }
+
+            function netejarNumero(value) {
+                if (!value)
+                    return '';
+                return value.replace(',', '.').replace(/[^\d.]/g, '');
+            }
+
+            function seleccionarProveidorPerNom(text) {
+                const select = document.getElementById('proveidorSelect');
+                if (!select || !text)
+                    return;
+
+                const normalitzat = normalitzar(text);
+
+                Array.from(select.options).forEach(option => {
+                    if (normalitzar(option.text).includes(normalitzat) || normalitzat.includes(normalitzar(option.text))) {
+                        select.value = option.value;
+                    }
+                });
+            }
+
+            function seleccionarMateriaPerText(card, text) {
+                const select = card.querySelector('.materia-select');
+                if (!select || !text)
+                    return;
+
+                const normalitzat = normalitzar(text);
+
+                Array.from(select.options).forEach(option => {
+                    const optText = normalitzar(option.text);
+                    if (optText && (normalitzat.includes(optText) || optText.includes(normalitzat))) {
+                        select.value = option.value;
+                    }
+                });
+            }
+
+            function normalitzar(text) {
+                return (text || '')
+                        .toLowerCase()
+                        .normalize('NFD')
+                        .replace(/[\u0300-\u036f]/g, '')
+                        .replace(/[^a-z0-9 ]/g, ' ')
+                        .replace(/\s+/g, ' ')
+                        .trim();
+            }
+        </script>
+    </body>
+</html>

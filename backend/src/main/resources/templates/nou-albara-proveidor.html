@@ -58,6 +58,7 @@
                       method="post">
 
                     <input type="hidden" th:field="*{id}"/>
+                    <input type="hidden" name="formSource" value="manual">
 
                     <div class="field">
                         <label>Data recepció *</label>
@@ -76,6 +77,12 @@
                                     th:text="${proveidor.nom}">
                             </option>
                         </select>
+                    </div>
+                    <div class="field">
+                        <label>Número d'albarà</label>
+                        <input type="text"
+                               name="numeroAlbara"
+                               th:value="${albaraProveidor.numeroAlbara != null ? albaraProveidor.numeroAlbara : ''}">
                     </div>
 
                     <div class="linies-box">
@@ -162,6 +169,13 @@
                         <label>Proveïdor</label>
                         <span class="readonly-value"
                               th:text="${albaraProveidor.proveidor != null ? albaraProveidor.proveidor.nom : ''}">
+                        </span>
+                    </div>
+                    
+                    <div class="field">
+                        <label>Número d'albarà</label>
+                        <span class="readonly-value"
+                              th:text="${albaraProveidor.numeroAlbara != null ? albaraProveidor.numeroAlbara : ''}">
                         </span>
                     </div>
 
