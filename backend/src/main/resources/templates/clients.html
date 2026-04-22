@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Clients</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}">
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+        <link rel="stylesheet" th:href="@{/css/table.css}">
+    </head>
+    <body>
+        <div class="app-layout">
+
+            <div th:replace="~{fragments/sidebar :: sidebar('clients')}"></div>
+
+            <main class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1>Clients</h1>
+                        <p>Gestió de clients</p>
+                    </div>
+
+                    <a th:href="@{/clients/nou}" class="btn-primary">+ Nou client</a>
+                </div>
+
+                <div class="content-card">
+                    <table th:if="${not #lists.isEmpty(clients)}">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>NIF</th>
+                                <th>Nom</th>
+                                <th>Cognoms</th>
+                                <th>RGS</th>
+                                <th>Accions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="client : ${clients}">
+                                <td th:text="${client.id}"></td>
+                                <td th:text="${client.nif}"></td>
+                                <td th:text="${client.nom}"></td>
+                                <td th:text="${client.cognoms}"></td>
+                                <td th:text="${client.registreSanitari}"></td>
+                                <td>
+                                    <a th:href="@{'/clients/veure/' + ${client.id}}" class="btn-view">Veure</a>
+                                    <a th:href="@{'/clients/editar/' + ${client.id}}" class="btn-edit">Editar</a>
+                                    <a th:href="@{'/clients/eliminar/' + ${client.id}}"
+                                       class="btn-delete"
+                                       onclick="return confirm('Segur que vols eliminar aquest client?')">
+                                        Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div th:if="${#lists.isEmpty(clients)}" class="empty-state">
+                        No hi ha clients registrats
+                    </div>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>

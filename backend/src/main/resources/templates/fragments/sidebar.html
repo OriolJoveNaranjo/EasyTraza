@@ -12,7 +12,10 @@
 
             <nav class="menu">
                 <a href="#" class="menu-item">Panell</a>
-                <a href="#" class="menu-item">Clients</a>
+                <a th:href="@{/clients}"
+                   th:class="'menu-item' + (${activePage} == 'clients' ? ' active' : '')">
+                    Clients
+                </a>
                 <a th:href="@{/proveidors}" th:class="'menu-item' + (${activePage} == 'proveidors' ? ' active' : '')">Proveïdors</a>
                 <a th:href="@{/cataleg}" th:class="'menu-item' + (${activePage} == 'cataleg' ? ' active' : '')">Catàleg</a>
                 <a th:href="@{/albarans-proveidor}"
