@@ -1,7 +1,9 @@
-= SPRINT - 1
+= Memora EasyTraza
 :toc:
 :toc-title: Índex de continguts
 :imagesdir: Imatges/Sprints
+
+= SPRINT - 1
 
 == 1. Planificació Inicial
 
@@ -58,3 +60,61 @@ En general, crec que he avançat bé, sobretot tenint en compte que era l’inic
 De cara al següent sprint, vull tenir més clars alguns aspectes abans de programar-los per no perdre temps amb dubtes, i seguir avançant amb la resta de funcionalitats.
 
 En resum, ha estat un bon inici de projecte, amb alguns petits problemes però amb una base ja feta per continuar treballant.
+
+= SPRINT - 2
+
+== 1. Planificació Inicial
+
+=== 1.1. Planificació (Inicial)
+
+==== Board inicial
+image::PlanificacioInicialSprint2.PNG[Board inicial]
+
+
+== 2. Daily Stand Up
+
+=== DIA 1 - 17/04
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+|  | Corregir errors que apareguin a la revisió del sprin i començar a fer el CRUD de clients |  | 4h
+|===
+
+=== DIA 2 - 20/04
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| Corregir els errors de l'sprin, com cambiar la pk del usuari i començar el CRUD  de producte final| Acabar el CRUD sencer de producte final senser part mòbil i comonçar el CRUD d'albarà de proveïdors| quin OCR utilitzar | 5h + 2h
+|===
+
+=== DIA 3 - 22/04
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| Acabar el CRUD de producte final i el CRUD d'albarà proveïdor | Començar a fer l'alta d'un albarà amb l'OCR | L'OCR no llegeix bé els camps  | 3h + 2h
+
+|===
+
+=== DIA 4 - 23/04
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| Fer l'alta d'albarà de proveïdors amb l'OCR | Fer el CRUD de clients i intentar cambiar com asoscia els proveïdors l'OCR | No agafa bé el CIF de les imatges | 4h
+|===
+
+== 3. Planificació Final
+
+=== 3.1. Planificació (Final de Sprint)
+
+==== Board final — Grup 3
+image::PlanificacioFinalSprint2.PNG[Board_Final]
+
+== 4. Retrospective Meeting
+
+En aquest sprint he continuat avançant en el projecte, primer corregint alguns errors que van aparèixer a la revisió de l’sprint anterior i després començant noves funcionalitats. He pogut avançar força amb el CRUD de producte final, començar el d’albarà de proveïdors i també iniciar la part de clients. A més, he començat a treballar amb l’OCR per automatitzar l’alta d’albarans, que era una part nova i una mica més complicada.
+
+En general, crec que el sprint ha anat bastant bé perquè he avançat en diverses funcionalitats importants en pocs dies. Tot i això, la part de l’OCR m’ha portat alguns problemes, sobretot perquè no llegia bé determinats camps de les imatges, especialment el CIF dels proveïdors. També he tingut dubtes sobre quin OCR utilitzar i com associar correctament la informació detectada.
+
+De cara al següent sprint, crec que hauré de centrar-me a acabar de polir la integració de l’OCR i seguir avançant amb els CRUDs que encara falten. També em convé revisar bé els errors que vagin sortint per no acumular problemes més endavant.
+
+En resum, ha estat un sprint productiu, amb bastant avanç en noves funcionalitats, tot i que amb algunes dificultats tècniques en la part de l’OCR que encara cal acabar de resoldre.
