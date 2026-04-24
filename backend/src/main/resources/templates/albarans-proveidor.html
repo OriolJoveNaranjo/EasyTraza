@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Albarans de proveïdor</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}">
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+        <link rel="stylesheet" th:href="@{/css/table.css}">
+    </head>
+    <style>
+        .inline-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+    </style>
+    <body>
+        <div class="app-layout">
+
+            <div th:replace="~{fragments/sidebar :: sidebar('albarans-proveidor')}"></div>
+
+            <main class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1>Albarans de proveïdor</h1>
+                        <p>Recepció manual d'albarans amb lots</p>
+                    </div>
+
+                    <a th:href="@{/albarans-proveidor/nou}" class="btn-primary">+ Nou albarà</a>
+                    <a th:href="@{/albarans-proveidor/ocr}" class="btn-secondary">Albarà amb OCR</a>
+                </div>              
+                <div class="content-card">
+                    <table th:if="${not #lists.isEmpty(albarans)}">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Data recepció</th>
+                                <th>Proveïdor</th>
+                                <th>Núm. albarà
+                                <th>Núm. línies</th>
+                                <th>Accions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="albara : ${albarans}">
+                                <td th:text="${albara.id}"></td>
+                                <td th:text="${albara.dataRecepcio}"></td>                                
+                                <td th:text="${albara.proveidor != null ? albara.proveidor.nom : '-'}"></td>
+                                <td th:text="${albara.numeroAlbara != null ? albara.numeroAlbara : '-'}"></td>
+                                <td th:text="${albara.linies != null ? #lists.size(albara.linies) : 0}"></td>
+                                <td>
+                                    <a th:href="@{'/albarans-proveidor/veure/' + ${albara.id}}" class="btn-view">Veure</a>
+                                    <a th:href="@{'/albarans-proveidor/editar/' + ${albara.id}}" class="btn-edit">Editar</a>
+                                    <a th:href="@{'/albarans-proveidor/eliminar/' + ${albara.id}}"
+                                       class="btn-delete"
+                                       onclick="return confirm('Segur que vols eliminar aquest albarà de proveïdor?')">Eliminar</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div th:if="${#lists.isEmpty(albarans)}" class="empty-state">
+                        No hi ha albarans de proveïdor registrats
+                    </div>
+                </div>
+            </main>
+        </div>
+    </body>
+    <script>
+        async function processarOCR() {
+            const fileInput = document.getElementById('ocrFile');
+            const resultArea = document.getElementById('ocrResult');
+
+            if (!fileInput.files.length) {
+                alert('Selecciona una imatge');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            resultArea.value = 'Processant OCR...';
+
+            try {
+                const response = await fetch('/api/ocr/albara-proveidor', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const error = await response.text();
+                    resultArea.value = 'Error: ' + error;
+                    return;
+                }
+
+                const data = await response.json();
+                resultArea.value = data.textDetectat;
+
+            } catch (error) {
+                resultArea.value = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</html>
+

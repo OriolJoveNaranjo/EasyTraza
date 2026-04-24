@@ -26,7 +26,7 @@ public class ProducteFinal {
     @NotBlank
     @Column(nullable = false, unique = true)
     private String nom;
-    @NotBlank
+    
     @Size(max = 255)
     @Column(nullable = false, length = 255)
     private String descripcio;
