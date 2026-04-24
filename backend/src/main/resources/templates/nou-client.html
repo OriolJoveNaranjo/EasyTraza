@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Client</title>
+        <link rel="stylesheet" th:href="@{/css/forms.css}">
+        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+        <style>
+            .readonly-value {
+                display: block;
+                padding: 10px 12px;
+                background: #f5f5f5;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                min-height: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="standalone-form-page">
+            <div class="form-card">
+
+                <h1 th:if="${mode == 'view'}">Veure client</h1>
+                <h1 th:if="${mode != 'view' and client.id != null}">Editar client</h1>
+                <h1 th:if="${mode != 'view' and client.id == null}">Nou client</h1>
+
+                <p th:if="${error}" th:text="${error}" class="error-message"></p>
+
+                <form th:if="${mode != 'view'}"
+                      th:action="@{/clients/guardar}"
+                      th:object="${client}"
+                      method="post">
+
+                    <input type="hidden" th:field="*{id}"/>
+
+                    <div class="field">
+                        <label>NIF *</label>
+                        <input type="text" th:field="*{nif}" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Nom *</label>
+                        <input type="text" th:field="*{nom}" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Cognoms</label>
+                        <input type="text" th:field="*{cognoms}">
+                    </div>
+
+                    <div class="field">
+                        <label>Adreça</label>
+                        <input type="text" th:field="*{adreca}">
+                    </div>
+
+                    <div class="field">
+                        <label>Registre sanitari</label>
+                        <input type="text" th:field="*{registreSanitari}">
+                    </div>
+
+                    <div class="field">
+                        <label>Telèfon</label>
+                        <input type="text" th:field="*{telefon}">
+                    </div>
+
+                    <div class="field">
+                        <label>Email</label>
+                        <input type="email" th:field="*{email}">
+                    </div>
+
+                    <div class="form-actions">
+                        <a th:href="@{/clients}" class="btn-secondary">Cancel·lar</a>
+                        <button type="submit" class="btn-primary">Guardar</button>
+                    </div>
+                </form>
+
+                <div th:if="${mode == 'view'}">
+                    <div class="field">
+                        <label>ID</label>
+                        <span class="readonly-value" th:text="${client.id}"></span>
+                    </div>
+
+                    <div class="field">
+                        <label>NIF</label>
+                        <span class="readonly-value" th:text="${client.nif}"></span>
+                    </div>
+
+                    <div class="field">
+                        <label>Nom</label>
+                        <span class="readonly-value" th:text="${client.nom}"></span>
+                    </div>
+
+                    <div class="field">
+                        <label>Cognoms</label>
+                        <span class="readonly-value" th:text="${client.cognoms}"></span>
+                    </div>
+
+                    <div class="field">
+                        <label>Adreça</label>
+                        <span class="readonly-value" th:text="${client.adreca}"></span>
+                    </div>
+
+                    <div class="field">
+                        <label>Registre sanitari</label>
+                        <span class="readonly-value" th:text="${client.registreSanitari}"></span>
+                    </div>
+
+                    <div class="field">
+                        <label>Telèfon</label>
+                        <span class="readonly-value" th:text="${client.telefon}"></span>
+                    </div>
+
+                    <div class="field">
+                        <label>Email</label>
+                        <span class="readonly-value" th:text="${client.email}"></span>
+                    </div>
+
+                    <div class="form-actions">
+                        <a th:href="@{/clients}" class="btn-secondary">Tornar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

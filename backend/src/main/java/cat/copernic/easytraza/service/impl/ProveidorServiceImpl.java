@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package cat.copernic.easytraza.service.impl;
 
 import cat.copernic.easytraza.entities.Proveidor;
@@ -12,13 +8,6 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
-/**
- *
- *
- * @author orjon
- *
- * Implementació del servei de proveïdors.
- */
 @Service
 public class ProveidorServiceImpl implements ProveidorService {
 
@@ -40,14 +29,13 @@ public class ProveidorServiceImpl implements ProveidorService {
 
     @Override
     public Proveidor save(Proveidor proveidor) {
-        if (proveidorRepository.existsByCif(proveidor.getCif())) {
+        validarProveidor(proveidor);
+
+        String cifNet = normalitzarCif(proveidor.getCif());
+        proveidor.setCif(cifNet);
+
+        if (proveidorRepository.existsByCif(cifNet)) {
             throw new RuntimeException("Ja existeix un proveïdor amb aquest CIF");
-        }
-        if (!CifValidator.validarCIF(proveidor.getCif())) {
-            throw new IllegalArgumentException("El CIF no és vàlid");
-        }
-        if (proveidor.getObservacions() != null && proveidor.getObservacions().length() > 500) {
-            throw new IllegalArgumentException("El text és massa gran. Com a màxim 500 caràcters");
         }
 
         return proveidorRepository.save(proveidor);
@@ -55,29 +43,24 @@ public class ProveidorServiceImpl implements ProveidorService {
 
     @Override
     public Proveidor update(Long id, Proveidor proveidor) {
-        Optional<Proveidor> existent = proveidorRepository.findById(id);
+        Proveidor actual = proveidorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("El proveïdor no existeix"));
 
-        if (existent.isEmpty()) {
-            throw new RuntimeException("El proveïdor no existeix");
-        }
+        validarProveidor(proveidor);
 
-        if (proveidorRepository.existsByCifAndIdNot(proveidor.getCif(), id)) {
+        String cifNet = normalitzarCif(proveidor.getCif());
+        proveidor.setCif(cifNet);
+
+        if (proveidorRepository.existsByCifAndIdNot(cifNet, id)) {
             throw new RuntimeException("Ja existeix un proveïdor amb aquest CIF");
         }
-        if (!CifValidator.validarCIF(proveidor.getCif())) {
-            throw new IllegalArgumentException("El CIF no és vàlid");
-        }
-        if (proveidor.getObservacions() != null && proveidor.getObservacions().length() > 500) {
-            throw new IllegalArgumentException("El text és massa gran. Com a màxim 500 caràcters");
-        }
 
-        Proveidor actual = existent.get();
-        actual.setNom(proveidor.getNom());
-        actual.setCif(proveidor.getCif());
-        actual.setTelefon(proveidor.getTelefon());
-        actual.setEmail(proveidor.getEmail());
-        actual.setAdreca(proveidor.getAdreca());
-        actual.setObservacions(proveidor.getObservacions());
+        actual.setNom(netText(proveidor.getNom()));
+        actual.setCif(cifNet);
+        actual.setTelefon(netText(proveidor.getTelefon()));
+        actual.setEmail(netText(proveidor.getEmail()));
+        actual.setAdreca(netText(proveidor.getAdreca()));
+        actual.setObservacions(netText(proveidor.getObservacions()));
 
         return proveidorRepository.save(actual);
     }
@@ -85,5 +68,45 @@ public class ProveidorServiceImpl implements ProveidorService {
     @Override
     public void deleteById(Long id) {
         proveidorRepository.deleteById(id);
+    }
+
+    private void validarProveidor(Proveidor proveidor) {
+        if (proveidor.getNom() == null || proveidor.getNom().trim().isEmpty()) {
+            throw new RuntimeException("El nom és obligatori");
+        }
+
+        if (proveidor.getCif() == null || proveidor.getCif().trim().isEmpty()) {
+            throw new RuntimeException("El CIF és obligatori");
+        }
+
+        String cifNet = normalitzarCif(proveidor.getCif());
+        proveidor.setCif(cifNet);
+
+        if (!CifValidator.validarCIF(cifNet)) {
+            throw new IllegalArgumentException("El CIF no és vàlid");
+        }
+
+        if (proveidor.getObservacions() != null && proveidor.getObservacions().trim().length() > 500) {
+            throw new IllegalArgumentException("El text és massa gran. Com a màxim 500 caràcters");
+        }
+
+        proveidor.setNom(proveidor.getNom().trim());
+        proveidor.setTelefon(netText(proveidor.getTelefon()));
+        proveidor.setEmail(netText(proveidor.getEmail()));
+        proveidor.setAdreca(netText(proveidor.getAdreca()));
+        proveidor.setObservacions(netText(proveidor.getObservacions()));
+    }
+
+    private String normalitzarCif(String cif) {
+        return cif == null ? null : cif.trim().toUpperCase().replace(" ", "");
+    }
+
+    private String netText(String text) {
+        if (text == null) {
+            return null;
+        }
+
+        String net = text.trim();
+        return net.isEmpty() ? null : net;
     }
 }
