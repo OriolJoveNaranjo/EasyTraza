@@ -77,10 +77,15 @@
                                 </select>
                                 <small id="proveidorOcrInfo"></small>
                             </div>
+                            <div class="field">
+                                <label>CIF detectat per OCR</label>
+                                <input type="text" id="proveidorCifOcr" readonly>
+                            </div>
 
                             <div class="field">
                                 <label>Número d'albarà</label>
                                 <input type="text"
+                                       id="numeroAlbaraOcr"
                                        name="numeroAlbara"
                                        th:value="${albaraProveidor.numeroAlbara != null ? albaraProveidor.numeroAlbara : ''}">
                             </div>
@@ -118,7 +123,15 @@
 
                                         <div class="field">
                                             <label>Unitat</label>
-                                            <input type="text" name="linies[0].unitat" value="kg" class="unitat-input">
+                                            <select name="linies[0].unitat" class="unitat-input">
+                                                <option value="">-- Selecciona unitat --</option>
+                                                <option value="KG" selected>KG</option>
+                                                <option value="L">L</option>
+                                                <option value="TONELADES">Tonelades</option>
+                                                <option value="SACOS">Sacs</option>
+                                                <option value="CAIXES">Caixes</option>
+                                                <option value="Unitat">Unitat</option>
+                                            </select>
                                         </div>
 
                                         <div class="field">
@@ -165,7 +178,7 @@
 
                 <div class="field">
                     <label>Descripció OCR</label>
-                    <input type="text" name="linies[__INDEX__].unitat" class="materia-text-ocr">
+                    <input type="text" class="materia-text-ocr">
                 </div>
 
                 <div class="field">
@@ -175,7 +188,15 @@
 
                 <div class="field">
                     <label>Unitat</label>
-                    <input type="text" name="linies[__INDEX__].unitat" value="kg" class="unitat-input">
+                    <select name="linies[__INDEX__].unitat" class="unitat-input">
+                        <option value="">-- Selecciona unitat --</option>
+                        <option value="KG" selected>KG</option>
+                        <option value="L">L</option>
+                        <option value="TONELADES">Tonelades</option>
+                        <option value="SACOS">Sacs</option>
+                        <option value="CAIXES">Caixes</option>
+                        <option value="Unitat">Unitat</option>
+                    </select>
                 </div>
 
                 <div class="field">
@@ -195,18 +216,22 @@
         </template>
 
         <script>
-            document.getElementById('ocrFile').addEventListener('change', function () {
-                const file = this.files[0];
+            document.addEventListener('DOMContentLoaded', function () {
+                const ocrFile = document.getElementById('ocrFile');
                 const preview = document.getElementById('ocrPreview');
 
-                if (!file) {
-                    preview.style.display = 'none';
-                    preview.src = '';
-                    return;
-                }
+                ocrFile.addEventListener('change', function () {
+                    const file = this.files[0];
 
-                preview.src = URL.createObjectURL(file);
-                preview.style.display = 'block';
+                    if (!file) {
+                        preview.style.display = 'none';
+                        preview.src = '';
+                        return;
+                    }
+
+                    preview.src = URL.createObjectURL(file);
+                    preview.style.display = 'block';
+                });
             });
 
             async function processarOCR() {
@@ -215,6 +240,15 @@
 
                 if (!fileInput.files.length) {
                     alert('Selecciona una imatge');
+                    return;
+                }
+                const maxSizeMB = 20;
+                const maxSizeBytes = maxSizeMB * 1024 * 1024;
+                const file = fileInput.files[0];
+
+                if (file.size > maxSizeBytes) {
+                    resultArea.value = 'Error: la imatge supera el límit de ' + maxSizeMB + 'MB.';
+                    alert('La imatge supera el límit de ' + maxSizeMB + 'MB.');
                     return;
                 }
 
@@ -236,7 +270,14 @@
                     }
 
                     const data = await response.json();
+                    console.log("OCR DATA:", data);
+
                     resultArea.value = data.textDetectat || '';
+
+                    const hidden = document.getElementById('ocrTextHidden');
+                    if (hidden) {
+                        hidden.value = data.textDetectat || '';
+                    }
 
                     omplirCapcalera(data);
                     omplirLinies(data.linies || []);
@@ -248,8 +289,6 @@
 
             function omplirCapcalera(data) {
                 const proveidorInfo = document.getElementById('proveidorOcrInfo');
-
-                console.log("OCR DATA:", data);
 
                 if (proveidorInfo) {
                     if (data.proveidorId) {
@@ -263,6 +302,12 @@
 
                 if (data.dataRecepcio) {
                     document.getElementById('dataRecepcio').value = convertirData(data.dataRecepcio);
+                }
+
+                const documentProveidor = data.proveidorDocument || data.proveidorCif;
+
+                if (documentProveidor) {
+                    document.getElementById('proveidorCifOcr').value = documentProveidor;
                 }
 
                 if (data.proveidorId) {
@@ -383,6 +428,11 @@
                     return parts[2] + '-' + parts[1] + '-' + parts[0];
                 }
 
+                if (/^\d{2}\/\d{2}\/\d{2}$/.test(text)) {
+                    const parts = text.split('/');
+                    return '20' + parts[2] + '-' + parts[1] + '-' + parts[0];
+                }
+
                 return '';
             }
 
@@ -390,45 +440,6 @@
                 if (!value)
                     return '';
                 return value.replace(',', '.').replace(/[^\d.]/g, '');
-            }
-
-            function seleccionarProveidorPerNom(text) {
-                const select = document.getElementById('proveidorSelect');
-                if (!select || !text)
-                    return;
-
-                const normalitzat = normalitzar(text);
-
-                Array.from(select.options).forEach(option => {
-                    if (normalitzar(option.text).includes(normalitzat) || normalitzat.includes(normalitzar(option.text))) {
-                        select.value = option.value;
-                    }
-                });
-            }
-
-            function seleccionarMateriaPerText(card, text) {
-                const select = card.querySelector('.materia-select');
-                if (!select || !text)
-                    return;
-
-                const normalitzat = normalitzar(text);
-
-                Array.from(select.options).forEach(option => {
-                    const optText = normalitzar(option.text);
-                    if (optText && (normalitzat.includes(optText) || optText.includes(normalitzat))) {
-                        select.value = option.value;
-                    }
-                });
-            }
-
-            function normalitzar(text) {
-                return (text || '')
-                        .toLowerCase()
-                        .normalize('NFD')
-                        .replace(/[\u0300-\u036f]/g, '')
-                        .replace(/[^a-z0-9 ]/g, ' ')
-                        .replace(/\s+/g, ' ')
-                        .trim();
             }
         </script>
     </body>

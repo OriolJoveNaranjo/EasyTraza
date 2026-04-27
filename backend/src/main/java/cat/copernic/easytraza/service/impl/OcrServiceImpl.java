@@ -24,6 +24,12 @@ import javax.imageio.ImageIO;
 import net.sourceforge.tess4j.Tesseract;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import cat.copernic.easytraza.validation.CifValidator;
+import cat.copernic.easytraza.validation.DniValidator;
+import cat.copernic.easytraza.validation.NieValidator;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import static org.springframework.core.io.buffer.DataBufferUtils.matcher;
 
 /**
  *
@@ -88,25 +94,18 @@ public class OcrServiceImpl implements OcrService {
         OcrAlbaraProveidorDto result = new OcrAlbaraProveidorDto();
         result.setTextDetectat(text);
 
+        result.setProveidorDocument(extreureDocument(text)); // o extreureCif(text), según cómo lo hayas llamado
+        result.setProveidorNom(extreureNomProveidor(text));
+        result.setNumeroAlbara(extreureNumeroAlbara(text));
+        result.setDataRecepcio(extreureData(text));
+
         String[] lines = text.split("\\r?\\n");
 
         for (String line : lines) {
             line = line.trim();
 
-            if (line.contains("ALBARAN")) {
-                String[] parts = line.split(" ");
-                for (String part : parts) {
-                    if (part.matches("[A-Z]{2,}\\d+")) {
-                        result.setNumeroAlbara(part);
-                    }
-                }
-            }
-
-            if (result.getDataRecepcio() == null) {
-                String fecha = extractFecha(line);
-                if (fecha != null) {
-                    result.setDataRecepcio(fecha);
-                }
+            if (line.isEmpty()) {
+                continue;
             }
 
             if (esLiniaProducte(line)) {
@@ -121,37 +120,30 @@ public class OcrServiceImpl implements OcrService {
     }
 
     private boolean esLiniaProducte(String line) {
-        if (line == null) {
+        if (line == null || line.trim().isEmpty()) {
             return false;
         }
 
         String trimmed = line.trim();
-        if (!trimmed.matches("^\\d{4,}.*")) {
+        String upper = trimmed.toUpperCase();
+
+        if (esFiArticles(upper) || esCabeceraArticles(upper)) {
             return false;
         }
 
-        boolean teData = trimmed.matches(".*\\d{2}/\\d{2}/\\d{4}.*");
-        boolean teLoteProbable = trimmed.matches(".*\\b[A-Z]{1,3}\\d+[A-Z0-9]*\\b.*")
-                || trimmed.matches(".*\\b[A-Z0-9]{6,}\\b.*");
+        boolean empiezaConCodigo = trimmed.matches("^([A-Z]{1,5}\\d{2,}|\\d{3,})\\s+.*");
+        boolean tieneTexto = trimmed.matches(".*[A-Za-zÀ-ÿ]{3,}.*");
+        boolean tieneCantidad = trimmed.matches(".*\\b\\d+[,.]?\\d*\\b.*");
 
-        String upper = trimmed.toUpperCase();
-
-        boolean esCabecera = upper.contains("NIF")
-                || upper.contains("N.I.F")
-                || upper.contains("ALBARAN")
-                || upper.contains("ALBARÁN")
-                || upper.contains("FECHA")
-                || upper.contains("CLIENTE")
-                || upper.contains("PAG")
-                || upper.contains("PÀG")
-                || upper.contains("CP")
-                || upper.contains("CODI POSTAL");
-
-        return teData && teLoteProbable && !esCabecera;
+        return empiezaConCodigo && tieneTexto && tieneCantidad;
     }
 
-    private String extractFecha(String line) {
-        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\\d{2}/\\d{2}/\\d{4}");
+    /*private String extractFecha(String line) {
+        if (line == null) {
+            return null;
+        }
+
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\\b\\d{2}/\\d{2}/\\d{2,4}\\b");
         java.util.regex.Matcher matcher = pattern.matcher(line);
 
         if (matcher.find()) {
@@ -159,44 +151,23 @@ public class OcrServiceImpl implements OcrService {
         }
 
         return null;
-    }
+    }*/
 
     private OcrLiniaDto parseLinia(String line) {
         OcrLiniaDto linia = new OcrLiniaDto();
 
+        String materia = extractMateria(line, null);
+        linia.setMateriaPrimeraText(materia);
+
         String[] parts = line.trim().split("\\s+");
-
-        String fecha = null;
-        String lote = null;
-        String cantidad = null;
-
+        
+        // Cantidad: en este formato suele aparecer antes de "SR"
         for (int i = 0; i < parts.length; i++) {
-            String part = parts[i];
-
-            // fecha tipo 26/07/2026 o incluso mal OCR parecida
-            if (part.matches("\\d{2}/\\d{2}/\\d{4}") || part.matches("\\d{2}/\\d{2}/\\d{5}")) {
-                fecha = part;
-
-                if (i + 1 < parts.length) {
-                    lote = parts[i + 1];
-                }
-            }
-        }
-
-        // cantidad: buscamos el entero más cercano al final, evitando código inicial
-        for (int i = parts.length - 1; i >= 0; i--) {
-            String part = parts[i];
-
-            if (part.matches("\\d+") && i > 0) {
-                cantidad = part;
+            if (parts[i].equalsIgnoreCase("SR") && i > 0) {
+                linia.setQuantitatText(parts[i - 1]);
                 break;
             }
         }
-
-        linia.setDataCaducitat(fecha);
-        linia.setIdentificadorLot(lote);
-        linia.setQuantitatText(cantidad);
-        linia.setMateriaPrimeraText(extractMateria(line, fecha));
 
         return linia;
     }
@@ -208,10 +179,11 @@ public class OcrServiceImpl implements OcrService {
 
         String resultat = line.trim();
 
-        // 1. quitar código inicial tipo 02173
+        // Quitar código inicial tipo 02173 o DS107
+        resultat = resultat.replaceFirst("^[A-Z]{1,5}\\d{2,}\\s*", "");
         resultat = resultat.replaceFirst("^\\d{4,}\\s*", "");
 
-        // 2. cortar cuando empieza la fecha
+        // Si hay fecha, cortar antes de la fecha
         if (fecha != null && !fecha.isEmpty()) {
             int posFecha = resultat.indexOf(fecha);
             if (posFecha > 0) {
@@ -219,12 +191,13 @@ public class OcrServiceImpl implements OcrService {
             }
         }
 
-        // 3. limpiar espacios repetidos
-        resultat = resultat.replaceAll("\\s+", " ").trim();
+        // Cortar antes de cantidad/formato típico: "2 2,00 SR..."
+        resultat = resultat.replaceFirst("\\s+\\d+\\s+\\d+[,.]\\d+\\s+SR.*$", "");
 
-        // 4. eliminar caracteres raros al principio/final
-        resultat = resultat.replaceAll("^[^A-Za-zÀ-ÿ0-9]+", "");
-        resultat = resultat.replaceAll("[^A-Za-zÀ-ÿ0-9. ]+$", "");
+        // Cortar antes de "SR"
+        resultat = resultat.replaceFirst("\\s+SR\\s+.*$", "");
+
+        resultat = resultat.replaceAll("\\s+", " ").trim();
 
         return resultat;
     }
@@ -271,6 +244,21 @@ public class OcrServiceImpl implements OcrService {
     }
 
     private void resoldreProveidor(OcrAlbaraProveidorDto dto) {
+        // 1. Intentar por CIF
+        if (dto.getProveidorDocument() != null && !dto.getProveidorDocument().isBlank()) {
+            String docNet = dto.getProveidorDocument().trim().toUpperCase();
+
+            Proveidor proveidor = proveidorRepo.findByCif(docNet).orElse(null);
+
+            if (proveidor != null) {
+                dto.setProveidorId(proveidor.getId());
+                dto.setProveidorNom(proveidor.getNom());
+                dto.setProveidorConfidence(100);
+                return;
+            }
+        }
+
+        // 2. Si no encuentra por CIF, fallback por nombre/texto
         if (dto.getTextDetectat() == null || dto.getTextDetectat().trim().isEmpty()) {
             dto.setProveidorId(null);
             dto.setProveidorConfidence(0);
@@ -308,6 +296,10 @@ public class OcrServiceImpl implements OcrService {
     }
 
     private int puntuarProveidorEnTextComplet(String textOcrNorm, Proveidor proveidor) {
+        if (textOcrNorm == null || proveidor == null || proveidor.getNom() == null) {
+            return Integer.MIN_VALUE;
+        }
+
         String nomNorm = normalitzar(proveidor.getNom());
 
         if (nomNorm.isEmpty()) {
@@ -327,6 +319,7 @@ public class OcrServiceImpl implements OcrService {
             if (paraula.length() < 3) {
                 continue;
             }
+
             if (textOcrNorm.contains(paraula)) {
                 coincidencies++;
             }
@@ -440,4 +433,104 @@ public class OcrServiceImpl implements OcrService {
                         .trim();
     }
 
+    private String extreureDocument(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            return null;
+        }
+
+        String textNet = text.toUpperCase();
+
+        Pattern cifPattern = Pattern.compile("\\b([A-HJNP-SUVW])\\s*[-.]?\\s*(\\d{7})\\s*[-.]?\\s*([0-9A-J])\\b");
+        Matcher cifMatcher = cifPattern.matcher(textNet);
+
+        while (cifMatcher.find()) {
+            String possible = cifMatcher.group(1) + cifMatcher.group(2) + cifMatcher.group(3);
+
+            if (CifValidator.validarCIF(possible)) {
+                return possible;
+            }
+        }
+
+        Pattern dniPattern = Pattern.compile("\\b(\\d{8}[A-Z])\\b");
+        Matcher dniMatcher = dniPattern.matcher(textNet);
+
+        while (dniMatcher.find()) {
+            String possible = dniMatcher.group(1);
+
+            if (DniValidator.validarDNI(possible)) {
+                return possible;
+            }
+        }
+
+        Pattern niePattern = Pattern.compile("\\b([XYZ]\\s*[-.]?\\s*\\d{7}\\s*[-.]?\\s*[A-Z])\\b");
+        Matcher nieMatcher = niePattern.matcher(textNet);
+
+        while (nieMatcher.find()) {
+            String possible = nieMatcher.group(1)
+                    .replaceAll("[\\s\\-.]", "")
+                    .toUpperCase();
+
+            if (NieValidator.validarNIE(possible)) {
+                return possible;
+            }
+        }
+
+        return null;
+    }
+
+    private String extreureNomProveidor(String text) {
+        if (text == null) {
+            return null;
+        }
+
+        String[] lines = text.split("\\r?\\n");
+
+        for (String line : lines) {
+            String l = line.trim();
+
+            // suele estar arriba del todo
+            if (l.contains("S.L") || l.contains("S.L.U") || l.contains("S.A") || l.contains("S.C.P")) {
+                return l;
+            }
+        }
+
+        return null;
+    }
+
+    private String extreureNumeroAlbara(String text) {
+        Pattern pattern = Pattern.compile("ALBARAN\\s*(\\d+)");
+        Matcher matcher = pattern.matcher(text.toUpperCase());
+
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+
+        return null;
+    }
+
+    private String extreureData(String text) {
+        Pattern pattern = Pattern.compile("\\b\\d{2}/\\d{2}/\\d{2,4}\\b");
+        Matcher matcher = pattern.matcher(text);
+
+        if (matcher.find()) {
+            return matcher.group();
+        }
+
+        return null;
+    }
+
+    private boolean esCabeceraArticles(String upper) {
+        return (upper.contains("CODIGO") || upper.contains("CÓDIGO") || upper.contains("ARTICULO") || upper.contains("ARTÍCULO"))
+                && (upper.contains("DESCRIP") || upper.contains("CONCEPTO") || upper.contains("PRODUCTO"))
+                && (upper.contains("CANTIDAD") || upper.contains("UDS") || upper.contains("SACOS") || upper.contains("LOTE"));
+    }
+
+    private boolean esFiArticles(String upper) {
+        return upper.contains("ENVASES")
+                || upper.contains("TOTAL")
+                || upper.contains("PALET")
+                || upper.contains("RECIBI")
+                || upper.contains("FIRMA")
+                || upper.contains("OBSERVACIONES");
+    }
 }
