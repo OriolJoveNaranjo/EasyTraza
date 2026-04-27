@@ -17,4 +17,10 @@ public interface LotProveidorRepository extends JpaRepository<LotProveidor, Long
     boolean existsByIdentificadorLotAndProveidorId(String identificadorLot, Long proveidorId);
 
     Optional<LotProveidor> findByIdentificadorLotAndProveidorId(String identificadorLot, Long proveidorId);
+
+    boolean existsByIdentificadorLotAndProveidorIdAndAlbaraProveidorIdNot(
+            String identificadorLot,
+            Long proveidorId,
+            Long albaraId);
+
 }

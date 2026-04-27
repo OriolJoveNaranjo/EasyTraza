@@ -115,8 +115,13 @@
 
                                 <div class="field">
                                     <label>Unitat</label>
-                                    <input type="text"
-                                           th:field="*{linies[__${stat.index}__].unitat}">
+                                    <select name="linies[__INDEX__].unitat">
+                                        <option value="">-- Selecciona unitat --</option>
+                                        <option value="KG">KG</option>
+                                        <option value="L">L</option>
+                                        <option value="TONELADES">Tonelades</option>
+                                        <option value="SACOS">Sacos</option>
+                                    </select>
                                 </div>
 
                                 <div class="field">
@@ -171,7 +176,7 @@
                               th:text="${albaraProveidor.proveidor != null ? albaraProveidor.proveidor.nom : ''}">
                         </span>
                     </div>
-                    
+
                     <div class="field">
                         <label>Número d'albarà</label>
                         <span class="readonly-value"
@@ -199,7 +204,13 @@
 
                             <div class="field">
                                 <label>Unitat</label>
-                                <span class="readonly-value" th:text="${linia.unitat}"></span>
+                                <select name="linies[__INDEX__].unitat">
+                                    <option value="">-- Selecciona unitat --</option>
+                                    <option value="KG">KG</option>
+                                    <option value="L">L</option>
+                                    <option value="TONELADES">Tonelades</option>
+                                    <option value="SACS">Sacs</option>
+                                </select>
                             </div>
 
                             <div class="field">
@@ -250,7 +261,13 @@
 
                 <div class="field">
                     <label>Unitat</label>
-                    <input type="text" name="linies[__INDEX__].unitat">
+                    <select name="linies[__INDEX__].unitat">
+                        <option value="">-- Selecciona unitat --</option>
+                        <option value="KG">KG</option>
+                        <option value="L">L</option>
+                        <option value="TONELADES">Tonelades</option>
+                        <option value="SACS">Sacs</option>
+                    </select>
                 </div>
 
                 <div class="field">
