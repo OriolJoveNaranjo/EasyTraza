@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Lots Proveïdor</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}">
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+        <link rel="stylesheet" th:href="@{/css/lots-proveidor.css}">
+    </head>
+    <body>
+        <div class="app-layout">
+
+            <div th:replace="~{fragments/sidebar :: sidebar('lots-proveidor')}"></div>
+
+            <main class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1>Lots Proveïdor</h1>
+                        <p>Gestió de lots de proveïdors</p>
+                    </div>
+                </div>
+
+                <p th:if="${error}" th:text="${error}" class="error-message"></p>
+                <p th:if="${success}" th:text="${success}" class="success-message"></p>
+
+                <div class="filters-row">
+                    <form th:action="@{/lots-proveidor}" method="get">
+                        <select class="filter-select" name="estat" onchange="this.form.submit()">
+                            <option value="" th:selected="${estatSeleccionat == null}">Tots els estats</option>
+                            <option value="EN_ESTOC" th:selected="${estatSeleccionat == 'EN_ESTOC'}">En estoc</option>
+                            <option value="OBERT" th:selected="${estatSeleccionat == 'OBERT'}">Obert</option>
+                            <option value="ACABAT" th:selected="${estatSeleccionat == 'ACABAT'}">Tancat</option>
+                        </select>
+                    </form>
+                </div>
+
+                <div class="lots-list">
+                    <div class="lot-card" th:each="lot : ${lots}">
+                        <div>
+                            <h2>
+                                <span th:text="${lot.materiaPrimera != null ? lot.materiaPrimera.nom : 'Matèria no indicada'}"></span>
+                                <span class="status-badge" th:text="${lot.estat}"></span>
+                            </h2>
+
+                            <p>
+                                <strong>Lot:</strong>
+                                <span th:text="${lot.identificadorLot}"></span>
+                            </p>
+
+                            <p>
+                                <strong>Proveïdor:</strong>
+                                <span th:text="${lot.proveidor != null ? lot.proveidor.nom : '-'}"></span>
+                            </p>
+
+                            <p>
+                                <strong>Quantitat:</strong>
+                                <span th:text="${lot.quantitat}"></span>
+                                <span th:text="${lot.unitat}"></span>
+                            </p>
+
+                            <p>
+                                <strong>Caducitat:</strong>
+                                <span th:text="${lot.dataCaducitat != null ? #temporals.format(lot.dataCaducitat, 'dd/MM/yyyy') : '-'}"></span>
+                            </p>
+                        </div>
+
+                        <div class="lot-actions">
+
+                            <!-- OBRIR -->
+                            <form th:if="${lot.estat.name() == 'EN_ESTOC'}"
+                                  th:action="@{/lots-proveidor/obrir/{id}(id=${lot.id})}"
+                                  method="post">
+                                <button type="submit" class="btn-primary">Obrir</button>
+                            </form>
+
+                            <!-- FINALITZAR -->
+                            <form th:if="${lot.estat.name() == 'OBERT'}"
+                                  th:action="@{/lots-proveidor/finalitzar/{id}(id=${lot.id})}"
+                                  method="post">
+                                <button type="submit" class="btn-finish">Finalitzar</button>
+                            </form>
+
+
+
+                        </div>
+                    </div>
+                    </body>
+                    </html>

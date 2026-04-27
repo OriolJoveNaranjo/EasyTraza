@@ -54,3 +54,45 @@
     color: white;
     margin-right: 8px;
 }
+.filter-select {
+    min-width: 220px;
+    height: 42px;
+    padding: 0 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background-color: white;
+    font-size: 14px;
+    color: #374151;
+    cursor: pointer;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+.btn-danger {
+    background-color: #dc2626;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-danger:hover {
+    background-color: #b91c1c;
+}
+.btn-finish {
+    background-color: #475569;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-finish:hover {
+    background-color: #334155;
+}

@@ -22,12 +22,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  *
  * @author orjon
  */
-
 @Service
 public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
 
@@ -218,21 +219,19 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
                     || linia.getLot() != null && linia.getLot().getIdentificadorLot() != null && !linia.getLot().getIdentificadorLot().trim().isEmpty()
                     || linia.getLot() != null && linia.getLot().getDataCaducitat() != null;
 
-            if (teAlgunaDada) {
+            if (!teAlgunaDada) {
                 continue;
             }
-                if (linia.getMateriaPrimera() == null || linia.getMateriaPrimera().getId() == null
-                        || linia.getQuantitat() == null || linia.getQuantitat() <= 0
-                        || linia.getUnitat() == null || linia.getUnitat().trim().isEmpty()
-                        || linia.getLot() == null
-                        || linia.getLot().getIdentificadorLot() == null || linia.getLot().getIdentificadorLot().trim().isEmpty()
-                        || linia.getLot().getDataCaducitat() == null) {
-                    throw new RuntimeException("Si afegeixes un lot, has d'omplir tots els camps del lot");
-                }
+            if (linia.getMateriaPrimera() == null || linia.getMateriaPrimera().getId() == null
+                    || linia.getQuantitat() == null || linia.getQuantitat() <= 0
+                    || linia.getUnitat() == null || linia.getUnitat().trim().isEmpty()
+                    || linia.getLot() == null
+                    || linia.getLot().getIdentificadorLot() == null || linia.getLot().getIdentificadorLot().trim().isEmpty()
+                    || linia.getLot().getDataCaducitat() == null) {
+                throw new RuntimeException("Si afegeixes un lot, has d'omplir tots els camps del lot");
+            }
 
-                liniesValides++;
-            
-    
+            liniesValides++;
 
             if (linia.getMateriaPrimera() == null || linia.getMateriaPrimera().getId() == null) {
                 throw new RuntimeException("La matèria primera és obligatòria");
@@ -333,6 +332,17 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
                 .orElseThrow(() -> new RuntimeException("El proveïdor no existeix"));
 
         existent.setProveidor(proveidor);
+        Map<String, EstatLot> estatsAnteriors = new HashMap<>();
+
+        for (LiniaAlbaraProveidor liniaExistent : existent.getLinies()) {
+            if (liniaExistent.getLot() != null
+                    && liniaExistent.getLot().getIdentificadorLot() != null
+                    && liniaExistent.getLot().getEstat() != null) {
+
+                String lotKey = liniaExistent.getLot().getIdentificadorLot().trim();
+                estatsAnteriors.put(lotKey, liniaExistent.getLot().getEstat());
+            }
+        }
         existent.getLinies().clear();
         Set<String> lotsFormulari = new HashSet<>();
         int liniesValides = 0;
@@ -370,7 +380,7 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
                         || liniaForm.getLot().getIdentificadorLot().trim().isEmpty()) {
                     continue;
                 }
-               
+
                 String identificadorLotNet = liniaForm.getLot().getIdentificadorLot().trim();
 
                 if (!lotsFormulari.add(identificadorLotNet)) {
@@ -395,15 +405,21 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
                 linia.setUnitat(liniaForm.getUnitat());
 
                 LotProveidor lot = new LotProveidor();
-                lot.setIdentificadorLot(liniaForm.getLot().getIdentificadorLot().trim());
+
+                EstatLot estatAnterior = estatsAnteriors.getOrDefault(
+                        identificadorLotNet,
+                        EstatLot.EN_ESTOC
+                );
+
+                lot.setEstat(estatAnterior);
+                lot.setIdentificadorLot(identificadorLotNet);
                 lot.setDataCaducitat(liniaForm.getLot().getDataCaducitat());
                 lot.setProveidor(proveidor);
                 lot.setMateriaPrimera(materia);
                 lot.setQuantitat(liniaForm.getQuantitat());
                 lot.setUnitat(liniaForm.getUnitat());
-                lot.setEstat(EstatLot.EN_ESTOC);
                 lot.setAlbaraProveidor(existent);
-                lot.setIdentificadorLot(identificadorLotNet);
+
                 linia.setLot(lot);
                 existent.getLinies().add(linia);
             }

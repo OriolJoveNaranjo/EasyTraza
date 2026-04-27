@@ -58,7 +58,7 @@
                       method="post">
 
                     <input type="hidden" th:field="*{id}"/>
-                    <input type="hidden" name="formSource" value="manual">
+                    <input type="hidden" name="formSource" value="manual">                    
 
                     <div class="field">
                         <label>Data recepció *</label>
@@ -93,6 +93,7 @@
                                 <h3 th:text="'Lot ' + ${stat.index + 1}"></h3>
 
                                 <input type="hidden" th:field="*{linies[__${stat.index}__].id}" />
+                                <input type="hidden" th:field="*{linies[__${stat.index}__].lot.id}" />
 
                                 <div class="field">
                                     <label>Matèria primera</label>
@@ -115,12 +116,14 @@
 
                                 <div class="field">
                                     <label>Unitat</label>
-                                    <select name="linies[__INDEX__].unitat">
+                                    <select th:field="*{linies[__${stat.index}__].unitat}">
                                         <option value="">-- Selecciona unitat --</option>
                                         <option value="KG">KG</option>
                                         <option value="L">L</option>
                                         <option value="TONELADES">Tonelades</option>
-                                        <option value="SACOS">Sacos</option>
+                                        <option value="SACS">Sacs</option>
+                                        <option value="CAIXES">Caixes</option>
+                                        <option value="Unitat">Unitat</option>
                                     </select>
                                 </div>
 
@@ -204,14 +207,9 @@
 
                             <div class="field">
                                 <label>Unitat</label>
-                                <select name="linies[__INDEX__].unitat">
-                                    <option value="">-- Selecciona unitat --</option>
-                                    <option value="KG">KG</option>
-                                    <option value="L">L</option>
-                                    <option value="TONELADES">Tonelades</option>
-                                    <option value="SACS">Sacs</option>
-                                </select>
+                                <span class="readonly-value" th:text="${linia.unitat}"></span>
                             </div>
+
 
                             <div class="field">
                                 <label>Identificador lot</label>
@@ -242,7 +240,8 @@
                 <h3>Lot __INDEX_VISUAL__</h3>
 
                 <input type="hidden" name="linies[__INDEX__].id" />
-
+                <input type="hidden" name="linies[__INDEX__].lot.id" />
+                
                 <div class="field">
                     <label>Matèria primera</label>
                     <select name="linies[__INDEX__].materiaPrimera.id">
@@ -267,6 +266,8 @@
                         <option value="L">L</option>
                         <option value="TONELADES">Tonelades</option>
                         <option value="SACS">Sacs</option>
+                        <option value="CAIXES">Caixes</option>
+                        <option value="UNITAT">Unitat</option>
                     </select>
                 </div>
 
