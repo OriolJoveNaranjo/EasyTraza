@@ -16,6 +16,7 @@ public class OcrLiniaDto {
     private String dataCaducitat;
     private String identificadorLot;
     private String quantitatText;
+    private String unitat;
 
     public String getMateriaPrimeraText() {
         return materiaPrimeraText;
@@ -56,5 +57,14 @@ public class OcrLiniaDto {
     public void setMateriaPrimeraId(Long materiaPrimeraId) {
         this.materiaPrimeraId = materiaPrimeraId;
     }
+
+    public String getUnitat() {
+        return unitat;
+    }
+
+    public void setUnitat(String unitat) {
+        this.unitat = unitat;
+    }
+    
     
 }
