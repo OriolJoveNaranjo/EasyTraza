@@ -29,7 +29,6 @@ import cat.copernic.easytraza.validation.DniValidator;
 import cat.copernic.easytraza.validation.NieValidator;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-import static org.springframework.core.io.buffer.DataBufferUtils.matcher;
 
 /**
  *
@@ -94,12 +93,15 @@ public class OcrServiceImpl implements OcrService {
         OcrAlbaraProveidorDto result = new OcrAlbaraProveidorDto();
         result.setTextDetectat(text);
 
-        result.setProveidorDocument(extreureDocument(text)); // o extreureCif(text), según cómo lo hayas llamado
+        result.setProveidorDocument(extreureDocument(text));
         result.setProveidorNom(extreureNomProveidor(text));
         result.setNumeroAlbara(extreureNumeroAlbara(text));
         result.setDataRecepcio(extreureData(text));
 
         String[] lines = text.split("\\r?\\n");
+
+        boolean enZonaArticles = false;
+        boolean haTrobatCapcaleraArticles = false;
 
         for (String line : lines) {
             line = line.trim();
@@ -108,10 +110,48 @@ public class OcrServiceImpl implements OcrService {
                 continue;
             }
 
+            String upper = line.toUpperCase();
+
+            if (esCabeceraArticles(upper)) {
+                enZonaArticles = true;
+                haTrobatCapcaleraArticles = true;
+                continue;
+            }
+
+            if (enZonaArticles && esFiArticles(upper)) {
+                enZonaArticles = false;
+                continue;
+            }
+
+            if (!enZonaArticles) {
+                continue;
+            }
+
             if (esLiniaProducte(line)) {
                 OcrLiniaDto linia = parseLinia(line);
                 if (linia != null) {
                     result.getLinies().add(linia);
+                }
+            }
+        }
+
+        // Fallback: si no ha detectado cabecera o no ha sacado líneas,
+        // intenta detectar productos en todo el texto
+        if (!haTrobatCapcaleraArticles || result.getLinies().isEmpty()) {
+            result.getLinies().clear();
+
+            for (String line : lines) {
+                line = line.trim();
+
+                if (line.isEmpty()) {
+                    continue;
+                }
+
+                if (esLiniaProducte(line)) {
+                    OcrLiniaDto linia = parseLinia(line);
+                    if (linia != null) {
+                        result.getLinies().add(linia);
+                    }
                 }
             }
         }
@@ -138,7 +178,7 @@ public class OcrServiceImpl implements OcrService {
         return empiezaConCodigo && tieneTexto && tieneCantidad;
     }
 
-    /*private String extractFecha(String line) {
+    private String extractFecha(String line) {
         if (line == null) {
             return null;
         }
@@ -151,16 +191,16 @@ public class OcrServiceImpl implements OcrService {
         }
 
         return null;
-    }*/
+    }
 
-    private OcrLiniaDto parseLinia(String line) {
+    /*private OcrLiniaDto parseLinia(String line) {
         OcrLiniaDto linia = new OcrLiniaDto();
 
         String materia = extractMateria(line, null);
         linia.setMateriaPrimeraText(materia);
 
         String[] parts = line.trim().split("\\s+");
-        
+
         // Cantidad: en este formato suele aparecer antes de "SR"
         for (int i = 0; i < parts.length; i++) {
             if (parts[i].equalsIgnoreCase("SR") && i > 0) {
@@ -170,8 +210,7 @@ public class OcrServiceImpl implements OcrService {
         }
 
         return linia;
-    }
-
+    }*/
     private String extractMateria(String line, String fecha) {
         if (line == null || line.trim().isEmpty()) {
             return "";
@@ -520,9 +559,23 @@ public class OcrServiceImpl implements OcrService {
     }
 
     private boolean esCabeceraArticles(String upper) {
-        return (upper.contains("CODIGO") || upper.contains("CÓDIGO") || upper.contains("ARTICULO") || upper.contains("ARTÍCULO"))
-                && (upper.contains("DESCRIP") || upper.contains("CONCEPTO") || upper.contains("PRODUCTO"))
-                && (upper.contains("CANTIDAD") || upper.contains("UDS") || upper.contains("SACOS") || upper.contains("LOTE"));
+        return (upper.contains("CODIGO")
+                || upper.contains("CODI")
+                || upper.contains("CÓDIGO")
+                || upper.contains("ARTICULO")
+                || upper.contains("ARTÍCULO")
+                || upper.contains("CODI"))
+                && (upper.contains("DESCRIP")
+                || upper.contains("CONCEPTO")
+                || upper.contains("PRODUCTO")
+                || upper.contains("ARTICLE")
+                || upper.contains("ARTICULO"))
+                && (upper.contains("CANT")
+                || upper.contains("UDS")
+                || upper.contains("SACOS")
+                || upper.contains("LOTE")
+                || upper.contains("UNITAT")
+                || upper.contains("U.M"));
     }
 
     private boolean esFiArticles(String upper) {
@@ -532,5 +585,157 @@ public class OcrServiceImpl implements OcrService {
                 || upper.contains("RECIBI")
                 || upper.contains("FIRMA")
                 || upper.contains("OBSERVACIONES");
+    }
+
+    private OcrLiniaDto parseLiniaProducte(String line) {
+        if (line == null || line.trim().isEmpty()) {
+            return null;
+        }
+
+        String net = line.trim()
+                .replace("—", " ")
+                .replaceAll("\\s+", " ");
+
+        String[] parts = net.split("\\s+");
+
+        if (parts.length < 3) {
+            return null;
+        }
+
+        String codiArticle = parts[0];
+
+        if (!codiArticle.matches("^[A-Z]{0,5}\\d{2,}$")) {
+            return null;
+        }
+
+        OcrLiniaDto dto = new OcrLiniaDto();
+        dto.setIdentificadorLot(codiArticle);
+
+        String data = extractFecha(net);
+        dto.setDataCaducitat(data);
+
+        int indexFiNom = trobarIndexFiNom(parts, data);
+
+        if (indexFiNom <= 1) {
+            return null;
+        }
+
+        StringBuilder nom = new StringBuilder();
+
+        for (int i = 1; i < indexFiNom; i++) {
+            if (nom.length() > 0) {
+                nom.append(" ");
+            }
+            nom.append(parts[i]);
+        }
+
+        dto.setMateriaPrimeraText(nom.toString().trim());
+
+        String unitat = trobarUnitat(parts);
+        dto.setUnitat(unitat);
+
+        String quantitat = trobarQuantitat(parts, unitat);
+        dto.setQuantitatText(quantitat);
+
+        return dto;
+    }
+
+    private int trobarIndexFiNom(String[] parts, String data) {
+        for (int i = 1; i < parts.length; i++) {
+            String p = parts[i].toUpperCase();
+
+            if (data != null && parts[i].equals(data)) {
+                return i;
+            }
+
+            if (esUnitatOEnvase(p)) {
+                return i;
+            }
+
+            if (p.matches("\\d+[,.]?\\d*") && i > 2) {
+                return i;
+            }
+        }
+
+        return parts.length;
+    }
+
+    private boolean esUnitatOEnvase(String text) {
+        if (text == null) {
+            return false;
+        }
+
+        String t = text.toUpperCase();
+
+        return t.equals("KG")
+                || t.equals("L")
+                || t.equals("CAIXA")
+                || t.equals("CAIXES")
+                || t.equals("UNITAT")
+                || t.equals("UNITATS")
+                || t.equals("SACS")
+                || t.equals("SACOS")
+                || t.startsWith("SACO")
+                || t.startsWith("SAC")
+                || t.equals("TONELADES")
+                || t.equals("SR");
+    }
+
+    private String trobarUnitat(String[] parts) {
+        for (String part : parts) {
+            String p = part.toUpperCase();
+
+            if (p.equals("CAIXA") || p.equals("CAIXES")) {
+                return "CAIXES";
+            }
+
+            if (p.equals("UNITAT") || p.equals("UNITATS")) {
+                return "UNITATS";
+            }
+
+            if (p.equals("KG")) {
+                return "KG";
+            }
+
+            if (p.equals("L")) {
+                return "L";
+            }
+
+            if (p.equals("TONELADES")) {
+                return "TONELADES";
+            }
+
+            if (p.equals("SACS") || p.equals("SACOS") || p.startsWith("SACO") || p.startsWith("SAC")) {
+                return "SACS";
+            }
+        }
+
+        return null;
+    }
+
+    private String trobarQuantitat(String[] parts, String unitat) {
+        for (int i = 0; i < parts.length; i++) {
+            String p = parts[i].toUpperCase();
+
+            if (esUnitatOEnvase(p) && i + 1 < parts.length) {
+                String possible = parts[i + 1];
+
+                if (possible.matches("\\d+[,.]?\\d*")) {
+                    return possible;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private OcrLiniaDto parseLinia(String line) {
+        OcrLiniaDto linia = parseLiniaProducte(line);
+
+        if (linia != null) {
+            return linia;
+        }
+
+        return null;
     }
 }
