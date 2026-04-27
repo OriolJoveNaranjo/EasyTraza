@@ -14,6 +14,7 @@ import java.util.List;
 public class OcrAlbaraProveidorDto {
 
     private Long proveidorId;
+    private String proveidorDocument;
     private String textDetectat;
     private String proveidorNom;
     private String numeroAlbara;
@@ -76,4 +77,13 @@ public class OcrAlbaraProveidorDto {
     public void setProveidorConfidence(Integer proveidorConfidence) {
         this.proveidorConfidence = proveidorConfidence;
     }
+
+    public String getProveidorDocument() {
+        return proveidorDocument;
+    }
+
+    public void setProveidorDocument(String proveidorDocument) {
+        this.proveidorDocument = proveidorDocument;
+    }
+
 }
