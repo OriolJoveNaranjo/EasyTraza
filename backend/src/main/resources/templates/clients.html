@@ -21,6 +21,27 @@
 
                     <a th:href="@{/clients/nou}" class="btn-primary">+ Nou client</a>
                 </div>
+                <div class="filter-card">
+                    <form method="get" th:action="@{/clients}" class="filter-bar">
+
+                        <input type="text"
+                               name="filtre"
+                               class="filter-input"
+                               placeholder="Buscar per nom o NIF"
+                               th:value="${filtre}">
+
+                        <select name="ordre" class="filter-select">
+                            <option value="">-- Ordenar --</option>
+                            <option value="nomAsc" th:selected="${ordre == 'nomAsc'}">Nom ↑</option>
+                            <option value="nomDesc" th:selected="${ordre == 'nomDesc'}">Nom ↓</option>
+                        </select>
+
+                        <button type="submit" class="btn-primary">Filtrar</button>
+
+                        <a th:href="@{/clients}" class="btn-secondary">Reset</a>
+
+                    </form>
+                </div>
 
                 <div class="content-card">
                     <table th:if="${not #lists.isEmpty(clients)}">

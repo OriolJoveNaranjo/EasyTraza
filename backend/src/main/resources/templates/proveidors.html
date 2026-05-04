@@ -23,8 +23,26 @@
                     <a th:href="@{/proveidors/nou}" class="btn-primary">+ Afegir proveïdor</a>
                 </div>
 
-                <div class="search-bar">
-                    <input type="text" placeholder="Cercar proveedors...">
+                <div class="filter-card">
+                    <form method="get" th:action="@{/proveidors}" class="filter-bar">
+
+                        <input type="text"
+                               name="filtre"
+                               class="filter-input"
+                               placeholder="Buscar per nom o NIF/CIF"
+                               th:value="${filtre}">
+
+                        <select name="ordre" class="filter-select">
+                            <option value="">-- Ordenar --</option>
+                            <option value="nomAsc" th:selected="${ordre == 'nomAsc'}">Nom ↑</option>
+                            <option value="nomDesc" th:selected="${ordre == 'nomDesc'}">Nom ↓</option>
+                        </select>
+
+                        <button type="submit" class="btn-primary">Filtrar</button>
+
+                        <a th:href="@{/proveidors}" class="btn-secondary">Reset</a>
+
+                    </form>
                 </div>
 
                 <div class="content-card">
