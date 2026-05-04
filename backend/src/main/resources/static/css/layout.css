@@ -65,3 +65,19 @@ body {
     padding: 50px 0;
     font-size: 18px;
 }
+.filter-card {
+    background: #fffdfa;
+    border: 1px solid #ead8c3;
+    border-radius: 24px;
+    padding: 24px 26px;
+    margin-bottom: 18px;
+    width: fit-content;
+    max-width: 100%;
+}
+
+.filter-bar {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+}

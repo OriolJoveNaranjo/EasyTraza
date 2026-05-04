@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 /**
@@ -24,6 +25,10 @@ public class Proveidor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Pattern(
+            regexp = "^[A-HJNP-SUVW][0-9]{7}[0-9A-J]$|^[0-9]{8}[A-Z]$|^[XYZ][0-9]{7}[A-Z]$",
+            message = "El CIF/NIF/NIE no té un format vàlid"
+    )
     @Column(nullable = false, unique = true)
     private String cif;
 
@@ -35,7 +40,6 @@ public class Proveidor {
     private String email;
 
     private String adreca;
-
 
     @Column(length = 500)
     private String observacions;
