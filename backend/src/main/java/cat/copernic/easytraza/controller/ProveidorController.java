@@ -6,12 +6,15 @@ package cat.copernic.easytraza.controller;
 
 import cat.copernic.easytraza.entities.Proveidor;
 import cat.copernic.easytraza.service.ProveidorService;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  * Controlador web per gestionar proveïdors.
  */
 @Controller
+@RequestMapping("/proveidors")
 public class ProveidorController {
 
     private final ProveidorService proveidorService;
@@ -28,20 +32,29 @@ public class ProveidorController {
         this.proveidorService = proveidorService;
     }
 
-    @GetMapping("/proveidors")
-    public String mostrarProveidors(Model model) {
-        model.addAttribute("proveidors", proveidorService.findAll());
+    @GetMapping
+    public String mostrarProveidors(
+            @RequestParam(required = false) String filtre,
+            @RequestParam(required = false) String ordre,
+            Model model) {
+
+        List<Proveidor> proveidors = proveidorService.filtrar(filtre, ordre);
+
+        model.addAttribute("proveidors", proveidors);
+        model.addAttribute("filtre", filtre);
+        model.addAttribute("ordre", ordre);
+
         return "proveidors";
     }
 
-    @GetMapping("/proveidors/nou")
+    @GetMapping("/nou")
     public String mostrarFormulariNouProveidor(Model model) {
         model.addAttribute("proveidor", new Proveidor());
         model.addAttribute("mode", "create");
         return "nou-proveidor";
     }
 
-    @PostMapping("/proveidors/guardar")
+    @PostMapping("/guardar")
     public String guardar(@ModelAttribute Proveidor proveidor, Model model) {
         try {
             if (proveidor.getId() != null) {
@@ -59,7 +72,7 @@ public class ProveidorController {
         }
     }
 
-    @GetMapping("/proveidors/editar/{id}")
+    @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
         Proveidor proveidor = proveidorService.findById(id).orElse(null);
 
@@ -72,13 +85,13 @@ public class ProveidorController {
         return "nou-proveidor";
     }
 
-    @GetMapping("/proveidors/eliminar/{id}")
+    @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Long id) {
         proveidorService.deleteById(id);
         return "redirect:/proveidors";
     }
 
-    @GetMapping("/proveidors/veure/{id}")
+    @GetMapping("/veure/{id}")
     public String veure(@PathVariable Long id, Model model) {
         Proveidor proveidor = proveidorService.findById(id).orElse(null);
 

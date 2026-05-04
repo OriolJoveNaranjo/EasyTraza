@@ -81,3 +81,19 @@ body {
     align-items: center;
     flex-wrap: wrap;
 }
+.filter-input {
+    min-width: 260px;
+    height: 42px;
+    padding: 0 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background-color: white;
+    font-size: 14px;
+    color: #374151;
+}
+
+.filter-input:focus {
+    outline: none;
+    border-color: #9a5514;
+    box-shadow: 0 0 0 3px rgba(154, 85, 20, 0.15);
+}

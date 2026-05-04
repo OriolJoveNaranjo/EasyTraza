@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -42,8 +43,18 @@ public class AlbaraProveidorController {
     }
 
     @GetMapping("/albarans-proveidor")
-    public String mostrarAlbarans(Model model) {
-        model.addAttribute("albarans", albaraProveidorService.findAll());
+    public String mostrarAlbaransProveidor(
+            @RequestParam(required = false) Long proveidorId,
+            @RequestParam(required = false) String ordre,
+            Model model) {
+
+        List<AlbaraProveidor> albarans = albaraProveidorService.filtrar(proveidorId, ordre);
+
+        model.addAttribute("albarans", albarans);
+        model.addAttribute("proveidors", proveidorService.findAll());
+        model.addAttribute("proveidorId", proveidorId);
+        model.addAttribute("ordre", ordre);
+
         return "albarans-proveidor";
     }
 

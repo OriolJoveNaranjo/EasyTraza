@@ -105,4 +105,29 @@ public class ProveidorServiceImpl implements ProveidorService {
         String net = text.trim();
         return net.isEmpty() ? null : net;
     }
+
+    @Override
+    public List<Proveidor> filtrar(String filtre, String ordre) {
+        List<Proveidor> proveidors;
+
+        if (filtre != null && !filtre.isBlank()) {
+            String text = filtre.trim();
+            proveidors = proveidorRepository
+                    .findByNomContainingIgnoreCaseOrCifContainingIgnoreCase(text, text);
+        } else if ("nomAsc".equals(ordre)) {
+            return proveidorRepository.findAllByOrderByNomAsc();
+        } else if ("nomDesc".equals(ordre)) {
+            return proveidorRepository.findAllByOrderByNomDesc();
+        } else {
+            proveidors = proveidorRepository.findAll();
+        }
+
+        if ("nomAsc".equals(ordre)) {
+            proveidors.sort((a, b) -> a.getNom().compareToIgnoreCase(b.getNom()));
+        } else if ("nomDesc".equals(ordre)) {
+            proveidors.sort((a, b) -> b.getNom().compareToIgnoreCase(a.getNom()));
+        }
+
+        return proveidors;
+    }
 }
