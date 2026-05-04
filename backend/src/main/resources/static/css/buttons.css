@@ -1,5 +1,7 @@
 .btn-primary,
 .btn-edit,
+.btn-danger,
+.btn-finish,
 .btn-delete {
     display: inline-block;
     text-decoration: none;
@@ -71,25 +73,20 @@
     border-color: #2563eb;
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
+
+
 .btn-danger {
-    background-color: #dc2626;
+    background: #F50007;
     color: white;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 8px;
-    cursor: pointer;
+    font-weight: bold;
 }
 
 .btn-danger:hover {
-    background-color: #b91c1c;
+    background: #963f24;
 }
 .btn-finish {
     background-color: #475569;
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 8px;
-    cursor: pointer;
+    color: white;     
     font-weight: 600;
 }
 

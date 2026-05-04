@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Albarans Client</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}">
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+        <link rel="stylesheet" th:href="@{/css/table.css}">
+    </head>
+
+    <body>
+        <div class="app-layout">
+
+            <div th:replace="~{fragments/sidebar :: sidebar('albarans-client')}"></div>
+
+            <main class="page-content">
+
+                <div class="page-header">
+                    <div>
+                        <h1>Albarans de Client</h1>
+                        <p>Consulta i gestiona els albarans de lliurament a clients.</p>
+                    </div>
+
+                    <a th:href="@{/albarans-client/nou}" class="btn-primary">
+                        + Nou albarà
+                    </a>
+                </div>
+                <div class="filter-card">
+                    <form method="get" th:action="@{/albarans-client}" class="filter-bar">
+
+
+                        <select name="clientId" class="filter-select">
+                            <option value="">-- Client --</option>
+                            <option th:each="c : ${clients}"
+                                    th:value="${c.id}"
+                                    th:text="${c.nom}"
+                                    th:selected="${clientId != null and clientId == c.id}">
+                            </option>
+                        </select>
+
+                        <select name="estat" class="filter-select">
+                            <option value="">-- Estat --</option>
+                            <option value="PENDENT"
+                                    th:selected="${estatSeleccionat == 'PENDENT'}">
+                                Pendent
+                            </option>
+                            <option value="LLIURAT"
+                                    th:selected="${estatSeleccionat == 'LLIURAT'}">
+                                Lliurat
+                            </option>
+                        </select>
+
+                        <select name="ordre" class="filter-select">
+                            <option value="">-- Ordenar --</option>
+                            <option value="dataAsc"
+                                    th:selected="${ordre == 'dataAsc'}">
+                                Data ↑
+                            </option>
+                            <option value="dataDesc"
+                                    th:selected="${ordre == 'dataDesc'}">
+                                Data ↓
+                            </option>
+                        </select>
+
+                        <button type="submit" class="btn-primary">Filtrar</button>
+
+                        <a th:href="@{/albarans-client}" class="btn-secondary">Reset</a>
+
+                    </form>
+                </div>
+
+                <div class="content-card">
+
+                    <table class="data-table" th:if="${albarans != null and !albarans.isEmpty()}">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Data</th>
+                                <th>Client</th>
+                                <th>Estat</th>
+                                <th>Accions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each="a : ${albarans}">
+                                <td th:text="${a.id}"></td>
+
+                                <td th:text="${a.data != null ? #temporals.format(a.data, 'dd/MM/yyyy HH:mm') : '-'}"></td>
+
+                                <td th:text="${a.client != null ? a.client.nom : '-'}"></td>
+
+                                <td>
+                                    <span th:text="${a.estat}"
+                                          th:class="${a.estat != null and a.estat.name() == 'LLIURAT'} ? 'status-badge status-success' : 'status-badge status-warning'">
+                                    </span>
+                                </td>
+
+                                <td class="actions-cell">
+                                    <a th:href="@{'/albarans-client/veure/' + ${a.id}}"
+                                       class="btn-view">
+                                        Veure
+                                    </a>
+                                    <a th:href="@{'/albarans-client/editar/' + ${a.id}}"
+                                       class="btn-edit"
+                                       th:if="${a.estat == null or a.estat.name() == 'PENDENT'}">
+                                        Editar
+                                    </a>
+
+                                    <a th:href="@{'/albarans-client/lliurar/' + ${a.id}}"
+                                       class="btn-primary"
+                                       th:if="${a.estat != null and a.estat.name() == 'PENDENT'}">
+                                        Marcar lliurat
+                                    </a>
+
+                                    <a th:href="@{'/albarans-client/eliminar/' + ${a.id}}"
+                                       class="btn-delete"
+                                       th:if="${a.estat == null or a.estat.name() == 'PENDENT'}"
+                                       onclick="return confirm('Segur que vols eliminar aquest albarà?')">
+                                        Eliminar
+                                    </a>
+
+                                    <span th:if="${a.estat != null and a.estat.name() == 'LLIURAT'}">
+                                        Bloquejat
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="empty-state" th:if="${albarans == null or albarans.isEmpty()}">
+                        <h2>No hi ha resultats</h2>
+                        <p>No hi ha cap albarà de client amb els filtres aplicats.</p>
+
+                        <a th:href="@{/albarans-client/nou}" class="btn-primary">
+                            Crear primer albarà
+                        </a>
+                    </div>
+
+                </div>
+
+            </main>
+        </div>
+    </body>
+</html>
