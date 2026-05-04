@@ -35,7 +35,7 @@ public class ProveidorServiceImpl implements ProveidorService {
         proveidor.setCif(cifNet);
 
         if (proveidorRepository.existsByCif(cifNet)) {
-            throw new RuntimeException("Ja existeix un proveïdor amb aquest CIF");
+            throw new RuntimeException("Ja existeix un proveïdor amb aquest NIF/CIF");
         }
 
         return proveidorRepository.save(proveidor);
@@ -52,7 +52,7 @@ public class ProveidorServiceImpl implements ProveidorService {
         proveidor.setCif(cifNet);
 
         if (proveidorRepository.existsByCifAndIdNot(cifNet, id)) {
-            throw new RuntimeException("Ja existeix un proveïdor amb aquest CIF");
+            throw new RuntimeException("Ja existeix un proveïdor amb aquest NIF/CIF");
         }
 
         actual.setNom(netText(proveidor.getNom()));
@@ -76,15 +76,11 @@ public class ProveidorServiceImpl implements ProveidorService {
         }
 
         if (proveidor.getCif() == null || proveidor.getCif().trim().isEmpty()) {
-            throw new RuntimeException("El CIF és obligatori");
+            throw new RuntimeException("El NIF/CIF és obligatori");
         }
 
         String cifNet = normalitzarCif(proveidor.getCif());
         proveidor.setCif(cifNet);
-
-        if (!CifValidator.validarCIF(cifNet)) {
-            throw new IllegalArgumentException("El CIF no és vàlid");
-        }
 
         if (proveidor.getObservacions() != null && proveidor.getObservacions().trim().length() > 500) {
             throw new IllegalArgumentException("El text és massa gran. Com a màxim 500 caràcters");

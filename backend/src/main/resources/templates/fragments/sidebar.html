@@ -26,7 +26,10 @@
                    th:class="'menu-item' + (${activePage} == 'lots-proveidor' ? ' active' : '')">
                     Lots Proveïdor
                 </a>
-                <a href="#" class="menu-item">Albarà Client</a>
+                <a th:href="@{/albarans-client}"
+                   th:class="'menu-item' + (${activePage} == 'albarans-client' ? ' active' : '')">
+                    Albarans Client
+                </a>
                 <a href="#" class="menu-item">Traçabilitat</a>
                 <a href="#" class="menu-item">Controls</a>
                 <a href="#" class="menu-item">Informes</a>

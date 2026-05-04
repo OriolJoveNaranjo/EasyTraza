@@ -26,9 +26,12 @@
                     </div>
 
                     <div class="field">
-                        <label>CIF *</label>
-                        <input type="text" th:field="*{cif}" name="cif" maxlength="9"
-                               pattern="[A-HJNP-SUVW][0-9]{7}[0-9A-J]"
+                        <label>NIF/CIF *</label>
+                        <input type="text"
+                               th:field="*{cif}"
+                               maxlength="9"
+                               pattern="([A-HJNP-SUVW][0-9]{7}[0-9A-J])|([0-9]{8}[A-Z])|([XYZ][0-9]{7}[A-Z])"
+                               title="Introdueix un NIF, CIF o NIE vàlid. Exemple: 47183180Z o B12345678"
                                required>
                     </div>
 
