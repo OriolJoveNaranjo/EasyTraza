@@ -11,11 +11,10 @@ import java.util.Optional;
 /**
  *
  * @author orjon
- * 
+ *
  * Servei de gestió de proveïdors.
- * 
+ *
  */
-
 public interface ProveidorService {
 
     List<Proveidor> findAll();
@@ -27,4 +26,6 @@ public interface ProveidorService {
     Proveidor update(Long id, Proveidor proveidor);
 
     void deleteById(Long id);
+
+    List<Proveidor> filtrar(String filtre, String ordre);
 }

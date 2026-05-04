@@ -110,4 +110,28 @@ public class ClientServiceImpl implements ClientService {
         String net = text.trim();
         return net.isEmpty() ? null : net;
     }
+
+    @Override
+    public List<Client> filtrar(String filtre, String ordre) {
+        List<Client> clients;
+
+        if (filtre != null && !filtre.isBlank()) {
+            String text = filtre.trim();
+            clients = clientRepo.findByNomContainingIgnoreCaseOrNifContainingIgnoreCase(text, text);
+        } else if ("nomAsc".equals(ordre)) {
+            return clientRepo.findAllByOrderByNomAsc();
+        } else if ("nomDesc".equals(ordre)) {
+            return clientRepo.findAllByOrderByNomDesc();
+        } else {
+            clients = clientRepo.findAll();
+        }
+
+        if ("nomAsc".equals(ordre)) {
+            clients.sort((a, b) -> a.getNom().compareToIgnoreCase(b.getNom()));
+        } else if ("nomDesc".equals(ordre)) {
+            clients.sort((a, b) -> b.getNom().compareToIgnoreCase(a.getNom()));
+        }
+
+        return clients;
+    }
 }

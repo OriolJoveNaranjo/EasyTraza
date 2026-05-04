@@ -431,4 +431,30 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
 
         return albaraRepo.save(existent);
     }
+
+    @Override
+    public List<AlbaraProveidor> filtrar(Long proveidorId, String ordre) {
+
+        if (proveidorId != null && "dataAsc".equals(ordre)) {
+            return albaraRepo.findByProveidorIdOrderByDataRecepcioAsc(proveidorId);
+        }
+
+        if (proveidorId != null && "dataDesc".equals(ordre)) {
+            return albaraRepo.findByProveidorIdOrderByDataRecepcioDesc(proveidorId);
+        }
+
+        if (proveidorId != null) {
+            return albaraRepo.findByProveidorId(proveidorId);
+        }
+
+        if ("dataAsc".equals(ordre)) {
+            return albaraRepo.findAllByOrderByDataRecepcioAsc();
+        }
+
+        if ("dataDesc".equals(ordre)) {
+            return albaraRepo.findAllByOrderByDataRecepcioDesc();
+        }
+
+        return albaraRepo.findAll();
+    }
 }

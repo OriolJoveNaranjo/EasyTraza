@@ -23,4 +23,6 @@ public interface AlbaraProveidorService {
     AlbaraProveidor update(Long id, AlbaraProveidor albaraProveidor);
 
     void deleteById(Long id);
+
+    List<AlbaraProveidor> filtrar(Long proveidorId, String ordre);
 }

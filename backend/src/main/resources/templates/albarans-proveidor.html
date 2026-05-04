@@ -28,7 +28,31 @@
 
                     <a th:href="@{/albarans-proveidor/nou}" class="btn-primary">+ Nou albarà</a>
                     <a th:href="@{/albarans-proveidor/ocr}" class="btn-secondary">Albarà amb OCR</a>
-                </div>              
+                </div> 
+                <div class="filter-card">
+                    <form method="get" th:action="@{/albarans-proveidor}" class="filter-bar">
+
+                        <select name="proveidorId" class="filter-select">
+                            <option value="">-- Proveïdor --</option>
+                            <option th:each="p : ${proveidors}"
+                                    th:value="${p.id}"
+                                    th:text="${p.nom}"
+                                    th:selected="${proveidorId != null and proveidorId == p.id}">
+                            </option>
+                        </select>
+
+                        <select name="ordre" class="filter-select">
+                            <option value="">-- Ordenar --</option>
+                            <option value="dataAsc" th:selected="${ordre == 'dataAsc'}">Data ↑</option>
+                            <option value="dataDesc" th:selected="${ordre == 'dataDesc'}">Data ↓</option>
+                        </select>
+
+                        <button type="submit" class="btn-primary">Filtrar</button>
+
+                        <a th:href="@{/albarans-proveidor}" class="btn-secondary">Reset</a>
+
+                    </form>
+                </div>
                 <div class="content-card">
                     <table th:if="${not #lists.isEmpty(albarans)}">
                         <thead>
