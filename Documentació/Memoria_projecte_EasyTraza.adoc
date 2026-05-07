@@ -118,3 +118,73 @@ En general, crec que el sprint ha anat bastant bé perquè he avançat en divers
 De cara al següent sprint, crec que hauré de centrar-me a acabar de polir la integració de l’OCR i seguir avançant amb els CRUDs que encara falten. També em convé revisar bé els errors que vagin sortint per no acumular problemes més endavant.
 
 En resum, ha estat un sprint productiu, amb bastant avanç en noves funcionalitats, tot i que amb algunes dificultats tècniques en la part de l’OCR que encara cal acabar de resoldre.
+
+= SPRINT - 3
+
+== 1. Planificació Inicial
+
+=== 1.1. Planificació (Inicial)
+
+==== Board inicial
+image::PlanificacioInicialSprint3.png[Board inicial]
+
+
+== 2. Daily Stand Up
+
+=== DIA 1 - 24/04
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+|  | Corregir errors que apareguin a la revisió del sprin i i fer les funcionalitats de Iniciar i finalitzar lot | Quan edites un lot que esta iniciat no es gbuarda l'estat | 5h
+|===
+
+=== DIA 2 - 27/04
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| Corregir els errors de l'sprin, i començar a fer la funcionalitat d'inicar lot | Acabar la funcionalitat d'iniciar lot i fer la funcionalitat de finalitzar lot | | 6h + 2h
+|===
+
+=== DIA 3 - 29/04
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| Acabar la funcionalitat d'iniciar i finalitzar lot | Intentar millorar el funcionament del OCR que ja tenia perque llegeixi bé les imatges i asigni bé els camps corresponents | No se si cambiar a un OCR diferent o fusionar  el que ja tinc amb un altre que utilitzar IA per llegir les imatges i el meu per a procesar el text que si m'ho fa correctament, hi ha imatges que l'OCR que tinc no llegeix bé algunes imatges | 3h + 2h
+
+|===
+
+=== DIA 4 - 04/05
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| Millorar el funcionament del meu OCR | Començar a fer el CRUD d'albara client |   | 6h + 1h
+|===
+
+=== DIA 5 - 06/05
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| Començar a fer el CRUD d'albara client | Acabar de fer el CRUD D'albara client i fer l'RF 15 del primer sprin que el tenia pendenet perque no habia començat amb res de la part mobile |   | 3h + 2h 
+|===
+=== DIA 6 - 07/05
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| Acabar de fer el CRUD D'albara client i fer l'RF 15 del primer sprin que el tenia pendenet perque no habia començat amb res de la part mobile i fer la pantalla d'iniciar sessio a la part mobile | Fer que les fotos del albara de proveïdor es guardi com a documnet i aparegui l'imatge a sobre del formulari per ajudar a implir dades | No es guarda correctament l'imatge | 4h
+|===
+
+== 3. Planificació Final
+
+=== 3.1. Planificació (Final de Sprint)
+
+==== Board final — Grup 3
+image::PlanificacioFinalSprint3.png[Board_Final]
+
+== 4. Retrospective Meeting
+En aquest sprint he continuat avançant amb funcionalitats importants del projecte, sobretot amb la gestió de lots, els albarans de client i la millora de l’OCR. He pogut completar les funcionalitats d’iniciar i finalitzar lots i també començar i pràcticament acabar el CRUD d’albarà client. A més, he començat a treballar més la part mòbil, fent la pantalla d’inici de sessió i recuperant un requisit funcional que tenia pendent d’un sprint anterior.
+
+La part que més problemes m’ha donat ha estat l’OCR. Tot i que ja funcionava parcialment, encara hi havia imatges que no llegia bé o camps que no associava correctament. He estat dubtant entre mantenir l’OCR actual, canviar-lo o combinar-lo amb alguna eina basada en IA per millorar la lectura de les imatges. També han aparegut errors amb la persistència de l’estat dels lots i amb el guardat correcte de les imatges dels albarans.
+
+Aquest sprint ha estat una mica més llarg del normal pel pont que hi havia entremig, cosa que m’ha permès repartir millor la feina i dedicar més temps a parts que requerien proves i ajustos. Tot i així, algunes funcionalitats han necessitat més temps del previst per la complexitat tècnica que tenien.
+
+En general, crec que el sprint ha anat bé perquè he avançat bastant tant en backend com en la part mòbil, i he pogut deixar moltes funcionalitats pràcticament acabades. De cara al següent sprint, em tocarà sobretot polir errors, acabar d’estabilitzar l’OCR i millorar la gestió de fitxers i imatges dins de l’aplicació.
