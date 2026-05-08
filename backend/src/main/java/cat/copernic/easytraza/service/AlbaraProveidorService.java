@@ -7,6 +7,7 @@ package cat.copernic.easytraza.service;
 import cat.copernic.easytraza.entities.AlbaraProveidor;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -25,4 +26,8 @@ public interface AlbaraProveidorService {
     void deleteById(Long id);
 
     List<AlbaraProveidor> filtrar(Long proveidorId, String ordre);
+
+    AlbaraProveidor save(AlbaraProveidor albaraProveidor, MultipartFile[] fitxers);
+
+    AlbaraProveidor update(Long id, AlbaraProveidor albaraProveidor, MultipartFile[] fitxers);
 }

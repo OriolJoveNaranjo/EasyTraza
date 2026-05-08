@@ -24,6 +24,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import cat.copernic.easytraza.entities.FitxerAlbaraProveidor;
+import java.io.IOException;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -456,5 +459,64 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
         }
 
         return albaraRepo.findAll();
+    }
+
+    @Override
+    public AlbaraProveidor save(AlbaraProveidor albaraProveidor, MultipartFile[] fitxers) {
+        prepararLinies(albaraProveidor);
+        afegirFitxers(albaraProveidor, fitxers);
+
+        return albaraRepo.save(albaraProveidor);
+    }
+
+    @Override
+    public AlbaraProveidor update(Long id, AlbaraProveidor albaraProveidor, MultipartFile[] fitxers) {
+        AlbaraProveidor actual = albaraRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Albarà de proveïdor no trobat"));
+
+        actual.setDataRecepcio(albaraProveidor.getDataRecepcio());
+        actual.setProveidor(albaraProveidor.getProveidor());
+        actual.setNumeroAlbara(albaraProveidor.getNumeroAlbara());
+
+        actual.getLinies().clear();
+
+        if (albaraProveidor.getLinies() != null) {
+            albaraProveidor.getLinies().forEach(linia -> {
+                linia.setAlbaraProveidor(actual);
+                actual.getLinies().add(linia);
+            });
+        }
+
+        afegirFitxers(actual, fitxers);
+
+        return albaraRepo.save(actual);
+    }
+
+    private void prepararLinies(AlbaraProveidor albaraProveidor) {
+        if (albaraProveidor.getLinies() != null) {
+            albaraProveidor.getLinies().forEach(linia -> linia.setAlbaraProveidor(albaraProveidor));
+        }
+    }
+
+    private void afegirFitxers(AlbaraProveidor albaraProveidor, MultipartFile[] fitxers) {
+        if (fitxers == null) {
+            return;
+        }
+
+        for (MultipartFile file : fitxers) {
+            if (file != null && !file.isEmpty()) {
+                try {
+                    FitxerAlbaraProveidor fitxer = new FitxerAlbaraProveidor();
+                    fitxer.setNomFitxer(file.getOriginalFilename());
+                    fitxer.setTipusFitxer(file.getContentType());
+                    fitxer.setDades(file.getBytes());
+                    fitxer.setAlbaraProveidor(albaraProveidor);
+
+                    albaraProveidor.getFitxers().add(fitxer);
+                } catch (IOException e) {
+                    throw new RuntimeException("No s'ha pogut guardar el fitxer: " + file.getOriginalFilename());
+                }
+            }
+        }
     }
 }
