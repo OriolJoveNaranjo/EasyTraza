@@ -27,4 +27,8 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findAllByOrderByNomAsc();
 
     List<Client> findAllByOrderByNomDesc();
+
+    boolean existsByEmail(String email);
+
+    boolean existsByEmailAndIdNot(String email, Long id);
 }
