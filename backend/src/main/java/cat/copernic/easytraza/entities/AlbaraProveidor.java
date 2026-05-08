@@ -38,6 +38,9 @@ public class AlbaraProveidor {
 
     @Column(unique = true)
     private String numeroAlbara;
+    
+    @OneToMany(mappedBy = "albaraProveidor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FitxerAlbaraProveidor> fitxers = new ArrayList<>();
 
     public AlbaraProveidor() {
     }
@@ -81,5 +84,14 @@ public class AlbaraProveidor {
     public void setNumeroAlbara(String numeroAlbara) {
         this.numeroAlbara = numeroAlbara;
     }
+
+    public List<FitxerAlbaraProveidor> getFitxers() {
+        return fitxers;
+    }
+
+    public void setFitxers(List<FitxerAlbaraProveidor> fitxers) {
+        this.fitxers = fitxers;
+    }
     
+
 }

@@ -5,14 +5,18 @@
 package cat.copernic.easytraza.controller;
 
 import cat.copernic.easytraza.entities.AlbaraProveidor;
+import cat.copernic.easytraza.entities.FitxerAlbaraProveidor;
 import cat.copernic.easytraza.entities.LiniaAlbaraProveidor;
 import cat.copernic.easytraza.entities.LotProveidor;
+import cat.copernic.easytraza.repository.FitxerAlbaraProveidorRepository;
 import cat.copernic.easytraza.service.AlbaraProveidorService;
 import cat.copernic.easytraza.service.MateriaPrimeraService;
 import cat.copernic.easytraza.service.ProveidorService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -31,15 +36,18 @@ public class AlbaraProveidorController {
     private final AlbaraProveidorService albaraProveidorService;
     private final ProveidorService proveidorService;
     private final MateriaPrimeraService materiaPrimeraService;
+    private final FitxerAlbaraProveidorRepository fitxerAlbaraProveidorRepository;
 
     public AlbaraProveidorController(
             AlbaraProveidorService albaraProveidorService,
             ProveidorService proveidorService,
-            MateriaPrimeraService materiaPrimeraService
+            MateriaPrimeraService materiaPrimeraService,
+            FitxerAlbaraProveidorRepository fitxerAlbaraProveidorRepository
     ) {
         this.albaraProveidorService = albaraProveidorService;
         this.proveidorService = proveidorService;
         this.materiaPrimeraService = materiaPrimeraService;
+        this.fitxerAlbaraProveidorRepository = fitxerAlbaraProveidorRepository;
     }
 
     @GetMapping("/albarans-proveidor")
@@ -82,17 +90,26 @@ public class AlbaraProveidorController {
     @PostMapping("/albarans-proveidor/guardar")
     public String guardar(
             @ModelAttribute AlbaraProveidor albaraProveidor,
-            @org.springframework.web.bind.annotation.RequestParam(name = "formSource", defaultValue = "manual") String formSource,
-            @org.springframework.web.bind.annotation.RequestParam(name = "ocrTextHidden", required = false) String ocrTextHidden,
+            @RequestParam(name = "formSource", defaultValue = "manual") String formSource,
+            @RequestParam(name = "ocrTextHidden", required = false) String ocrTextHidden,
+            @RequestParam(value = "fitxersPujats", required = false) MultipartFile[] fitxers,
             Model model) {
 
         try {
+            System.out.println("FITXERS REBUTS: " + (fitxers == null ? "null" : fitxers.length));
+
+            if (fitxers != null) {
+                for (MultipartFile f : fitxers) {
+                    System.out.println("FITXER: " + f.getOriginalFilename() + " / buit=" + f.isEmpty());
+                }
+            }
+
             netejarLiniesBuides(albaraProveidor);
 
             if (albaraProveidor.getId() != null) {
-                albaraProveidorService.update(albaraProveidor.getId(), albaraProveidor);
+                albaraProveidorService.update(albaraProveidor.getId(), albaraProveidor, fitxers);
             } else {
-                albaraProveidorService.save(albaraProveidor);
+                albaraProveidorService.save(albaraProveidor, fitxers);
             }
 
             return "redirect:/albarans-proveidor";
@@ -106,7 +123,7 @@ public class AlbaraProveidorController {
             if ("ocr".equals(formSource)) {
                 model.addAttribute("mode", "ocr");
                 model.addAttribute("ocrTextHidden", ocrTextHidden);
-                return "nou-albara-proveidor-ocr"; // usa aquí el nombre REAL de tu archivo
+                return "nou-albara-proveidor-ocr";
             }
 
             model.addAttribute("mode", albaraProveidor.getId() != null ? "edit" : "create");
@@ -115,7 +132,8 @@ public class AlbaraProveidorController {
     }
 
     @GetMapping("/albarans-proveidor/editar/{id}")
-    public String editar(@PathVariable Long id, Model model) {
+    public String editar(@PathVariable Long id, Model model
+    ) {
         AlbaraProveidor albara = albaraProveidorService.findById(id).orElse(null);
 
         if (albara == null) {
@@ -147,7 +165,8 @@ public class AlbaraProveidorController {
     }
 
     @GetMapping("/albarans-proveidor/veure/{id}")
-    public String veure(@PathVariable Long id, Model model) {
+    public String veure(@PathVariable Long id, Model model
+    ) {
         AlbaraProveidor albara = albaraProveidorService.findById(id).orElse(null);
 
         if (albara == null) {
@@ -161,7 +180,8 @@ public class AlbaraProveidorController {
     }
 
     @GetMapping("/albarans-proveidor/eliminar/{id}")
-    public String eliminar(@PathVariable Long id) {
+    public String eliminar(@PathVariable Long id
+    ) {
         albaraProveidorService.deleteById(id);
         return "redirect:/albarans-proveidor";
     }
@@ -222,5 +242,15 @@ public class AlbaraProveidorController {
         model.addAttribute("mode", "ocr");
 
         return "nou-albara-proveidor-ocr";
+    }
+
+    @GetMapping("/albarans-proveidor/fitxer/{id}")
+    public ResponseEntity<byte[]> veureFitxer(@PathVariable Long id) {
+        return fitxerAlbaraProveidorRepository.findById(id)
+                .map(fitxer -> ResponseEntity.ok()
+                .header("Content-Disposition", "inline; filename=\"" + fitxer.getNomFitxer() + "\"")
+                .contentType(MediaType.parseMediaType(fitxer.getTipusFitxer()))
+                .body(fitxer.getDades()))
+                .orElse(ResponseEntity.notFound().build());
     }
 }
