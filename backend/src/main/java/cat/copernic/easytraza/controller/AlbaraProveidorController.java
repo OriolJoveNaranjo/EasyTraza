@@ -211,9 +211,9 @@ public class AlbaraProveidorController {
                 continue;
             }
 
-            linia.setAlbaraProveidor(albaraProveidor);
             linia.getLot().setAlbaraProveidor(albaraProveidor);
             linia.getLot().setMateriaPrimera(linia.getMateriaPrimera());
+            linia.getLot().setProveidor(albaraProveidor.getProveidor());
             linia.getLot().setQuantitat(linia.getQuantitat());
             linia.getLot().setUnitat(linia.getUnitat());
 
