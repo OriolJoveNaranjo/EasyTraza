@@ -118,36 +118,37 @@
                                         </div>
 
                                         <div class="field">
-                                            <label>Descripció OCR</label>
-                                            <input type="text" class="materia-text-ocr">
-                                        </div>
-
-                                        <div class="field">
                                             <label>Quantitat</label>
-                                            <input type="number" step="0.01" min="0" name="linies[0].quantitat" class="quantitat-input">
+                                            <input type="number"
+                                                   step="0.01"
+                                                   min="0"
+                                                   name="linies[0].quantitat"
+                                                   class="quantitat-input"
+                                                   th:value="${albaraProveidor.linies[0].quantitat}">
                                         </div>
 
                                         <div class="field">
                                             <label>Unitat</label>
-                                            <select name="linies[0].unitat" class="unitat-input">
-                                                <option value="">-- Selecciona unitat --</option>
-                                                <option value="KG" selected>KG</option>
-                                                <option value="L">L</option>
-                                                <option value="TONELADES">Tonelades</option>
-                                                <option value="SACOS">Sacs</option>
-                                                <option value="CAIXES">Caixes</option>
-                                                <option value="Unitat">Unitat</option>
-                                            </select>
+                                            <input type="text"
+                                                   name="linies[0].unitat"
+                                                   class="unitat-input"
+                                                   list="unitatsList"
+                                                   th:value="${albaraProveidor.linies[0].unitat != null ? albaraProveidor.linies[0].unitat : 'KG'}"
+                                                   placeholder="Selecciona o escriu una unitat">
                                         </div>
 
                                         <div class="field">
                                             <label>Identificador lot</label>
-                                            <input type="text" name="linies[0].lot.identificadorLot" class="lot-input">
+                                            <input type="text"
+                                                   name="linies[0].lot.identificadorLot"
+                                                   class="lot-input"
+                                                   th:value="${albaraProveidor.linies[0].lot != null ? albaraProveidor.linies[0].lot.identificadorLot : ''}">
                                         </div>
 
                                         <div class="field">
                                             <label>Data caducitat</label>
-                                            <input type="date" name="linies[0].lot.dataCaducitat" class="caducitat-input">
+                                            <input type="date" name="linies[0].lot.dataCaducitat" 
+                                                   class="caducitat-input" th:value="${albaraProveidor.linies[0].lot != null && albaraProveidor.linies[0].lot.dataCaducitat != null ? #temporals.format(albaraProveidor.linies[0].lot.dataCaducitat, 'yyyy-MM-dd') : ''}">
                                         </div>
 
                                         <div class="inline-actions">
@@ -194,15 +195,12 @@
 
                 <div class="field">
                     <label>Unitat</label>
-                    <select name="linies[__INDEX__].unitat" class="unitat-input">
-                        <option value="">-- Selecciona unitat --</option>
-                        <option value="KG" selected>KG</option>
-                        <option value="L">L</option>
-                        <option value="TONELADES">Tonelades</option>
-                        <option value="SACOS">Sacs</option>
-                        <option value="CAIXES">Caixes</option>
-                        <option value="Unitat">Unitat</option>
-                    </select>
+                    <input type="text"
+                           name="linies[__INDEX__].unitat"
+                           class="unitat-input"
+                           list="unitatsList"
+                           value="KG"
+                           placeholder="Selecciona o escriu una unitat">
                 </div>
 
                 <div class="field">

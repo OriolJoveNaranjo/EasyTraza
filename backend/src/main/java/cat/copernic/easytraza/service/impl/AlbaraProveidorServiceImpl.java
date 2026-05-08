@@ -189,11 +189,25 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
         if (albaraProveidor.getDataRecepcio().isAfter(LocalDate.now())) {
             throw new RuntimeException("La data de recepció no pot ser futura");
         }
+        if (albaraProveidor.getNumeroAlbara() == null || albaraProveidor.getNumeroAlbara().trim().isEmpty()) {
+            throw new RuntimeException("El número d'albarà és obligatori");
+        }
+        if (albaraProveidor.getNumeroAlbara() == null || albaraProveidor.getNumeroAlbara().trim().isEmpty()) {
+            throw new RuntimeException("El número d'albarà és obligatori");
+        }
 
-        albaraProveidor.setNumeroAlbara(albaraProveidor.getNumeroAlbara().trim());
+        String numero = albaraProveidor.getNumeroAlbara();
 
-        if (albaraRepo.existsByNumeroAlbara(albaraProveidor.getNumeroAlbara())) {
-            throw new RuntimeException("Ja existeix un albarà amb aquest número");
+        if (numero != null && !numero.isBlank()) {
+            numero = numero.trim();
+
+            if (albaraRepo.existsByNumeroAlbara(numero)) {
+                throw new RuntimeException("Aquest número d'albarà ja existeix");
+            }
+
+            albaraProveidor.setNumeroAlbara(numero);
+        } else {
+            albaraProveidor.setNumeroAlbara(null);
         }
 
         if (albaraProveidor.getProveidor() == null || albaraProveidor.getProveidor().getId() == null) {
@@ -208,8 +222,10 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
         if (albaraProveidor.getLinies() == null || albaraProveidor.getLinies().isEmpty()) {
             throw new RuntimeException("L'albarà ha de tenir almenys una línia");
         }
+
         int liniesValides = 0;
         Set<String> lotsFormulari = new HashSet<>();
+
         for (LiniaAlbaraProveidor linia : albaraProveidor.getLinies()) {
             if (linia == null) {
                 continue;
@@ -225,49 +241,40 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
             if (!teAlgunaDada) {
                 continue;
             }
-            if (linia.getMateriaPrimera() == null || linia.getMateriaPrimera().getId() == null
-                    || linia.getQuantitat() == null || linia.getQuantitat() <= 0
-                    || linia.getUnitat() == null || linia.getUnitat().trim().isEmpty()
-                    || linia.getLot() == null
-                    || linia.getLot().getIdentificadorLot() == null || linia.getLot().getIdentificadorLot().trim().isEmpty()
-                    || linia.getLot().getDataCaducitat() == null) {
-                throw new RuntimeException("Si afegeixes un lot, has d'omplir tots els camps del lot");
-            }
-
-            liniesValides++;
 
             if (linia.getMateriaPrimera() == null || linia.getMateriaPrimera().getId() == null) {
-                throw new RuntimeException("La matèria primera és obligatòria");
+                throw new RuntimeException("Has de seleccionar la matèria primera del lot");
             }
 
-            MateriaPrimera materia = materiaRepo.findById(linia.getMateriaPrimera().getId())
-                    .orElseThrow(() -> new RuntimeException("La matèria primera no existeix"));
-
             if (linia.getQuantitat() == null || linia.getQuantitat() <= 0) {
-                throw new RuntimeException("La quantitat ha de ser superior a zero");
+                throw new RuntimeException("La quantitat del lot ha de ser superior a zero");
+            }
+
+            if (linia.getUnitat() == null || linia.getUnitat().trim().isEmpty()) {
+                throw new RuntimeException("Has d'indicar la unitat del lot");
             }
 
             if (linia.getLot() == null) {
                 throw new RuntimeException("El lot és obligatori");
             }
 
-            if (linia.getLot().getIdentificadorLot() == null
-                    || linia.getLot().getIdentificadorLot().trim().isEmpty()) {
-                throw new RuntimeException("L'identificador del lot és obligatori");
+            if (linia.getLot().getIdentificadorLot() == null || linia.getLot().getIdentificadorLot().trim().isEmpty()) {
+                throw new RuntimeException("Has d'indicar l'identificador del lot");
             }
 
-            if (lotRepo.existsByIdentificadorLotAndProveidorId(
-                    linia.getLot().getIdentificadorLot().trim(),
-                    proveidor.getId())) {
-                throw new RuntimeException("Ja existeix un lot amb aquest identificador per aquest proveïdor");
-            }
             if (linia.getLot().getDataCaducitat() == null) {
-                throw new RuntimeException("La data de caducitat del lot és obligatòria");
+                throw new RuntimeException("Has d'indicar la data de caducitat del lot");
             }
+
+            liniesValides++;
+
+            MateriaPrimera materia = materiaRepo.findById(linia.getMateriaPrimera().getId())
+                    .orElseThrow(() -> new RuntimeException("La matèria primera no existeix"));
 
             if (linia.getLot().getDataCaducitat().isBefore(albaraProveidor.getDataRecepcio())) {
                 throw new RuntimeException("La data de caducitat no pot ser anterior a la data de recepció");
             }
+
             String identificadorLotNet = linia.getLot().getIdentificadorLot().trim();
 
             if (!lotsFormulari.add(identificadorLotNet)) {
@@ -282,15 +289,15 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
             linia.setMateriaPrimera(materia);
 
             LotProveidor lot = linia.getLot();
-            lot.setIdentificadorLot(lot.getIdentificadorLot().trim());
+            lot.setIdentificadorLot(identificadorLotNet);
             lot.setAlbaraProveidor(albaraProveidor);
             lot.setProveidor(proveidor);
             lot.setMateriaPrimera(materia);
             lot.setQuantitat(linia.getQuantitat());
-            lot.setUnitat(linia.getUnitat());
+            lot.setUnitat(linia.getUnitat().trim());
             lot.setEstat(EstatLot.EN_ESTOC);
-            lot.setIdentificadorLot(identificadorLotNet);
         }
+
         if (liniesValides == 0) {
             throw new RuntimeException("L'albarà ha de tenir almenys un lot complet");
         }
@@ -304,15 +311,6 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
         AlbaraProveidor existent = albaraRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("L'albarà no existeix"));
 
-        String numeroAlbaraNet = null;
-
-        if (albaraProveidor.getNumeroAlbara() != null && !albaraProveidor.getNumeroAlbara().trim().isEmpty()) {
-            numeroAlbaraNet = albaraProveidor.getNumeroAlbara().trim();
-
-            if (albaraRepo.existsByNumeroAlbaraAndIdNot(numeroAlbaraNet, id)) {
-                throw new RuntimeException("Ja existeix un albarà amb aquest número");
-            }
-        }
         if (albaraProveidor.getDataRecepcio() == null) {
             throw new RuntimeException("La data de recepció és obligatòria");
         }
@@ -321,10 +319,14 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
             throw new RuntimeException("La data de recepció no pot ser futura");
         }
 
-        existent.setNumeroAlbara(numeroAlbaraNet);
+        String numeroAlbaraNet = null;
 
-        if (albaraProveidor.getDataRecepcio() != null) {
-            existent.setDataRecepcio(albaraProveidor.getDataRecepcio());
+        if (albaraProveidor.getNumeroAlbara() != null && !albaraProveidor.getNumeroAlbara().trim().isEmpty()) {
+            numeroAlbaraNet = albaraProveidor.getNumeroAlbara().trim();
+
+            if (albaraRepo.existsByNumeroAlbaraAndIdNot(numeroAlbaraNet, id)) {
+                throw new RuntimeException("Aquest número d'albarà ja existeix");
+            }
         }
 
         if (albaraProveidor.getProveidor() == null || albaraProveidor.getProveidor().getId() == null) {
@@ -334,7 +336,10 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
         Proveidor proveidor = proveidorRepo.findById(albaraProveidor.getProveidor().getId())
                 .orElseThrow(() -> new RuntimeException("El proveïdor no existeix"));
 
+        existent.setNumeroAlbara(numeroAlbaraNet);
+        existent.setDataRecepcio(albaraProveidor.getDataRecepcio());
         existent.setProveidor(proveidor);
+
         Map<String, EstatLot> estatsAnteriors = new HashMap<>();
 
         for (LiniaAlbaraProveidor liniaExistent : existent.getLinies()) {
@@ -346,9 +351,12 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
                 estatsAnteriors.put(lotKey, liniaExistent.getLot().getEstat());
             }
         }
+
         existent.getLinies().clear();
+
         Set<String> lotsFormulari = new HashSet<>();
         int liniesValides = 0;
+
         if (albaraProveidor.getLinies() != null) {
             for (LiniaAlbaraProveidor liniaForm : albaraProveidor.getLinies()) {
                 if (liniaForm == null) {
@@ -367,22 +375,32 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
                     continue;
                 }
 
-                if (liniaForm.getMateriaPrimera() == null || liniaForm.getMateriaPrimera().getId() == null
-                        || liniaForm.getQuantitat() == null || liniaForm.getQuantitat() <= 0
-                        || liniaForm.getUnitat() == null || liniaForm.getUnitat().trim().isEmpty()
-                        || liniaForm.getLot() == null
-                        || liniaForm.getLot().getIdentificadorLot() == null
-                        || liniaForm.getLot().getIdentificadorLot().trim().isEmpty()
-                        || liniaForm.getLot().getDataCaducitat() == null) {
-                    throw new RuntimeException("Si afegeixes un lot, has d'omplir tots els camps del lot");
+                if (liniaForm.getMateriaPrimera() == null || liniaForm.getMateriaPrimera().getId() == null) {
+                    throw new RuntimeException("Has de seleccionar la matèria primera del lot");
+                }
+
+                if (liniaForm.getQuantitat() == null || liniaForm.getQuantitat() <= 0) {
+                    throw new RuntimeException("La quantitat del lot ha de ser superior a zero");
+                }
+
+                if (liniaForm.getUnitat() == null || liniaForm.getUnitat().trim().isEmpty()) {
+                    throw new RuntimeException("Has d'indicar la unitat del lot");
+                }
+
+                if (liniaForm.getLot() == null) {
+                    throw new RuntimeException("El lot és obligatori");
+                }
+
+                if (liniaForm.getLot().getIdentificadorLot() == null
+                        || liniaForm.getLot().getIdentificadorLot().trim().isEmpty()) {
+                    throw new RuntimeException("Has d'indicar l'identificador del lot");
+                }
+
+                if (liniaForm.getLot().getDataCaducitat() == null) {
+                    throw new RuntimeException("Has d'indicar la data de caducitat del lot");
                 }
 
                 liniesValides++;
-
-                if (liniaForm.getLot() == null || liniaForm.getLot().getIdentificadorLot() == null
-                        || liniaForm.getLot().getIdentificadorLot().trim().isEmpty()) {
-                    continue;
-                }
 
                 String identificadorLotNet = liniaForm.getLot().getIdentificadorLot().trim();
 
@@ -398,6 +416,10 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
                     throw new RuntimeException("Ja existeix un lot amb aquest identificador per aquest proveïdor");
                 }
 
+                if (liniaForm.getLot().getDataCaducitat().isBefore(albaraProveidor.getDataRecepcio())) {
+                    throw new RuntimeException("La data de caducitat no pot ser anterior a la data de recepció");
+                }
+
                 MateriaPrimera materia = materiaRepo.findById(liniaForm.getMateriaPrimera().getId())
                         .orElseThrow(() -> new RuntimeException("La matèria primera no existeix"));
 
@@ -405,7 +427,7 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
                 linia.setAlbaraProveidor(existent);
                 linia.setMateriaPrimera(materia);
                 linia.setQuantitat(liniaForm.getQuantitat());
-                linia.setUnitat(liniaForm.getUnitat());
+                linia.setUnitat(liniaForm.getUnitat().trim());
 
                 LotProveidor lot = new LotProveidor();
 
@@ -420,14 +442,14 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
                 lot.setProveidor(proveidor);
                 lot.setMateriaPrimera(materia);
                 lot.setQuantitat(liniaForm.getQuantitat());
-                lot.setUnitat(liniaForm.getUnitat());
+                lot.setUnitat(liniaForm.getUnitat().trim());
                 lot.setAlbaraProveidor(existent);
 
                 linia.setLot(lot);
                 existent.getLinies().add(linia);
             }
-
         }
+
         if (liniesValides == 0) {
             throw new RuntimeException("L'albarà ha de tenir almenys un lot complet");
         }
@@ -436,60 +458,18 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
     }
 
     @Override
-    public List<AlbaraProveidor> filtrar(Long proveidorId, String ordre) {
-
-        if (proveidorId != null && "dataAsc".equals(ordre)) {
-            return albaraRepo.findByProveidorIdOrderByDataRecepcioAsc(proveidorId);
-        }
-
-        if (proveidorId != null && "dataDesc".equals(ordre)) {
-            return albaraRepo.findByProveidorIdOrderByDataRecepcioDesc(proveidorId);
-        }
-
-        if (proveidorId != null) {
-            return albaraRepo.findByProveidorId(proveidorId);
-        }
-
-        if ("dataAsc".equals(ordre)) {
-            return albaraRepo.findAllByOrderByDataRecepcioAsc();
-        }
-
-        if ("dataDesc".equals(ordre)) {
-            return albaraRepo.findAllByOrderByDataRecepcioDesc();
-        }
-
-        return albaraRepo.findAll();
-    }
-
-    @Override
+    @Transactional
     public AlbaraProveidor save(AlbaraProveidor albaraProveidor, MultipartFile[] fitxers) {
-        prepararLinies(albaraProveidor);
         afegirFitxers(albaraProveidor, fitxers);
-
-        return albaraRepo.save(albaraProveidor);
+        return save(albaraProveidor);
     }
 
     @Override
+    @Transactional
     public AlbaraProveidor update(Long id, AlbaraProveidor albaraProveidor, MultipartFile[] fitxers) {
-        AlbaraProveidor actual = albaraRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Albarà de proveïdor no trobat"));
-
-        actual.setDataRecepcio(albaraProveidor.getDataRecepcio());
-        actual.setProveidor(albaraProveidor.getProveidor());
-        actual.setNumeroAlbara(albaraProveidor.getNumeroAlbara());
-
-        actual.getLinies().clear();
-
-        if (albaraProveidor.getLinies() != null) {
-            albaraProveidor.getLinies().forEach(linia -> {
-                linia.setAlbaraProveidor(actual);
-                actual.getLinies().add(linia);
-            });
-        }
-
-        afegirFitxers(actual, fitxers);
-
-        return albaraRepo.save(actual);
+        AlbaraProveidor actualitzat = update(id, albaraProveidor);
+        afegirFitxers(actualitzat, fitxers);
+        return albaraRepo.save(actualitzat);
     }
 
     private void prepararLinies(AlbaraProveidor albaraProveidor) {
@@ -518,5 +498,31 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
                 }
             }
         }
+    }
+
+    @Override
+    public List<AlbaraProveidor> filtrar(Long proveidorId, String ordre) {
+
+        if (proveidorId != null && "dataAsc".equals(ordre)) {
+            return albaraRepo.findByProveidorIdOrderByDataRecepcioAsc(proveidorId);
+        }
+
+        if (proveidorId != null && "dataDesc".equals(ordre)) {
+            return albaraRepo.findByProveidorIdOrderByDataRecepcioDesc(proveidorId);
+        }
+
+        if (proveidorId != null) {
+            return albaraRepo.findByProveidorId(proveidorId);
+        }
+
+        if ("dataAsc".equals(ordre)) {
+            return albaraRepo.findAllByOrderByDataRecepcioAsc();
+        }
+
+        if ("dataDesc".equals(ordre)) {
+            return albaraRepo.findAllByOrderByDataRecepcioDesc();
+        }
+
+        return albaraRepo.findAll();
     }
 }

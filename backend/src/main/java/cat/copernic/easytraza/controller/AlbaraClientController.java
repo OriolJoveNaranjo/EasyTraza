@@ -72,7 +72,7 @@ public class AlbaraClientController {
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute AlbaraClient albara) {
         service.save(albara);
-        return "redirect:/albara-client";
+        return "redirect:/albarans-client";
     }
 
     // EDITAR
@@ -93,7 +93,7 @@ public class AlbaraClientController {
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Long id) {
         service.deleteById(id);
-        return "redirect:/albara-client";
+        return "redirect:/albarans-client";
     }
 
     @GetMapping("/lliurar/{id}")
@@ -132,6 +132,6 @@ public class AlbaraClientController {
         model.addAttribute("estatSeleccionat", estat);
         model.addAttribute("ordre", ordre);
 
-        return "albara-client";
+        return "albarans-client";
     }
 }

@@ -33,13 +33,17 @@ public class ClientServiceImpl implements ClientService {
     public Client save(Client client) {
         validarClient(client);
 
+        String emailNet = netText(client.getEmail());
         String nifNet = normalitzarNif(client.getNif());
         client.setNif(nifNet);
 
         if (clientRepo.existsByNif(nifNet)) {
             throw new RuntimeException("Ja existeix un client amb aquest NIF");
         }
-
+        if (emailNet != null && clientRepo.existsByEmail(emailNet)) {
+            throw new RuntimeException("Aquest correu ja existeix a la base de dades, no es pot repetir");
+        }
+        client.setEmail(emailNet);
         return clientRepo.save(client);
     }
 
@@ -51,11 +55,15 @@ public class ClientServiceImpl implements ClientService {
 
         validarClient(client);
 
+        String emailNet = netText(client.getEmail());
         String nifNet = normalitzarNif(client.getNif());
         client.setNif(nifNet);
 
         if (clientRepo.existsByNifAndIdNot(nifNet, id)) {
             throw new RuntimeException("Ja existeix un client amb aquest NIF");
+        }
+        if (emailNet != null && clientRepo.existsByEmailAndIdNot(emailNet, id)) {
+            throw new RuntimeException("Aquest correu ja existeix a la base de dades, no es pot repetir");
         }
 
         existent.setNif(nifNet);
