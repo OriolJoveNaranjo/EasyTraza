@@ -38,6 +38,35 @@
                 gap: 10px;
                 margin-top: 12px;
             }
+            .fitxers-preview {
+                margin-bottom: 24px;
+                padding: 16px;
+                border: 1px solid #ddd;
+                border-radius: 12px;
+                background: #fafafa;
+            }
+
+            .fitxer-preview-card {
+                margin-top: 12px;
+            }
+
+            .fitxer-preview-img {
+                width: 100%;
+                max-height: 420px;
+                object-fit: contain;
+                border-radius: 10px;
+                border: 1px solid #ddd;
+                background: white;
+                margin-bottom: 12px;
+            }
+
+            .fitxer-preview-pdf {
+                width: 100%;
+                height: 420px;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                margin-bottom: 12px;
+            }
         </style>
     </head>
     <body>
@@ -51,11 +80,39 @@
 
                 <p th:if="${error}" th:text="${error}" class="error-message"></p>
 
+                <div th:if="${albaraProveidor.id != null 
+                     and albaraProveidor.fitxers != null 
+                     and !albaraProveidor.fitxers.isEmpty()}"
+                     class="fitxers-preview">
+
+                    <h2>Document original</h2>
+
+                    <div th:each="fitxer : ${albaraProveidor.fitxers}" class="fitxer-preview-card">
+
+                        <img th:if="${fitxer.tipusFitxer != null and #strings.startsWith(fitxer.tipusFitxer, 'image/')}"
+                             th:src="@{'/albarans-proveidor/fitxer/' + ${fitxer.id}}"
+                             class="fitxer-preview-img"
+                             alt="Document de l'albarà">
+
+                        <iframe th:if="${fitxer.tipusFitxer == 'application/pdf'}"
+                                th:src="@{'/albarans-proveidor/fitxer/' + ${fitxer.id}}"
+                                class="fitxer-preview-pdf">
+                        </iframe>
+
+                        <a th:href="@{'/albarans-proveidor/fitxer/' + ${fitxer.id}}"
+                           target="_blank"
+                           class="btn-secondary"
+                           th:text="'Obrir ' + ${fitxer.nomFitxer}">
+                        </a>
+                    </div>
+                </div>
+
                 <!-- MODO EDITAR / CREAR -->
                 <form th:if="${mode != 'view'}"
                       th:action="@{/albarans-proveidor/guardar}"
                       th:object="${albaraProveidor}"
-                      method="post">
+                      method="post"
+                      enctype="multipart/form-data">
 
                     <input type="hidden" th:field="*{id}"/>
                     <input type="hidden" name="formSource" value="manual">                    
@@ -83,6 +140,13 @@
                         <input type="text"
                                name="numeroAlbara"
                                th:value="${albaraProveidor.numeroAlbara != null ? albaraProveidor.numeroAlbara : ''}">
+                    </div>
+                    <div class="field">
+                        <label>Fitxers de l'albarà</label>
+                        <input type="file"
+                               name="fitxersPujats"
+                               multiple
+                               accept="image/*,.pdf">
                     </div>
 
                     <div class="linies-box">
@@ -241,7 +305,7 @@
 
                 <input type="hidden" name="linies[__INDEX__].id" />
                 <input type="hidden" name="linies[__INDEX__].lot.id" />
-                
+
                 <div class="field">
                     <label>Matèria primera</label>
                     <select name="linies[__INDEX__].materiaPrimera.id">

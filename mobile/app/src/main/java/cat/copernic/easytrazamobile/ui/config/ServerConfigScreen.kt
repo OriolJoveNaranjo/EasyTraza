@@ -19,6 +19,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun ServerConfigScreen(
+    onConfigSaved: () -> Unit,
     viewModel: ServerConfigViewModel = viewModel()
 ) {
     val serverIp by viewModel.serverIp.collectAsState()
@@ -53,11 +54,11 @@ fun ServerConfigScreen(
         )
 
         Button(
-            onClick = viewModel::saveIp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp)
-        ) {
+            onClick = {
+                viewModel.saveIp()
+                onConfigSaved()
+            }
+        ){
             Text("Guardar configuració")
         }
         Button(

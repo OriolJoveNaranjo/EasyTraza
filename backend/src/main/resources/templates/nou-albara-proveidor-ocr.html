@@ -29,7 +29,11 @@
 
                         <div class="field">
                             <label>Selecciona una imatge</label>
-                            <input type="file" id="ocrFile" accept="image/*">
+                            <input type="file"
+                                   id="ocrFile"
+                                   name="fitxersPujats"
+                                   form="albaraProveidorForm"
+                                   accept="image/*,.pdf">
                         </div>
 
                         <div class="inline-actions">
@@ -49,12 +53,14 @@
                     <section class="form-card">
                         <h2>Dades de l'albarà</h2>
                         <p th:if="${error}" th:text="${error}" class="error-message"></p>
-                        <form th:action="@{/albarans-proveidor/guardar}"
+                        <form id="albaraProveidorForm" 
+                              th:action="@{/albarans-proveidor/guardar}"
                               th:object="${albaraProveidor}"
-                              method="post">
+                              method="post"
+                              enctype="multipart/form-data">
 
                             <input type="hidden" th:field="*{id}"/>
-                            <input type="hidden" name="formSource" value="ocr">
+                            <input type="hidden" name="formSource" value="ocr"> 
                             <input type="hidden" id="ocrTextHidden" name="ocrTextHidden" th:value="${ocrTextHidden}">
 
                             <div class="field">
@@ -88,7 +94,7 @@
                                        id="numeroAlbaraOcr"
                                        name="numeroAlbara"
                                        th:value="${albaraProveidor.numeroAlbara != null ? albaraProveidor.numeroAlbara : ''}">
-                            </div>
+                            </div>                            
 
                             <div style="margin-top: 24px;">
                                 <div class="inline-actions" style="justify-content: space-between;">

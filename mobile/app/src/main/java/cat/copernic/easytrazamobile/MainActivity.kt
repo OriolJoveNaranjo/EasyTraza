@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import cat.copernic.easytrazamobile.ui.theme.EasyTrazaMobileTheme
 import cat.copernic.easytrazamobile.ui.config.ServerConfigScreen
+import cat.copernic.easytrazamobile.ui.users.UserSelectionScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,9 +33,20 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             EasyTrazaMobileTheme {
-                ServerConfigScreen()
+                var screen by rememberSaveable { mutableStateOf("config") }
 
+                when (screen) {
+                    "config" -> ServerConfigScreen(
+                        onConfigSaved = { screen = "users" }
+                    )
 
+                    "users" -> UserSelectionScreen(
+                        onUserSelected = { screen = "menu" },
+                        onConfigClick = { screen = "config" }
+                    )
+
+                    "menu" -> Text("Menú principal")
+                }
             }
         }
     }
