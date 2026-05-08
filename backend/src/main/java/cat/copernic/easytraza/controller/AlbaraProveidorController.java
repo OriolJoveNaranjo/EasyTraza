@@ -104,8 +104,6 @@ public class AlbaraProveidorController {
                 }
             }
 
-            netejarLiniesBuides(albaraProveidor);
-
             if (albaraProveidor.getId() != null) {
                 albaraProveidorService.update(albaraProveidor.getId(), albaraProveidor, fitxers);
             } else {
@@ -123,6 +121,7 @@ public class AlbaraProveidorController {
             if ("ocr".equals(formSource)) {
                 model.addAttribute("mode", "ocr");
                 model.addAttribute("ocrTextHidden", ocrTextHidden);
+                model.addAttribute("error", e.getMessage() + ". Torna a seleccionar la imatge abans de guardar.");
                 return "nou-albara-proveidor-ocr";
             }
 

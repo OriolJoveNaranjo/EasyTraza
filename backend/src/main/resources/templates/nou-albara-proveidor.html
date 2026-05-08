@@ -180,15 +180,10 @@
 
                                 <div class="field">
                                     <label>Unitat</label>
-                                    <select th:field="*{linies[__${stat.index}__].unitat}">
-                                        <option value="">-- Selecciona unitat --</option>
-                                        <option value="KG">KG</option>
-                                        <option value="L">L</option>
-                                        <option value="TONELADES">Tonelades</option>
-                                        <option value="SACS">Sacs</option>
-                                        <option value="CAIXES">Caixes</option>
-                                        <option value="Unitat">Unitat</option>
-                                    </select>
+                                    <input type="text"
+                                           th:field="*{linies[__${stat.index}__].unitat}"
+                                           list="unitatsList"
+                                           placeholder="Selecciona o escriu una unitat">
                                 </div>
 
                                 <div class="field">
@@ -224,6 +219,15 @@
                         <button type="submit" class="btn-primary">Guardar</button>
                     </div>
                 </form>
+                <datalist id="unitatsList">
+                    <option value="KG"></option>
+                    <option value="L"></option>
+                    <option value="TONELADES"></option>
+                    <option value="SACS"></option>
+                    <option value="CAIXES"></option>
+                    <option value="UNITAT"></option>
+                    <option value="GRAMS"></option>
+                </datalist>
 
                 <!-- MODO VER -->
                 <div th:if="${mode == 'view'}">
@@ -324,15 +328,10 @@
 
                 <div class="field">
                     <label>Unitat</label>
-                    <select name="linies[__INDEX__].unitat">
-                        <option value="">-- Selecciona unitat --</option>
-                        <option value="KG">KG</option>
-                        <option value="L">L</option>
-                        <option value="TONELADES">Tonelades</option>
-                        <option value="SACS">Sacs</option>
-                        <option value="CAIXES">Caixes</option>
-                        <option value="UNITAT">Unitat</option>
-                    </select>
+                    <input type="text"
+                           name="linies[__INDEX__].unitat"
+                           list="unitatsList"
+                           placeholder="Selecciona o escriu una unitat">
                 </div>
 
                 <div class="field">

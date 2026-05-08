@@ -30,7 +30,8 @@ public class Client {
     private String registreSanitari;
 
     private String telefon;
-
+    
+    @Column(unique = true)
     private String email;
 
     public Client() {
