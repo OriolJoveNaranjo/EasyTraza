@@ -37,12 +37,18 @@ public class LotProveidorController {
     }
 
     @PostMapping("/obrir/{id}")
-    public String obrir(@PathVariable Long id, RedirectAttributes redirect) {
+    public String obrir(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "false") boolean confirmar,
+            RedirectAttributes redirect) {
+
         try {
-            lotService.iniciarLot(id);
+            lotService.iniciarLot(id, confirmar);
             redirect.addFlashAttribute("success", "Lot obert correctament");
+
         } catch (RuntimeException e) {
             redirect.addFlashAttribute("error", e.getMessage());
+            redirect.addFlashAttribute("lotPendentInici", id);
         }
 
         return "redirect:/lots-proveidor";
@@ -59,5 +65,5 @@ public class LotProveidorController {
 
         return "redirect:/lots-proveidor";
     }
-
+    
 }

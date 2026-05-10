@@ -26,4 +26,6 @@ public interface LotProveidorRepository extends JpaRepository<LotProveidor, Long
             Long albaraId);
 
     List<LotProveidor> findByEstat(EstatLot estat);
+
+    Optional<LotProveidor> findByMateriaPrimeraIdAndEstat(Long materiaPrimeraId, EstatLot estat);
 }
