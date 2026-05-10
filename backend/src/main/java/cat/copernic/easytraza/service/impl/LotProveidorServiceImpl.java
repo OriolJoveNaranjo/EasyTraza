@@ -8,9 +8,11 @@ import cat.copernic.easytraza.entities.LotProveidor;
 import cat.copernic.easytraza.enums.EstatLot;
 import cat.copernic.easytraza.repository.LotProveidorRepository;
 import cat.copernic.easytraza.service.LotProveidorService;
+import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -35,17 +37,39 @@ public class LotProveidorServiceImpl implements LotProveidorService {
         return lotRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("El lot no existeix"));
     }
-
     @Override
     @Transactional
-    public void iniciarLot(Long id) {
-        LotProveidor lot = findById(id);
+    public void iniciarLot(Long lotId, boolean confirmarTancarAnterior) {
+        LotProveidor lot = lotRepo.findById(lotId)
+                .orElseThrow(() -> new RuntimeException("El lot no existeix"));
 
-        if (lot.getEstat() != EstatLot.EN_ESTOC) {
-            throw new RuntimeException("Només es poden iniciar lots en estat EN_ESTOC");
+        if (lot.getMateriaPrimera() == null || lot.getMateriaPrimera().getId() == null) {
+            throw new RuntimeException("El lot no té matèria primera associada");
+        }
+
+        Optional<LotProveidor> lotObertAnterior = lotRepo.findByMateriaPrimeraIdAndEstat(
+                lot.getMateriaPrimera().getId(),
+                EstatLot.OBERT
+        );
+
+        if (lotObertAnterior.isPresent()
+                && !lotObertAnterior.get().getId().equals(lot.getId())
+                && !confirmarTancarAnterior) {
+            throw new RuntimeException("Ja hi ha un lot obert d'aquesta matèria primera. Cal confirmar que vols finalitzar-lo.");
+        }
+
+        if (lotObertAnterior.isPresent()
+                && !lotObertAnterior.get().getId().equals(lot.getId())) {
+            LotProveidor anterior = lotObertAnterior.get();
+            anterior.setEstat(EstatLot.ACABAT);
+            anterior.setDataAcabament(LocalDateTime.now());
+            lotRepo.save(anterior);
         }
 
         lot.setEstat(EstatLot.OBERT);
+        lot.setDataObertura(LocalDateTime.now());
+
+        lotRepo.save(lot);
     }
 
     @Override
@@ -68,8 +92,11 @@ public class LotProveidorServiceImpl implements LotProveidorService {
         }
 
         lot.setEstat(EstatLot.ACABAT);
+        lot.setDataAcabament(LocalDateTime.now());        
 
         lotRepo.save(lot);
     }
+
+    
 
 }

@@ -7,6 +7,7 @@
         <link rel="stylesheet" th:href="@{/css/buttons.css}">
         <link rel="stylesheet" th:href="@{/css/lots-proveidor.css}">
     </head>
+
     <body>
         <div class="app-layout">
 
@@ -20,7 +21,21 @@
                     </div>
                 </div>
 
-                <p th:if="${error}" th:text="${error}" class="error-message"></p>
+                <div th:if="${error}" class="error-message">
+                    <p th:text="${error}"></p>
+
+                    <form th:if="${lotPendentInici != null}"
+                          th:action="@{'/lots-proveidor/obrir/' + ${lotPendentInici}}"
+                          method="post">
+
+                        <input type="hidden" name="confirmar" value="true">
+
+                        <button type="submit" class="btn-primary">
+                            Confirmar i finalitzar lot anterior
+                        </button>
+                    </form>
+                </div>
+
                 <p th:if="${success}" th:text="${success}" class="success-message"></p>
 
                 <div class="filters-row">
@@ -65,24 +80,21 @@
                         </div>
 
                         <div class="lot-actions">
-
-                            <!-- OBRIR -->
                             <form th:if="${lot.estat.name() == 'EN_ESTOC'}"
                                   th:action="@{/lots-proveidor/obrir/{id}(id=${lot.id})}"
                                   method="post">
                                 <button type="submit" class="btn-primary">Obrir</button>
                             </form>
 
-                            <!-- FINALITZAR -->
                             <form th:if="${lot.estat.name() == 'OBERT'}"
                                   th:action="@{/lots-proveidor/finalitzar/{id}(id=${lot.id})}"
                                   method="post">
                                 <button type="submit" class="btn-finish">Finalitzar</button>
                             </form>
-
-
-
                         </div>
                     </div>
-                    </body>
-                    </html>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>

@@ -17,7 +17,7 @@ public interface LotProveidorService {
 
     LotProveidor findById(Long id);
 
-    void iniciarLot(Long lotId);
+    void iniciarLot(Long lotId, boolean confirmarTancarAnterior);
     
     void finalitzarLot(Long lotId);
 
