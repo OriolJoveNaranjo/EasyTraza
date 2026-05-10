@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Panell - EasyTraza</title>
+
+        <link rel="stylesheet" th:href="@{/css/layout.css}">
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+        <link rel="stylesheet" th:href="@{/css/table.css}">
+    </head>
+
+    <body>
+
+        <div class="app-layout">
+
+            <div th:replace="~{fragments/sidebar :: sidebar('panell')}"></div>
+
+            <main class="page-content">
+
+                <div class="page-header">
+                    <div>
+                        <h1>Panell</h1>
+                        <p>Activitat recent</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-cards">
+
+                    <div class="dashboard-card">
+                        <h3>Lots actius</h3>
+                        <strong>0</strong>
+                        <p>Veure tots</p>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <h3>Alertes de caducitat</h3>
+                        <strong>0</strong>
+                        <p>Pròxims 7 dies</p>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <h3>Controls pendents</h3>
+                        <strong>1</strong>
+                        <p>Control pH pendent</p>
+                    </div>
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </body>
+</html>
