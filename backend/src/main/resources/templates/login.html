@@ -21,6 +21,9 @@
                 <div th:if="${param.error}" class="login-alert error">
                     Email o contrasenya incorrectes.
                 </div>
+                <div th:if="${param.passwordChanged}" class="login-alert success">
+                    Contrasenya actualitzada correctament. Ja pots iniciar sessió.
+                </div>
 
                 <div th:if="${param.disabled}" class="login-alert error">
                     Aquest usuari no està operatiu.

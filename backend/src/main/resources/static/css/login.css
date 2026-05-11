@@ -105,3 +105,34 @@ body.login-body {
     background: #dcfce7;
     color: #166534;
 }
+.login-title {
+    text-align: center;
+    margin-bottom: 24px;
+    color: #5f3a1a;
+    font-size: 24px;
+}
+
+.login-footer a {
+    color: #9a5514;
+    font-weight: 700;
+    text-decoration: none;
+}
+.login-demo-link {
+    margin-top: 22px;
+    background: #fff8ef;
+    border: 1px solid #ead8c3;
+    border-radius: 14px;
+    padding: 14px;
+    font-size: 14px;
+}
+
+.login-demo-link p {
+    margin-bottom: 8px;
+    font-weight: 700;
+    color: #5f3a1a;
+}
+
+.login-demo-link a {
+    color: #9a5514;
+    word-break: break-all;
+}
