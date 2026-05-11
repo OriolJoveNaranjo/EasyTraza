@@ -11,7 +11,10 @@
             </div>
 
             <nav class="menu">
-                <a href="#" class="menu-item">Panell</a>
+                <a th:href="@{/panell}"
+                   th:class="'menu-item' + (${activePage} == 'panell' ? ' active' : '')">
+                    Panell
+                </a>
                 <a th:href="@{/clients}"
                    th:class="'menu-item' + (${activePage} == 'clients' ? ' active' : '')">
                     Clients
@@ -42,15 +45,29 @@
                     <span class="active-lang">CA</span>
                 </div>
 
-                <div class="user-box">
-                    <div class="avatar"></div>
+                <div class="user-box" th:if="${usuariSessio != null}">
+
+                    <img th:src="${usuariSessio.foto != null and !#strings.isEmpty(usuariSessio.foto)}
+                         ? @{${'/uploads/usuaris/' + usuariSessio.foto}}
+                         : @{/images/fotoPerfil.png}"
+                         alt="Foto usuari"
+                         class="avatar">
+
                     <div>
-                        <strong>Marco</strong>
-                        <p>Maestro Panadero</p>
+                        <strong th:text="${usuariSessio.nom}">
+                            Nom Usuari
+                        </strong>
+
+                        <p th:text="${usuariSessio.rol}">
+                            Rol
+                        </p>
                     </div>
+
                 </div>
 
-                <button class="logout-btn">Tancar sessió</button>
+                <form th:action="@{/logout}" method="post">
+                    <button class="logout-btn" type="submit">Tancar sessió</button>
+                </form>
             </div>
         </aside>
     </body>

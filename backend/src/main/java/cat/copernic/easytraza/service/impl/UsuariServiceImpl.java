@@ -9,6 +9,7 @@ import cat.copernic.easytraza.repository.UsuariRepository;
 import cat.copernic.easytraza.service.UsuariService;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,9 +20,11 @@ import org.springframework.stereotype.Service;
 public class UsuariServiceImpl implements UsuariService {
 
     private final UsuariRepository usuariRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuariServiceImpl(UsuariRepository usuariRepository) {
+    public UsuariServiceImpl(UsuariRepository usuariRepository, PasswordEncoder passwordEncoder) {
         this.usuariRepository = usuariRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -39,6 +42,7 @@ public class UsuariServiceImpl implements UsuariService {
         if (usuariRepository.existsByEmail(usuari.getEmail())) {
             throw new RuntimeException("Ja existeix un usuari amb aquest email");
         }
+        usuari.setPassword(passwordEncoder.encode(usuari.getPassword()));
 
         return usuariRepository.save(usuari);
     }
@@ -56,11 +60,11 @@ public class UsuariServiceImpl implements UsuariService {
         }
 
         Usuari actual = existent.get();
-        actual.setNom(usuari.getNom());    
+        actual.setNom(usuari.getNom());
         actual.setRol(usuari.getRol());
         actual.setActiu(usuari.isActiu());
         if (usuari.getPassword() != null && !usuari.getPassword().trim().isEmpty()) {
-            actual.setPassword(usuari.getPassword());
+            actual.setPassword(passwordEncoder.encode(usuari.getPassword()));
         }
 
         return usuariRepository.save(actual);
