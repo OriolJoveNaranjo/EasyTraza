@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -40,17 +46,41 @@ public class UsuariController {
     }
 
     @PostMapping("/usuaris/guardar")
-    public String guardar(@ModelAttribute Usuari usuari, Model model) {
+    public String guardar(@ModelAttribute Usuari usuari,
+            @RequestParam(required = false) MultipartFile fotoFile,
+            Model model) {
         try {
+            Usuari usuariGuardat;
+
             if (usuari.getId() != null) {
-                usuariService.update(usuari.getId(), usuari);
+                usuariGuardat = usuariService.update(usuari.getId(), usuari);
             } else {
-                usuariService.save(usuari);
+                usuariGuardat = usuariService.save(usuari);
+            }
+
+            if (fotoFile != null && !fotoFile.isEmpty()) {
+                String nomOriginal = fotoFile.getOriginalFilename();
+                String extensio = "";
+
+                if (nomOriginal != null && nomOriginal.contains(".")) {
+                    extensio = nomOriginal.substring(nomOriginal.lastIndexOf("."));
+                }
+
+                String nomFitxer = "usuari_" + usuariGuardat.getId() + extensio;
+
+                Path directori = Paths.get("uploads/usuaris");
+                Files.createDirectories(directori);
+
+                Path rutaFitxer = directori.resolve(nomFitxer);
+                Files.write(rutaFitxer, fotoFile.getBytes());
+
+                usuariGuardat.setFoto(nomFitxer);
+                usuariService.update(usuariGuardat.getId(), usuariGuardat);
             }
 
             return "redirect:/usuaris";
 
-        } catch (RuntimeException e) {
+        } catch (RuntimeException | IOException e) {
             model.addAttribute("error", e.getMessage());
             model.addAttribute("usuari", usuari);
             model.addAttribute("mode", usuari.getId() != null ? "edit" : "create");

@@ -37,38 +37,30 @@
                 <a href="#" class="menu-item">Controls</a>
                 <a href="#" class="menu-item">Informes</a>
                 <a th:href="@{/usuaris}" th:class="'menu-item' + (${activePage} == 'usuaris' ? ' active' : '')">Usuaris</a>
-            </nav>
+            </nav>   
+            <div class="sidebar-footer">                
 
-            <div class="sidebar-footer">
-                <div class="lang-switch">
-                    <span>ES</span>
-                    <span class="active-lang">CA</span>
-                </div>
-
-                <div class="user-box" th:if="${usuariSessio != null}">
+                <a th:href="@{/perfil}" class="user-box" th:if="${usuariSessio != null}">
 
                     <img th:src="${usuariSessio.foto != null and !#strings.isEmpty(usuariSessio.foto)}
                          ? @{${'/uploads/usuaris/' + usuariSessio.foto}}
-                         : @{/images/fotoPerfil.png}"
+                         : @{/images/usuaris/fotoPerfil.png}"
                          alt="Foto usuari"
                          class="avatar">
 
                     <div>
-                        <strong th:text="${usuariSessio.nom}">
-                            Nom Usuari
-                        </strong>
-
-                        <p th:text="${usuariSessio.rol}">
-                            Rol
-                        </p>
+                        <strong th:text="${usuariSessio.nom}">Nom Usuari</strong>
+                        <p th:text="${usuariSessio.rol}">Rol</p>
                     </div>
 
-                </div>
+                </a>
 
                 <form th:action="@{/logout}" method="post">
                     <button class="logout-btn" type="submit">Tancar sessió</button>
                 </form>
+
             </div>
+
         </aside>
     </body>
 </html>

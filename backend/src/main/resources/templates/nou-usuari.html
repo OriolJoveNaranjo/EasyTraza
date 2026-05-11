@@ -13,8 +13,21 @@
 
                 <p th:if="${error}" th:text="${error}" class="error-message"></p>
 
-                <form th:action="@{/usuaris/guardar}" th:object="${usuari}" method="post">
+                <form th:action="@{/usuaris/guardar}"
+                      th:object="${usuari}"
+                      method="post"
+                      enctype="multipart/form-data">
                     <input type="hidden" th:field="*{id}"/>
+
+                    <div class="form-group">
+                        <label for="fotoFile">Foto de perfil</label>
+
+                        <input id="fotoFile"
+                               type="file"
+                               name="fotoFile"
+                               accept="image/*"
+                               class="form-input">
+                    </div>
 
                     <div class="field">
                         <label>Nom *</label>
@@ -31,33 +44,33 @@
 
                     <div class="field">
                         <label>Contrasenya *</label>                        
-                            <input type="password"
-                                   th:field="*{password}"
-                                   th:required="${usuari.id == null}"
-                                   th:placeholder="${usuari.id != null} ? 'Deixa-ho buit per mantenir la contrasenya actual' : 'Introdueix una contrasenya'">
-                        </div>
+                        <input type="password"
+                               th:field="*{password}"
+                               th:required="${usuari.id == null}"
+                               th:placeholder="${usuari.id != null} ? 'Deixa-ho buit per mantenir la contrasenya actual' : 'Introdueix una contrasenya'">
+                    </div>
 
-                        <div class="field">
-                            <label>Rol *</label>
-                            <select th:field="*{rol}" required>
-                                <option value="">Selecciona un rol</option>
-                                <option value="ADMIN">ADMIN</option>
-                                <option value="OPERARI">OPERARI</option>
-                            </select>
-                        </div>
+                    <div class="field">
+                        <label>Rol *</label>
+                        <select th:field="*{rol}" required>
+                            <option value="">Selecciona un rol</option>
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="OPERARI">OPERARI</option>
+                        </select>
+                    </div>
 
-                        <div class="field">
-                            <label>Actiu *</label>
-                            <select th:field="*{actiu}" required>
-                                <option value="true">Sí</option>
-                                <option value="false">No</option>
-                            </select>
-                        </div>
+                    <div class="field">
+                        <label>Actiu *</label>
+                        <select th:field="*{actiu}" required>
+                            <option value="true">Sí</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
 
-                        <div class="form-actions">
-                            <a th:href="@{/usuaris}" class="btn-secondary">Cancel·lar</a>
-                            <button type="submit" class="btn-primary">Guardar</button>
-                        </div>
+                    <div class="form-actions">
+                        <a th:href="@{/usuaris}" class="btn-secondary">Cancel·lar</a>
+                        <button type="submit" class="btn-primary">Guardar</button>
+                    </div>
                 </form>
             </div>
         </div>
