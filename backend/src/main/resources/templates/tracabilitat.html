@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Traçabilitat - EasyTraza</title>
+
+        <link rel="stylesheet" th:href="@{/css/layout.css}">
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+        <link rel="stylesheet" th:href="@{/css/table.css}">
+    </head>
+
+    <body>
+        <div class="app-layout">
+
+            <div th:replace="~{fragments/sidebar :: sidebar('tracabilitat')}"></div>
+
+            <main class="page-content">
+
+                <div class="page-header">
+                    <div>
+                        <h1>Traçabilitat</h1>
+                        <p>Relació entre lots de proveïdor i albarans de client</p>
+                    </div>
+
+                    <a th:href="@{/tracabilitat/nova}" class="btn-primary">
+                        + Nova traçabilitat
+                    </a>
+                </div>
+
+                <div class="content-card">
+
+                    <table th:if="${not #lists.isEmpty(tracabilitats)}">
+                        <thead>
+                            <tr>
+                                <th>Lot proveïdor</th>
+                                <th>Matèria primera</th>
+                                <th>Producte final</th>
+                                <th>Client</th>
+                                <th>Albarà client</th>
+                                <th>Quantitat utilitzada</th>
+                                <th>Data registre</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each="t : ${tracabilitats}">
+                                <td th:text="${t.lotProveidor.identificadorLot}"></td>
+                                <td th:text="${t.lotProveidor.materiaPrimera.nom}"></td>
+                                <td th:text="${t.producteFinal.nom}"></td>
+                                <td th:text="${t.liniaAlbaraClient.albaraClient.client.nom}"></td>
+                                <td th:text="${t.liniaAlbaraClient.albaraClient.id}"></td>
+                                <td th:text="${t.quantitatUtilitzada}"></td>
+                                <td th:text="${#temporals.format(t.dataRegistre, 'dd/MM/yyyy HH:mm')}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div th:if="${#lists.isEmpty(tracabilitats)}" class="empty-state">
+                        Encara no hi ha registres de traçabilitat.
+                    </div>
+
+                </div>
+
+            </main>
+
+        </div>
+    </body>
+</html>

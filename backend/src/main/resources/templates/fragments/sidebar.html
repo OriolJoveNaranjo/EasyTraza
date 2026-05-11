@@ -33,9 +33,15 @@
                    th:class="'menu-item' + (${activePage} == 'albarans-client' ? ' active' : '')">
                     Albarans Client
                 </a>
-                <a href="#" class="menu-item">Traçabilitat</a>
+                <a th:href="@{/tracabilitat}"
+                   th:class="'menu-item' + (${activePage} == 'tracabilitat' ? ' active' : '')">
+                    Traçabilitat
+                </a>
                 <a href="#" class="menu-item">Controls</a>
-                <a href="#" class="menu-item">Informes</a>
+                <a th:href="@{/informes/lot}"
+                   th:class="'menu-item' + (${activePage} == 'informes' ? ' active' : '')">
+                    Informes
+                </a>
                 <a th:href="@{/usuaris}" th:class="'menu-item' + (${activePage} == 'usuaris' ? ' active' : '')">Usuaris</a>
             </nav>   
             <div class="sidebar-footer">                

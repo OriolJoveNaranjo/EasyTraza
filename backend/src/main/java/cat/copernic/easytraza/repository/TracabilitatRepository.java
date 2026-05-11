@@ -4,7 +4,7 @@
  */
 package cat.copernic.easytraza.repository;
 
-import cat.copernic.easytraza.entities.LiniaAlbaraClient;
+import cat.copernic.easytraza.entities.Tracabilitat;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,7 +12,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author orjon
  */
-public interface LiniaAlbaraClientRepository extends JpaRepository<LiniaAlbaraClient, Long> {
+public interface TracabilitatRepository extends JpaRepository<Tracabilitat, Long> {
 
-    List<LiniaAlbaraClient> findByLotProveidorId(Long lotProveidorId);
+    List<Tracabilitat> findByLotProveidorId(Long lotId);
+
 }
