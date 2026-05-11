@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Login - EasyTraza</title>
+
+        <link rel="stylesheet" th:href="@{/css/layout.css}">
+        <link rel="stylesheet" th:href="@{/css/login.css}">
+    </head>
+
+    <body class="login-body">
+
+        <main class="login-container">
+
+            <div class="login-logo">
+                <img th:src="@{/images/LogoEasyTraza.PNG}" alt="EasyTraza">
+            </div>
+
+            <section class="login-card">
+
+                <div th:if="${param.error}" class="login-alert error">
+                    Email o contrasenya incorrectes.
+                </div>
+
+                <div th:if="${param.disabled}" class="login-alert error">
+                    Aquest usuari no està operatiu.
+                </div>
+
+                <div th:if="${param.logout}" class="login-alert success">
+                    Sessió tancada correctament.
+                </div>
+
+                <form th:action="@{/login}" method="post">
+
+                    <label class="login-label" for="email">Email</label>
+                    <input id="email"
+                           class="login-input"
+                           type="email"
+                           name="email"
+                           placeholder="correu@exemple.com"
+                           required>
+
+                    <label class="login-label" for="password">Contrasenya</label>
+                    <input id="password"
+                           class="login-input"
+                           type="password"
+                           name="password"
+                           placeholder="••••••••"
+                           required>
+
+                    <a class="forgot-link" th:href="@{/recuperar-contrasenya}">
+                        Has oblidat la contrasenya?
+                    </a>
+
+                    <button class="login-button" type="submit">
+                        Iniciar sessió
+                    </button>
+
+                </form>
+
+                <div class="login-footer">
+                    Gestió de lots i traçabilitat
+                </div>
+
+            </section>
+
+        </main>
+
+    </body>
+</html>

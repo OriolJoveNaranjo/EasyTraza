@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+
 /**
  *
  * @author orjon
@@ -42,6 +43,8 @@ public class Usuari {
 
     @Column(nullable = false)
     private boolean actiu;
+    
+    private String foto;
 
     public Usuari() {
     }
@@ -101,4 +104,13 @@ public class Usuari {
     public void setActiu(boolean actiu) {
         this.actiu = actiu;
     }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+    
 }
