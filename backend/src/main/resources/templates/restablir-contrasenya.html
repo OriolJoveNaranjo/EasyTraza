@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Restablir contrasenya - EasyTraza</title>
+
+        <link rel="stylesheet" th:href="@{/css/layout.css}">
+        <link rel="stylesheet" th:href="@{/css/login.css}">
+    </head>
+
+    <body class="login-body">
+
+        <main class="login-container">
+
+            <div class="login-logo">
+                <img th:src="@{/images/LogoEasyTraza.PNG}" alt="EasyTraza">
+            </div>
+
+            <section class="login-card">
+
+                <h2 class="login-title">Nova contrasenya</h2>
+
+                <form th:action="@{/restablir-contrasenya}" method="post">
+
+                    <input type="hidden" name="token" th:value="${token}">
+
+                    <label class="login-label" for="novaContrasenya">Nova contrasenya</label>
+                    <input id="novaContrasenya"
+                           class="login-input"
+                           type="password"
+                           name="novaContrasenya"
+                           placeholder="Nova contrasenya"
+                           required>
+
+                    <button class="login-button" type="submit">
+                        Actualitzar contrasenya
+                    </button>
+
+                </form>
+
+                <div class="login-footer">
+                    <a th:href="@{/login}">Tornar al login</a>
+                </div>
+
+            </section>
+
+        </main>
+
+    </body>
+</html>
