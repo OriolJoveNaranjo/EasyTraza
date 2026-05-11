@@ -30,6 +30,7 @@ public class SecurityConfig {
                         "/api/**",
                         "/images/**",
                         "/webjars/**",
+                        "/restablir-contrasenya",
                         "/recuperar-contrasenya"
                 ).permitAll()
                 .anyRequest().authenticated()
