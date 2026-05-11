@@ -77,12 +77,6 @@
     border-radius: 8px;
 }
 
-.user-box {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    margin-bottom: 18px;
-}
 
 .avatar {
     width: 46px;
@@ -91,8 +85,21 @@
     background: #bca38b;
 }
 
+.user-box {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 18px;
+    text-decoration: none;
+    color: #fff7e6;
+}
+
+.user-box strong {
+    color: #fff7e6;
+}
+
 .user-box p {
-    color: #6b665f;
+    color: #f4c27a;
     font-size: 14px;
     margin-top: 4px;
 }
