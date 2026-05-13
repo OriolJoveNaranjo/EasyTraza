@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Gràfic mensual de productes - EasyTraza</title>
+
+        <link rel="stylesheet" th:href="@{/css/layout.css}">
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+        <link rel="stylesheet" th:href="@{/css/table.css}">
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+
+    <body>
+        <div class="app-layout">
+
+            <div th:replace="~{fragments/sidebar :: sidebar('informes')}"></div>
+
+            <main class="page-content">
+
+                <div class="page-header">
+                    <div>
+                        <h1>Informe mensual</h1>
+                        <p>Evolució diària de productes venuts</p>
+                    </div>
+
+                    <a th:href="@{/informes}" class="btn-secondary">Tornar</a>
+                </div>
+
+                <div class="filter-card">
+                    <form id="filtersForm" th:action="@{/informes/productes-mensual}" method="get" class="filter-bar">
+
+                        <select name="mes" class="filter-input" onchange="this.form.submit()">
+                            <option th:each="m : ${mesos}"
+                                    th:value="${m}"
+                                    th:selected="${m.toString() == mesSeleccionat}"
+                                    th:text="${m}">
+                            </option>
+                        </select>
+
+                        <select name="producteId" class="filter-input" onchange="this.form.submit()">
+                            <option value="">Tots els productes</option>
+
+                            <option th:each="producte : ${productes}"
+                                    th:value="${producte.id}"
+                                    th:selected="${producte.id == producteSeleccionat}"
+                                    th:text="${producte.nom}">
+                            </option>
+                        </select>
+
+                    </form>
+                </div>
+
+                <div class="content-card">
+
+                    <h3>Total venut aquest mes</h3>
+                    <strong style="display:block; font-size:36px; margin:12px 0 24px;"
+                            th:text="${totalMes}">
+                        0
+                    </strong>
+
+                    <canvas id="productesChart" height="110"></canvas>
+
+                </div>
+
+            </main>
+
+        </div>
+
+        <script th:inline="javascript">
+            const dies = /*[[${dies}]]*/ [];
+            const quantitats = /*[[${quantitats}]]*/ [];
+
+            const ctx = document.getElementById('productesChart');
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dies,
+                    datasets: [{
+                            label: 'Unitats venudes',
+                            data: quantitats,
+                            tension: 0.3,
+                            fill: false
+                        }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Dia del mes'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Unitats venudes'
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+
+    </body>
+</html>
