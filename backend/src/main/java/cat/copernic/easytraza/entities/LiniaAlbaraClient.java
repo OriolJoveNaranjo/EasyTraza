@@ -29,6 +29,9 @@ public class LiniaAlbaraClient {
 
     private Double quantitat;
 
+    @ManyToOne
+    private LotProveidor lotProveidor;
+
     public Long getId() {
         return id;
     }
@@ -60,5 +63,13 @@ public class LiniaAlbaraClient {
     public void setQuantitat(Double quantitat) {
         this.quantitat = quantitat;
     }
-    
+
+    public LotProveidor getLotProveidor() {
+        return lotProveidor;
+    }
+
+    public void setLotProveidor(LotProveidor lotProveidor) {
+        this.lotProveidor = lotProveidor;
+    }
+
 }

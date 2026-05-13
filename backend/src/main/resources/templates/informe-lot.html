@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Informe per lot - EasyTraza</title>
+
+        <link rel="stylesheet" th:href="@{/css/layout.css}">
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+        <link rel="stylesheet" th:href="@{/css/table.css}">
+    </head>
+
+    <body>
+        <div class="app-layout">
+
+            <div th:replace="~{fragments/sidebar :: sidebar('informes')}"></div>
+
+            <main class="page-content">
+
+                <div class="page-header">
+                    <div>
+                        <h1>Informe per lot</h1>
+                        <p>Consulta els productes i albarans generats a partir d’un lot</p>
+                    </div>
+                </div>
+
+                <div class="filter-card">
+                    <form th:action="@{/informes/lot}" method="get" class="filter-bar">
+
+                        <select name="lotId" class="filter-input" required>
+                            <option value="">Selecciona un lot</option>
+
+                            <option th:each="lot : ${lots}"
+                                    th:value="${lot.id}"
+                                    th:selected="${lot.id == lotSeleccionatId}"
+                                    th:text="${lot.identificadorLot + ' - ' + lot.materiaPrimera.nom}">
+                            </option>
+                        </select>
+
+                        <button type="submit" class="btn-primary">
+                            Consultar
+                        </button>
+
+                    </form>
+                </div>
+
+                <div class="content-card">
+
+                    <table th:if="${resultats != null and not #lists.isEmpty(resultats)}">
+                        <thead>
+                            <tr>
+                                <th>Producte fabricat</th>
+                                <th>Quantitat fabricada</th>
+                                <th>Client</th>
+                                <th>Núm. albarà</th>
+                                <th>Data albarà</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each="linia : ${resultats}">
+                                <td th:text="${linia.producte.nom}"></td>
+                                <td th:text="${linia.quantitat}"></td>
+                                <td th:text="${linia.albaraClient.client.nom}"></td>
+                                <td th:text="${linia.albaraClient.id}"></td>
+                                <td th:text="${#temporals.format(linia.albaraClient.data, 'dd/MM/yyyy HH:mm')}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div th:if="${resultats != null and #lists.isEmpty(resultats)}" class="empty-state">
+                        No s’han trobat resultats per aquest lot.
+                    </div>
+
+                    <div th:if="${resultats == null}" class="empty-state">
+                        Selecciona un lot per consultar l’informe.
+                    </div>
+
+                </div>
+
+            </main>
+
+        </div>
+    </body>
+</html>

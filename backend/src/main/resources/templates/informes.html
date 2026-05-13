@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Informes - EasyTraza</title>
+
+        <link rel="stylesheet" th:href="@{/css/layout.css}">
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+    </head>
+
+    <body>
+        <div class="app-layout">
+
+            <div th:replace="~{fragments/sidebar :: sidebar('informes')}"></div>
+
+            <main class="page-content">
+
+                <div class="page-header">
+                    <div>
+                        <h1>Informes</h1>
+                        <p>Selecciona l’informe que vols consultar</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-cards">
+
+                    <a th:href="@{/informes/productes-mensual}" class="dashboard-card report-card">
+                        <h3>Informe mensual</h3>
+                        <strong>📈</strong>
+                        <p>Evolució diària de productes venuts durant un mes</p>
+                    </a>
+
+                </div>
+
+            </main>
+
+        </div>
+    </body>
+</html>
