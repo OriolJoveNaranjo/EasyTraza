@@ -33,14 +33,61 @@ public class TracabilitatController {
     }
 
     @GetMapping("/tracabilitat")
-    public String tracabilitat(@RequestParam(required = false) Long lotId, Model model) {
+    public String tracabilitat(@RequestParam(required = false) Long lotId,
+            @RequestParam(required = false) String ordre,
+            Model model) {
 
-        model.addAttribute("lots",
-        lotProveidorRepository.findByEstatNot(EstatLot.EN_ESTOC));
+        model.addAttribute("lots", lotProveidorRepository.findByEstatNot(EstatLot.EN_ESTOC));
         model.addAttribute("lotSeleccionatId", lotId);
+        model.addAttribute("ordre", ordre);
 
         if (lotId != null) {
             List<Tracabilitat> resultats = tracabilitatRepository.findByLotProveidor_Id(lotId);
+
+            if (ordre != null && !ordre.isBlank()) {
+                switch (ordre) {
+                    case "producteAsc" ->
+                        resultats.sort((a, b) -> a.getProducteFinal().getNom()
+                                .compareToIgnoreCase(b.getProducteFinal().getNom()));
+
+                    case "producteDesc" ->
+                        resultats.sort((a, b) -> b.getProducteFinal().getNom()
+                                .compareToIgnoreCase(a.getProducteFinal().getNom()));
+
+                    case "quantitatAsc" ->
+                        resultats.sort((a, b) -> a.getLiniaAlbaraClient().getQuantitat()
+                                .compareTo(b.getLiniaAlbaraClient().getQuantitat()));
+
+                    case "quantitatDesc" ->
+                        resultats.sort((a, b) -> b.getLiniaAlbaraClient().getQuantitat()
+                                .compareTo(a.getLiniaAlbaraClient().getQuantitat()));
+
+                    case "clientAsc" ->
+                        resultats.sort((a, b) -> a.getLiniaAlbaraClient().getAlbaraClient().getClient().getNom()
+                                .compareToIgnoreCase(b.getLiniaAlbaraClient().getAlbaraClient().getClient().getNom()));
+
+                    case "clientDesc" ->
+                        resultats.sort((a, b) -> b.getLiniaAlbaraClient().getAlbaraClient().getClient().getNom()
+                                .compareToIgnoreCase(a.getLiniaAlbaraClient().getAlbaraClient().getClient().getNom()));
+
+                    case "albaraAsc" ->
+                        resultats.sort((a, b) -> a.getLiniaAlbaraClient().getAlbaraClient().getId()
+                                .compareTo(b.getLiniaAlbaraClient().getAlbaraClient().getId()));
+
+                    case "albaraDesc" ->
+                        resultats.sort((a, b) -> b.getLiniaAlbaraClient().getAlbaraClient().getId()
+                                .compareTo(a.getLiniaAlbaraClient().getAlbaraClient().getId()));
+
+                    case "dataAsc" ->
+                        resultats.sort((a, b) -> a.getLiniaAlbaraClient().getAlbaraClient().getData()
+                                .compareTo(b.getLiniaAlbaraClient().getAlbaraClient().getData()));
+
+                    case "dataDesc" ->
+                        resultats.sort((a, b) -> b.getLiniaAlbaraClient().getAlbaraClient().getData()
+                                .compareTo(a.getLiniaAlbaraClient().getAlbaraClient().getData()));
+                }
+            }
+
             model.addAttribute("resultats", resultats);
         }
 

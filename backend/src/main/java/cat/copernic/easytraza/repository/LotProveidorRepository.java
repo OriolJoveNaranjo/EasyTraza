@@ -28,7 +28,6 @@ public interface LotProveidorRepository extends JpaRepository<LotProveidor, Long
 
     List<LotProveidor> findByEstatNot(EstatLot estat);
 
-    Optional<LotProveidor> findByMateriaPrimeraIdAndEstat(Long materiaPrimeraId, EstatLot estat);
-    
+    Optional<LotProveidor> findByMateriaPrimeraIdAndEstat(Long materiaPrimeraId, EstatLot estat);   
     
 }

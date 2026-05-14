@@ -35,6 +35,25 @@
                                     th:selected="${lot.id == lotSeleccionatId}"
                                     th:text="${lot.identificadorLot + ' - ' + lot.materiaPrimera.nom}">
                             </option>
+
+                        </select>
+                        <select name="ordre" class="filter-select" onchange="this.form.submit()">
+                            <option value="">Ordenar per</option>
+
+                            <option value="producteAsc" th:selected="${ordre == 'producteAsc'}">Producte A-Z</option>
+                            <option value="producteDesc" th:selected="${ordre == 'producteDesc'}">Producte Z-A</option>
+
+                            <option value="quantitatAsc" th:selected="${ordre == 'quantitatAsc'}">Quantitat ↑</option>
+                            <option value="quantitatDesc" th:selected="${ordre == 'quantitatDesc'}">Quantitat ↓</option>
+
+                            <option value="clientAsc" th:selected="${ordre == 'clientAsc'}">Client A-Z</option>
+                            <option value="clientDesc" th:selected="${ordre == 'clientDesc'}">Client Z-A</option>
+
+                            <option value="albaraAsc" th:selected="${ordre == 'albaraAsc'}">Albarà ↑</option>
+                            <option value="albaraDesc" th:selected="${ordre == 'albaraDesc'}">Albarà ↓</option>
+
+                            <option value="dataAsc" th:selected="${ordre == 'dataAsc'}">Data ↑</option>
+                            <option value="dataDesc" th:selected="${ordre == 'dataDesc'}">Data ↓</option>
                         </select>
 
                         <button type="submit" class="btn-primary">
