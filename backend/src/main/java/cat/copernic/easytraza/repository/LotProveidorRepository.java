@@ -6,9 +6,12 @@ package cat.copernic.easytraza.repository;
 
 import cat.copernic.easytraza.entities.LotProveidor;
 import cat.copernic.easytraza.enums.EstatLot;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
@@ -24,10 +27,23 @@ public interface LotProveidorRepository extends JpaRepository<LotProveidor, Long
             String identificadorLot,
             Long proveidorId,
             Long albaraId);
+
     List<LotProveidor> findByEstat(EstatLot estat);
 
     List<LotProveidor> findByEstatNot(EstatLot estat);
 
-    Optional<LotProveidor> findByMateriaPrimeraIdAndEstat(Long materiaPrimeraId, EstatLot estat);   
-    
+    Optional<LotProveidor> findByMateriaPrimeraIdAndEstat(Long materiaPrimeraId, EstatLot estat);
+
+    @Query("""
+    SELECT l FROM LotProveidor l
+    WHERE (:identificador IS NULL OR LOWER(l.identificadorLot) LIKE LOWER(CONCAT('%', :identificador, '%')))
+    AND (:estat IS NULL OR l.estat = :estat)
+    AND (:materiaId IS NULL OR l.materiaPrimera.id = :materiaId)
+    AND (:data IS NULL OR l.dataCaducitat = :data)
+    """)
+    List<LotProveidor> filtrarLots(
+            @Param("identificador") String identificador,
+            @Param("estat") EstatLot estat,
+            @Param("materiaId") Long materiaId,
+            @Param("data") LocalDate data);
 }

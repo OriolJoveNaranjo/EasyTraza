@@ -39,13 +39,38 @@
                 <p th:if="${success}" th:text="${success}" class="success-message"></p>
 
                 <div class="filters-row">
-                    <form th:action="@{/lots-proveidor}" method="get">
-                        <select class="filter-select" name="estat" onchange="this.form.submit()">
-                            <option value="" th:selected="${estatSeleccionat == null}">Tots els estats</option>
+                    <form th:action="@{/lots-proveidor}" method="get" class="filter-bar">
+
+                        <input type="text"
+                               name="identificador"
+                               class="filter-select"
+                               placeholder="Identificador lot"
+                               th:value="${identificador}">
+
+                        <select class="filter-select" name="estat">
+                            <option value="">Tots els estats</option>
                             <option value="EN_ESTOC" th:selected="${estatSeleccionat == 'EN_ESTOC'}">En estoc</option>
                             <option value="OBERT" th:selected="${estatSeleccionat == 'OBERT'}">Obert</option>
                             <option value="ACABAT" th:selected="${estatSeleccionat == 'ACABAT'}">Tancat</option>
                         </select>
+
+                        <select class="filter-select" name="materiaId">
+                            <option value="">Totes les matèries</option>
+                            <option th:each="m : ${materies}"
+                                    th:value="${m.id}"
+                                    th:text="${m.nom}"
+                                    th:selected="${materiaId != null and materiaId == m.id}">
+                            </option>
+                        </select>
+
+                        <input type="date"
+                               name="data"
+                               class="filter-select"
+                               th:value="${data}">
+
+                        <button type="submit" class="btn-primary">Filtrar</button>
+
+                        <a th:href="@{/lots-proveidor}" class="btn-secondary">Reset</a>
                     </form>
                 </div>
 
