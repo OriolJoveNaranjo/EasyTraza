@@ -25,7 +25,11 @@ import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
 import cat.copernic.easytraza.entities.FitxerAlbaraProveidor;
+import cat.copernic.easytraza.entities.Usuari;
+import cat.copernic.easytraza.repository.UsuariRepository;
 import java.io.IOException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -39,17 +43,20 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
     private final ProveidorRepository proveidorRepo;
     private final MateriaPrimeraRepository materiaRepo;
     private final LotProveidorRepository lotRepo;
+    private final UsuariRepository usuarirepo;
 
     public AlbaraProveidorServiceImpl(
             AlbaraProveidorRepository albaraRepo,
             ProveidorRepository proveidorRepo,
             MateriaPrimeraRepository materiaRepo,
-            LotProveidorRepository lotRepo
+            LotProveidorRepository lotRepo,
+            UsuariRepository usuarirepo
     ) {
         this.albaraRepo = albaraRepo;
         this.proveidorRepo = proveidorRepo;
         this.materiaRepo = materiaRepo;
         this.lotRepo = lotRepo;
+        this.usuarirepo = usuarirepo;
     }
 
     @Override
@@ -296,6 +303,13 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
             lot.setQuantitat(linia.getQuantitat());
             lot.setUnitat(linia.getUnitat().trim());
             lot.setEstat(EstatLot.EN_ESTOC);
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String email = auth.getName();
+
+            Usuari usuari = usuarirepo.findByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("Usuari no trobat"));
+
+            albaraProveidor.setUsuariAlta(usuari);
         }
 
         if (liniesValides == 0) {

@@ -15,7 +15,6 @@ import jakarta.persistence.GenerationType;
  *
  * @author orjon
  */
-
 @Entity
 public class Tracabilitat {
 
@@ -31,8 +30,6 @@ public class Tracabilitat {
 
     @ManyToOne(optional = false)
     private LiniaAlbaraClient liniaAlbaraClient;
-
-    private Double quantitatUtilitzada;
 
     private LocalDateTime dataRegistre;
 
@@ -55,10 +52,6 @@ public class Tracabilitat {
         return liniaAlbaraClient;
     }
 
-    public Double getQuantitatUtilitzada() {
-        return quantitatUtilitzada;
-    }
-
     public LocalDateTime getDataRegistre() {
         return dataRegistre;
     }
@@ -77,10 +70,6 @@ public class Tracabilitat {
 
     public void setLiniaAlbaraClient(LiniaAlbaraClient liniaAlbaraClient) {
         this.liniaAlbaraClient = liniaAlbaraClient;
-    }
-
-    public void setQuantitatUtilitzada(Double quantitatUtilitzada) {
-        this.quantitatUtilitzada = quantitatUtilitzada;
     }
 
     public void setDataRegistre(LocalDateTime dataRegistre) {
