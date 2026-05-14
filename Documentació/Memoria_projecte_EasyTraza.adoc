@@ -188,3 +188,71 @@ La part que més problemes m’ha donat ha estat l’OCR. Tot i que ja funcionav
 Aquest sprint ha estat una mica més llarg del normal pel pont que hi havia entremig, cosa que m’ha permès repartir millor la feina i dedicar més temps a parts que requerien proves i ajustos. Tot i així, algunes funcionalitats han necessitat més temps del previst per la complexitat tècnica que tenien.
 
 En general, crec que el sprint ha anat bé perquè he avançat bastant tant en backend com en la part mòbil, i he pogut deixar moltes funcionalitats pràcticament acabades. De cara al següent sprint, em tocarà sobretot polir errors, acabar d’estabilitzar l’OCR i millorar la gestió de fitxers i imatges dins de l’aplicació.
+
+
+= SPRINT - 4
+
+== 1. Planificació Inicial
+
+=== 1.1. Planificació (Inicial)
+
+==== Board inicial
+image::PlanificacioInicialSprint4.PNG[Board inicial]
+
+
+== 2. Daily Stand Up
+
+=== DIA 1 - 08/05
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| | Corregir errors que surgin a l'sprin i començar amb les funcionalitats noves de l'enunciat | Han aparegut molts problemes a la revisió de l'sprint perque vaig tenir un problema a l'hora de fer un merge a una branca equivocada i em faltaben clases | 5h
+|===
+
+=== DIA 2 - 10/05
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| Començar a corregir errors que van aparèixer a la revisió  | Acabar de resoldre el problemes de l'sprin i començar a fer el login |  | 5h
+|===
+
+=== DIA 3 - 11/05
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| Acabar de corregir els errors fer la funcionalitat del login i del logout | Fer la funcionalitat de recuperar contrassenya i editar perfil  | Si el correu de recuperar la contrassenya l'enllaç no l'obro desde l'ordinador l'enllaç no s'obre  | 6h + 2h
+
+|===
+
+=== DIA 4 - 13/05
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+|  Fer la funcionalitat de recuperar contrassenya i editar perfil | Fer les funcionalitats de llistat per lot i de la grafica dels productes  | no enllaço bé el producte final amb la matèria primera i no puc fer la traçabilitat | 3h + 1h
+|===
+
+=== DIA 4 - 14/05
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| Fer la funcionalitat del gràfic de productes finals | Fer la la traçabilitat i els requisits funcionals d'ordenar i filtrar llistat de lots | | 4h
+|===
+
+== 3. Planificació Final
+
+=== 3.1. Planificació (Final de Sprint)
+
+==== Board final — Grup 3
+image::PlanificacioFinalSprint4_a.PNG[Board_Final]
+
+
+image::PlanificacioFinalSprint4_b.PNG[Board_Final]
+
+== 4. Retrospective Meeting
+En aquest sprint m’he centrat principalment en corregir els errors detectats durant la revisió anterior i en implementar noves funcionalitats relacionades amb l’autenticació i la traçabilitat. He pogut avançar amb el login, logout, recuperació de contrasenya i edició de perfil, així com començar les funcionalitats de gràfiques de productes, filtratge i ordenació de lots.
+
+La part més complicada del sprint ha estat la quantitat d’errors que van aparèixer després de la revisió. Gran part venien d’un problema amb Git, ja que vaig fer un merge en una branca equivocada i faltaven classes importants del projecte. Això m’ha obligat a dedicar bastant temps a reorganitzar i recuperar funcionalitats abans de continuar avançant. També he tingut dificultats amb la traçabilitat, especialment a l’hora d’enllaçar correctament el producte final amb les matèries primeres, i amb el sistema de recuperació de contrasenya, ja que l’enllaç del correu no funcionava correctament en alguns casos.
+
+Tot i aquests problemes, crec que el sprint ha estat positiu perquè he aconseguit avançar en funcionalitats importants i entendre millor algunes parts més complexes del projecte, sobretot les relacions entre entitats i la gestió d’usuaris. També he pogut començar funcionalitats més visuals, com les gràfiques i els filtres, que ajuden a donar una sensació de projecte més complet.
+
+De cara al següent sprint, em tocarà sobretot acabar de polir la traçabilitat, revisar bé les relacions entre entitats i continuar corregint errors per deixar el projecte més estable. També vull millorar la gestió de branques i merges per evitar problemes similars amb Git en el futur.
