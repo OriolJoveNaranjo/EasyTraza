@@ -4,10 +4,12 @@
  */
 package cat.copernic.easytraza.controller;
 
-
 import cat.copernic.easytraza.entities.LiniaAlbaraClient;
+import cat.copernic.easytraza.entities.Tracabilitat;
+import cat.copernic.easytraza.enums.EstatLot;
 import cat.copernic.easytraza.repository.LiniaAlbaraClientRepository;
 import cat.copernic.easytraza.repository.LotProveidorRepository;
+import cat.copernic.easytraza.repository.TracabilitatRepository;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,31 +17,32 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * 
+ *
  * @author orjon
- * 
+ *
  * RF20 - Informe per lot.
  */
 @Controller
 public class InformeLotController {
 
     private final LotProveidorRepository lotProveidorRepository;
-    private final LiniaAlbaraClientRepository liniaAlbaraClientRepository;
+    private final TracabilitatRepository tracabilitatRepository;
 
     public InformeLotController(LotProveidorRepository lotProveidorRepository,
-                                LiniaAlbaraClientRepository liniaAlbaraClientRepository) {
+            TracabilitatRepository tracabilitatRepository) {
         this.lotProveidorRepository = lotProveidorRepository;
-        this.liniaAlbaraClientRepository = liniaAlbaraClientRepository;
+        this.tracabilitatRepository = tracabilitatRepository;
     }
 
     @GetMapping("/informes/lot")
     public String informeLot(@RequestParam(required = false) Long lotId, Model model) {
 
-        model.addAttribute("lots", lotProveidorRepository.findAll());
+        model.addAttribute("lots",
+        lotProveidorRepository.findByEstatNot(EstatLot.EN_ESTOC));
         model.addAttribute("lotSeleccionatId", lotId);
 
         if (lotId != null) {
-            List<LiniaAlbaraClient> resultats = liniaAlbaraClientRepository.findByLotProveidorId(lotId);
+            List<Tracabilitat> resultats = tracabilitatRepository.findByLotProveidor_Id(lotId);
             model.addAttribute("resultats", resultats);
         }
 

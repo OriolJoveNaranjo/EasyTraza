@@ -46,6 +46,8 @@ public class LotProveidor {
 
     @ManyToOne(optional = false)
     private AlbaraProveidor albaraProveidor;
+    @ManyToOne
+    private Usuari usuariObertura;
 
     public LotProveidor() {
     }
@@ -137,5 +139,13 @@ public class LotProveidor {
     public void setAlbaraProveidor(AlbaraProveidor albaraProveidor) {
         this.albaraProveidor = albaraProveidor;
     }
-}
+
+    public Usuari getUsuariObertura() {
+        return usuariObertura;
+    }
+
+    public void setUsuariObertura(Usuari usuariObertura) {
+        this.usuariObertura = usuariObertura;
+    }
     
+}

@@ -41,6 +41,8 @@ public class AlbaraProveidor {
     
     @OneToMany(mappedBy = "albaraProveidor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FitxerAlbaraProveidor> fitxers = new ArrayList<>();
+    @ManyToOne
+    private Usuari usuariAlta;
 
     public AlbaraProveidor() {
     }
@@ -91,6 +93,14 @@ public class AlbaraProveidor {
 
     public void setFitxers(List<FitxerAlbaraProveidor> fitxers) {
         this.fitxers = fitxers;
+    }
+
+    public Usuari getUsuariAlta() {
+        return usuariAlta;
+    }
+
+    public void setUsuariAlta(Usuari usuariAlta) {
+        this.usuariAlta = usuariAlta;
     }
     
 
