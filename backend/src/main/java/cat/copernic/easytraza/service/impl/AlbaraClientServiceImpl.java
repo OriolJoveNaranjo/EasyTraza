@@ -8,10 +8,18 @@ import cat.copernic.easytraza.entities.AlbaraClient;
 import cat.copernic.easytraza.enums.EstatAlbaraClient;
 import cat.copernic.easytraza.repository.AlbaraClientRepository;
 import cat.copernic.easytraza.service.AlbaraClientService;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
+import cat.copernic.easytraza.entities.LiniaAlbaraClient;
+import cat.copernic.easytraza.entities.LotProveidor;
+import cat.copernic.easytraza.entities.Tracabilitat;
+import cat.copernic.easytraza.enums.EstatLot;
+import cat.copernic.easytraza.repository.LotProveidorRepository;
+import cat.copernic.easytraza.repository.TracabilitatRepository;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -21,9 +29,14 @@ import org.springframework.stereotype.Service;
 public class AlbaraClientServiceImpl implements AlbaraClientService {
 
     private final AlbaraClientRepository repository;
+    private final LotProveidorRepository lotProveidorRepository;
+    private final TracabilitatRepository tracabilitatRepository;
 
-    public AlbaraClientServiceImpl(AlbaraClientRepository repository) {
+    public AlbaraClientServiceImpl(AlbaraClientRepository repository, LotProveidorRepository lotProveidorRepository,
+            TracabilitatRepository tracabilitatRepository) {
         this.repository = repository;
+        this.lotProveidorRepository = lotProveidorRepository;
+        this.tracabilitatRepository = tracabilitatRepository;
     }
 
     @Override
@@ -127,5 +140,47 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
         }
 
         return albarans;
+    }
+
+    @Override
+    @Transactional
+    public AlbaraClient saveAmbTracabilitatAutomatica(AlbaraClient albara) {
+
+        if (albara.getEstat() == null) {
+            albara.setEstat(EstatAlbaraClient.PENDENT);
+        }
+
+        if (albara.getData() == null) {
+            albara.setData(LocalDateTime.now());
+        }
+
+        if (albara.getLinies() != null) {
+            for (LiniaAlbaraClient linia : albara.getLinies()) {
+                linia.setAlbaraClient(albara);
+            }
+        }
+
+        AlbaraClient albaraGuardat = repository.save(albara);
+
+        if (albaraGuardat.getLinies() != null) {
+            for (LiniaAlbaraClient linia : albaraGuardat.getLinies()) {
+                tracabilitatRepository.deleteByLiniaAlbaraClient_Id(linia.getId());
+            }
+
+            List<LotProveidor> lotsOberts = lotProveidorRepository.findByEstat(EstatLot.OBERT);
+
+            for (LiniaAlbaraClient linia : albaraGuardat.getLinies()) {
+                for (LotProveidor lot : lotsOberts) {
+                    Tracabilitat t = new Tracabilitat();
+                    t.setLiniaAlbaraClient(linia);
+                    t.setLotProveidor(lot);                    
+                    t.setDataRegistre(LocalDateTime.now());
+
+                    tracabilitatRepository.save(t);
+                }
+            }
+        }
+
+        return albaraGuardat;
     }
 }

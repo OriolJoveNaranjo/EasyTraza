@@ -18,7 +18,7 @@ import org.springframework.data.repository.query.Param;
  */
 public interface LiniaAlbaraClientRepository extends JpaRepository<LiniaAlbaraClient, Long> {
 
-    List<LiniaAlbaraClient> findByLotProveidorId(Long lotProveidorId);
+   
 
     @Query("""
        SELECT DAY(l.albaraClient.data), SUM(l.quantitat)

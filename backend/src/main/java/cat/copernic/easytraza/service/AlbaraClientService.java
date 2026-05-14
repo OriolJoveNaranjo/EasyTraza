@@ -27,4 +27,6 @@ public interface AlbaraClientService {
     void marcarComLliurat(Long id);
 
     List<AlbaraClient> filtrar(Long clientId, String estat, String ordre);
+
+    AlbaraClient saveAmbTracabilitatAutomatica(AlbaraClient albara);
 }

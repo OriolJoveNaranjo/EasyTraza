@@ -39,6 +39,21 @@
                 border-radius: 8px;
                 min-height: 20px;
             }
+            .lots-checkbox-list {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                background: #fff;
+            }
+
+            .lot-check {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+            }
         </style>
     </head>
 
@@ -115,6 +130,28 @@
                                            th:disabled="${mode == 'view'}" 
                                            required>
                                 </div>
+                                <div class="linies-box" th:if="${mode == 'view'}">
+                                    <h2>Lots associats a aquest albarà</h2>
+
+                                    <table class="data-table" th:if="${tracabilitats != null and !tracabilitats.isEmpty()}">
+                                        <thead>
+                                            <tr>                                                
+                                                <th>Lot</th>
+                                                <th>Matèria primera</th>
+                                                <th>Estat actual del lot</th>
+                                                <th>Data registre</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="t : ${tracabilitats}">                                                
+                                                <td th:text="${t.lotProveidor.identificadorLot}"></td>
+                                                <td th:text="${t.lotProveidor.materiaPrimera.nom}"></td>
+                                                <td th:text="${t.lotProveidor.estat}"></td>
+                                                <td th:text="${t.dataRegistre != null ? #temporals.format(t.dataRegistre, 'dd/MM/yyyy HH:mm') : '-'}"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
 
                                 <div class="inline-actions">
                                     <button type="button" class="btn-secondary" onclick="eliminarLinia(this)" th:if="${mode != 'view'}">
@@ -160,7 +197,7 @@
                                 th:text="${producte.nom}">
                         </option>
                     </select>
-                </div>
+                </div>                
 
                 <div class="field">
                     <label>Quantitat *</label>
@@ -220,6 +257,7 @@
                     });
                 });
             }
+
         </script>
     </body>
 </html>

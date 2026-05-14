@@ -85,6 +85,13 @@
                      and !albaraProveidor.fitxers.isEmpty()}"
                      class="fitxers-preview">
 
+                    <div class="field" th:if="${mode != 'create'}">
+                        <label>Albarà donat d'alta per</label>
+                        <span class="readonly-value"
+                              th:text="${albaraProveidor.usuariAlta != null ? albaraProveidor.usuariAlta.email : '-'}">
+                        </span>
+                    </div>
+
                     <h2>Document original</h2>
 
                     <div th:each="fitxer : ${albaraProveidor.fitxers}" class="fitxer-preview-card">

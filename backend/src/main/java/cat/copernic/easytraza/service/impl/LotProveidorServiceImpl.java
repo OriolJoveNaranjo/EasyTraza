@@ -5,14 +5,18 @@
 package cat.copernic.easytraza.service.impl;
 
 import cat.copernic.easytraza.entities.LotProveidor;
+import cat.copernic.easytraza.entities.Usuari;
 import cat.copernic.easytraza.enums.EstatLot;
 import cat.copernic.easytraza.repository.LotProveidorRepository;
+import cat.copernic.easytraza.repository.UsuariRepository;
 import cat.copernic.easytraza.service.LotProveidorService;
 import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -22,9 +26,11 @@ import java.util.Optional;
 public class LotProveidorServiceImpl implements LotProveidorService {
 
     private final LotProveidorRepository lotRepo;
+    private final UsuariRepository usuarirepo;
 
-    public LotProveidorServiceImpl(LotProveidorRepository lotRepo) {
+    public LotProveidorServiceImpl(LotProveidorRepository lotRepo, UsuariRepository usuarirepo) {
         this.lotRepo = lotRepo;
+        this.usuarirepo = usuarirepo;
     }
 
     @Override
@@ -37,6 +43,7 @@ public class LotProveidorServiceImpl implements LotProveidorService {
         return lotRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("El lot no existeix"));
     }
+
     @Override
     @Transactional
     public void iniciarLot(Long lotId, boolean confirmarTancarAnterior) {
@@ -67,6 +74,12 @@ public class LotProveidorServiceImpl implements LotProveidorService {
         }
 
         lot.setEstat(EstatLot.OBERT);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+
+        Usuari usuari = usuarirepo.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuari no trobat"));
+
         lot.setDataObertura(LocalDateTime.now());
 
         lotRepo.save(lot);
@@ -92,11 +105,9 @@ public class LotProveidorServiceImpl implements LotProveidorService {
         }
 
         lot.setEstat(EstatLot.ACABAT);
-        lot.setDataAcabament(LocalDateTime.now());        
+        lot.setDataAcabament(LocalDateTime.now());
 
         lotRepo.save(lot);
     }
-
-    
 
 }

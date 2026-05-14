@@ -20,44 +20,66 @@
                 <div class="page-header">
                     <div>
                         <h1>Traçabilitat</h1>
-                        <p>Relació entre lots de proveïdor i albarans de client</p>
+                        <p>Consulta quins productes i albarans estan relacionats amb un lot</p>
                     </div>
+                </div>
 
-                    <a th:href="@{/tracabilitat/nova}" class="btn-primary">
-                        + Nova traçabilitat
-                    </a>
+                <div class="filter-card">
+                    <form th:action="@{/tracabilitat}" method="get" class="filter-bar">
+
+                        <select name="lotId" class="filter-input" required>
+                            <option value="">Selecciona un lot</option>
+
+                            <option th:each="lot : ${lots}"
+                                    th:value="${lot.id}"
+                                    th:selected="${lot.id == lotSeleccionatId}"
+                                    th:text="${lot.identificadorLot + ' - ' + lot.materiaPrimera.nom}">
+                            </option>
+                        </select>
+
+                        <button type="submit" class="btn-primary">
+                            Consultar
+                        </button>
+
+                    </form>
                 </div>
 
                 <div class="content-card">
 
-                    <table th:if="${not #lists.isEmpty(tracabilitats)}">
+                    <table th:if="${resultats != null and not #lists.isEmpty(resultats)}">
                         <thead>
                             <tr>
-                                <th>Lot proveïdor</th>
+                                <th>Lot</th>
                                 <th>Matèria primera</th>
                                 <th>Producte final</th>
+                                <th>Quantitat venuda</th>
                                 <th>Client</th>
-                                <th>Albarà client</th>
-                                <th>Quantitat utilitzada</th>
-                                <th>Data registre</th>
+                                <th>Albarà</th>
+                                <th>Data</th>
+                                <th>Estat</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            <tr th:each="t : ${tracabilitats}">
+                            <tr th:each="t : ${resultats}">
                                 <td th:text="${t.lotProveidor.identificadorLot}"></td>
                                 <td th:text="${t.lotProveidor.materiaPrimera.nom}"></td>
                                 <td th:text="${t.producteFinal.nom}"></td>
+                                <td th:text="${t.liniaAlbaraClient.quantitat}"></td>
                                 <td th:text="${t.liniaAlbaraClient.albaraClient.client.nom}"></td>
                                 <td th:text="${t.liniaAlbaraClient.albaraClient.id}"></td>
-                                <td th:text="${t.quantitatUtilitzada}"></td>
-                                <td th:text="${#temporals.format(t.dataRegistre, 'dd/MM/yyyy HH:mm')}"></td>
+                                <td th:text="${#temporals.format(t.liniaAlbaraClient.albaraClient.data, 'dd/MM/yyyy HH:mm')}"></td>
+                                <td th:text="${t.liniaAlbaraClient.albaraClient.estat}"></td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <div th:if="${#lists.isEmpty(tracabilitats)}" class="empty-state">
-                        Encara no hi ha registres de traçabilitat.
+                    <div th:if="${resultats != null and #lists.isEmpty(resultats)}" class="empty-state">
+                        No s’ha trobat cap traçabilitat per aquest lot.
+                    </div>
+
+                    <div th:if="${resultats == null}" class="empty-state">
+                        Selecciona un lot per consultar la traçabilitat.
                     </div>
 
                 </div>

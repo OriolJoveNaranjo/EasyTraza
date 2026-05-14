@@ -77,6 +77,11 @@
                                 <strong>Caducitat:</strong>
                                 <span th:text="${lot.dataCaducitat != null ? #temporals.format(lot.dataCaducitat, 'dd/MM/yyyy') : '-'}"></span>
                             </p>
+                            <p>
+                                <strong>Obert per:</strong>
+                                <span th:text="${lot.usuariObertura != null ? lot.usuariObertura.nom : '-'}"></span>
+                            </p>
+
                         </div>
 
                         <div class="lot-actions">
