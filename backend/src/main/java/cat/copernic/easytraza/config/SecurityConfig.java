@@ -25,14 +25,31 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                         "/login",
+                        "/restablir-contrasenya/**",
+                        "/recuperar-contrasenya/**",
                         "/css/**",
-                        "/js/**",
-                        "/api/**",
                         "/images/**",
-                        "/webjars/**",
-                        "/restablir-contrasenya",
-                        "/recuperar-contrasenya"
+                        "/js/**",
+                        "/uploads/**"
                 ).permitAll()
+                .requestMatchers(
+                        "/cataleg/**",
+                        "/usuaris/**",
+                        "/proveidors/**",
+                        "/materies-primeres/**",
+                        "/clients/**"
+                ).hasRole("ADMIN")
+                .requestMatchers(
+                        "/perfil/**",
+                        "/controls/**",
+                        "/albarans-proveidor/**",
+                        "/lots-proveidor/**",
+                        "/albarans-client/**",
+                        "/informes/**",
+                        "/tracabilitat/**",
+                        "/grafic-productes/**",
+                        "/panell/**"
+                ).hasAnyRole("ADMIN", "OPERARI")
                 .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
