@@ -4,7 +4,6 @@
  */
 package cat.copernic.easytraza.config;
 
-
 import cat.copernic.easytraza.entities.Usuari;
 import cat.copernic.easytraza.repository.UsuariRepository;
 import org.springframework.security.core.userdetails.User;
@@ -14,9 +13,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 /**
- * 
- * @author orjo
- * Servicio que permite a Spring Security buscar usuarios por email.
+ *
+ * @author orjo Servicio que permite a Spring Security buscar usuarios por
+ * email.
  */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -36,7 +35,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .username(usuari.getEmail())
                 .password(usuari.getPassword())
                 .disabled(!usuari.isActiu())
-                .roles("USER")
+                .roles(usuari.getRol().name())
                 .build();
     }
 }
