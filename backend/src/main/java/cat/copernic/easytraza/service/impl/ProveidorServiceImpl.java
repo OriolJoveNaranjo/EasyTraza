@@ -1,6 +1,7 @@
 package cat.copernic.easytraza.service.impl;
 
 import cat.copernic.easytraza.entities.Proveidor;
+import cat.copernic.easytraza.repository.AlbaraProveidorRepository;
 import cat.copernic.easytraza.repository.ProveidorRepository;
 import cat.copernic.easytraza.service.ProveidorService;
 import cat.copernic.easytraza.validation.CifValidator;
@@ -12,9 +13,11 @@ import org.springframework.stereotype.Service;
 public class ProveidorServiceImpl implements ProveidorService {
 
     private final ProveidorRepository proveidorRepository;
+    private final AlbaraProveidorRepository alabaraProveidorRepo;
 
-    public ProveidorServiceImpl(ProveidorRepository proveidorRepository) {
+    public ProveidorServiceImpl(ProveidorRepository proveidorRepository, AlbaraProveidorRepository alabaraProveidorRepo) {
         this.proveidorRepository = proveidorRepository;
+        this.alabaraProveidorRepo = alabaraProveidorRepo;
     }
 
     @Override
@@ -66,8 +69,20 @@ public class ProveidorServiceImpl implements ProveidorService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public String deleteById(Long id) {
+        Proveidor proveidor = proveidorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Proveïdor no trobat"));
+
+        boolean teAlbarans = alabaraProveidorRepo.existsByProveidorId(id);
+
+        if (teAlbarans) {
+            proveidor.setActiu(false);
+            proveidorRepository.save(proveidor);
+            return "Aquest proveïdor no es pot eliminar perquè té dades associades, però s'ha desactivat.";
+        }
+
         proveidorRepository.deleteById(id);
+        return "Proveïdor eliminat correctament.";
     }
 
     private void validarProveidor(Proveidor proveidor) {
@@ -130,4 +145,14 @@ public class ProveidorServiceImpl implements ProveidorService {
 
         return proveidors;
     }
+
+    @Override
+    public void activar(Long id) {
+        Proveidor proveidor = proveidorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Proveidor no trobat"));
+
+        proveidor.setActiu(true);
+        proveidorRepository.save(proveidor);
+    }
+
 }

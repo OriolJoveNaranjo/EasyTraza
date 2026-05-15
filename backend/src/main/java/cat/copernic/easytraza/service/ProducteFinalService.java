@@ -22,5 +22,7 @@ public interface ProducteFinalService {
 
     ProducteFinal update(Long id, ProducteFinal producteFinal);
 
-    void deleteById(Long id);
+    String deleteById(Long id);
+    
+    void activar(Long id);
 }

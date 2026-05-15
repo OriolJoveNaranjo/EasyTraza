@@ -5,6 +5,7 @@
 package cat.copernic.easytraza.service.impl;
 
 import cat.copernic.easytraza.entities.ProducteFinal;
+import cat.copernic.easytraza.repository.LiniaAlbaraClientRepository;
 import cat.copernic.easytraza.repository.ProducteFinalRepository;
 import cat.copernic.easytraza.service.ProducteFinalService;
 import java.util.List;
@@ -19,9 +20,12 @@ import org.springframework.stereotype.Service;
 public class ProducteFinalServiceImpl implements ProducteFinalService {
 
     private final ProducteFinalRepository producteFinalRepository;
+    private final LiniaAlbaraClientRepository liniaRepo;
 
-    public ProducteFinalServiceImpl(ProducteFinalRepository producteFinalRepository) {
+    public ProducteFinalServiceImpl(ProducteFinalRepository producteFinalRepository,
+            LiniaAlbaraClientRepository liniaRepo) {
         this.producteFinalRepository = producteFinalRepository;
+        this.liniaRepo = liniaRepo;
     }
 
     @Override
@@ -63,7 +67,28 @@ public class ProducteFinalServiceImpl implements ProducteFinalService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public String deleteById(Long id) {
+        ProducteFinal producte = producteFinalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producte final no trobat"));
+
+        boolean teLinies = liniaRepo.existsByProducteId(id);
+
+        if (teLinies) {
+            producte.setActiu(false);
+            producteFinalRepository.save(producte);
+            return "Aquest producte final té dades associades i s'ha desactivat.";
+        }
+
         producteFinalRepository.deleteById(id);
+        return "Producte final eliminat correctament.";
+    }
+
+    @Override
+    public void activar(Long id) {
+        ProducteFinal producte = producteFinalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producte final no trobat"));
+
+        producte.setActiu(true);
+        producteFinalRepository.save(producte);
     }
 }

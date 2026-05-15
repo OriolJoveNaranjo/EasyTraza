@@ -5,6 +5,7 @@
 package cat.copernic.easytraza.service.impl;
 
 import cat.copernic.easytraza.entities.MateriaPrimera;
+import cat.copernic.easytraza.repository.LotProveidorRepository;
 import cat.copernic.easytraza.repository.MateriaPrimeraRepository;
 import cat.copernic.easytraza.service.MateriaPrimeraService;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,12 @@ import java.util.Optional;
 @Service
 public class MateriaPrimeraServiceImpl implements MateriaPrimeraService {
 
-    private final MateriaPrimeraRepository materiaPrimeraRepository;
+    private final MateriaPrimeraRepository materiaPrimeraRepository; 
+    private final LotProveidorRepository lotProvRepo;
 
-    public MateriaPrimeraServiceImpl(MateriaPrimeraRepository materiaPrimeraRepository) {
+    public MateriaPrimeraServiceImpl(MateriaPrimeraRepository materiaPrimeraRepository,LotProveidorRepository lotProvRepo) {
         this.materiaPrimeraRepository = materiaPrimeraRepository;
+        this.lotProvRepo = lotProvRepo;
     }
 
     @Override
@@ -64,7 +67,27 @@ public class MateriaPrimeraServiceImpl implements MateriaPrimeraService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public String deleteById(Long id) {
+        MateriaPrimera materia = materiaPrimeraRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Matèria primera no trobada"));
+
+        boolean teLots = lotProvRepo.existsByMateriaPrimeraId(id);
+
+        if (teLots) {
+            materia.setActiu(false);
+            materiaPrimeraRepository.save(materia);
+            return "Aquesta matèria primera té dades associades i s'ha desactivat.";
+        }
+
         materiaPrimeraRepository.deleteById(id);
+        return "Matèria primera eliminada correctament.";
+    }
+
+    public void activar(Long id) {
+        MateriaPrimera materia = materiaPrimeraRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Matèria primera no trobada"));
+
+        materia.setActiu(true);
+        materiaPrimeraRepository.save(materia);
     }
 }

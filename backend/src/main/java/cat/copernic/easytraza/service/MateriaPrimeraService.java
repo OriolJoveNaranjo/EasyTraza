@@ -10,8 +10,7 @@ import java.util.Optional;
 
 /**
  *
- * @author orjon
- * Servei de gestió de matèries primeres.
+ * @author orjon Servei de gestió de matèries primeres.
  */
 public interface MateriaPrimeraService {
 
@@ -23,6 +22,8 @@ public interface MateriaPrimeraService {
 
     MateriaPrimera update(Long id, MateriaPrimera materiaPrimera);
 
-    void deleteById(Long id);
-    
+    String deleteById(Long id);
+
+    void activar(Long id);
+
 }

@@ -11,10 +11,9 @@ import java.util.Optional;
 /**
  *
  * @author orjon
- * 
+ *
  * Servei de gestió d'usuaris.
  */
-
 public interface UsuariService {
 
     List<Usuari> findAll();
@@ -25,5 +24,7 @@ public interface UsuariService {
 
     Usuari update(Long id, Usuari usuari);
 
-    void deleteById(Long id);
+    String deleteById(Long id);
+
+    void activar(Long id);
 }

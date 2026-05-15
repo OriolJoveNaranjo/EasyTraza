@@ -124,6 +124,7 @@ public class AlbaraProveidorController {
                 model.addAttribute("error", e.getMessage() + ". Torna a seleccionar la imatge abans de guardar.");
                 return "nou-albara-proveidor-ocr";
             }
+            
 
             model.addAttribute("mode", albaraProveidor.getId() != null ? "edit" : "create");
             return "nou-albara-proveidor";

@@ -30,6 +30,8 @@ public class MateriaPrimera {
     @Size(max = 255)
     @Column(length = 255)
     private String descripcio;
+    
+    private boolean actiu = true;
 
     public MateriaPrimera() {
     }
@@ -62,5 +64,14 @@ public class MateriaPrimera {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public boolean isActiu() {
+        return actiu;
+    }
+
+    public void setActiu(boolean actiu) {
+        this.actiu = actiu;
+    }
+    
     
 }

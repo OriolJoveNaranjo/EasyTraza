@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -102,8 +103,21 @@ public class UsuariController {
     }
 
     @GetMapping("/usuaris/eliminar/{id}")
-    public String eliminar(@PathVariable Long id) {
-        usuariService.deleteById(id);
+    public String eliminar(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            String missatge = usuariService.deleteById(id);
+            redirectAttributes.addFlashAttribute("success", missatge);
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
+        return "redirect:/usuaris";
+    }
+
+    @GetMapping("/usuaris/activar/{id}")
+    public String activar(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        usuariService.activar(id);
+        redirectAttributes.addFlashAttribute("success", "Usuari activat correctament.");
         return "redirect:/usuaris";
     }
 }

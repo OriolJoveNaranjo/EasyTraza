@@ -18,8 +18,6 @@ import org.springframework.data.repository.query.Param;
  */
 public interface LiniaAlbaraClientRepository extends JpaRepository<LiniaAlbaraClient, Long> {
 
-   
-
     @Query("""
        SELECT DAY(l.albaraClient.data), SUM(l.quantitat)
        FROM LiniaAlbaraClient l
@@ -30,9 +28,11 @@ public interface LiniaAlbaraClientRepository extends JpaRepository<LiniaAlbaraCl
        GROUP BY DAY(l.albaraClient.data)
        ORDER BY DAY(l.albaraClient.data)
        """)
-List<Object[]> vendesPerDia(
-        @Param("inici") LocalDateTime inici,
-        @Param("fi") LocalDateTime fi,
-        @Param("producteId") Long producteId,
-        @Param("estat") EstatAlbaraClient estat);
+    List<Object[]> vendesPerDia(
+            @Param("inici") LocalDateTime inici,
+            @Param("fi") LocalDateTime fi,
+            @Param("producteId") Long producteId,
+            @Param("estat") EstatAlbaraClient estat);
+
+    boolean existsByProducteId(Long producteId);
 }

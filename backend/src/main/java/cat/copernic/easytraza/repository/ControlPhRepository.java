@@ -12,8 +12,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author orjon
  */
-
 public interface ControlPhRepository extends JpaRepository<ControlPh, Long> {
 
     List<ControlPh> findAllByOrderByDataControlDesc();
+
+    boolean existsByUsuariId(Long usuariId);
+
+    boolean existsById(Long id);
 }

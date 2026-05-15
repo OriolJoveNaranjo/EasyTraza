@@ -30,10 +30,11 @@ public class Client {
     private String registreSanitari;
 
     private String telefon;
-    
+
     @Column(unique = true)
     private String email;
     
+    private boolean actiu = true;
 
     public Client() {
     }
@@ -101,4 +102,14 @@ public class Client {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public boolean isActiu() {
+        return actiu;
+    }
+
+    public void setActiu(boolean actiu) {
+        this.actiu = actiu;
+    }
+
 }
+
