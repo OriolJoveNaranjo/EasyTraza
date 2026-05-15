@@ -10,6 +10,7 @@ import cat.copernic.easytraza.enums.EstatLot;
 import cat.copernic.easytraza.repository.LotProveidorRepository;
 import cat.copernic.easytraza.repository.UsuariRepository;
 import cat.copernic.easytraza.service.LotProveidorService;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -108,6 +109,23 @@ public class LotProveidorServiceImpl implements LotProveidorService {
         lot.setDataAcabament(LocalDateTime.now());
 
         lotRepo.save(lot);
+    }
+
+    @Override
+    public List<LotProveidor> filtrarLots(String identificador, String estat, Long materiaId, LocalDate data) {
+
+        EstatLot estatEnum = null;
+
+        if (estat != null && !estat.isBlank()) {
+            estatEnum = EstatLot.valueOf(estat);
+        }
+
+        return lotRepo.filtrarLots(
+                identificador != null && !identificador.isBlank() ? identificador : null,
+                estatEnum,
+                materiaId,
+                data
+        );
     }
 
 }
