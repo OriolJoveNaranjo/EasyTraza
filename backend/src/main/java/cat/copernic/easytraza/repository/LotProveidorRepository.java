@@ -46,4 +46,8 @@ public interface LotProveidorRepository extends JpaRepository<LotProveidor, Long
             @Param("estat") EstatLot estat,
             @Param("materiaId") Long materiaId,
             @Param("data") LocalDate data);
+
+    boolean existsByMateriaPrimeraId(Long materiaPrimeraId);
+
+    boolean existsByUsuariOberturaId(Long usuariId);
 }

@@ -23,6 +23,13 @@
 
                     <a th:href="@{/cataleg/materies-primeres/nova}" class="btn-primary">+ Afegir</a>
                 </div>
+                <div th:if="${error}" class="error-message">
+                    <p th:text="${error}"></p>
+                </div>
+
+                <div th:if="${success}" class="success-message">
+                    <p th:text="${success}"></p>
+                </div>
 
                 <div class="search-bar">
                     <input type="text" placeholder="Buscar...">
@@ -44,13 +51,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="materia : ${materiesPrimeres}">
+                            <tr th:each="materia : ${materiesPrimeres}"th:classappend="${!materia.actiu} ? ' fila-inactiva' : ''">
                                 <td th:text="${materia.id}"></td>
                                 <td th:text="${materia.nom}"></td>
                                 <td th:text="${materia.descripcio}"></td>
                                 <td>
+                                    <a th:if="${!materia.actiu}"
+                                       th:href="@{'/cataleg/activar/' + ${materia.id}}"
+                                       class="btn-primary">
+                                        Activar
+                                    </a>
                                     <a th:href="@{/cataleg/materies-primeres/editar/{id}(id=${materia.id})}" class="btn-edit">Editar</a>
-                                    <a th:href="@{/cataleg/materies-primeres/eliminar/{id}(id=${materia.id})}"
+                                    <a th:if="${materia.actiu}" th:href="@{/cataleg/materies-primeres/eliminar/{id}(id=${materia.id})}"
                                        class="btn-delete"
                                        onclick="return confirm('Segur que vols eliminar aquesta matèria primera?')">Eliminar</a>
                                 </td>

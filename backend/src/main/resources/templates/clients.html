@@ -22,6 +22,13 @@
 
                     <a th:href="@{/clients/nou}" class="btn-primary">+ Nou client</a>
                 </div>
+                <div th:if="${error}" class="error-message">
+                    <p th:text="${error}"></p>
+                </div>
+
+                <div th:if="${success}" class="success-message">
+                    <p th:text="${success}"></p>
+                </div>
                 <div class="filter-card">
                     <form method="get" th:action="@{/clients}" class="filter-bar">
 
@@ -57,16 +64,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="client : ${clients}">
+                            <tr th:each="client : ${clients}"
+                                th:classappend="${!client.actiu} ? ' fila-inactiva' : ''">
                                 <td th:text="${client.id}"></td>
                                 <td th:text="${client.nif}"></td>
                                 <td th:text="${client.nom}"></td>
                                 <td th:text="${client.cognoms}"></td>
                                 <td th:text="${client.registreSanitari}"></td>
                                 <td>
+                                    <a th:if="${!client.actiu}"
+                                       th:href="@{'/clients/activar/' + ${client.id}}"
+                                       class="btn-primary">
+                                        Activar
+                                    </a>
                                     <a th:href="@{'/clients/veure/' + ${client.id}}" class="btn-view">Veure</a>
                                     <a th:href="@{'/clients/editar/' + ${client.id}}" class="btn-edit">Editar</a>
-                                    <a th:href="@{'/clients/eliminar/' + ${client.id}}"
+                                    <a th:if="${client.actiu}"
+                                       th:href="@{'/clients/eliminar/' + ${client.id}}"
                                        class="btn-delete"
                                        onclick="return confirm('Segur que vols eliminar aquest client?')">
                                         Eliminar

@@ -22,6 +22,13 @@
 
                     <a th:href="@{/usuaris/nou}" class="btn-primary">+ Afegir usuari</a>
                 </div>
+                <div th:if="${error}" class="error-message">
+                    <p th:text="${error}"></p>
+                </div>
+
+                <div th:if="${success}" class="success-message">
+                    <p th:text="${success}"></p>
+                </div>
 
                 <div class="search-bar">
                     <input type="text" placeholder="Cercar usuaris...">
@@ -41,8 +48,8 @@
                         </thead>
 
                         <tbody>
-                            <tr th:each="usuari : ${usuaris}">
-
+                            <tr th:each="usuari : ${usuaris}"
+                                th:classappend="${!usuari.actiu} ? ' fila-inactiva' : ''">
                                 <td>
                                     <img th:src="${usuari.foto != null and !#strings.isEmpty(usuari.foto)}
                                          ? @{${'/uploads/usuaris/' + usuari.foto}}
@@ -58,9 +65,15 @@
                                 <td th:text="${usuari.actiu ? 'Sí' : 'No'}"></td>
 
                                 <td>
+                                    <a th:if="${!usuari.actiu}"
+                                       th:href="@{'/usuaris/activar/' + ${usuari.id}}"
+                                       class="btn-primary">
+                                        Activar
+                                    </a>
                                     <a th:href="@{'/usuaris/editar/' + ${usuari.id}}" class="btn-edit">Editar</a>
 
-                                    <a th:href="@{'/usuaris/eliminar/' + ${usuari.id}}"
+                                    <a th:if="${usuari.actiu}"
+                                       th:href="@{'/usuaris/eliminar/' + ${usuari.id}}"
                                        class="btn-delete"
                                        onclick="return confirm('Segur que vols eliminar aquest usuari?')">
                                         Eliminar

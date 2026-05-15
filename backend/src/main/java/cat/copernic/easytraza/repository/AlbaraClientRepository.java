@@ -24,4 +24,10 @@ public interface AlbaraClientRepository extends JpaRepository<AlbaraClient, Long
     List<AlbaraClient> findAllByOrderByDataAsc();
 
     List<AlbaraClient> findAllByOrderByDataDesc();
+
+    boolean existsByClientIdAndEstat(Long clientId, EstatAlbaraClient estat);
+
+    boolean existsByClientId(Long clientId);
+
+    
 }

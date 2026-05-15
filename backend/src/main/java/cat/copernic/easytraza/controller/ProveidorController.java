@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -86,8 +87,14 @@ public class ProveidorController {
     }
 
     @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Long id) {
-        proveidorService.deleteById(id);
+    public String eliminar(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            String missatge = proveidorService.deleteById(id);
+            redirectAttributes.addFlashAttribute("success", missatge);
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
         return "redirect:/proveidors";
     }
 
@@ -102,5 +109,10 @@ public class ProveidorController {
         model.addAttribute("proveidor", proveidor);
         model.addAttribute("mode", "view");
         return "nou-proveidor";
+    }
+    @GetMapping("/activar/{id}")
+    public String activar(@PathVariable Long id) {
+        proveidorService.activar(id);
+        return "redirect:/proveidors";
     }
 }

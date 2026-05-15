@@ -25,7 +25,9 @@ public interface ProveidorService {
 
     Proveidor update(Long id, Proveidor proveidor);
 
-    void deleteById(Long id);
+    String deleteById(Long id);
 
     List<Proveidor> filtrar(String filtre, String ordre);
+
+    void activar(Long id);
 }

@@ -43,6 +43,8 @@ public class Proveidor {
 
     @Column(length = 500)
     private String observacions;
+    
+    private boolean actiu = true;
 
     public Proveidor() {
     }
@@ -110,6 +112,14 @@ public class Proveidor {
 
     public void setObservacions(String observacions) {
         this.observacions = observacions;
+    }
+
+    public boolean isActiu() {
+        return actiu;
+    }
+
+    public void setActiu(boolean actiu) {
+        this.actiu = actiu;
     }
 
 }

@@ -30,6 +30,8 @@ public class ProducteFinal {
     @Size(max = 255)
     @Column(nullable = false, length = 255)
     private String descripcio;
+    
+    private boolean actiu = true;
 
     public ProducteFinal() {
 
@@ -64,5 +66,14 @@ public class ProducteFinal {
     public void setDescripcio(String descripcio) {
         this.descripcio = descripcio;
     }
+
+    public boolean isActiu() {
+        return actiu;
+    }
+
+    public void setActiu(boolean actiu) {
+        this.actiu = actiu;
+    }
+    
 
 }

@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -93,8 +94,20 @@ public class ClientController {
     }
 
     @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Long id) {
-        clientService.deleteById(id);
+    public String eliminar(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            String missatge = clientService.deleteById(id);
+            redirectAttributes.addFlashAttribute("success", missatge);
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
+        return "redirect:/clients";
+    }
+
+    @GetMapping("/activar/{id}")
+    public String activar(@PathVariable Long id) {
+        clientService.activar(id);
         return "redirect:/clients";
     }
 }
