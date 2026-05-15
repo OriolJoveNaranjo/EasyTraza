@@ -23,6 +23,13 @@
 
                     <a th:href="@{/proveidors/nou}" class="btn-primary">+ Afegir proveïdor</a>
                 </div>
+                <div th:if="${error}" class="error-message">
+                    <p th:text="${error}"></p>
+                </div>
+
+                <div th:if="${success}" class="success-message">
+                    <p th:text="${success}"></p>
+                </div>
 
                 <div class="filter-card">
                     <form method="get" th:action="@{/proveidors}" class="filter-bar">
@@ -58,15 +65,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="proveidor : ${proveidors}">
+                            <tr th:each="proveidor : ${proveidors}"
+                                th:classappend="${!proveidor.actiu} ? ' fila-inactiva' : ''">
                                 <td th:text="${proveidor.nom}"></td>
                                 <td th:text="${proveidor.cif}"></td>
                                 <td th:text="${proveidor.telefon}"></td>
                                 <td th:text="${proveidor.email}"></td>
                                 <td>
+                                    <a th:if="${!proveidor.actiu}"
+                                       th:href="@{'/proveidors/activar/' + ${proveidor.id}}"
+                                       class="btn-primary">
+                                        Activar
+                                    </a>
                                     <a th:href="@{'/proveidors/veure/' + ${proveidor.id}}" class="btn-view">Veure</a>
                                     <a th:href="@{'/proveidors/editar/' + ${proveidor.id}}" class="btn-edit">Editar</a>
-                                    <a th:href="@{'/proveidors/eliminar/' + ${proveidor.id}}"
+                                    <a th:if="${proveidor.actiu}" th:href="@{'/proveidors/eliminar/' + ${proveidor.id}}"
                                        class="btn-delete"
                                        onclick="return confirm('Segur que vols eliminar aquest proveïdor?')">Eliminar</a>
                                 </td>

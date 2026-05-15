@@ -21,4 +21,5 @@ public interface TracabilitatRepository extends JpaRepository<Tracabilitat, Long
     List<Tracabilitat> findByLiniaAlbaraClient_AlbaraClient_Id(Long albaraId);
 
     void deleteByLiniaAlbaraClient_Id(Long liniaId);
+    void deleteByLiniaAlbaraClient_AlbaraClient_Id(Long albaraId);
 }

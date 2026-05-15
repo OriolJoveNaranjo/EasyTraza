@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -54,8 +55,14 @@ public class MateriaPrimeraController {
     }
 
     @GetMapping("/cataleg/materies-primeres/eliminar/{id}")
-    public String eliminar(@PathVariable Long id) {
-        materiaPrimeraService.deleteById(id);
+    public String eliminar(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            String missatge = materiaPrimeraService.deleteById(id);
+            redirectAttributes.addFlashAttribute("success", missatge);
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
         return "redirect:/cataleg";
     }
 
@@ -69,6 +76,13 @@ public class MateriaPrimeraController {
 
         model.addAttribute("materiaPrimera", materia);
         return "nova-materia-primera";
+    }
+
+    @GetMapping("/cataleg/activar/{id}")
+    public String activar(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        materiaPrimeraService.activar(id);
+        redirectAttributes.addFlashAttribute("success", "Matèria primera activada correctament.");
+        return "redirect:/cataleg";
     }
 
 }

@@ -22,7 +22,9 @@ public interface ClientService {
 
     Client update(Long id, Client client);
 
-    void deleteById(Long id);
+    String deleteById(Long id);
 
     List<Client> filtrar(String filtre, String ordre);
+
+    void activar(Long id);
 }

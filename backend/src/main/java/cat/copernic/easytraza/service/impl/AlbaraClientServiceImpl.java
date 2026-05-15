@@ -89,6 +89,7 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         AlbaraClient existent = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Albarà de client no trobat"));
@@ -96,6 +97,8 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
         if (existent.getEstat() == EstatAlbaraClient.LLIURAT) {
             throw new RuntimeException("No es pot eliminar un albarà lliurat");
         }
+
+        tracabilitatRepository.deleteByLiniaAlbaraClient_AlbaraClient_Id(id);
 
         repository.deleteById(id);
     }
@@ -146,6 +149,14 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
     @Transactional
     public AlbaraClient saveAmbTracabilitatAutomatica(AlbaraClient albara) {
 
+        if (albara.getLinies() != null) {
+            albara.setLinies(
+                    albara.getLinies().stream()
+                            .filter(linia -> linia.getProducte() != null && linia.getProducte().getId() != null)
+                            .toList()
+            );
+        }
+
         if (albara.getEstat() == null) {
             albara.setEstat(EstatAlbaraClient.PENDENT);
         }
@@ -170,10 +181,16 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
             List<LotProveidor> lotsOberts = lotProveidorRepository.findByEstat(EstatLot.OBERT);
 
             for (LiniaAlbaraClient linia : albaraGuardat.getLinies()) {
+
+                if (linia.getProducte() == null || linia.getProducte().getId() == null) {
+                    continue;
+                }
+
                 for (LotProveidor lot : lotsOberts) {
                     Tracabilitat t = new Tracabilitat();
                     t.setLiniaAlbaraClient(linia);
-                    t.setLotProveidor(lot);                    
+                    t.setLotProveidor(lot);
+                    t.setProducteFinal(linia.getProducte());
                     t.setDataRegistre(LocalDateTime.now());
 
                     tracabilitatRepository.save(t);

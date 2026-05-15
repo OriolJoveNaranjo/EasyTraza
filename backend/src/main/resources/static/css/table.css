@@ -13,3 +13,23 @@ td {
 th {
     color: #6d4a2b;
 }
+.fila-inactiva {
+    opacity: 0.45;
+    background: #eeeeee;
+}
+.error-message {
+    background: #f8d7da;
+    color: #842029;
+    border: 1px solid #f1aeb5;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 18px;
+}
+.success-message{
+    background: #7DFFB6;
+    color: #842029;
+    border: 1px solid #f1aeb5;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 18px;
+}

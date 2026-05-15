@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -68,8 +69,21 @@ public class ProducteFinalController {
     }
 
     @GetMapping("/productes-finals/eliminar/{id}")
-    public String eliminar(@PathVariable Long id) {
-        producteFinalService.deleteById(id);
+    public String eliminar(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            String missatge = producteFinalService.deleteById(id);
+            redirectAttributes.addFlashAttribute("success", missatge);
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
+        return "redirect:/productes-finals";
+    }
+
+    @GetMapping("/productes-finals/activar/{id}")
+    public String activar(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        producteFinalService.activar(id);
+        redirectAttributes.addFlashAttribute("success", "Producte final activat correctament.");
         return "redirect:/productes-finals";
     }
 }

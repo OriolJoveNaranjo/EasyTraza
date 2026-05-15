@@ -22,6 +22,13 @@
 
                     <a th:href="@{/productes-finals/nou}" class="btn-primary">+ Afegir</a>
                 </div>
+                <div th:if="${error}" class="error-message">
+                    <p th:text="${error}"></p>
+                </div>
+
+                <div th:if="${success}" class="success-message">
+                    <p th:text="${success}"></p>
+                </div>
 
                 <div class="search-bar">
                     <input type="text" placeholder="Buscar...">
@@ -43,13 +50,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="producte : ${productesFinals}">
+                            <tr th:each="producte : ${productesFinals}"th:classappend="${!producte.actiu} ? ' fila-inactiva' : ''">
                                 <td th:text="${producte.id}"></td>
                                 <td th:text="${producte.nom}"></td>
                                 <td th:text="${producte.descripcio}"></td>
                                 <td>
+                                    <a th:if="${!producte.actiu}"
+                                       th:href="@{'/productes-finals/activar/' + ${producte.id}}"
+                                       class="btn-primary">
+                                        Activar
+                                    </a>
                                     <a th:href="@{'/productes-finals/editar/' + ${producte.id}}" class="btn-edit">Editar</a>
-                                    <a th:href="@{'/productes-finals/eliminar/' + ${producte.id}}"
+                                    <a th:if="${producte.actiu}" th:href="@{'/productes-finals/eliminar/' + ${producte.id}}"
                                        class="btn-delete"
                                        onclick="return confirm('Segur que vols eliminar aquest producte final?')">Eliminar</a>
                                 </td>

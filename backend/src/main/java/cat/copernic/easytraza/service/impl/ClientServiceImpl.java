@@ -1,6 +1,8 @@
 package cat.copernic.easytraza.service.impl;
 
 import cat.copernic.easytraza.entities.Client;
+import cat.copernic.easytraza.enums.EstatAlbaraClient;
+import cat.copernic.easytraza.repository.AlbaraClientRepository;
 import cat.copernic.easytraza.repository.ClientRepository;
 import cat.copernic.easytraza.service.ClientService;
 import cat.copernic.easytraza.validation.NifValidator;
@@ -13,9 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepo;
+    private final AlbaraClientRepository albaraCliRepo;
 
-    public ClientServiceImpl(ClientRepository clientRepo) {
+    public ClientServiceImpl(ClientRepository clientRepo, AlbaraClientRepository albaraCliRepo) {
         this.clientRepo = clientRepo;
+        this.albaraCliRepo = albaraCliRepo;
     }
 
     @Override
@@ -77,9 +81,29 @@ public class ClientServiceImpl implements ClientService {
         return clientRepo.save(existent);
     }
 
+    
     @Override
-    public void deleteById(Long id) {
+    public String deleteById(Long id) {
+        Client client = clientRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Client no trobat"));
+
+        boolean teAlbaransPendents = albaraCliRepo
+                .existsByClientIdAndEstat(id, EstatAlbaraClient.PENDENT);
+
+        if (teAlbaransPendents) {
+            throw new RuntimeException("No es pot eliminar el client perquè té albarans pendents.");
+        }
+
+        boolean teAlbarans = albaraCliRepo.existsByClientId(id);
+
+        if (teAlbarans) {
+            client.setActiu(false);
+            clientRepo.save(client);
+            return "Aquest client no es pot eliminar perquè té dades associades, però s'ha desactivat.";
+        }
+
         clientRepo.deleteById(id);
+        return "Client eliminat correctament.";
     }
 
     private void validarClient(Client client) {
@@ -141,5 +165,13 @@ public class ClientServiceImpl implements ClientService {
         }
 
         return clients;
+    }
+
+    public void activar(Long id) {
+        Client client = clientRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Client no trobat"));
+
+        client.setActiu(true);
+        clientRepo.save(client);
     }
 }

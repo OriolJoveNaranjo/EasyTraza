@@ -27,4 +27,8 @@ public interface AlbaraProveidorRepository extends JpaRepository<AlbaraProveidor
     List<AlbaraProveidor> findByProveidorIdOrderByDataRecepcioAsc(Long proveidorId);
 
     List<AlbaraProveidor> findByProveidorIdOrderByDataRecepcioDesc(Long proveidorId);
+
+    boolean existsByProveidorId(Long proveidorId);
+
+    boolean existsByUsuariAltaId(Long usuariId);
 }
