@@ -50,4 +50,8 @@ public interface LotProveidorRepository extends JpaRepository<LotProveidor, Long
     boolean existsByMateriaPrimeraId(Long materiaPrimeraId);
 
     boolean existsByUsuariOberturaId(Long usuariId);
+
+    long countByEstat(EstatLot estat);
+
+    long countByDataCaducitatBetween(LocalDate dataInici, LocalDate dataFi);
 }
