@@ -104,6 +104,15 @@
                                 <span th:text="${lot.dataCaducitat != null ? #temporals.format(lot.dataCaducitat, 'dd/MM/yyyy') : '-'}"></span>
                             </p>
                             <p>
+                                <strong>Data obertura:</strong>
+                                <span th:text="${lot.dataObertura != null ? #temporals.format(lot.dataObertura, 'dd/MM/yyyy HH:mm') : '-'}"></span>
+                            </p>
+
+                            <p>
+                                <strong>Data tancament:</strong>
+                                <span th:text="${lot.dataAcabament != null ? #temporals.format(lot.dataAcabament, 'dd/MM/yyyy HH:mm') : '-'}"></span>
+                            </p>
+                            <p>
                                 <strong>Obert per:</strong>
                                 <span th:text="${lot.usuariObertura != null ? lot.usuariObertura.nom : '-'}"></span>
                             </p>
@@ -116,11 +125,15 @@
                                   method="post">
                                 <button type="submit" class="btn-primary">Obrir</button>
                             </form>
-
                             <form th:if="${lot.estat.name() == 'OBERT'}"
                                   th:action="@{/lots-proveidor/finalitzar/{id}(id=${lot.id})}"
                                   method="post">
                                 <button type="submit" class="btn-finish">Finalitzar</button>
+                                <a th:if="${lot.estat.name() == 'OBERT' or lot.estat.name() == 'ACABAT'}"
+                                   th:href="@{/tracabilitat(lotId=${lot.id})}"
+                                   class="btn-secondary">
+                                    Traçabilitat
+                                </a>
                             </form>
                         </div>
                     </div>
