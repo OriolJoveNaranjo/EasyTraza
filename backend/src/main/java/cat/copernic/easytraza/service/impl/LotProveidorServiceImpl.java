@@ -80,7 +80,7 @@ public class LotProveidorServiceImpl implements LotProveidorService {
 
         Usuari usuari = usuarirepo.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuari no trobat"));
-
+        lot.setUsuariObertura(usuari);
         lot.setDataObertura(LocalDateTime.now());
 
         lotRepo.save(lot);

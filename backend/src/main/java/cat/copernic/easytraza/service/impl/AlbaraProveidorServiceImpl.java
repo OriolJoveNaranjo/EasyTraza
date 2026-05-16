@@ -303,14 +303,14 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
             lot.setQuantitat(linia.getQuantitat());
             lot.setUnitat(linia.getUnitat().trim());
             lot.setEstat(EstatLot.EN_ESTOC);
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            String email = auth.getName();
-
-            Usuari usuari = usuarirepo.findByEmail(email)
-                    .orElseThrow(() -> new RuntimeException("Usuari no trobat"));
-
-            albaraProveidor.setUsuariAlta(usuari);
         }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+
+        Usuari usuari = usuarirepo.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuari no trobat"));
+
+        albaraProveidor.setUsuariAlta(usuari);
 
         if (liniesValides == 0) {
             throw new RuntimeException("L'albarà ha de tenir almenys un lot complet");
