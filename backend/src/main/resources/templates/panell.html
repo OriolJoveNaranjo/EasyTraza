@@ -28,21 +28,21 @@
                 <div class="dashboard-cards">
 
                     <div class="dashboard-card">
-                        <h3>Lots actius</h3>
-                        <strong>0</strong>
-                        <p>Veure tots</p>
+                        <h2>Lots actius</h2>
+                        <strong th:text="${lotsActius}">0</strong>
+                        <a th:href="@{/lots-proveidor(estat='OBERT')}">Veure tots</a>
                     </div>
 
                     <div class="dashboard-card">
-                        <h3>Alertes de caducitat</h3>
-                        <strong>0</strong>
+                        <h2>Alertes de caducitat</h2>
+                        <strong th:text="${alertesCaducitat}">0</strong>
                         <p>Pròxims 7 dies</p>
                     </div>
 
                     <div class="dashboard-card">
-                        <h3>Controls pendents</h3>
-                        <strong>1</strong>
-                        <p>Control pH pendent</p>
+                        <h2>Controls pendents</h2>
+                        <strong th:text="${controlsPendents}">0</strong>
+                        <p th:text="${controlsPendents > 0 ? 'Control pH pendent' : 'Controls al dia'}"></p>
                     </div>
 
                 </div>

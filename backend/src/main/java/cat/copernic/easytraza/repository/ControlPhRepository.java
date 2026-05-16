@@ -5,6 +5,7 @@
 package cat.copernic.easytraza.repository;
 
 import cat.copernic.easytraza.entities.ControlPh;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -18,5 +19,8 @@ public interface ControlPhRepository extends JpaRepository<ControlPh, Long> {
 
     boolean existsByUsuariId(Long usuariId);
 
+    
     boolean existsById(Long id);
+
+    boolean existsByDataControlAfter(LocalDateTime data);
 }
