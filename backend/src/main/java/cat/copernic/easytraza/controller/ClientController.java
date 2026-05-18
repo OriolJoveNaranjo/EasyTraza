@@ -6,6 +6,7 @@ package cat.copernic.easytraza.controller;
 
 import cat.copernic.easytraza.entities.Client;
 import cat.copernic.easytraza.service.ClientService;
+import cat.copernic.easytraza.utils.ValidacioEmail;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,8 +51,21 @@ public class ClientController {
 
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute Client client, Model model) {
+
+        boolean esCreacio = client.getId() == null;
+
         try {
-            if (client.getId() != null) {
+            if (client.getEmail() != null && client.getEmail().trim().isEmpty()) {
+                client.setEmail(null);
+            }
+            if (ValidacioEmail.emailNoValid(client.getEmail())) {
+                model.addAttribute("error", "El format del correu electrònic no és vàlid.");
+                model.addAttribute("client", client);
+                model.addAttribute("mode", esCreacio ? "create" : "edit");
+                return "nou-client";
+            }
+
+            if (!esCreacio) {
                 clientService.update(client.getId(), client);
             } else {
                 clientService.save(client);
@@ -62,7 +76,7 @@ public class ClientController {
         } catch (RuntimeException e) {
             model.addAttribute("error", e.getMessage());
             model.addAttribute("client", client);
-            model.addAttribute("mode", client.getId() != null ? "edit" : "create");
+            model.addAttribute("mode", esCreacio ? "create" : "edit");
             return "nou-client";
         }
     }

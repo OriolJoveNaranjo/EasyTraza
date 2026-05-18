@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 
 class UserSelectionViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -23,26 +24,53 @@ class UserSelectionViewModel(application: Application) : AndroidViewModel(applic
     private val _message = MutableStateFlow("")
     val message: StateFlow<String> = _message
 
-    fun loadUsers() {
-        viewModelScope.launch {
-            try {
-                val baseUrl = serverConfigRepository.serverIp.first()
+    private val _baseUrl = MutableStateFlow("")
+    val baseUrl: StateFlow<String> = _baseUrl
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing
 
-                if (baseUrl.isBlank()) {
+    fun loadUsers() {
+        if (_isRefreshing.value) return
+
+        viewModelScope.launch {
+            _isRefreshing.value = true
+
+            try {
+                val savedBaseUrl = serverConfigRepository.serverIp.first()
+
+                if (savedBaseUrl.isBlank()) {
                     _message.value = "Primer configura la IP del servidor"
                     return@launch
                 }
 
-                val api = RetrofitProvider.createApi(baseUrl)
+                _baseUrl.value = savedBaseUrl
+
+                val api = RetrofitProvider.createApi(savedBaseUrl)
                 val response = api.getUsuaris()
 
                 if (response.isSuccessful) {
-                    _usuaris.value = response.body() ?: emptyList()
+                    _usuaris.value = response.body()
+                        ?.filter { it.actiu }
+                        ?: emptyList()
+
+                    _message.value = ""
                 } else {
-                    _message.value = "No s'han pogut carregar els usuaris"
+                    _message.value = "No s'han pogut carregar els usuaris: ${response.code()}"
                 }
             } catch (e: Exception) {
-                _message.value = "Error carregant usuaris"
+                _message.value = when {
+                    e.message?.contains("failed to connect", ignoreCase = true) == true ||
+                            e.message?.contains("timeout", ignoreCase = true) == true ||
+                            e.message?.contains("ECONNREFUSED", ignoreCase = true) == true -> {
+                        "No s'ha pogut connectar amb el servidor. Comprova que el backend estigui arrancat."
+                    }
+
+                    else -> {
+                        "Error carregant usuaris."
+                    }
+                }
+            } finally {
+                _isRefreshing.value = false
             }
         }
     }
@@ -51,6 +79,14 @@ class UserSelectionViewModel(application: Application) : AndroidViewModel(applic
         viewModelScope.launch {
             userSessionRepository.saveUserId(userId)
             onSelected()
+        }
+    }
+    fun startAutoRefreshUsers() {
+        viewModelScope.launch {
+            while (true) {
+                loadUsers()
+                delay(5000)
+            }
         }
     }
 }

@@ -5,7 +5,7 @@ import cat.copernic.easytraza.enums.EstatAlbaraClient;
 import cat.copernic.easytraza.repository.AlbaraClientRepository;
 import cat.copernic.easytraza.repository.ClientRepository;
 import cat.copernic.easytraza.service.ClientService;
-import cat.copernic.easytraza.validation.NifValidator;
+import cat.copernic.easytraza.utils.NifValidator;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;

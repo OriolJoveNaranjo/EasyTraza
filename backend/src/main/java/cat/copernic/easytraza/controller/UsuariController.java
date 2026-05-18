@@ -6,6 +6,7 @@ package cat.copernic.easytraza.controller;
 
 import cat.copernic.easytraza.entities.Usuari;
 import cat.copernic.easytraza.service.UsuariService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +17,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import cat.copernic.easytraza.utils.ValidacioEmail;
 
 /**
  *
@@ -47,13 +50,24 @@ public class UsuariController {
     }
 
     @PostMapping("/usuaris/guardar")
-    public String guardar(@ModelAttribute Usuari usuari,
+    public String guardar(@Valid @ModelAttribute Usuari usuari,
+            BindingResult result,
             @RequestParam(required = false) MultipartFile fotoFile,
             Model model) {
+
+        boolean esCreacio = usuari.getId() == null;
+
         try {
+            if (esCreacio && ValidacioEmail.emailNoValid(usuari.getEmail())) {
+                model.addAttribute("error", "El format del correu electrònic no és vàlid.");
+                model.addAttribute("usuari", usuari);
+                model.addAttribute("mode", "create");
+                return "nou-usuari";
+            }
+
             Usuari usuariGuardat;
 
-            if (usuari.getId() != null) {
+            if (!esCreacio) {
                 usuariGuardat = usuariService.update(usuari.getId(), usuari);
             } else {
                 usuariGuardat = usuariService.save(usuari);
@@ -84,7 +98,7 @@ public class UsuariController {
         } catch (RuntimeException | IOException e) {
             model.addAttribute("error", e.getMessage());
             model.addAttribute("usuari", usuari);
-            model.addAttribute("mode", usuari.getId() != null ? "edit" : "create");
+            model.addAttribute("mode", esCreacio ? "create" : "edit");
             return "nou-usuari";
         }
     }

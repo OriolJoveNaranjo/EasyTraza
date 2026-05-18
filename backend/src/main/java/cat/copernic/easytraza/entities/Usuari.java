@@ -12,15 +12,15 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  *
  * @author orjon
- * 
+ *
  * Entitat que representa un usuari.
  */
-
 @Entity
 public class Usuari {
 
@@ -32,6 +32,8 @@ public class Usuari {
     private String nom;
 
     @Column(nullable = false, unique = true)
+    @NotBlank(message = "El correu electrònic és obligatori")
+    @Email(message = "El format del correu electrònic no és vàlid")
     private String email;
 
     @Column(nullable = false)
@@ -43,7 +45,7 @@ public class Usuari {
 
     @Column(nullable = false)
     private boolean actiu;
-    
+
     private String foto;
 
     public Usuari() {
@@ -112,5 +114,5 @@ public class Usuari {
     public void setFoto(String foto) {
         this.foto = foto;
     }
-    
+
 }

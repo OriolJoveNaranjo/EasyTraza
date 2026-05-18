@@ -1,12 +1,15 @@
 package cat.copernic.easytrazamobile.ui.users
 
-
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -22,8 +25,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 
 @Composable
 fun UserSelectionScreen(
@@ -33,21 +42,34 @@ fun UserSelectionScreen(
 ) {
     val usuaris by viewModel.usuaris.collectAsState()
     val message by viewModel.message.collectAsState()
+    val baseUrl by viewModel.baseUrl.collectAsState()
+
+
 
     LaunchedEffect(Unit) {
-        viewModel.loadUsers()
+        viewModel.startAutoRefreshUsers()
     }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp),
+            .background(Color(0xFFFFF3E0))
+            .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Qui ets?",
+            text = "EasyTraza",
             style = MaterialTheme.typography.headlineLarge,
-            modifier = Modifier.padding(bottom = 24.dp)
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF6D3B00),
+            modifier = Modifier.padding(top = 24.dp)
+        )
+
+        Text(
+            text = "Qui fa el seguiment avui?",
+            style = MaterialTheme.typography.titleMedium,
+            color = Color(0xFF8A4F08),
+            modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
         )
 
         if (message.isNotBlank()) {
@@ -60,41 +82,73 @@ fun UserSelectionScreen(
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            horizontalArrangement = Arrangement.spacedBy(18.dp),
-            verticalArrangement = Arrangement.spacedBy(18.dp),
+            contentPadding = PaddingValues(bottom = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(14.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp),
             modifier = Modifier
                 .weight(1f)
-                .padding(bottom = 32.dp)
+                .fillMaxWidth()
         ) {
             items(usuaris) { usuari ->
+                val imageUrl = if (!usuari.foto.isNullOrBlank()) {
+                    "$baseUrl/uploads/usuaris/${usuari.foto}"
+                } else {
+                    "$baseUrl/images/usuaris/fotoPerfil.png"
+                }
+
                 Card(
                     modifier = Modifier
-                        .size(width = 150.dp, height = 130.dp)
+                        .fillMaxWidth()
+                        .aspectRatio(0.82f)
                         .clickable {
                             viewModel.selectUser(usuari.id, onUserSelected)
                         },
-                    shape = RoundedCornerShape(18.dp),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                    shape = RoundedCornerShape(20.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(12.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Text("👤", style = MaterialTheme.typography.headlineLarge)
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        AsyncImage(
+                            model = imageUrl,
+                            contentDescription = usuari.nom,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clip(RoundedCornerShape(20.dp))
+                        )
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(
+                                    Brush.verticalGradient(
+                                        colors = listOf(
+                                            Color.Transparent,
+                                            Color(0xAA000000)
+                                        )
+                                    )
+                                )
+                        )
 
                         Text(
                             text = usuari.nom,
-                            style = MaterialTheme.typography.titleMedium
+                            color = Color.White,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .align(Alignment.BottomCenter)
+                                .padding(bottom = 14.dp)
                         )
                     }
                 }
             }
         }
 
-        Button(onClick = onConfigClick) {
+        Button(
+            onClick = onConfigClick,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 12.dp)
+        ) {
             Text("Canviar IP servidor")
         }
     }

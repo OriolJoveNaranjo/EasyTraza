@@ -24,6 +24,7 @@ fun ServerConfigScreen(
 ) {
     val serverIp by viewModel.serverIp.collectAsState()
     val message by viewModel.message.collectAsState()
+    val isConnecting by viewModel.isConnecting.collectAsState()
 
     Column(
         modifier = Modifier
@@ -63,11 +64,12 @@ fun ServerConfigScreen(
         }
         Button(
             onClick = viewModel::testConnection,
+            enabled = !isConnecting,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 12.dp)
         ) {
-            Text("Provar connexió")
+            Text(if (isConnecting) "Conectando..." else "Provar connexió")
         }
 
         if (message.isNotBlank()) {

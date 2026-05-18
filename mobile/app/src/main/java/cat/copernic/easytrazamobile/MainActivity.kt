@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             EasyTrazaMobileTheme {
-                var screen by rememberSaveable { mutableStateOf("config") }
+                var screen by rememberSaveable { mutableStateOf("users") }
 
                 when (screen) {
                     "config" -> ServerConfigScreen(

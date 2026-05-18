@@ -4,10 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import cat.copernic.easytrazamobile.data.local.ServerConfigRepository
+import cat.copernic.easytrazamobile.data.remote.RetrofitProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import cat.copernic.easytrazamobile.data.remote.RetrofitProvider
 
 class ServerConfigViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -18,6 +18,9 @@ class ServerConfigViewModel(application: Application) : AndroidViewModel(applica
 
     private val _message = MutableStateFlow("")
     val message: StateFlow<String> = _message
+
+    private val _isConnecting = MutableStateFlow(false)
+    val isConnecting: StateFlow<Boolean> = _isConnecting
 
     init {
         viewModelScope.launch {
@@ -32,6 +35,16 @@ class ServerConfigViewModel(application: Application) : AndroidViewModel(applica
         _message.value = ""
     }
 
+    private fun buildServerUrl(ip: String): String {
+        val cleanIp = ip
+            .trim()
+            .removePrefix("http://")
+            .removePrefix("https://")
+            .substringBefore(":")
+
+        return "http://$cleanIp:8080"
+    }
+
     fun saveIp() {
         val ip = _serverIp.value.trim()
 
@@ -40,26 +53,21 @@ class ServerConfigViewModel(application: Application) : AndroidViewModel(applica
             return
         }
 
-        // Validación simple (IP o URL con puerto)
-        val regex = Regex("^((http://)?(\\d{1,3}\\.){3}\\d{1,3}(:\\d{2,5})?)$")
+        val regex = Regex("^(\\d{1,3}\\.){3}\\d{1,3}$")
 
-        if (!regex.matches(ip)) {
-            _message.value = "Format incorrecte. Exemple: 192.168.1.50:8080"
+        if (!regex.matches(ip.removePrefix("http://").removePrefix("https://").substringBefore(":"))) {
+            _message.value = "Format incorrecte. Exemple: 192.168.1.50"
             return
         }
 
-        // Añadir http:// si no está
-        val finalUrl = if (!ip.startsWith("http")) {
-            "http://$ip"
-        } else {
-            ip
-        }
+        val finalUrl = buildServerUrl(ip)
 
         viewModelScope.launch {
             repository.saveServerIp(finalUrl)
             _message.value = "Servidor guardat: $finalUrl"
         }
     }
+
     fun testConnection() {
         val ip = _serverIp.value.trim()
 
@@ -68,24 +76,25 @@ class ServerConfigViewModel(application: Application) : AndroidViewModel(applica
             return
         }
 
-        val finalUrl = if (!ip.startsWith("http")) {
-            "http://$ip"
-        } else {
-            ip
-        }
+        val finalUrl = buildServerUrl(ip)
 
         viewModelScope.launch {
+            _isConnecting.value = true
+            _message.value = "Conectando..."
+
             try {
                 val api = RetrofitProvider.createApi(finalUrl)
                 val response = api.testConnection()
 
-                if (response.isSuccessful) {
-                    _message.value = "Connexió correcta amb el servidor"
+                _message.value = if (response.isSuccessful) {
+                    "Connexió correcta amb el servidor"
                 } else {
-                    _message.value = "Servidor trobat, però resposta no vàlida: ${response.code()}"
+                    "Servidor trobat, però resposta no vàlida: ${response.code()}"
                 }
             } catch (e: Exception) {
                 _message.value = "No s'ha pogut connectar amb el servidor"
+            } finally {
+                _isConnecting.value = false
             }
         }
     }
