@@ -9,8 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
 /**
  *
@@ -37,13 +37,15 @@ public class Proveidor {
 
     private String telefon;
 
+    
+    @Email(message = "El format del correu electrònic no és vàlid")
     private String email;
 
     private String adreca;
 
     @Column(length = 500)
     private String observacions;
-    
+
     private boolean actiu = true;
 
     public Proveidor() {

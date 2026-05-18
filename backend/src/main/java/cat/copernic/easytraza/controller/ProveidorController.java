@@ -6,6 +6,7 @@ package cat.copernic.easytraza.controller;
 
 import cat.copernic.easytraza.entities.Proveidor;
 import cat.copernic.easytraza.service.ProveidorService;
+import cat.copernic.easytraza.utils.ValidacioEmail;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,8 +58,21 @@ public class ProveidorController {
 
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute Proveidor proveidor, Model model) {
+
+        boolean esCreacio = proveidor.getId() == null;
+
         try {
-            if (proveidor.getId() != null) {
+            if (proveidor.getEmail() != null && proveidor.getEmail().trim().isEmpty()) {
+            proveidor.setEmail(null);
+        }
+            if (ValidacioEmail.emailNoValid(proveidor.getEmail())) {
+                model.addAttribute("error", "El format del correu electrònic no és vàlid.");
+                model.addAttribute("proveidor", proveidor);
+                model.addAttribute("mode", esCreacio ? "create" : "edit");
+                return "nou-proveidor";
+            }
+
+            if (!esCreacio) {
                 proveidorService.update(proveidor.getId(), proveidor);
             } else {
                 proveidorService.save(proveidor);
@@ -69,6 +83,7 @@ public class ProveidorController {
         } catch (RuntimeException e) {
             model.addAttribute("error", e.getMessage());
             model.addAttribute("proveidor", proveidor);
+            model.addAttribute("mode", esCreacio ? "create" : "edit");
             return "nou-proveidor";
         }
     }
@@ -110,6 +125,7 @@ public class ProveidorController {
         model.addAttribute("mode", "view");
         return "nou-proveidor";
     }
+
     @GetMapping("/activar/{id}")
     public String activar(@PathVariable Long id) {
         proveidorService.activar(id);

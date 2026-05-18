@@ -5,6 +5,8 @@
 package cat.copernic.easytraza.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  *
@@ -31,9 +33,10 @@ public class Client {
 
     private String telefon;
 
-    @Column(unique = true)
+    @Column(unique = true)    
+    @Email(message = "El format del correu electrònic no és vàlid")
     private String email;
-    
+
     private boolean actiu = true;
 
     public Client() {
@@ -112,4 +115,3 @@ public class Client {
     }
 
 }
-
