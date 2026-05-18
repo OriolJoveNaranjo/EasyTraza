@@ -30,7 +30,10 @@ public class SecurityConfig {
                         "/css/**",
                         "/images/**",
                         "/js/**",
-                        "/uploads/**"
+                        "/uploads/**",
+                        "/api/health",
+                        "/api/usuaris",
+                        "/api/usuaris/**"
                 ).permitAll()
                 .requestMatchers(
                         "/cataleg/**",

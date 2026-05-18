@@ -24,9 +24,9 @@ import javax.imageio.ImageIO;
 import net.sourceforge.tess4j.Tesseract;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import cat.copernic.easytraza.validation.CifValidator;
-import cat.copernic.easytraza.validation.DniValidator;
-import cat.copernic.easytraza.validation.NieValidator;
+import cat.copernic.easytraza.utils.CifValidator;
+import cat.copernic.easytraza.utils.DniValidator;
+import cat.copernic.easytraza.utils.NieValidator;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 

@@ -4,7 +4,7 @@ import cat.copernic.easytraza.entities.Proveidor;
 import cat.copernic.easytraza.repository.AlbaraProveidorRepository;
 import cat.copernic.easytraza.repository.ProveidorRepository;
 import cat.copernic.easytraza.service.ProveidorService;
-import cat.copernic.easytraza.validation.CifValidator;
+import cat.copernic.easytraza.utils.CifValidator;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
