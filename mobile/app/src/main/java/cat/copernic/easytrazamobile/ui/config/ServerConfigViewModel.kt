@@ -3,12 +3,16 @@ package cat.copernic.easytrazamobile.ui.config
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import cat.copernic.easytrazamobile.R
 import cat.copernic.easytrazamobile.data.local.ServerConfigRepository
 import cat.copernic.easytrazamobile.data.remote.RetrofitProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel for reading, validating and testing the backend server configuration.
+ */
 class ServerConfigViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = ServerConfigRepository(application)
@@ -30,11 +34,13 @@ class ServerConfigViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
+    /** Updates the currently typed IP and clears validation messages. */
     fun onIpChange(newIp: String) {
         _serverIp.value = newIp
         _message.value = ""
     }
 
+    /** Normalizes a plain IP into the backend base URL expected by Retrofit. */
     private fun buildServerUrl(ip: String): String {
         val cleanIp = ip
             .trim()
@@ -45,18 +51,20 @@ class ServerConfigViewModel(application: Application) : AndroidViewModel(applica
         return "http://$cleanIp:8080"
     }
 
+    /** Validates and saves the backend URL, then invokes [onSaved] when successful. */
     fun saveIp(onSaved: () -> Unit = {}) {
         val ip = _serverIp.value.trim()
 
         if (ip.isBlank()) {
-            _message.value = "La IP del servidor és obligatòria"
+            _message.value = string(R.string.server_ip_required)
             return
         }
 
         val regex = Regex("^(\\d{1,3}\\.){3}\\d{1,3}$")
+        val ipWithoutProtocol = ip.removePrefix("http://").removePrefix("https://").substringBefore(":")
 
-        if (!regex.matches(ip.removePrefix("http://").removePrefix("https://").substringBefore(":"))) {
-            _message.value = "Format incorrecte. Exemple: 192.168.1.50"
+        if (!regex.matches(ipWithoutProtocol)) {
+            _message.value = string(R.string.server_ip_invalid)
             return
         }
 
@@ -64,16 +72,17 @@ class ServerConfigViewModel(application: Application) : AndroidViewModel(applica
 
         viewModelScope.launch {
             repository.saveServerIp(finalUrl)
-            _message.value = "Servidor guardat: $finalUrl"
+            _message.value = string(R.string.server_saved, finalUrl)
             onSaved()
         }
     }
 
+    /** Tests whether the configured backend responds to the health endpoint. */
     fun testConnection() {
         val ip = _serverIp.value.trim()
 
         if (ip.isBlank()) {
-            _message.value = "Primer has d'introduir la IP del servidor"
+            _message.value = string(R.string.server_enter_ip_first)
             return
         }
 
@@ -81,22 +90,25 @@ class ServerConfigViewModel(application: Application) : AndroidViewModel(applica
 
         viewModelScope.launch {
             _isConnecting.value = true
-            _message.value = "Connectant..."
+            _message.value = string(R.string.server_connecting)
 
             try {
                 val api = RetrofitProvider.createApi(finalUrl)
                 val response = api.testConnection()
 
                 _message.value = if (response.isSuccessful) {
-                    "Connexió correcta amb el servidor"
+                    string(R.string.server_connection_ok)
                 } else {
-                    "Servidor trobat, però resposta no vàlida: ${response.code()}"
+                    string(R.string.server_invalid_response, response.code())
                 }
             } catch (e: Exception) {
-                _message.value = "No s'ha pogut connectar amb el servidor"
+                _message.value = string(R.string.server_connection_failed)
             } finally {
                 _isConnecting.value = false
             }
         }
     }
+
+    private fun string(id: Int, vararg args: Any): String =
+        getApplication<Application>().getString(id, *args)
 }

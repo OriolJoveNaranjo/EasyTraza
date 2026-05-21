@@ -1,5 +1,6 @@
 package cat.copernic.easytrazamobile.ui.users
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,10 +29,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.AsyncImage
+import cat.copernic.easytrazamobile.R
 import cat.copernic.easytrazamobile.ui.components.EasySecondaryButton
 import cat.copernic.easytrazamobile.ui.components.EasyStatusMessage
 import cat.copernic.easytrazamobile.ui.theme.EasyBackground
@@ -41,7 +43,11 @@ import cat.copernic.easytrazamobile.ui.theme.EasySurface
 import cat.copernic.easytrazamobile.ui.theme.EasyTextLight
 import cat.copernic.easytrazamobile.ui.theme.EasyTextMuted
 import cat.copernic.easytrazamobile.ui.theme.EasyTextStrong
+import coil.compose.AsyncImage
 
+/**
+ * Screen where the operator selects the active backend user for the mobile session.
+ */
 @Composable
 fun UserSelectionScreen(
     onUserSelected: () -> Unit,
@@ -64,7 +70,7 @@ fun UserSelectionScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "EasyTraza",
+            text = stringResource(R.string.common_app_title),
             style = MaterialTheme.typography.headlineLarge,
             fontWeight = FontWeight.Bold,
             color = EasyTextStrong,
@@ -72,7 +78,7 @@ fun UserSelectionScreen(
         )
 
         Text(
-            text = "Selecciona l'usuari de treball",
+            text = stringResource(R.string.users_subtitle),
             style = MaterialTheme.typography.titleMedium,
             color = EasyTextMuted,
             modifier = Modifier.padding(top = 6.dp, bottom = 16.dp)
@@ -103,12 +109,10 @@ fun UserSelectionScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .aspectRatio(0.88f)
-                        .clickable {
-                            viewModel.selectUser(usuari.id, onUserSelected)
-                        },
+                        .clickable { viewModel.selectUser(usuari.id, onUserSelected) },
                     shape = RoundedCornerShape(22.dp),
                     colors = CardDefaults.cardColors(containerColor = EasySurface),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, EasyBorder),
+                    border = BorderStroke(1.dp, EasyBorder),
                     elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                 ) {
                     Box(modifier = Modifier.fillMaxSize()) {
@@ -149,7 +153,7 @@ fun UserSelectionScreen(
         }
 
         EasySecondaryButton(
-            text = "Canviar IP servidor",
+            text = stringResource(R.string.users_change_server_ip),
             onClick = onConfigClick,
             modifier = Modifier.padding(top = 8.dp)
         )

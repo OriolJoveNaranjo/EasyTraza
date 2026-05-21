@@ -3,6 +3,7 @@ package cat.copernic.easytrazamobile.ui.albarans
 import android.app.DatePickerDialog
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,9 +35,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import cat.copernic.easytrazamobile.R
 import cat.copernic.easytrazamobile.data.model.LotFormState
 import cat.copernic.easytrazamobile.ui.components.EasyDangerButton
 import cat.copernic.easytrazamobile.ui.components.EasyPrimaryButton
@@ -54,6 +57,9 @@ import cat.copernic.easytrazamobile.ui.theme.EasyTextMuted
 import cat.copernic.easytrazamobile.ui.theme.EasyTextStrong
 import java.time.LocalDate
 
+/**
+ * Screen used to receive a supplier delivery note and create its lots from mobile.
+ */
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RebreAlbaraScreen(
@@ -110,7 +116,7 @@ fun RebreAlbaraScreen(
                     selected = true,
                     onClick = {},
                     icon = { Text("📄") },
-                    label = { Text("Rebre") },
+                    label = { Text(stringResource(R.string.common_receive)) },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = EasyPrimary,
                         selectedTextColor = EasyPrimary,
@@ -121,7 +127,7 @@ fun RebreAlbaraScreen(
                     selected = false,
                     onClick = onBackToMenu,
                     icon = { Text("🏠") },
-                    label = { Text("Menú") },
+                    label = { Text(stringResource(R.string.common_menu)) },
                     colors = NavigationBarItemDefaults.colors(
                         unselectedIconColor = EasyTextMuted,
                         unselectedTextColor = EasyTextMuted
@@ -140,15 +146,15 @@ fun RebreAlbaraScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             EasyScreenHeader(
-                title = "Rebre albarà",
-                subtitle = "Escaneja o revisa les dades abans de guardar."
+                title = stringResource(R.string.receive_title),
+                subtitle = stringResource(R.string.receive_subtitle)
             )
 
             EasyStatusMessage(message = message)
 
             EasySectionCard {
                 EasyPrimaryButton(
-                    text = "Escanejar albarà amb OCR",
+                    text = stringResource(R.string.receive_scan_ocr),
                     onClick = onOpenOcrCamera,
                     modifier = Modifier.height(52.dp)
                 )
@@ -156,13 +162,17 @@ fun RebreAlbaraScreen(
                 WarmOutlinedTextField(
                     value = numeroAlbara,
                     onValueChange = { numeroAlbara = it },
-                    label = "Número d'albarà",
+                    label = stringResource(R.string.receive_delivery_number),
                     singleLine = true
                 )
 
                 Box(modifier = Modifier.fillMaxWidth()) {
                     EasySecondaryButton(
-                        text = if (proveidor.isBlank()) "Seleccionar proveïdor" else proveidor,
+                        text = if (proveidor.isBlank()) {
+                            stringResource(R.string.receive_select_supplier)
+                        } else {
+                            proveidor
+                        },
                         onClick = { expandedProveidors = true }
                     )
                     DropdownMenu(
@@ -172,7 +182,7 @@ fun RebreAlbaraScreen(
                     ) {
                         if (proveidors.isEmpty()) {
                             DropdownMenuItem(
-                                text = { Text("No hi ha proveïdors carregats") },
+                                text = { Text(stringResource(R.string.receive_no_suppliers_loaded)) },
                                 onClick = { expandedProveidors = false }
                             )
                         } else {
@@ -193,31 +203,33 @@ fun RebreAlbaraScreen(
                     value = dataRecepcio,
                     onValueChange = {},
                     readOnly = true,
-                    label = "Data recepció",
+                    label = stringResource(R.string.receive_date),
                     singleLine = true
                 )
 
                 WarmOutlinedTextField(
                     value = observacions,
                     onValueChange = { observacions = it },
-                    label = "Observacions",
+                    label = stringResource(R.string.receive_observations),
                     minLines = 3
                 )
             }
 
             Text(
-                text = "Lots de l'albarà",
+                text = stringResource(R.string.receive_lots_title),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = EasyTextStrong
             )
 
             lots.forEachIndexed { index, lot ->
+                var expandedMateria by remember { mutableStateOf(false) }
+
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(20.dp),
                     colors = CardDefaults.cardColors(containerColor = EasySurface),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, EasyBorder),
+                    border = BorderStroke(1.dp, EasyBorder),
                     elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
                 ) {
                     Column(
@@ -225,17 +237,16 @@ fun RebreAlbaraScreen(
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         Text(
-                            text = "Lot ${index + 1}",
+                            text = stringResource(R.string.common_lot_number, index + 1),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = EasyTextStrong
                         )
 
-                        var expandedMateria by remember { mutableStateOf(false) }
                         Box(modifier = Modifier.fillMaxWidth()) {
                             EasySecondaryButton(
                                 text = if (lot.materiaPrimera.isBlank()) {
-                                    "Seleccionar matèria primera"
+                                    stringResource(R.string.receive_select_material)
                                 } else {
                                     lot.materiaPrimera
                                 },
@@ -248,7 +259,7 @@ fun RebreAlbaraScreen(
                             ) {
                                 if (materiesPrimeres.isEmpty()) {
                                     DropdownMenuItem(
-                                        text = { Text("No hi ha matèries carregades") },
+                                        text = { Text(stringResource(R.string.receive_no_materials_loaded)) },
                                         onClick = { expandedMateria = false }
                                     )
                                 } else {
@@ -274,7 +285,7 @@ fun RebreAlbaraScreen(
                                     it[index] = it[index].copy(quantitat = value)
                                 }
                             },
-                            label = "Quantitat",
+                            label = stringResource(R.string.common_quantity),
                             singleLine = true
                         )
 
@@ -285,7 +296,7 @@ fun RebreAlbaraScreen(
                                     it[index] = it[index].copy(unitat = value)
                                 }
                             },
-                            label = "Unitat",
+                            label = stringResource(R.string.common_unit),
                             singleLine = true
                         )
 
@@ -296,18 +307,18 @@ fun RebreAlbaraScreen(
                                     it[index] = it[index].copy(identificadorLot = value)
                                 }
                             },
-                            label = "Identificador lot",
+                            label = stringResource(R.string.receive_lot_identifier),
                             singleLine = true
                         )
 
-                        val today = LocalDate.now()
                         EasySecondaryButton(
                             text = if (lot.dataCaducitat.isBlank()) {
-                                "Seleccionar data caducitat"
+                                stringResource(R.string.receive_select_expiry_date)
                             } else {
-                                "Caducitat: ${lot.dataCaducitat}"
+                                stringResource(R.string.receive_expiry_date_value, lot.dataCaducitat)
                             },
                             onClick = {
+                                val today = LocalDate.now()
                                 DatePickerDialog(
                                     context,
                                     { _, year, month, dayOfMonth ->
@@ -327,7 +338,7 @@ fun RebreAlbaraScreen(
 
                         if (lots.size > 1) {
                             EasyDangerButton(
-                                text = "Eliminar lot",
+                                text = stringResource(R.string.receive_delete_lot),
                                 onClick = {
                                     lots = lots.toMutableList().also { it.removeAt(index) }
                                 }
@@ -338,12 +349,17 @@ fun RebreAlbaraScreen(
             }
 
             EasySecondaryButton(
-                text = "Afegir lot",
+                text = stringResource(R.string.receive_add_lot),
                 onClick = { lots = lots + LotFormState() }
             )
 
             EasyPrimaryButton(
-                text = if (isSaving) "Guardant..." else "Guardar albarà",
+                text = if (isSaving) {
+                    stringResource(R.string.receive_saving)
+                } else {
+                    stringResource(R.string.receive_save)
+                },
+                enabled = !isSaving,
                 onClick = {
                     viewModel.guardarAlbara(
                         numeroAlbara = numeroAlbara,
@@ -361,13 +377,13 @@ fun RebreAlbaraScreen(
                         }
                     )
                 },
-                enabled = !isSaving,
-                modifier = Modifier.height(54.dp)
+                modifier = Modifier.height(52.dp)
             )
         }
     }
 }
 
+/** Detects a delivery note number from OCR text using common labels. */
 private fun detectarNumeroAlbara(text: String): String {
     val regex = Regex(
         pattern = "(?i)(albar[aà]|albaran|n[ºo]?|num|numero)[:\\s-]*([A-Za-z0-9\\-/]+)"
@@ -376,6 +392,7 @@ private fun detectarNumeroAlbara(text: String): String {
     return regex.find(text)?.groupValues?.getOrNull(2) ?: ""
 }
 
+/** Detects supplier lot identifiers from OCR text. */
 private fun detectarLots(text: String): List<String> {
     val regex = Regex(
         pattern = "(?i)(lot|lote)[\\s:\\-]*([A-Za-z0-9\\-/]+)"
@@ -387,6 +404,7 @@ private fun detectarLots(text: String): List<String> {
         .toList()
 }
 
+/** Detects a supplier name by checking whether the OCR text contains a known supplier. */
 private fun detectarProveidor(text: String, proveidors: List<String>): String {
     val textNormalitzat = text.lowercase()
 

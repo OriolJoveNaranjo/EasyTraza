@@ -6,8 +6,16 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
+/**
+ * Factory that creates Retrofit API clients for the configured backend URL.
+ */
 object RetrofitProvider {
 
+    /**
+     * Creates an [ApiService] ensuring Retrofit receives a base URL ending with `/`.
+     *
+     * @param baseUrl Backend base URL saved in the app configuration.
+     */
     fun createApi(baseUrl: String): ApiService {
         val fixedBaseUrl = if (baseUrl.endsWith("/")) baseUrl else "$baseUrl/"
 
