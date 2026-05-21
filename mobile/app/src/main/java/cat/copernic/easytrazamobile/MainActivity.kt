@@ -23,8 +23,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
+import cat.copernic.easytrazamobile.ui.albarans.OcrCameraScreen
+import cat.copernic.easytrazamobile.ui.albarans.RebreAlbaraScreen
 import cat.copernic.easytrazamobile.ui.theme.EasyTrazaMobileTheme
 import cat.copernic.easytrazamobile.ui.config.ServerConfigScreen
+import cat.copernic.easytrazamobile.ui.menu.MenuScreen
 import cat.copernic.easytrazamobile.ui.users.UserSelectionScreen
 
 class MainActivity : ComponentActivity() {
@@ -32,8 +35,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            EasyTrazaMobileTheme {
+            EasyTrazaMobileTheme(dynamicColor = false) {
                 var screen by rememberSaveable { mutableStateOf("users") }
+                var ocrText by rememberSaveable { mutableStateOf("") }
 
                 when (screen) {
                     "config" -> ServerConfigScreen(
@@ -45,7 +49,25 @@ class MainActivity : ComponentActivity() {
                         onConfigClick = { screen = "config" }
                     )
 
-                    "menu" -> Text("Menú principal")
+                    "menu" -> MenuScreen(
+                        onReceiveDeliveryClick = { screen = "rebreAlbara" },
+                        onLogoutClick = { screen = "users" }
+                    )
+
+                    "rebreAlbara" -> RebreAlbaraScreen(
+                        ocrText = ocrText,
+                        onBackToMenu = { screen = "menu" },
+                        onOpenOcrCamera = { screen = "ocrCamera" }
+                    )
+                    "ocrCamera" -> OcrCameraScreen(
+                        onOcrResult = { text ->
+                            ocrText = text
+                            screen = "rebreAlbara"
+                        },
+                        onBack = {
+                            screen = "rebreAlbara"
+                        }
+                    )
                 }
             }
         }
