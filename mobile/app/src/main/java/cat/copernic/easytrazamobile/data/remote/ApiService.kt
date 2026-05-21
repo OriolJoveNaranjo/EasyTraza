@@ -10,6 +10,8 @@ import retrofit2.http.Path
 import retrofit2.http.Body
 import retrofit2.http.POST
 import cat.copernic.easytrazamobile.data.model.GuardarAlbaraRequest
+import cat.copernic.easytrazamobile.data.model.LotOberturaDto
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -32,6 +34,15 @@ interface ApiService {
     @POST("api/mobile/albarans-proveidor/guardar")
     suspend fun guardarAlbaraMobile(
         @Body request: GuardarAlbaraRequest
+    ): Response<String>
+    @GET("api/mobile/lots-proveidor/en-estoc")
+    suspend fun getLotsEnEstoc(): Response<List<LotOberturaDto>>
+
+    @POST("api/mobile/lots-proveidor/{id}/obrir")
+    suspend fun obrirLotMobile(
+        @Path("id") id: Long,
+        @Query("usuariId") usuariId: Long,
+        @Query("confirmar") confirmar: Boolean = false
     ): Response<String>
 
 }

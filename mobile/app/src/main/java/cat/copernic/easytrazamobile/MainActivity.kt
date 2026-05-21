@@ -1,9 +1,11 @@
 package cat.copernic.easytrazamobile
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -29,8 +31,10 @@ import cat.copernic.easytrazamobile.ui.theme.EasyTrazaMobileTheme
 import cat.copernic.easytrazamobile.ui.config.ServerConfigScreen
 import cat.copernic.easytrazamobile.ui.menu.MenuScreen
 import cat.copernic.easytrazamobile.ui.users.UserSelectionScreen
+import cat.copernic.easytrazamobile.ui.lots.ObrirLotScreen
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -51,6 +55,7 @@ class MainActivity : ComponentActivity() {
 
                     "menu" -> MenuScreen(
                         onReceiveDeliveryClick = { screen = "rebreAlbara" },
+                        onStartLotClick = { screen = "obrirLot" },
                         onLogoutClick = { screen = "users" }
                     )
 
@@ -67,6 +72,9 @@ class MainActivity : ComponentActivity() {
                         onBack = {
                             screen = "rebreAlbara"
                         }
+                    )
+                    "obrirLot" -> ObrirLotScreen(
+                        onBackToMenu = { screen = "menu" }
                     )
                 }
             }
