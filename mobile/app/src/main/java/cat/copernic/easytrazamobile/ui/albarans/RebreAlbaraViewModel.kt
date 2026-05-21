@@ -101,12 +101,51 @@ class RebreAlbaraViewModel(application: Application) : AndroidViewModel(applicat
                     return@launch
                 }
 
-                val lotsValids = lots.filter {
-                    it.materiaPrimera.isNotBlank()
-                            && it.quantitat.isNotBlank()
-                            && it.unitat.isNotBlank()
-                            && it.identificadorLot.isNotBlank()
+                if (lots.isEmpty()) {
+                    _message.value = "Has d'afegir com a mínim un lot"
+                    return@launch
                 }
+
+                lots.forEachIndexed { index, lot ->
+                    val numLot = index + 1
+
+                    if (lot.materiaPrimera.isBlank()) {
+                        _message.value = "Falta seleccionar la matèria primera del lot $numLot"
+                        return@launch
+                    }
+
+                    if (lot.quantitat.isBlank()) {
+                        _message.value = "Falta indicar la quantitat del lot $numLot"
+                        return@launch
+                    }
+
+                    if (lot.quantitat.replace(",", ".").toDoubleOrNull() == null) {
+                        _message.value = "La quantitat del lot $numLot ha de ser un número vàlid"
+                        return@launch
+                    }
+
+                    if (lot.quantitat.replace(",", ".").toDouble() <= 0) {
+                        _message.value = "La quantitat del lot $numLot ha de ser superior a zero"
+                        return@launch
+                    }
+
+                    if (lot.unitat.isBlank()) {
+                        _message.value = "Falta indicar la unitat del lot $numLot"
+                        return@launch
+                    }
+
+                    if (lot.identificadorLot.isBlank()) {
+                        _message.value = "Falta indicar l'identificador del lot $numLot"
+                        return@launch
+                    }
+
+                    if (lot.dataCaducitat.isBlank()) {
+                        _message.value = "Falta seleccionar la data de caducitat del lot $numLot"
+                        return@launch
+                    }
+                }
+
+                val lotsValids = lots
 
                 if (lotsValids.isEmpty()) {
                     _message.value = "Has d'afegir com a mínim un lot complet"

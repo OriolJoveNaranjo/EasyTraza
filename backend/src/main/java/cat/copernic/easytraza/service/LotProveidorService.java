@@ -26,4 +26,6 @@ public interface LotProveidorService {
 
     List<LotProveidor> filtrarLots(String identificador, String estat, Long materiaId, LocalDate data);
 
+    void iniciarLotMobile(Long lotId, boolean confirmarTancarAnterior, Long usuariId);
+
 }

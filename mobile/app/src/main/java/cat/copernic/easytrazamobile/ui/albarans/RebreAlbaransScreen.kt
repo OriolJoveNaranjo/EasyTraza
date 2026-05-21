@@ -69,6 +69,13 @@ fun RebreAlbaraScreen(
     val message by viewModel.message.collectAsState()
     val materiesPrimeres by viewModel.materiesPrimeres.collectAsState()
     val context = androidx.compose.ui.platform.LocalContext.current
+    val scrollState = rememberScrollState()
+
+    LaunchedEffect(message) {
+        if (message.isNotBlank()) {
+            scrollState.animateScrollTo(0)
+        }
+    }
 
     LaunchedEffect(Unit) {
         viewModel.carregarProveidors()
@@ -120,7 +127,7 @@ fun RebreAlbaraScreen(
                 .fillMaxSize()
                 .background(BackgroundWarm)
                 .padding(paddingValues)
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(scrollState)
                 .padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(18.dp)
         ) {
