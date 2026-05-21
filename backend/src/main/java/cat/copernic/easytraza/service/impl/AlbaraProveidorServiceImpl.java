@@ -69,123 +69,11 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
         return albaraRepo.findById(id);
     }
 
-    /*@Transactional
-    public AlbaraProveidor create(AlbaraProveidorRequest request) {
-        validarRequest(request);
-
-        Proveidor proveidor = proveidorRepo.findById(request.getProveidorId())
-                .orElseThrow(() -> new RuntimeException("El proveïdor no existeix"));
-
-        AlbaraProveidor albara = new AlbaraProveidor();
-        albara.setDataRecepcio(request.getDataRecepcio());
-        albara.setProveidor(proveidor);
-
-        List<LiniaAlbaraProveidor> linies = new ArrayList<>();
-
-        for (LiniaAlbaraProveidorRequest liniaReq : request.getLinies()) {
-            MateriaPrimera materia = materiaRepo.findById(liniaReq.getMateriaPrimeraId())
-                    .orElseThrow(() -> new RuntimeException("La matèria primera no existeix"));
-
-            if (lotRepo.existsByIdentificadorLotAndProveidorId(
-                    liniaReq.getIdentificadorLot(),
-                    proveidor.getId()
-            )) {
-                throw new RuntimeException("Ja existeix un lot amb aquest identificador per aquest proveïdor");
-            }
-
-            LotProveidor lot = new LotProveidor();
-            lot.setIdentificadorLot(liniaReq.getIdentificadorLot());
-            lot.setProveidor(proveidor);
-            lot.setMateriaPrimera(materia);
-            lot.setQuantitat(liniaReq.getQuantitat());
-            lot.setUnitat(liniaReq.getUnitat());
-            lot.setDataCaducitat(liniaReq.getDataCaducitat());
-            lot.setEstat(EstatLot.EN_ESTOC);
-            lot.setAlbaraProveidor(albara);
-
-            LiniaAlbaraProveidor linia = new LiniaAlbaraProveidor();
-            linia.setAlbaraProveidor(albara);
-            linia.setMateriaPrimera(materia);
-            linia.setQuantitat(liniaReq.getQuantitat());
-            linia.setUnitat(liniaReq.getUnitat());
-            linia.setLot(lot);
-
-            linies.add(linia);
-        }
-
-        albara.setLinies(linies);
-        return albaraRepo.save(albara);
-    }
-
-    @Transactional
-    public AlbaraProveidor update(Long id, AlbaraProveidorRequest request) {
-        AlbaraProveidor existent = albaraRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("L'albarà no existeix"));
-
-        validarRequest(request);
-
-        Proveidor proveidor = proveidorRepo.findById(request.getProveidorId())
-                .orElseThrow(() -> new RuntimeException("El proveïdor no existeix"));
-
-        existent.setDataRecepcio(request.getDataRecepcio());
-        existent.setProveidor(proveidor);
-
-        existent.getLinies().clear();
-
-        for (LiniaAlbaraProveidorRequest liniaReq : request.getLinies()) {
-            MateriaPrimera materia = materiaRepo.findById(liniaReq.getMateriaPrimeraId())
-                    .orElseThrow(() -> new RuntimeException("La matèria primera no existeix"));
-
-            LotProveidor lot = new LotProveidor();
-            lot.setIdentificadorLot(liniaReq.getIdentificadorLot());
-            lot.setProveidor(proveidor);
-            lot.setMateriaPrimera(materia);
-            lot.setQuantitat(liniaReq.getQuantitat());
-            lot.setUnitat(liniaReq.getUnitat());
-            lot.setDataCaducitat(liniaReq.getDataCaducitat());
-            lot.setEstat(EstatLot.EN_ESTOC);
-            lot.setAlbaraProveidor(existent);
-
-            LiniaAlbaraProveidor linia = new LiniaAlbaraProveidor();
-            linia.setAlbaraProveidor(existent);
-            linia.setMateriaPrimera(materia);
-            linia.setQuantitat(liniaReq.getQuantitat());
-            linia.setUnitat(liniaReq.getUnitat());
-            linia.setLot(lot);
-
-            existent.getLinies().add(linia);
-        }
-
-        return albaraRepo.save(existent);
-    }*/
     @Override
     public void deleteById(Long id) {
         albaraRepo.deleteById(id);
     }
 
-    /*private void validarRequest(AlbaraProveidorRequest request) {
-        if (request.getProveidorId() == null) {
-            throw new RuntimeException("El proveïdor és obligatori");
-        }
-        if (request.getDataRecepcio() == null) {
-            throw new RuntimeException("La data de recepció és obligatòria");
-        }
-        if (request.getLinies() == null || request.getLinies().isEmpty()) {
-            throw new RuntimeException("L'albarà ha de tenir almenys una línia");
-        }
-
-        for (LiniaAlbaraProveidorRequest linia : request.getLinies()) {
-            if (linia.getMateriaPrimeraId() == null) {
-                throw new RuntimeException("La matèria primera és obligatòria");
-            }
-            if (linia.getQuantitat() == null || linia.getQuantitat() <= 0) {
-                throw new RuntimeException("La quantitat ha de ser superior a zero");
-            }
-            if (linia.getIdentificadorLot() == null || linia.getIdentificadorLot().isBlank()) {
-                throw new RuntimeException("L'identificador del lot és obligatori");
-            }
-        }
-    }*/
     @Override
     @Transactional
     public AlbaraProveidor save(AlbaraProveidor albaraProveidor) {
@@ -304,13 +192,15 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
             lot.setUnitat(linia.getUnitat().trim());
             lot.setEstat(EstatLot.EN_ESTOC);
         }
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String email = auth.getName();
+        if (albaraProveidor.getUsuariAlta() == null) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String email = auth.getName();
 
-        Usuari usuari = usuarirepo.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuari no trobat"));
+            Usuari usuari = usuarirepo.findByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("Usuari no trobat"));
 
-        albaraProveidor.setUsuariAlta(usuari);
+            albaraProveidor.setUsuariAlta(usuari);
+        }
 
         if (liniesValides == 0) {
             throw new RuntimeException("L'albarà ha de tenir almenys un lot complet");

@@ -6,7 +6,6 @@ package cat.copernic.easytraza.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,7 +21,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/**").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/**").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.PUT, "/api/**").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.DELETE, "/api/**").permitAll()
                 .requestMatchers(
                         "/login",
                         "/restablir-contrasenya/**",
@@ -31,9 +35,8 @@ public class SecurityConfig {
                         "/images/**",
                         "/js/**",
                         "/uploads/**",
-                        "/api/health",
-                        "/api/usuaris",
-                        "/api/usuaris/**"
+                        "/error",
+                        "/error/**"
                 ).permitAll()
                 .requestMatchers(
                         "/cataleg/**",
@@ -61,13 +64,6 @@ public class SecurityConfig {
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/panell", true)
-                .failureHandler((request, response, exception) -> {
-                    if (exception instanceof org.springframework.security.authentication.DisabledException) {
-                        response.sendRedirect("/login?disabled");
-                    } else {
-                        response.sendRedirect("/login?error");
-                    }
-                })
                 .permitAll()
                 )
                 .logout(logout -> logout

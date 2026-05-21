@@ -129,12 +129,13 @@
                                   th:action="@{/lots-proveidor/finalitzar/{id}(id=${lot.id})}"
                                   method="post">
                                 <button type="submit" class="btn-finish">Finalitzar</button>
-                                <a th:if="${lot.estat.name() == 'OBERT' or lot.estat.name() == 'ACABAT'}"
-                                   th:href="@{/tracabilitat(lotId=${lot.id})}"
-                                   class="btn-secondary">
-                                    Traçabilitat
-                                </a>
+
                             </form>
+                            <a th:if="${lot.estat.name() == 'OBERT' or lot.estat.name() == 'ACABAT'}"
+                               th:href="@{/tracabilitat(lotId=${lot.id})}"
+                               class="btn-secondary">
+                                Traçabilitat
+                            </a>
                         </div>
                     </div>
                 </div>
