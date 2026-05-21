@@ -128,4 +128,39 @@ public class LotProveidorServiceImpl implements LotProveidorService {
         );
     }
 
+    @Override
+    @Transactional
+    public void iniciarLotMobile(Long lotId, boolean confirmarTancarAnterior, Long usuariId) {
+        LotProveidor lot = lotRepo.findById(lotId)
+                .orElseThrow(() -> new RuntimeException("El lot no existeix"));
+
+        Optional<LotProveidor> lotObertAnterior = lotRepo.findByMateriaPrimeraIdAndEstat(
+                lot.getMateriaPrimera().getId(),
+                EstatLot.OBERT
+        );
+
+        if (lotObertAnterior.isPresent()
+                && !lotObertAnterior.get().getId().equals(lot.getId())
+                && !confirmarTancarAnterior) {
+            throw new RuntimeException("Ja hi ha un lot obert d'aquesta matèria primera. Cal confirmar que vols finalitzar-lo.");
+        }
+
+        if (lotObertAnterior.isPresent()
+                && !lotObertAnterior.get().getId().equals(lot.getId())) {
+            LotProveidor anterior = lotObertAnterior.get();
+            anterior.setEstat(EstatLot.ACABAT);
+            anterior.setDataAcabament(LocalDateTime.now());
+            lotRepo.save(anterior);
+        }
+
+        Usuari usuari = usuarirepo.findById(usuariId)
+                .orElseThrow(() -> new RuntimeException("Usuari no trobat"));
+
+        lot.setEstat(EstatLot.OBERT);
+        lot.setUsuariObertura(usuari);
+        lot.setDataObertura(LocalDateTime.now());
+
+        lotRepo.save(lot);
+    }
+
 }
