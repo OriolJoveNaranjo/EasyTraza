@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.Job
 
 class UserSelectionViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -28,6 +29,8 @@ class UserSelectionViewModel(application: Application) : AndroidViewModel(applic
     val baseUrl: StateFlow<String> = _baseUrl
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing
+
+    private var autoRefreshJob: Job? = null
 
     fun loadUsers() {
         if (_isRefreshing.value) return
@@ -82,7 +85,9 @@ class UserSelectionViewModel(application: Application) : AndroidViewModel(applic
         }
     }
     fun startAutoRefreshUsers() {
-        viewModelScope.launch {
+        if (autoRefreshJob?.isActive == true) return
+
+        autoRefreshJob = viewModelScope.launch {
             while (true) {
                 loadUsers()
                 delay(5000)

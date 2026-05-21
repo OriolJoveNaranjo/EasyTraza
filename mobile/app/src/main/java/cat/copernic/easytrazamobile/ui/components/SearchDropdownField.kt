@@ -4,10 +4,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import cat.copernic.easytrazamobile.ui.theme.EasySurface
 
 @Composable
 fun SearchDropdownField(
@@ -17,30 +21,37 @@ fun SearchDropdownField(
     options: List<String>,
     modifier: Modifier = Modifier
 ) {
+    var expanded by remember { mutableStateOf(false) }
+
     val filteredOptions = options
-        .filter { it.contains(value, ignoreCase = true) }
+        .filter { it.isNotBlank() }
+        .filter { value.isBlank() || it.contains(value, ignoreCase = true) }
         .distinct()
         .take(8)
 
-    val expanded = value.isNotBlank() && filteredOptions.isNotEmpty()
-
     Box(modifier = modifier) {
-        OutlinedTextField(
+        WarmOutlinedTextField(
             value = value,
-            onValueChange = onValueChange,
-            label = { Text(label) },
+            onValueChange = {
+                onValueChange(it)
+                expanded = true
+            },
+            label = label,
+            singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
 
         DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = {}
+            expanded = expanded && filteredOptions.isNotEmpty(),
+            onDismissRequest = { expanded = false },
+            containerColor = EasySurface
         ) {
             filteredOptions.forEach { option ->
                 DropdownMenuItem(
                     text = { Text(option) },
                     onClick = {
                         onValueChange(option)
+                        expanded = false
                     }
                 )
             }
