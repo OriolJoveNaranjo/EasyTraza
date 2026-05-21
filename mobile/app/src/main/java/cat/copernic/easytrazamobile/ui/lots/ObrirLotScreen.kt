@@ -1,5 +1,10 @@
 package cat.copernic.easytrazamobile.ui.lots
 
+import cat.copernic.easytrazamobile.ui.theme.EasyBackground
+import cat.copernic.easytrazamobile.ui.theme.EasySurface
+import cat.copernic.easytrazamobile.ui.theme.EasyPrimary
+import cat.copernic.easytrazamobile.ui.theme.EasyText
+import cat.copernic.easytrazamobile.ui.theme.EasyDanger
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,9 +37,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cat.copernic.easytrazamobile.ui.components.SearchDropdownField
 
-private val BackgroundWarm = Color(0xFFFFF7ED)
-private val PrimaryWarm = Color(0xFF2F6B4F)
-private val TextBrown = Color(0xFF3B240D)
+private val BackgroundWarm = EasyBackground
+private val PrimaryWarm = EasyPrimary
+private val TextBrown = EasyText
 
 
 @Composable
@@ -57,7 +62,7 @@ fun ObrirLotScreen(
 
     Scaffold(
         bottomBar = {
-            NavigationBar(containerColor = Color.White) {
+            NavigationBar(containerColor = EasySurface) {
                 NavigationBarItem(
                     selected = true,
                     onClick = {},
@@ -121,7 +126,7 @@ fun ObrirLotScreen(
             if (message.isNotBlank()) {
                 Text(
                     text = message,
-                    color = if (message.contains("correctament")) PrimaryWarm else Color.Red
+                    color = if (message.contains("correctament")) PrimaryWarm else EasyDanger
                 )
             }
             val lotsFiltrats = lots.filter { lot ->
@@ -141,7 +146,7 @@ fun ObrirLotScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(18.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    colors = CardDefaults.cardColors(containerColor = EasySurface),
                     elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                 ) {
                     Column(
@@ -172,7 +177,7 @@ fun ObrirLotScreen(
                         if (lotPendentConfirmacio == lot.id) {
                             Text(
                                 text = "Ja hi ha un lot obert d'aquesta matèria primera.",
-                                color = Color.Red,
+                                color = EasyDanger,
                                 fontWeight = FontWeight.Bold
                             )
 

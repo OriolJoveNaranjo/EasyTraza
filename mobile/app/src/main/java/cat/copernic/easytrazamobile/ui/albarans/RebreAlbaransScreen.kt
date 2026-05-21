@@ -1,5 +1,10 @@
 package cat.copernic.easytrazamobile.ui.albarans
 
+import cat.copernic.easytrazamobile.ui.theme.EasyBackground
+import cat.copernic.easytrazamobile.ui.theme.EasySurface
+import cat.copernic.easytrazamobile.ui.theme.EasyPrimary
+import cat.copernic.easytrazamobile.ui.theme.EasyText
+import cat.copernic.easytrazamobile.ui.theme.EasyDanger
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,7 +24,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,15 +40,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cat.copernic.easytrazamobile.data.model.LotFormState
+import cat.copernic.easytrazamobile.ui.components.WarmOutlinedTextField
 import android.app.DatePickerDialog
 import android.os.Build
 import androidx.annotation.RequiresApi
 import java.time.LocalDate
 
 
-private val BackgroundWarm = Color(0xFFFFF7ED)
-private val PrimaryWarm = Color(0xFF2F6B4F)
-private val TextBrown = Color(0xFF3B240D)
+private val BackgroundWarm = EasyBackground
+private val PrimaryWarm = EasyPrimary
+private val TextBrown = EasyText
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -106,7 +111,7 @@ fun RebreAlbaraScreen(
 
     Scaffold(
         bottomBar = {
-            NavigationBar(containerColor = Color.White) {
+            NavigationBar(containerColor = EasySurface) {
                 NavigationBarItem(
                     selected = true,
                     onClick = {},
@@ -148,14 +153,14 @@ fun RebreAlbaraScreen(
             if (message.isNotBlank()) {
                 Text(
                     text = message,
-                    color = Color.Red
+                    color = EasyDanger
                 )
             }
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(18.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
+                colors = CardDefaults.cardColors(containerColor = EasySurface),
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
             ) {
                 Column(
@@ -171,11 +176,12 @@ fun RebreAlbaraScreen(
                         Text("Escanejar albarà amb OCR")
                     }
 
-                    OutlinedTextField(
+                    WarmOutlinedTextField(
                         value = numeroAlbara,
                         onValueChange = { numeroAlbara = it },
-                        label = { Text("Número d'albarà") },
-                        modifier = Modifier.fillMaxWidth()
+                        label = "Número d'albarà",
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true
                     )
 
                     Button(
@@ -206,18 +212,19 @@ fun RebreAlbaraScreen(
                         }
                     }
 
-                    OutlinedTextField(
+                    WarmOutlinedTextField(
                         value = dataRecepcio,
                         onValueChange = {},
                         readOnly = true,
-                        label = { Text("Data recepció") },
-                        modifier = Modifier.fillMaxWidth()
+                        label = "Data recepció",
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true
                     )
 
-                    OutlinedTextField(
+                    WarmOutlinedTextField(
                         value = observacions,
                         onValueChange = { observacions = it },
-                        label = { Text("Observacions") },
+                        label = "Observacions",
                         modifier = Modifier.fillMaxWidth(),
                         minLines = 3
                     )
@@ -233,7 +240,7 @@ fun RebreAlbaraScreen(
                         Card(
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(18.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White),
+                            colors = CardDefaults.cardColors(containerColor = EasySurface),
                             elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
                         ) {
                             Column(
@@ -293,37 +300,40 @@ fun RebreAlbaraScreen(
                                     }
                                 }
 
-                                OutlinedTextField(
+                                WarmOutlinedTextField(
                                     value = lot.quantitat,
                                     onValueChange = { value ->
                                         lots = lots.toMutableList().also {
                                             it[index] = it[index].copy(quantitat = value)
                                         }
                                     },
-                                    label = { Text("Quantitat") },
-                                    modifier = Modifier.fillMaxWidth()
+                                    label = "Quantitat",
+                                    modifier = Modifier.fillMaxWidth(),
+                                    singleLine = true
                                 )
 
-                                OutlinedTextField(
+                                WarmOutlinedTextField(
                                     value = lot.unitat,
                                     onValueChange = { value ->
                                         lots = lots.toMutableList().also {
                                             it[index] = it[index].copy(unitat = value)
                                         }
                                     },
-                                    label = { Text("Unitat") },
-                                    modifier = Modifier.fillMaxWidth()
+                                    label = "Unitat",
+                                    modifier = Modifier.fillMaxWidth(),
+                                    singleLine = true
                                 )
 
-                                OutlinedTextField(
+                                WarmOutlinedTextField(
                                     value = lot.identificadorLot,
                                     onValueChange = { value ->
                                         lots = lots.toMutableList().also {
                                             it[index] = it[index].copy(identificadorLot = value)
                                         }
                                     },
-                                    label = { Text("Identificador lot") },
-                                    modifier = Modifier.fillMaxWidth()
+                                    label = "Identificador lot",
+                                    modifier = Modifier.fillMaxWidth(),
+                                    singleLine = true
                                 )
 
                                 val today = LocalDate.now()

@@ -1,5 +1,8 @@
 package cat.copernic.easytrazamobile.ui.albarans
 
+import cat.copernic.easytrazamobile.ui.theme.EasyBackground
+import cat.copernic.easytrazamobile.ui.theme.EasySurface
+import cat.copernic.easytrazamobile.ui.theme.EasyPrimary
 import android.Manifest
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -42,8 +45,8 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import java.io.File
 
-private val BackgroundWarm = Color(0xFFFFE8C7)
-private val PrimaryWarm = Color(0xFF2F6B4F)
+private val BackgroundWarm = EasyBackground
+private val PrimaryWarm = EasyPrimary
 
 @Composable
 fun OcrCameraScreen(
@@ -120,7 +123,7 @@ fun OcrCameraScreen(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
-                    .background(Color.White.copy(alpha = 0.92f))
+                    .background(EasySurface.copy(alpha = 0.92f))
                     .padding(18.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {

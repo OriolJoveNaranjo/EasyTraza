@@ -1,5 +1,15 @@
 package cat.copernic.easytrazamobile.ui.config
 
+import cat.copernic.easytrazamobile.ui.theme.EasyTextMuted
+import cat.copernic.easytrazamobile.ui.theme.EasyText
+import cat.copernic.easytrazamobile.ui.theme.EasyPrimary
+import cat.copernic.easytrazamobile.ui.theme.EasySurface
+import cat.copernic.easytrazamobile.ui.theme.EasyBackground
+import cat.copernic.easytrazamobile.ui.components.WarmOutlinedTextField
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Card
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,7 +17,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -29,54 +38,65 @@ fun ServerConfigScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(EasyBackground)
             .padding(24.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        Text(
-            text = "Configuració del servidor",
-            style = MaterialTheme.typography.headlineMedium
-        )
-
-        Text(
-            text = "Introdueix la IP o URL del backend",
-            modifier = Modifier.padding(top = 8.dp, bottom = 24.dp)
-        )
-
-        OutlinedTextField(
-            value = serverIp,
-            onValueChange = viewModel::onIpChange,
-            label = { Text("IP del servidor") },
-            placeholder = { Text(
-                text = "Exemple: 192.168.1.50:8080",
-                style = MaterialTheme.typography.bodySmall
-            )},
+        Card(
             modifier = Modifier.fillMaxWidth(),
-            singleLine = true
-        )
-
-        Button(
-            onClick = {
-                viewModel.saveIp()
-                onConfigSaved()
-            }
-        ){
-            Text("Guardar configuració")
-        }
-        Button(
-            onClick = viewModel::testConnection,
-            enabled = !isConnecting,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp)
+            shape = RoundedCornerShape(22.dp),
+            colors = CardDefaults.cardColors(containerColor = EasySurface),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
-            Text(if (isConnecting) "Conectando..." else "Provar connexió")
-        }
+            Column(
+                modifier = Modifier.padding(22.dp),
+                verticalArrangement = Arrangement.spacedBy(14.dp)
+            ) {
+                Text(
+                    text = "Configuració del servidor",
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = EasyPrimary
+                )
 
-        if (message.isNotBlank()) {
-            Text(
-                text = message,
-                modifier = Modifier.padding(top = 16.dp)
-            )
+                Text(
+                    text = "Introdueix només la IP del backend. L'app afegeix el port automàticament.",
+                    color = EasyTextMuted
+                )
+
+                WarmOutlinedTextField(
+                    value = serverIp,
+                    onValueChange = viewModel::onIpChange,
+                    label = "IP del servidor",
+                    placeholder = "Exemple: 192.168.1.50",
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true
+                )
+
+                Button(
+                    onClick = {
+                        viewModel.saveIp()
+                        onConfigSaved()
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Guardar configuració")
+                }
+
+                Button(
+                    onClick = viewModel::testConnection,
+                    enabled = !isConnecting,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(if (isConnecting) "Connectant..." else "Provar connexió")
+                }
+
+                if (message.isNotBlank()) {
+                    Text(
+                        text = message,
+                        color = EasyText
+                    )
+                }
+            }
         }
     }
 }

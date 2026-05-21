@@ -1,5 +1,11 @@
 package cat.copernic.easytrazamobile.ui.users
 
+import cat.copernic.easytrazamobile.ui.theme.EasyBackground
+import cat.copernic.easytrazamobile.ui.theme.EasySurface
+import cat.copernic.easytrazamobile.ui.theme.EasyPrimary
+import cat.copernic.easytrazamobile.ui.theme.EasyPrimaryDark
+import cat.copernic.easytrazamobile.ui.theme.EasyText
+import cat.copernic.easytrazamobile.ui.theme.EasyTextMuted
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -53,7 +59,7 @@ fun UserSelectionScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFFF3E0))
+            .background(EasyBackground)
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -61,14 +67,14 @@ fun UserSelectionScreen(
             text = "EasyTraza",
             style = MaterialTheme.typography.headlineLarge,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFF6D3B00),
+            color = EasyPrimaryDark,
             modifier = Modifier.padding(top = 24.dp)
         )
 
         Text(
             text = "Qui fa el seguiment avui?",
             style = MaterialTheme.typography.titleMedium,
-            color = Color(0xFF8A4F08),
+            color = EasyTextMuted,
             modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
         )
 
@@ -131,7 +137,7 @@ fun UserSelectionScreen(
 
                         Text(
                             text = usuari.nom,
-                            color = Color.White,
+                            color = EasySurface,
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier

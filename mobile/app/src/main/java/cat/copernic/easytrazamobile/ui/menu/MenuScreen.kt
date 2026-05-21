@@ -1,5 +1,12 @@
 package cat.copernic.easytrazamobile.ui.menu
 
+import cat.copernic.easytrazamobile.ui.theme.EasyBackground
+import cat.copernic.easytrazamobile.ui.theme.EasySurface
+import cat.copernic.easytrazamobile.ui.theme.EasyPrimary
+import cat.copernic.easytrazamobile.ui.theme.EasyPrimaryDark
+import cat.copernic.easytrazamobile.ui.theme.EasyText
+import cat.copernic.easytrazamobile.ui.theme.EasyAccent
+import cat.copernic.easytrazamobile.ui.theme.EasySidebar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -17,10 +24,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
-private val BackgroundWarm = Color(0xFFFFF7ED)
-private val PrimaryWarm = Color(0xFF2F6B4F)
-private val PrimaryDark = Color(0xFF24513D)
-private val TextBrown = Color(0xFF3B240D)
+private val BackgroundWarm = EasyBackground
+private val PrimaryWarm = EasyPrimary
+private val PrimaryDark = EasyPrimaryDark
+private val TextBrown = EasyText
 
 @Composable
 fun MenuScreen(
@@ -32,7 +39,7 @@ fun MenuScreen(
     Scaffold(
         bottomBar = {
             NavigationBar(
-                containerColor = Color.White,
+                containerColor = EasySurface,
                 tonalElevation = 8.dp
             ) {
                 NavigationBarItem(
@@ -48,7 +55,7 @@ fun MenuScreen(
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = PrimaryWarm,
                         selectedTextColor = PrimaryWarm,
-                        indicatorColor = Color(0xFFFFE0B2)
+                        indicatorColor = EasyAccent
                     )
                 )
 
@@ -99,7 +106,7 @@ fun MenuScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.White)
+                    .background(EasySurface)
                     .padding(horizontal = 22.dp, vertical = 20.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -124,7 +131,7 @@ fun MenuScreen(
                         Icon(
                             imageVector = Icons.Outlined.ReceiptLong,
                             contentDescription = null,
-                            tint = Color.White,
+                            tint = EasySurface,
                             modifier = Modifier.size(46.dp)
                         )
                     },
@@ -137,7 +144,7 @@ fun MenuScreen(
                         Icon(
                             imageVector = Icons.Outlined.Inventory2,
                             contentDescription = null,
-                            tint = Color.White,
+                            tint = EasySurface,
                             modifier = Modifier.size(46.dp)
                         )
                     },
@@ -150,7 +157,7 @@ fun MenuScreen(
                         Icon(
                             imageVector = Icons.Outlined.CheckCircle,
                             contentDescription = null,
-                            tint = Color.White,
+                            tint = EasySurface,
                             modifier = Modifier.size(46.dp)
                         )
                     },
@@ -163,7 +170,7 @@ fun MenuScreen(
                         Icon(
                             imageVector = Icons.Outlined.ExitToApp,
                             contentDescription = null,
-                            tint = Color.White,
+                            tint = EasySurface,
                             modifier = Modifier.size(46.dp)
                         )
                     },
@@ -187,7 +194,7 @@ private fun MenuCard(
             .clickable { onClick() },
         shape = RoundedCornerShape(18.dp),
         colors = CardDefaults.cardColors(
-            containerColor = PrimaryWarm
+            containerColor = EasySidebar
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
     ) {
@@ -205,7 +212,7 @@ private fun MenuCard(
 
             Text(
                 text = title,
-                color = Color.White,
+                color = EasySurface,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
