@@ -44,5 +44,12 @@ interface ApiService {
         @Query("usuariId") usuariId: Long,
         @Query("confirmar") confirmar: Boolean = false
     ): Response<String>
+    @GET("api/mobile/lots-proveidor/oberts")
+    suspend fun getLotsOberts(): Response<List<LotOberturaDto>>
+
+    @POST("api/mobile/lots-proveidor/{id}/tancar")
+    suspend fun tancarLotMobile(
+        @Path("id") id: Long
+    ): Response<String>
 
 }

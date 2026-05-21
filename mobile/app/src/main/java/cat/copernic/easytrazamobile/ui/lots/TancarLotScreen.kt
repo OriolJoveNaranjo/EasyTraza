@@ -37,17 +37,22 @@ private val PrimaryWarm = Color(0xFF2F6B4F)
 private val TextBrown = Color(0xFF3B240D)
 
 @Composable
-fun ObrirLotScreen(
+fun TancarLotScreen(
     onBackToMenu: () -> Unit = {},
-    viewModel: ObrirLotViewModel = viewModel()
+    viewModel: TancarLotViewModel = viewModel()
 ) {
     val lots by viewModel.lots.collectAsState()
     val message by viewModel.message.collectAsState()
+
     var filtreLot by rememberSaveable { mutableStateOf("") }
     var filtreProveidor by rememberSaveable { mutableStateOf("") }
     var filtreMateria by rememberSaveable { mutableStateOf("") }
-    val lotPendentConfirmacio by viewModel.lotPendentConfirmacio.collectAsState()
 
+    val lotsFiltrats = lots.filter { lot ->
+        lot.identificadorLot.contains(filtreLot, ignoreCase = true) &&
+                lot.proveidor.contains(filtreProveidor, ignoreCase = true) &&
+                lot.materiaPrimera.contains(filtreMateria, ignoreCase = true)
+    }
 
     LaunchedEffect(Unit) {
         viewModel.carregarLots()
@@ -59,8 +64,8 @@ fun ObrirLotScreen(
                 NavigationBarItem(
                     selected = true,
                     onClick = {},
-                    icon = { Text("📦") },
-                    label = { Text("Obrir") }
+                    icon = { Text("✅") },
+                    label = { Text("Tancar") }
                 )
 
                 NavigationBarItem(
@@ -82,16 +87,17 @@ fun ObrirLotScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
-                text = "Obrir lot",
+                text = "Tancar lot",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 color = PrimaryWarm
             )
 
             Text(
-                text = "Selecciona un lot en estoc per obrir-lo.",
+                text = "Selecciona un lot obert per finalitzar-lo.",
                 color = TextBrown
             )
+
             SearchDropdownField(
                 value = filtreLot,
                 onValueChange = { filtreLot = it },
@@ -122,15 +128,10 @@ fun ObrirLotScreen(
                     color = if (message.contains("correctament")) PrimaryWarm else Color.Red
                 )
             }
-            val lotsFiltrats = lots.filter { lot ->
-                lot.identificadorLot.contains(filtreLot, ignoreCase = true) &&
-                        lot.proveidor.contains(filtreProveidor, ignoreCase = true) &&
-                        lot.materiaPrimera.contains(filtreMateria, ignoreCase = true)
-            }
 
             if (lotsFiltrats.isEmpty()) {
                 Text(
-                    text = "No hi ha lots en estoc disponibles.",
+                    text = "No hi ha lots oberts disponibles.",
                     color = TextBrown
                 )
             }
@@ -160,30 +161,11 @@ fun ObrirLotScreen(
 
                         Button(
                             onClick = {
-                                viewModel.obrirLot(lot.id)
+                                viewModel.tancarLot(lot.id)
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Obrir lot")
-                        }
-                        if (lotPendentConfirmacio == lot.id) {
-                            Text(
-                                text = "Ja hi ha un lot obert d'aquesta matèria primera.",
-                                color = Color.Red,
-                                fontWeight = FontWeight.Bold
-                            )
-
-                            Button(
-                                onClick = {
-                                    viewModel.obrirLot(
-                                        lotId = lot.id,
-                                        confirmar = true
-                                    )
-                                },
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Text("Confirmar i tancar l'anterior")
-                            }
+                            Text("Tancar lot")
                         }
                     }
                 }
@@ -191,4 +173,3 @@ fun ObrirLotScreen(
         }
     }
 }
-

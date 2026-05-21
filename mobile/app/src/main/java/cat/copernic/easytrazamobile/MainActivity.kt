@@ -32,6 +32,7 @@ import cat.copernic.easytrazamobile.ui.config.ServerConfigScreen
 import cat.copernic.easytrazamobile.ui.menu.MenuScreen
 import cat.copernic.easytrazamobile.ui.users.UserSelectionScreen
 import cat.copernic.easytrazamobile.ui.lots.ObrirLotScreen
+import cat.copernic.easytrazamobile.ui.lots.TancarLotScreen
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -56,6 +57,7 @@ class MainActivity : ComponentActivity() {
                     "menu" -> MenuScreen(
                         onReceiveDeliveryClick = { screen = "rebreAlbara" },
                         onStartLotClick = { screen = "obrirLot" },
+                        onCloseLotClick = { screen = "tancarLot" },
                         onLogoutClick = { screen = "users" }
                     )
 
@@ -74,6 +76,9 @@ class MainActivity : ComponentActivity() {
                         }
                     )
                     "obrirLot" -> ObrirLotScreen(
+                        onBackToMenu = { screen = "menu" }
+                    )
+                    "tancarLot" -> TancarLotScreen(
                         onBackToMenu = { screen = "menu" }
                     )
                 }

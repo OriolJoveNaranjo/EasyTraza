@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import cat.copernic.easytrazamobile.data.local.ServerConfigRepository
-import cat.copernic.easytrazamobile.data.local.UserSessionRepository
 import cat.copernic.easytrazamobile.data.model.LotOberturaDto
 import cat.copernic.easytrazamobile.data.remote.RetrofitProvider
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,19 +11,15 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-class ObrirLotViewModel(application: Application) : AndroidViewModel(application) {
+class TancarLotViewModel(application: Application) : AndroidViewModel(application) {
 
     private val serverConfigRepository = ServerConfigRepository(application)
-    private val userSessionRepository = UserSessionRepository(application)
 
     private val _lots = MutableStateFlow<List<LotOberturaDto>>(emptyList())
     val lots: StateFlow<List<LotOberturaDto>> = _lots
 
     private val _message = MutableStateFlow("")
     val message: StateFlow<String> = _message
-
-    private val _lotPendentConfirmacio = MutableStateFlow<Long?>(null)
-    val lotPendentConfirmacio: StateFlow<Long?> = _lotPendentConfirmacio
 
     fun carregarLots() {
         viewModelScope.launch {
@@ -37,13 +32,13 @@ class ObrirLotViewModel(application: Application) : AndroidViewModel(application
                 }
 
                 val api = RetrofitProvider.createApi(baseUrl)
-                val response = api.getLotsEnEstoc()
+                val response = api.getLotsOberts()
 
                 if (response.isSuccessful) {
                     _lots.value = response.body() ?: emptyList()
                     _message.value = ""
                 } else {
-                    _message.value = "No s'han pogut carregar els lots"
+                    _message.value = "No s'han pogut carregar els lots oberts"
                 }
 
             } catch (e: Exception) {
@@ -52,45 +47,24 @@ class ObrirLotViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun obrirLot(
-        lotId: Long,
-        confirmar: Boolean = false
-    ) {
+    fun tancarLot(lotId: Long) {
         viewModelScope.launch {
             try {
                 val baseUrl = serverConfigRepository.serverIp.first()
-                val usuariId = userSessionRepository.userId.first()
-
-                if (usuariId == null) {
-                    _message.value = "No s'ha trobat l'usuari seleccionat"
-                    return@launch
-                }
-
                 val api = RetrofitProvider.createApi(baseUrl)
-                val response = api.obrirLotMobile(
-                    id = lotId,
-                    usuariId = usuariId,
-                    confirmar = confirmar
-                )
+
+                val response = api.tancarLotMobile(lotId)
 
                 if (response.isSuccessful) {
-                    _message.value = "Lot obert correctament"
-                    _lotPendentConfirmacio.value = null
+                    _message.value = "Lot tancat correctament"
                     carregarLots()
-
                 } else {
-                    val error = response.errorBody()?.string()
-                        ?: "No s'ha pogut obrir el lot"
-
-                    _message.value = error
-
-                    if (error.contains("Ja hi ha un lot obert", ignoreCase = true)) {
-                        _lotPendentConfirmacio.value = lotId
-                    }
+                    _message.value = response.errorBody()?.string()
+                        ?: "No s'ha pogut tancar el lot"
                 }
 
             } catch (e: Exception) {
-                _message.value = "Error obrint el lot: ${e.message}"
+                _message.value = "Error tancant el lot: ${e.message}"
             }
         }
     }
