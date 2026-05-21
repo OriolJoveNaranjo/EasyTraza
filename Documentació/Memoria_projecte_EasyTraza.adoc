@@ -256,3 +256,75 @@ La part més complicada del sprint ha estat la quantitat d’errors que van apar
 Tot i aquests problemes, crec que el sprint ha estat positiu perquè he aconseguit avançar en funcionalitats importants i entendre millor algunes parts més complexes del projecte, sobretot les relacions entre entitats i la gestió d’usuaris. També he pogut començar funcionalitats més visuals, com les gràfiques i els filtres, que ajuden a donar una sensació de projecte més complet.
 
 De cara al següent sprint, em tocarà sobretot acabar de polir la traçabilitat, revisar bé les relacions entre entitats i continuar corregint errors per deixar el projecte més estable. També vull millorar la gestió de branques i merges per evitar problemes similars amb Git en el futur.
+
+
+= SPRINT - 5
+
+== 1. Planificació Inicial
+
+=== 1.1. Planificació (Inicial)
+
+==== Board inicial
+image::PlanificacioInicialSprint5.PNG[Board inicial]
+
+
+== 2. Daily Stand Up
+
+=== DIA 1 - 15/05
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+|  | Corregir errors que apareguin a la revisió de l'sprin | Els errors no es mostren correctament per pantalla  | 5h + 3h
+|===
+
+=== DIA 2 - 16/05
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| Corregir errors de la correcció de l'sprin | Fer la funcionalitat de panell i acabar de corretgir els errors |  | 4h
+|===
+
+=== DIA 3 - 18/05
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| Fer la funcionalitat del panell la pagina principal i arreglar erros de guardar usuaris i | Començar a fer la part mòbil de configurar l'ip i identificar-se |   | 6h + 2h
+
+|===
+
+=== DIA 4 - 19/05
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| Començar a fer la part mòbil de configurar l'ip i identificar-se | Fer la funcionalitat de rebre albarà amb ocr i manual | | 3h
+|===
+
+=== DIA 5 - 20/05
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+|  Fer la funcionalitat de rebre albarà amb ocr i manual | Acabar la funcionalitat de rebre albara i començar les de obrir i tanvar lot | | 3h + 2h
+|===
+
+=== DIA 6 - 21/05
+[cols="2,2,2,1", options="header"]
+|===
+| Què va fer ahir | Què farà avui | Problemes | Hores
+| Acabar la funcionalitat de rebre albara manualment i amb ocr al mòbil i començar la funcionalitat de obrir lot |Acabar obrir i tancar lot a la part mòvil i arreglar la part visual del front end que es molt bàsica | L'OCR del mòvil no funciona gaire bé s'ha de millorar de cara a l'entrega del projecte | 4h + 3h
+|===
+
+== 3. Planificació Final
+
+=== 3.1. Planificació (Final de Sprint)
+
+==== Board final — Grup 3
+image::PlanificacioFinalSprint5.PNG[Board_Final]
+
+== 4. Retrospective Meeting
+Aquest ha estat l’últim sprint complet abans de l’entrega final del projecte, així que gran part del temps s’ha dedicat a corregir errors, acabar funcionalitats pendents i intentar deixar el projecte el més estable possible. Durant aquests dies he treballat sobretot en la correcció d’errors detectats a les revisions, la funcionalitat del panell principal, diverses millores visuals del frontend i també en la part mòbil de l’aplicació, especialment la configuració de la IP, el login i la gestió d’albarans amb OCR.
+
+En general, crec que aquest sprint ha estat bastant intens perquè ja s’acosta l’entrega i encara quedaven funcionalitats importants per acabar i polir. Una de les parts més complicades ha estat l’OCR del mòbil, que encara no funciona tan bé com m’agradaria i necessita algunes millores perquè la lectura de dades sigui més fiable. També he tingut problemes amb la visualització correcta dels errors per pantalla i amb alguns aspectes visuals del frontend, que inicialment eren massa bàsics i he hagut de revisar.
+
+Tot i això, considero que he avançat bastant aquests últims dies. He pogut completar funcionalitats importants tant a la part web com a la part mòbil, especialment la recepció d’albarans manual i amb OCR, així com les funcionalitats d’obrir i tancar lots. També he dedicat temps a millorar la usabilitat general de l’aplicació perquè de cara a l’entrega final el projecte tingui una sensació més completa i funcional.
+
+De cara a l’última setmana abans de l’entrega, l’objectiu principal serà acabar de polir errors, millorar el funcionament de l’OCR mòbil i revisar el projecte en general per assegurar que totes les funcionalitats funcionin correctament. En resum, aquest sprint ha estat molt enfocat a estabilitzar i preparar el projecte per a la fase final d’entrega.
