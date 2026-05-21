@@ -45,7 +45,7 @@ class ServerConfigViewModel(application: Application) : AndroidViewModel(applica
         return "http://$cleanIp:8080"
     }
 
-    fun saveIp() {
+    fun saveIp(onSaved: () -> Unit = {}) {
         val ip = _serverIp.value.trim()
 
         if (ip.isBlank()) {
@@ -65,6 +65,7 @@ class ServerConfigViewModel(application: Application) : AndroidViewModel(applica
         viewModelScope.launch {
             repository.saveServerIp(finalUrl)
             _message.value = "Servidor guardat: $finalUrl"
+            onSaved()
         }
     }
 
@@ -80,7 +81,7 @@ class ServerConfigViewModel(application: Application) : AndroidViewModel(applica
 
         viewModelScope.launch {
             _isConnecting.value = true
-            _message.value = "Conectando..."
+            _message.value = "Connectant..."
 
             try {
                 val api = RetrofitProvider.createApi(finalUrl)

@@ -20,7 +20,8 @@ class TancarLotViewModel(application: Application) : AndroidViewModel(applicatio
 
     private val _message = MutableStateFlow("")
     val message: StateFlow<String> = _message
-
+    private val _isClosing = MutableStateFlow(false)
+    val isClosing: StateFlow<Boolean> = _isClosing
     fun carregarLots() {
         viewModelScope.launch {
             try {
@@ -50,6 +51,8 @@ class TancarLotViewModel(application: Application) : AndroidViewModel(applicatio
     fun tancarLot(lotId: Long) {
         viewModelScope.launch {
             try {
+                if (_isClosing.value) return@launch
+                _isClosing.value = true
                 val baseUrl = serverConfigRepository.serverIp.first()
                 val api = RetrofitProvider.createApi(baseUrl)
 
@@ -65,6 +68,8 @@ class TancarLotViewModel(application: Application) : AndroidViewModel(applicatio
 
             } catch (e: Exception) {
                 _message.value = "Error tancant el lot: ${e.message}"
+            }finally {
+                _isClosing.value = false
             }
         }
     }
