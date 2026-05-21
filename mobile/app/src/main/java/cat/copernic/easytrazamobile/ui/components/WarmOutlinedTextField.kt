@@ -15,6 +15,19 @@ import cat.copernic.easytrazamobile.ui.theme.EasySurfaceAlt
 import cat.copernic.easytrazamobile.ui.theme.EasyText
 import cat.copernic.easytrazamobile.ui.theme.EasyTextMuted
 
+/**
+ * Text field styled with the EasyTraza warm color palette.
+ *
+ * @param value Current field value.
+ * @param onValueChange Callback invoked when the user edits the field.
+ * @param label Localized field label.
+ * @param modifier Modifier applied to the field.
+ * @param placeholder Optional localized placeholder.
+ * @param readOnly Whether the field can be focused but not edited.
+ * @param enabled Whether the field is enabled.
+ * @param singleLine Whether the field should remain on one line.
+ * @param minLines Minimum number of text lines.
+ */
 @Composable
 fun WarmOutlinedTextField(
     value: String,

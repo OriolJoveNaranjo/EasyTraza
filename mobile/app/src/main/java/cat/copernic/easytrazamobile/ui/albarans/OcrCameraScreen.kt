@@ -11,6 +11,7 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,10 +35,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import cat.copernic.easytrazamobile.R
 import cat.copernic.easytrazamobile.ui.components.EasyPrimaryButton
 import cat.copernic.easytrazamobile.ui.components.EasySecondaryButton
 import cat.copernic.easytrazamobile.ui.theme.EasyBackgroundSoft
@@ -50,6 +53,9 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import java.io.File
 
+/**
+ * Camera screen that captures a delivery-note image and extracts text with ML Kit OCR.
+ */
 @Composable
 fun OcrCameraScreen(
     onOcrResult: (String) -> Unit,
@@ -87,33 +93,10 @@ fun OcrCameraScreen(
             .background(EasyBackgroundSoft)
     ) {
         if (hasCameraPermission) {
-            AndroidView(
-                modifier = Modifier.fillMaxSize(),
-                factory = { ctx ->
-                    val previewView = PreviewView(ctx)
-                    val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
-                    cameraProviderFuture.addListener({
-                        val cameraProvider = cameraProviderFuture.get()
-                        val preview = Preview.Builder().build().also {
-                            it.setSurfaceProvider(previewView.surfaceProvider)
-                        }
-                        val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
-                        try {
-                            cameraProvider.unbindAll()
-                            cameraProvider.bindToLifecycle(
-                                lifecycleOwner,
-                                cameraSelector,
-                                preview,
-                                imageCapture
-                            )
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
-                    }, ContextCompat.getMainExecutor(ctx))
-
-                    previewView
-                }
+            CameraPreview(
+                imageCapture = imageCapture,
+                lifecycleOwner = lifecycleOwner,
+                modifier = Modifier.fillMaxSize()
             )
 
             Card(
@@ -123,69 +106,38 @@ fun OcrCameraScreen(
                     .padding(16.dp),
                 shape = RoundedCornerShape(22.dp),
                 colors = CardDefaults.cardColors(containerColor = EasySurface),
-                border = androidx.compose.foundation.BorderStroke(1.dp, EasyBorder)
+                border = BorderStroke(1.dp, EasyBorder)
             ) {
                 Column(
                     modifier = Modifier.padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Text(
-                        text = "Escaneig OCR",
+                        text = stringResource(R.string.ocr_title),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = EasyTextStrong
                     )
                     Text(
-                        text = "Enfoca l'albarà i fes la foto quan el text sigui visible.",
+                        text = stringResource(R.string.ocr_subtitle),
                         style = MaterialTheme.typography.bodyMedium,
                         color = EasyText
                     )
 
                     EasyPrimaryButton(
-                        text = "Fer foto i llegir text",
+                        text = stringResource(R.string.ocr_take_photo),
                         onClick = {
-                            val photoFile = File(
-                                context.cacheDir,
-                                "albara_ocr_${System.currentTimeMillis()}.jpg"
-                            )
-                            val outputOptions = ImageCapture.OutputFileOptions
-                                .Builder(photoFile)
-                                .build()
-
-                            imageCapture.takePicture(
-                                outputOptions,
-                                ContextCompat.getMainExecutor(context),
-                                object : ImageCapture.OnImageSavedCallback {
-                                    override fun onImageSaved(
-                                        outputFileResults: ImageCapture.OutputFileResults
-                                    ) {
-                                        val image = InputImage.fromFilePath(
-                                            context,
-                                            Uri.fromFile(photoFile)
-                                        )
-                                        val recognizer = TextRecognition.getClient(
-                                            TextRecognizerOptions.DEFAULT_OPTIONS
-                                        )
-                                        recognizer.process(image)
-                                            .addOnSuccessListener { visionText ->
-                                                onOcrResult(visionText.text)
-                                            }
-                                            .addOnFailureListener {
-                                                onOcrResult("")
-                                            }
-                                    }
-
-                                    override fun onError(exception: ImageCaptureException) {
-                                        exception.printStackTrace()
-                                    }
-                                }
+                            captureAndReadText(
+                                context = context,
+                                imageCapture = imageCapture,
+                                onOcrResult = onOcrResult
                             )
                         },
                         modifier = Modifier.height(54.dp)
                     )
 
                     EasySecondaryButton(
-                        text = "Tornar",
+                        text = stringResource(R.string.common_back),
                         onClick = onBack,
                         modifier = Modifier.height(50.dp)
                     )
@@ -200,16 +152,86 @@ fun OcrCameraScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text(
-                    text = "Cal donar permís de càmera per escanejar l'albarà.",
+                    text = stringResource(R.string.ocr_permission_required),
                     style = MaterialTheme.typography.bodyLarge,
                     color = EasyText
                 )
 
                 EasyPrimaryButton(
-                    text = "Donar permís",
+                    text = stringResource(R.string.ocr_grant_permission),
                     onClick = { permissionLauncher.launch(Manifest.permission.CAMERA) }
                 )
             }
         }
     }
+}
+
+/** Hosts the CameraX preview inside Compose. */
+@Composable
+private fun CameraPreview(
+    imageCapture: ImageCapture,
+    lifecycleOwner: androidx.lifecycle.LifecycleOwner,
+    modifier: Modifier = Modifier
+) {
+    AndroidView(
+        modifier = modifier,
+        factory = { ctx ->
+            val previewView = PreviewView(ctx)
+            val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
+            cameraProviderFuture.addListener({
+                val cameraProvider = cameraProviderFuture.get()
+                val preview = Preview.Builder().build().also {
+                    it.setSurfaceProvider(previewView.surfaceProvider)
+                }
+                val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
+                try {
+                    cameraProvider.unbindAll()
+                    cameraProvider.bindToLifecycle(
+                        lifecycleOwner,
+                        cameraSelector,
+                        preview,
+                        imageCapture
+                    )
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }, ContextCompat.getMainExecutor(ctx))
+
+            previewView
+        }
+    )
+}
+
+/** Captures an image and returns the recognized OCR text. */
+private fun captureAndReadText(
+    context: android.content.Context,
+    imageCapture: ImageCapture,
+    onOcrResult: (String) -> Unit
+) {
+    val photoFile = File(
+        context.cacheDir,
+        "albara_ocr_${System.currentTimeMillis()}.jpg"
+    )
+    val outputOptions = ImageCapture.OutputFileOptions
+        .Builder(photoFile)
+        .build()
+
+    imageCapture.takePicture(
+        outputOptions,
+        ContextCompat.getMainExecutor(context),
+        object : ImageCapture.OnImageSavedCallback {
+            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                val image = InputImage.fromFilePath(context, Uri.fromFile(photoFile))
+                val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+                recognizer.process(image)
+                    .addOnSuccessListener { visionText -> onOcrResult(visionText.text) }
+                    .addOnFailureListener { onOcrResult("") }
+            }
+
+            override fun onError(exception: ImageCaptureException) {
+                exception.printStackTrace()
+            }
+        }
+    )
 }

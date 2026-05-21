@@ -3,6 +3,7 @@ package cat.copernic.easytrazamobile.ui.lots
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import cat.copernic.easytrazamobile.R
 import cat.copernic.easytrazamobile.data.local.ServerConfigRepository
 import cat.copernic.easytrazamobile.data.local.UserSessionRepository
 import cat.copernic.easytrazamobile.data.model.LotOberturaDto
@@ -12,6 +13,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel for opening supplier lots from the mobile app.
+ */
 class ObrirLotViewModel(application: Application) : AndroidViewModel(application) {
 
     private val serverConfigRepository = ServerConfigRepository(application)
@@ -29,13 +33,14 @@ class ObrirLotViewModel(application: Application) : AndroidViewModel(application
     private val _isOpening = MutableStateFlow(false)
     val isOpening: StateFlow<Boolean> = _isOpening
 
+    /** Loads lots currently in stock and available to open. */
     fun carregarLots() {
         viewModelScope.launch {
             try {
                 val baseUrl = serverConfigRepository.serverIp.first()
 
                 if (baseUrl.isBlank()) {
-                    _message.value = "Primer configura la IP del servidor"
+                    _message.value = string(R.string.users_configure_server_first)
                     return@launch
                 }
 
@@ -46,15 +51,20 @@ class ObrirLotViewModel(application: Application) : AndroidViewModel(application
                     _lots.value = response.body() ?: emptyList()
                     _message.value = ""
                 } else {
-                    _message.value = "No s'han pogut carregar els lots"
+                    _message.value = string(R.string.open_lots_load_failed)
                 }
-
             } catch (e: Exception) {
-                _message.value = "No s'ha pogut connectar amb el servidor"
+                _message.value = string(R.string.server_connection_failed)
             }
         }
     }
 
+    /**
+     * Opens the selected lot.
+     *
+     * When the backend reports that another lot of the same material is already open,
+     * the lot id is stored so the UI can show the confirmation button.
+     */
     fun obrirLot(
         lotId: Long,
         confirmar: Boolean = false
@@ -63,11 +73,12 @@ class ObrirLotViewModel(application: Application) : AndroidViewModel(application
             try {
                 if (_isOpening.value) return@launch
                 _isOpening.value = true
+
                 val baseUrl = serverConfigRepository.serverIp.first()
                 val usuariId = userSessionRepository.userId.first()
 
                 if (usuariId == null) {
-                    _message.value = "No s'ha trobat l'usuari seleccionat"
+                    _message.value = string(R.string.receive_selected_user_missing)
                     return@launch
                 }
 
@@ -79,27 +90,27 @@ class ObrirLotViewModel(application: Application) : AndroidViewModel(application
                 )
 
                 if (response.isSuccessful) {
-                    _message.value = "Lot obert correctament"
+                    _message.value = string(R.string.open_lot_success)
                     _lotPendentConfirmacio.value = null
                     carregarLots()
-
                 } else {
-                    val error = response.errorBody()?.string()
-                        ?: "No s'ha pogut obrir el lot"
-
+                    val error = response.errorBody()?.string() ?: string(R.string.open_lot_failed)
                     _message.value = error
 
-                    if (error.contains("Ja hi ha un lot obert", ignoreCase = true)) {
+                    if (error.contains("Ja hi ha un lot obert", ignoreCase = true) ||
+                        error.contains("Ya hay un lote abierto", ignoreCase = true)
+                    ) {
                         _lotPendentConfirmacio.value = lotId
                     }
                 }
-
             } catch (e: Exception) {
-                _message.value = "Error obrint el lot: ${e.message}"
-            }
-            finally {
+                _message.value = string(R.string.open_lot_error, e.message ?: "")
+            } finally {
                 _isOpening.value = false
             }
         }
     }
+
+    private fun string(id: Int, vararg args: Any): String =
+        getApplication<Application>().getString(id, *args)
 }

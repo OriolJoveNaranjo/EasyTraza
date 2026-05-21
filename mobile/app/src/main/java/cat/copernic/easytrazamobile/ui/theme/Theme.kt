@@ -31,6 +31,12 @@ private val EasyLightColorScheme = lightColorScheme(
     onError = Color.White
 )
 
+/**
+ * Application theme with fixed EasyTraza colors.
+ *
+ * Dynamic colors are intentionally ignored so the UI keeps the same colors on emulator,
+ * real devices and different Android system themes.
+ */
 @Composable
 fun EasyTrazaMobileTheme(
     darkTheme: Boolean = false,

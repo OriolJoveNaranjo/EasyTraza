@@ -1,5 +1,6 @@
 package cat.copernic.easytrazamobile.ui.lots
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,12 +26,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import cat.copernic.easytrazamobile.R
 import cat.copernic.easytrazamobile.ui.components.EasyInfoRow
 import cat.copernic.easytrazamobile.ui.components.EasyPrimaryButton
 import cat.copernic.easytrazamobile.ui.components.EasyScreenHeader
+import cat.copernic.easytrazamobile.ui.components.EasySectionCard
 import cat.copernic.easytrazamobile.ui.components.EasySecondaryButton
 import cat.copernic.easytrazamobile.ui.components.EasyStatusMessage
 import cat.copernic.easytrazamobile.ui.components.SearchDropdownField
@@ -43,6 +47,9 @@ import cat.copernic.easytrazamobile.ui.theme.EasySurface
 import cat.copernic.easytrazamobile.ui.theme.EasyTextMuted
 import cat.copernic.easytrazamobile.ui.theme.EasyTextStrong
 
+/**
+ * Screen that lists stock lots and allows the operator to open one of them.
+ */
 @Composable
 fun ObrirLotScreen(
     onBackToMenu: () -> Unit = {},
@@ -74,7 +81,7 @@ fun ObrirLotScreen(
                     selected = true,
                     onClick = {},
                     icon = { Text("📦") },
-                    label = { Text("Obrir") },
+                    label = { Text(stringResource(R.string.common_open)) },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = EasyPrimary,
                         selectedTextColor = EasyPrimary,
@@ -85,7 +92,7 @@ fun ObrirLotScreen(
                     selected = false,
                     onClick = onBackToMenu,
                     icon = { Text("🏠") },
-                    label = { Text("Menú") },
+                    label = { Text(stringResource(R.string.common_menu)) },
                     colors = NavigationBarItemDefaults.colors(
                         unselectedIconColor = EasyTextMuted,
                         unselectedTextColor = EasyTextMuted
@@ -104,56 +111,42 @@ fun ObrirLotScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             EasyScreenHeader(
-                title = "Obrir lot",
-                subtitle = "Busca un lot en estoc i obre'l per començar a utilitzar-lo."
+                title = stringResource(R.string.open_lot_title),
+                subtitle = stringResource(R.string.open_lot_subtitle)
             )
 
             EasyStatusMessage(message = message)
 
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = EasySurface),
-                border = androidx.compose.foundation.BorderStroke(1.dp, EasyBorder),
-                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Text(
-                        text = "Filtres",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = EasyTextStrong
-                    )
-
-                    SearchDropdownField(
-                        value = filtreLot,
-                        onValueChange = { filtreLot = it },
-                        label = "Número de lot",
-                        options = lots.map { it.identificadorLot }
-                    )
-
-                    SearchDropdownField(
-                        value = filtreProveidor,
-                        onValueChange = { filtreProveidor = it },
-                        label = "Proveïdor",
-                        options = lots.map { it.proveidor }
-                    )
-
-                    SearchDropdownField(
-                        value = filtreMateria,
-                        onValueChange = { filtreMateria = it },
-                        label = "Matèria primera",
-                        options = lots.map { it.materiaPrimera }
-                    )
-                }
+            EasySectionCard {
+                Text(
+                    text = stringResource(R.string.common_filters),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = EasyTextStrong
+                )
+                SearchDropdownField(
+                    value = filtreLot,
+                    onValueChange = { filtreLot = it },
+                    label = stringResource(R.string.filter_lot_number),
+                    options = lots.map { it.identificadorLot }
+                )
+                SearchDropdownField(
+                    value = filtreProveidor,
+                    onValueChange = { filtreProveidor = it },
+                    label = stringResource(R.string.filter_supplier),
+                    options = lots.map { it.proveidor }
+                )
+                SearchDropdownField(
+                    value = filtreMateria,
+                    onValueChange = { filtreMateria = it },
+                    label = stringResource(R.string.filter_material),
+                    options = lots.map { it.materiaPrimera }
+                )
             }
 
             if (lotsFiltrats.isEmpty()) {
                 Text(
-                    text = "No hi ha lots en estoc disponibles amb aquests filtres.",
+                    text = stringResource(R.string.open_lot_empty),
                     color = EasyTextMuted
                 )
             }
@@ -163,7 +156,7 @@ fun ObrirLotScreen(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(20.dp),
                     colors = CardDefaults.cardColors(containerColor = EasySurface),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, EasyBorder),
+                    border = BorderStroke(1.dp, EasyBorder),
                     elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
                 ) {
                     Column(
@@ -177,26 +170,29 @@ fun ObrirLotScreen(
                             color = EasyTextStrong
                         )
 
-                        EasyInfoRow("Matèria", lot.materiaPrimera)
-                        EasyInfoRow("Proveïdor", lot.proveidor)
-                        EasyInfoRow("Quantitat", "${lot.quantitat} ${lot.unitat}")
-                        EasyInfoRow("Estat", lot.estat)
+                        EasyInfoRow(stringResource(R.string.common_material), lot.materiaPrimera)
+                        EasyInfoRow(stringResource(R.string.common_supplier), lot.proveidor)
+                        EasyInfoRow(stringResource(R.string.common_quantity), "${lot.quantitat} ${lot.unitat}")
+                        EasyInfoRow(stringResource(R.string.common_status), lot.estat)
 
                         EasyPrimaryButton(
-                            text = if (isOpening) "Obrint..." else "Obrir lot",
+                            text = if (isOpening) {
+                                stringResource(R.string.open_lot_opening)
+                            } else {
+                                stringResource(R.string.open_lot_button)
+                            },
                             onClick = { viewModel.obrirLot(lot.id) },
                             enabled = !isOpening
                         )
 
                         if (lotPendentConfirmacio == lot.id) {
                             Text(
-                                text = "Ja hi ha un lot obert d'aquesta matèria primera.",
+                                text = stringResource(R.string.open_lot_already_open),
                                 color = EasyDanger,
                                 fontWeight = FontWeight.Bold
                             )
-
                             EasySecondaryButton(
-                                text = "Confirmar i tancar l'anterior",
+                                text = stringResource(R.string.open_lot_confirm_close_previous),
                                 onClick = {
                                     viewModel.obrirLot(
                                         lotId = lot.id,

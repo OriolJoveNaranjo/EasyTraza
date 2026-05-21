@@ -13,6 +13,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import cat.copernic.easytrazamobile.ui.theme.EasySurface
 
+/**
+ * Search field with a small dropdown of matching suggestions.
+ *
+ * @param value Current search text.
+ * @param onValueChange Called when the text changes or a suggestion is selected.
+ * @param label Localized field label.
+ * @param options All possible suggestions.
+ * @param modifier Modifier applied to the component root.
+ */
 @Composable
 fun SearchDropdownField(
     value: String,

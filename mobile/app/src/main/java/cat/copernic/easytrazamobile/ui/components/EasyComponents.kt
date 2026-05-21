@@ -24,7 +24,6 @@ import cat.copernic.easytrazamobile.ui.theme.EasyBorder
 import cat.copernic.easytrazamobile.ui.theme.EasyDanger
 import cat.copernic.easytrazamobile.ui.theme.EasyDangerBg
 import cat.copernic.easytrazamobile.ui.theme.EasyDangerBorder
-import cat.copernic.easytrazamobile.ui.theme.EasyInfo
 import cat.copernic.easytrazamobile.ui.theme.EasyPrimary
 import cat.copernic.easytrazamobile.ui.theme.EasyPrimaryDark
 import cat.copernic.easytrazamobile.ui.theme.EasySuccess
@@ -34,6 +33,13 @@ import cat.copernic.easytrazamobile.ui.theme.EasyText
 import cat.copernic.easytrazamobile.ui.theme.EasyTextMuted
 import cat.copernic.easytrazamobile.ui.theme.EasyTextStrong
 
+/**
+ * Standard screen title used across the mobile application.
+ *
+ * @param title Main screen title.
+ * @param subtitle Optional supporting text.
+ * @param modifier Modifier applied to the header container.
+ */
 @Composable
 fun EasyScreenHeader(
     title: String,
@@ -60,6 +66,9 @@ fun EasyScreenHeader(
     }
 }
 
+/**
+ * Card container used for form sections and filter blocks.
+ */
 @Composable
 fun EasySectionCard(
     modifier: Modifier = Modifier,
@@ -81,6 +90,9 @@ fun EasySectionCard(
     }
 }
 
+/**
+ * Main action button with the EasyTraza color palette.
+ */
 @Composable
 fun EasyPrimaryButton(
     text: String,
@@ -104,6 +116,9 @@ fun EasyPrimaryButton(
     }
 }
 
+/**
+ * Secondary outline button used for navigation and non-destructive actions.
+ */
 @Composable
 fun EasySecondaryButton(
     text: String,
@@ -126,6 +141,9 @@ fun EasySecondaryButton(
     }
 }
 
+/**
+ * Destructive action button used for deleting lots from a form.
+ */
 @Composable
 fun EasyDangerButton(
     text: String,
@@ -149,6 +167,12 @@ fun EasyDangerButton(
     }
 }
 
+/**
+ * Displays a success or error message using a card style.
+ *
+ * Success is inferred from common Catalan and Spanish success words, because ViewModels
+ * already return localized text and backend errors may still arrive as plain strings.
+ */
 @Composable
 fun EasyStatusMessage(
     message: String,
@@ -156,9 +180,20 @@ fun EasyStatusMessage(
 ) {
     if (message.isBlank()) return
 
-    val success = message.contains("correctament", ignoreCase = true) ||
-            message.contains("guardat", ignoreCase = true) ||
-            message.contains("guardada", ignoreCase = true)
+    val lower = message.lowercase()
+    val success = listOf(
+        "correctament",
+        "correctamente",
+        "guardat",
+        "guardado",
+        "guardada",
+        "obert",
+        "abierto",
+        "tancat",
+        "cerrado",
+        "connexió correcta",
+        "conexión correcta"
+    ).any { lower.contains(it) }
 
     val background = if (success) EasySuccessBg else EasyDangerBg
     val textColor = if (success) EasySuccess else EasyDanger
@@ -180,6 +215,9 @@ fun EasyStatusMessage(
     }
 }
 
+/**
+ * Small label/value row used inside lot cards.
+ */
 @Composable
 fun EasyInfoRow(
     label: String,

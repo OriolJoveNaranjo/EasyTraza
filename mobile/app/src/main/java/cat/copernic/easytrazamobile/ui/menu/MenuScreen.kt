@@ -1,5 +1,6 @@
 package cat.copernic.easytrazamobile.ui.menu
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -30,8 +31,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import cat.copernic.easytrazamobile.R
 import cat.copernic.easytrazamobile.ui.theme.EasyAccentSoft
 import cat.copernic.easytrazamobile.ui.theme.EasyBackground
 import cat.copernic.easytrazamobile.ui.theme.EasyBorder
@@ -40,8 +43,10 @@ import cat.copernic.easytrazamobile.ui.theme.EasySidebar
 import cat.copernic.easytrazamobile.ui.theme.EasySurface
 import cat.copernic.easytrazamobile.ui.theme.EasyTextLight
 import cat.copernic.easytrazamobile.ui.theme.EasyTextMuted
-import cat.copernic.easytrazamobile.ui.theme.EasyTextStrong
 
+/**
+ * Main mobile menu shown after selecting a user.
+ */
 @Composable
 fun MenuScreen(
     onReceiveDeliveryClick: () -> Unit = {},
@@ -51,36 +56,33 @@ fun MenuScreen(
 ) {
     Scaffold(
         bottomBar = {
-            NavigationBar(
-                containerColor = EasySurface,
-                tonalElevation = 8.dp
-            ) {
+            NavigationBar(containerColor = EasySurface, tonalElevation = 8.dp) {
                 NavigationBarItem(
                     selected = true,
                     onClick = onReceiveDeliveryClick,
                     icon = { Icon(Icons.Outlined.ReceiptLong, contentDescription = null) },
-                    label = { Text("Rebre") },
+                    label = { Text(stringResource(R.string.common_receive)) },
                     colors = menuNavColors()
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = onStartLotClick,
                     icon = { Icon(Icons.Outlined.Inventory2, contentDescription = null) },
-                    label = { Text("Obrir") },
+                    label = { Text(stringResource(R.string.common_open)) },
                     colors = menuNavColors()
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = onCloseLotClick,
                     icon = { Icon(Icons.Outlined.CheckCircle, contentDescription = null) },
-                    label = { Text("Tancar") },
+                    label = { Text(stringResource(R.string.common_close)) },
                     colors = menuNavColors()
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = onLogoutClick,
                     icon = { Icon(Icons.Outlined.ExitToApp, contentDescription = null) },
-                    label = { Text("Sortir") },
+                    label = { Text(stringResource(R.string.common_exit)) },
                     colors = menuNavColors()
                 )
             }
@@ -101,13 +103,13 @@ fun MenuScreen(
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "EasyTraza",
+                        text = stringResource(R.string.common_app_title),
                         color = Color.White,
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "Gestió ràpida de recepcions i lots",
+                        text = stringResource(R.string.menu_subtitle),
                         color = EasyTextLight.copy(alpha = 0.82f),
                         style = MaterialTheme.typography.bodyMedium
                     )
@@ -121,26 +123,26 @@ fun MenuScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 MenuCard(
-                    title = "Rebre albarà",
-                    subtitle = "OCR, dades i alta de lots",
+                    title = stringResource(R.string.menu_receive_title),
+                    subtitle = stringResource(R.string.menu_receive_subtitle),
                     icon = { Icon(Icons.Outlined.ReceiptLong, contentDescription = null, tint = Color.White, modifier = Modifier.size(42.dp)) },
                     onClick = onReceiveDeliveryClick
                 )
                 MenuCard(
-                    title = "Obrir lot",
-                    subtitle = "Iniciar consum de matèria primera",
+                    title = stringResource(R.string.menu_open_lot_title),
+                    subtitle = stringResource(R.string.menu_open_lot_subtitle),
                     icon = { Icon(Icons.Outlined.Inventory2, contentDescription = null, tint = Color.White, modifier = Modifier.size(42.dp)) },
                     onClick = onStartLotClick
                 )
                 MenuCard(
-                    title = "Tancar lot",
-                    subtitle = "Finalitzar un lot obert",
+                    title = stringResource(R.string.menu_close_lot_title),
+                    subtitle = stringResource(R.string.menu_close_lot_subtitle),
                     icon = { Icon(Icons.Outlined.CheckCircle, contentDescription = null, tint = Color.White, modifier = Modifier.size(42.dp)) },
                     onClick = onCloseLotClick
                 )
                 MenuCard(
-                    title = "Tancar sessió",
-                    subtitle = "Tornar a seleccionar usuari",
+                    title = stringResource(R.string.menu_logout_title),
+                    subtitle = stringResource(R.string.menu_logout_subtitle),
                     icon = { Icon(Icons.Outlined.ExitToApp, contentDescription = null, tint = Color.White, modifier = Modifier.size(42.dp)) },
                     onClick = onLogoutClick
                 )
@@ -149,6 +151,7 @@ fun MenuScreen(
     }
 }
 
+/** Navigation bar color set shared by all items on the menu screen. */
 @Composable
 private fun menuNavColors() = NavigationBarItemDefaults.colors(
     selectedIconColor = EasyPrimary,
@@ -158,6 +161,7 @@ private fun menuNavColors() = NavigationBarItemDefaults.colors(
     indicatorColor = EasyAccentSoft
 )
 
+/** Card used for one menu action. */
 @Composable
 private fun MenuCard(
     title: String,
@@ -172,7 +176,7 @@ private fun MenuCard(
             .clickable { onClick() },
         shape = RoundedCornerShape(22.dp),
         colors = CardDefaults.cardColors(containerColor = EasySidebar),
-        border = androidx.compose.foundation.BorderStroke(1.dp, EasyBorder),
+        border = BorderStroke(1.dp, EasyBorder),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Row(
