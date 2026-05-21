@@ -26,6 +26,9 @@ class ObrirLotViewModel(application: Application) : AndroidViewModel(application
     private val _lotPendentConfirmacio = MutableStateFlow<Long?>(null)
     val lotPendentConfirmacio: StateFlow<Long?> = _lotPendentConfirmacio
 
+    private val _isOpening = MutableStateFlow(false)
+    val isOpening: StateFlow<Boolean> = _isOpening
+
     fun carregarLots() {
         viewModelScope.launch {
             try {
@@ -58,6 +61,8 @@ class ObrirLotViewModel(application: Application) : AndroidViewModel(application
     ) {
         viewModelScope.launch {
             try {
+                if (_isOpening.value) return@launch
+                _isOpening.value = true
                 val baseUrl = serverConfigRepository.serverIp.first()
                 val usuariId = userSessionRepository.userId.first()
 
@@ -91,6 +96,9 @@ class ObrirLotViewModel(application: Application) : AndroidViewModel(application
 
             } catch (e: Exception) {
                 _message.value = "Error obrint el lot: ${e.message}"
+            }
+            finally {
+                _isOpening.value = false
             }
         }
     }

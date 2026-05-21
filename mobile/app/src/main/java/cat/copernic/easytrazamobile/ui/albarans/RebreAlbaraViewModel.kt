@@ -27,6 +27,8 @@ class RebreAlbaraViewModel(application: Application) : AndroidViewModel(applicat
     private val _materiesPrimeres = MutableStateFlow<List<MateriaPrimeraMobileDto>>(emptyList())
     val materiesPrimeres: StateFlow<List<MateriaPrimeraMobileDto>> = _materiesPrimeres
 
+    private val _isSaving = MutableStateFlow(false)
+    val isSaving: StateFlow<Boolean> = _isSaving
     private val userSessionRepository = UserSessionRepository(application)
 
 
@@ -91,6 +93,8 @@ class RebreAlbaraViewModel(application: Application) : AndroidViewModel(applicat
     ) {
         viewModelScope.launch {
             try {
+                if (_isSaving.value) return@launch
+                _isSaving.value = true
                 if (numeroAlbara.isBlank()) {
                     _message.value = "El número d'albarà és obligatori"
                     return@launch
@@ -190,6 +194,9 @@ class RebreAlbaraViewModel(application: Application) : AndroidViewModel(applicat
                 _message.value = "La quantitat ha de ser un número vàlid"
             } catch (e: Exception) {
                 _message.value = "Error guardant l'albarà: ${e.message}"
+            }
+            finally {
+                _isSaving.value = false
             }
         }
     }

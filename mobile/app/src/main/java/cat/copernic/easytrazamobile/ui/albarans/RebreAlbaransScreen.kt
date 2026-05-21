@@ -70,6 +70,7 @@ fun RebreAlbaraScreen(
     val materiesPrimeres by viewModel.materiesPrimeres.collectAsState()
     val context = androidx.compose.ui.platform.LocalContext.current
     val scrollState = rememberScrollState()
+    val isSaving by viewModel.isSaving.collectAsState()
 
     LaunchedEffect(message) {
         if (message.isNotBlank()) {
@@ -401,11 +402,12 @@ fun RebreAlbaraScreen(
                                 }
                             )
                         },
+                        enabled = !isSaving,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(52.dp)
                     ) {
-                        Text("Guardar albarà")
+                        Text(if (isSaving) "Guardant..." else "Guardar albarà")
                     }
                 }
             }

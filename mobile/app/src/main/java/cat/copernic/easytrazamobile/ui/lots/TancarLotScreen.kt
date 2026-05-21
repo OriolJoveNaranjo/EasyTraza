@@ -47,6 +47,7 @@ fun TancarLotScreen(
     var filtreLot by rememberSaveable { mutableStateOf("") }
     var filtreProveidor by rememberSaveable { mutableStateOf("") }
     var filtreMateria by rememberSaveable { mutableStateOf("") }
+    val isClosing by viewModel.isClosing.collectAsState()
 
     val lotsFiltrats = lots.filter { lot ->
         lot.identificadorLot.contains(filtreLot, ignoreCase = true) &&
@@ -163,9 +164,10 @@ fun TancarLotScreen(
                             onClick = {
                                 viewModel.tancarLot(lot.id)
                             },
+                            enabled = !isClosing,
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Tancar lot")
+                            Text(if (isClosing) "Tancant..." else "Tancar lot")
                         }
                     }
                 }

@@ -36,6 +36,7 @@ private val BackgroundWarm = Color(0xFFFFF7ED)
 private val PrimaryWarm = Color(0xFF2F6B4F)
 private val TextBrown = Color(0xFF3B240D)
 
+
 @Composable
 fun ObrirLotScreen(
     onBackToMenu: () -> Unit = {},
@@ -47,6 +48,7 @@ fun ObrirLotScreen(
     var filtreProveidor by rememberSaveable { mutableStateOf("") }
     var filtreMateria by rememberSaveable { mutableStateOf("") }
     val lotPendentConfirmacio by viewModel.lotPendentConfirmacio.collectAsState()
+    val isOpening by viewModel.isOpening.collectAsState()
 
 
     LaunchedEffect(Unit) {
@@ -162,9 +164,10 @@ fun ObrirLotScreen(
                             onClick = {
                                 viewModel.obrirLot(lot.id)
                             },
+                            enabled = !isOpening,
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Obrir lot")
+                            Text(if (isOpening) "Obrint..." else "Obrir lot")
                         }
                         if (lotPendentConfirmacio == lot.id) {
                             Text(
