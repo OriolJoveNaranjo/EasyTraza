@@ -12,7 +12,7 @@ object RetrofitProvider {
         val fixedBaseUrl = if (baseUrl.endsWith("/")) baseUrl else "$baseUrl/"
 
         val logging = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
+            level = HttpLoggingInterceptor.Level.BASIC
         }
 
         val client = OkHttpClient.Builder()

@@ -95,6 +95,7 @@ class RebreAlbaraViewModel(application: Application) : AndroidViewModel(applicat
             try {
                 if (_isSaving.value) return@launch
                 _isSaving.value = true
+                _message.value = ""
                 if (numeroAlbara.isBlank()) {
                     _message.value = "El número d'albarà és obligatori"
                     return@launch
@@ -150,11 +151,6 @@ class RebreAlbaraViewModel(application: Application) : AndroidViewModel(applicat
                 }
 
                 val lotsValids = lots
-
-                if (lotsValids.isEmpty()) {
-                    _message.value = "Has d'afegir com a mínim un lot complet"
-                    return@launch
-                }
                 val usuariId = userSessionRepository.userId.first()
 
                 if (usuariId == null) {
@@ -187,7 +183,12 @@ class RebreAlbaraViewModel(application: Application) : AndroidViewModel(applicat
                     _message.value = "Albarà guardat correctament"
                     onSuccess()
                 } else {
-                    _message.value = "No s'ha pogut guardar l'albarà: ${response.code()}"
+                    val error = response.errorBody()?.string()
+                    _message.value = if (error.isNullOrBlank()) {
+                        "No s'ha pogut guardar l'albarà: ${response.code()}"
+                    } else {
+                        error
+                    }
                 }
 
             } catch (e: NumberFormatException) {

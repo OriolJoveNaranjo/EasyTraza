@@ -1,11 +1,5 @@
 package cat.copernic.easytrazamobile.ui.users
 
-import cat.copernic.easytrazamobile.ui.theme.EasyBackground
-import cat.copernic.easytrazamobile.ui.theme.EasySurface
-import cat.copernic.easytrazamobile.ui.theme.EasyPrimary
-import cat.copernic.easytrazamobile.ui.theme.EasyPrimaryDark
-import cat.copernic.easytrazamobile.ui.theme.EasyText
-import cat.copernic.easytrazamobile.ui.theme.EasyTextMuted
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,7 +14,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -39,6 +32,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import cat.copernic.easytrazamobile.ui.components.EasySecondaryButton
+import cat.copernic.easytrazamobile.ui.components.EasyStatusMessage
+import cat.copernic.easytrazamobile.ui.theme.EasyBackground
+import cat.copernic.easytrazamobile.ui.theme.EasyBorder
+import cat.copernic.easytrazamobile.ui.theme.EasyPrimaryDark
+import cat.copernic.easytrazamobile.ui.theme.EasySurface
+import cat.copernic.easytrazamobile.ui.theme.EasyTextLight
+import cat.copernic.easytrazamobile.ui.theme.EasyTextMuted
+import cat.copernic.easytrazamobile.ui.theme.EasyTextStrong
 
 @Composable
 fun UserSelectionScreen(
@@ -50,8 +52,6 @@ fun UserSelectionScreen(
     val message by viewModel.message.collectAsState()
     val baseUrl by viewModel.baseUrl.collectAsState()
 
-
-
     LaunchedEffect(Unit) {
         viewModel.startAutoRefreshUsers()
     }
@@ -60,35 +60,32 @@ fun UserSelectionScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(EasyBackground)
-            .padding(20.dp),
+            .padding(horizontal = 18.dp, vertical = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = "EasyTraza",
             style = MaterialTheme.typography.headlineLarge,
             fontWeight = FontWeight.Bold,
-            color = EasyPrimaryDark,
-            modifier = Modifier.padding(top = 24.dp)
+            color = EasyTextStrong,
+            modifier = Modifier.padding(top = 8.dp)
         )
 
         Text(
-            text = "Qui fa el seguiment avui?",
+            text = "Selecciona l'usuari de treball",
             style = MaterialTheme.typography.titleMedium,
             color = EasyTextMuted,
-            modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
+            modifier = Modifier.padding(top = 6.dp, bottom = 16.dp)
         )
 
-        if (message.isNotBlank()) {
-            Text(
-                text = message,
-                color = MaterialTheme.colorScheme.error,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-        }
+        EasyStatusMessage(
+            message = message,
+            modifier = Modifier.padding(bottom = if (message.isBlank()) 0.dp else 12.dp)
+        )
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            contentPadding = PaddingValues(bottom = 16.dp),
+            contentPadding = PaddingValues(bottom = 14.dp),
             horizontalArrangement = Arrangement.spacedBy(14.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp),
             modifier = Modifier
@@ -105,12 +102,14 @@ fun UserSelectionScreen(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .aspectRatio(0.82f)
+                        .aspectRatio(0.88f)
                         .clickable {
                             viewModel.selectUser(usuari.id, onUserSelected)
                         },
-                    shape = RoundedCornerShape(20.dp),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
+                    shape = RoundedCornerShape(22.dp),
+                    colors = CardDefaults.cardColors(containerColor = EasySurface),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, EasyBorder),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                 ) {
                     Box(modifier = Modifier.fillMaxSize()) {
                         AsyncImage(
@@ -119,7 +118,7 @@ fun UserSelectionScreen(
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
                                 .fillMaxSize()
-                                .clip(RoundedCornerShape(20.dp))
+                                .clip(RoundedCornerShape(22.dp))
                         )
 
                         Box(
@@ -129,7 +128,7 @@ fun UserSelectionScreen(
                                     Brush.verticalGradient(
                                         colors = listOf(
                                             Color.Transparent,
-                                            Color(0xAA000000)
+                                            EasyPrimaryDark.copy(alpha = 0.88f)
                                         )
                                     )
                                 )
@@ -137,25 +136,22 @@ fun UserSelectionScreen(
 
                         Text(
                             text = usuari.nom,
-                            color = EasySurface,
+                            color = EasyTextLight,
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier
                                 .align(Alignment.BottomCenter)
-                                .padding(bottom = 14.dp)
+                                .padding(horizontal = 8.dp, vertical = 14.dp)
                         )
                     }
                 }
             }
         }
 
-        Button(
+        EasySecondaryButton(
+            text = "Canviar IP servidor",
             onClick = onConfigClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp)
-        ) {
-            Text("Canviar IP servidor")
-        }
+            modifier = Modifier.padding(top = 8.dp)
+        )
     }
 }
