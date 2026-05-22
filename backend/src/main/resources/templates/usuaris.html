@@ -25,8 +25,29 @@
                 <div class="success-message" th:if="${success}">
                     <p th:text="${success}"></p>
                 </div>
-                <div class="search-bar">
-                    <input placeholder="Cercar usuaris..." th:placeholder="#{ui.cercar_usuaris}" type="text"/>
+                <div class="filter-card">
+                    <form th:action="@{/usuaris}" method="get" class="filter-bar">
+
+                        <input type="text"
+                               name="nom"
+                               th:value="${nom}"
+                               placeholder="Cercar per nom"
+                               class="filter-input">
+
+                        <select name="rol" class="filter-input">
+                            <option value="">Tots els rols</option>
+                            <option value="ADMIN" th:selected="${rol == 'ADMIN'}">ADMIN</option>
+                            <option value="OPERARI" th:selected="${rol == 'OPERARI'}">OPERARI</option>
+                        </select>
+
+                        <button type="submit" class="btn-primary">
+                            Filtrar
+                        </button>
+
+                        <a th:href="@{/usuaris}" class="btn-secondary">
+                            Netejar
+                        </a>
+                    </form>
                 </div>
                 <div class="content-card">
                     <table th:if="${not #lists.isEmpty(usuaris)}">
@@ -54,7 +75,13 @@
                                 <td>
                                     <a class="btn-primary" th:href="@{'/usuaris/activar/' + ${usuari.id}}" th:if="${!usuari.actiu}" th:text="#{ui.activar}">Activar</a>
                                     <a class="btn-edit" th:href="@{'/usuaris/editar/' + ${usuari.id}}" th:text="#{ui.editar}">Editar</a>
-                                    <a class="btn-delete" onclick="return confirm('Segur que vols eliminar aquest usuari?')" th:href="@{'/usuaris/eliminar/' + ${usuari.id}}" th:if="${usuari.actiu}" th:text="#{ui.eliminar}">Eliminar</a>
+                                    <a class="btn-delete"
+                                       onclick="return confirm('Segur que vols eliminar aquest usuari?')"
+                                       th:href="@{'/usuaris/eliminar/' + ${usuari.id}}"
+                                       th:if="${usuari.actiu and usuari.email != emailActual and usuari.email != superAdminEmail}"
+                                       th:text="#{ui.eliminar}">
+                                        Eliminar
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>

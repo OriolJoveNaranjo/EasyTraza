@@ -9,6 +9,12 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
+/**
+ * Implementació de la lògica de negoci associada als proveïdors.
+ *
+ * <p>Centralitza validacions com el CIF, l'activació/desactivació i el control
+ * de proveïdors amb albarans associats abans d'eliminar-los.</p>
+ */
 @Service
 public class ProveidorServiceImpl implements ProveidorService {
 

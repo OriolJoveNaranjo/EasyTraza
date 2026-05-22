@@ -26,8 +26,23 @@
                 <div class="success-message" th:if="${success}">
                     <p th:text="${success}"></p>
                 </div>
-                <div class="search-bar">
-                    <input placeholder="Buscar..." th:placeholder="#{ui.buscar}" type="text"/>
+                <div class="filter-card">
+                    <form th:action="@{/productes-finals}" method="get" class="filter-bar">
+
+                        <input type="text"
+                               name="nom"
+                               th:value="${nom}"
+                               placeholder="Cercar per nom"
+                               class="filter-input">
+
+                        <button type="submit" class="btn-primary">
+                            Filtrar
+                        </button>
+
+                        <a th:href="@{/productes-finals}" class="btn-secondary">
+                            Netejar
+                        </a>
+                    </form>
                 </div>
                 <div class="catalog-tabs">
                     <a class="tab-btn" th:href="@{/cataleg}" th:text="#{ui.materies_primeres}">Matèries primeres</a>

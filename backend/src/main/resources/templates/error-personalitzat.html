@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Error - EasyTraza</title>
+
+        <link rel="stylesheet" th:href="@{/css/layout.css}">
+        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+    </head>
+
+    <body>
+        <main class="page-content">
+            <div class="content-card">
+                <h1 th:text="${titol}">Error</h1>
+
+                <p th:text="${missatge}">
+                    S'ha produït un error.
+                </p>
+
+                <p>
+                    Ruta:
+                    <span th:text="${ruta}"></span>
+                </p>
+
+                <a th:href="@{/login}" class="btn-primary">
+                    Tornar a l'inici
+                </a>
+            </div>
+        </main>
+    </body>
+</html>
