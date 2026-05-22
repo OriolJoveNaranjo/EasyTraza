@@ -52,7 +52,10 @@ class MainActivity : ComponentActivity() {
                         onReceiveDeliveryClick = { screen = Screen.ReceiveDelivery.route },
                         onStartLotClick = { screen = Screen.OpenLot.route },
                         onCloseLotClick = { screen = Screen.CloseLot.route },
-                        onLogoutClick = { screen = Screen.Users.route }
+                        onLogoutClick = { screen = Screen.Users.route },
+                        onExitAppClick = {
+                            finishAffinity()
+                        }
                     )
 
                     Screen.ReceiveDelivery.route -> RebreAlbaraScreen(

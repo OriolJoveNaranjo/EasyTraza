@@ -43,7 +43,12 @@ import cat.copernic.easytrazamobile.ui.theme.EasySidebar
 import cat.copernic.easytrazamobile.ui.theme.EasySurface
 import cat.copernic.easytrazamobile.ui.theme.EasyTextLight
 import cat.copernic.easytrazamobile.ui.theme.EasyTextMuted
-
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 /**
  * Main mobile menu shown after selecting a user.
  */
@@ -52,8 +57,44 @@ fun MenuScreen(
     onReceiveDeliveryClick: () -> Unit = {},
     onStartLotClick: () -> Unit = {},
     onCloseLotClick: () -> Unit = {},
-    onLogoutClick: () -> Unit = {}
+    onLogoutClick: () -> Unit = {},
+    onExitAppClick: () -> Unit = {}
 ) {
+    var showExitDialog by remember { mutableStateOf(false) }
+
+    if (showExitDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                showExitDialog = false
+            },
+            title = {
+                Text(stringResource(R.string.exit_title))
+            },
+            text = {
+                Text(stringResource(R.string.exit_question))
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showExitDialog = false
+                        onLogoutClick()
+                    }
+                ) {
+                    Text(stringResource(R.string.logout))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        showExitDialog = false
+                        onExitAppClick()
+                    }
+                ) {
+                    Text(stringResource(R.string.close_app))
+                }
+            }
+        )
+    }
     Scaffold(
         bottomBar = {
             NavigationBar(containerColor = EasySurface, tonalElevation = 8.dp) {
@@ -80,14 +121,17 @@ fun MenuScreen(
                 )
                 NavigationBarItem(
                     selected = false,
-                    onClick = onLogoutClick,
-                    icon = { Icon(Icons.Outlined.ExitToApp, contentDescription = null) },
-                    label = { Text(stringResource(R.string.common_exit)) },
-                    colors = menuNavColors()
+                    onClick = {
+                        showExitDialog = true
+                    },
+                    icon = {Icon(imageVector = Icons.Outlined.ExitToApp, contentDescription = null)},
+                    label = { Text(stringResource(R.string.exit_title)) }
                 )
             }
         }
-    ) { paddingValues ->
+
+    )
+    { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
