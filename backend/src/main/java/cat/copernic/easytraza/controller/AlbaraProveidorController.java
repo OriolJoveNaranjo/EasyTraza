@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +34,8 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Controller
 public class AlbaraProveidorController {
+
+    private static final Logger logger = LoggerFactory.getLogger(AlbaraProveidorController.class);
 
     private final AlbaraProveidorService albaraProveidorService;
     private final ProveidorService proveidorService;
@@ -96,11 +100,11 @@ public class AlbaraProveidorController {
             Model model) {
 
         try {
-            System.out.println("FITXERS REBUTS: " + (fitxers == null ? "null" : fitxers.length));
+            logger.info("Fitxers rebuts en formulari d\'albarà de proveïdor: {}", fitxers == null ? "null" : fitxers.length);
 
             if (fitxers != null) {
                 for (MultipartFile f : fitxers) {
-                    System.out.println("FITXER: " + f.getOriginalFilename() + " / buit=" + f.isEmpty());
+                    logger.debug("Fitxer rebut: {} / buit={}", f.getOriginalFilename(), f.isEmpty());
                 }
             }
 

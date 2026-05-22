@@ -16,6 +16,9 @@ import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -30,6 +33,8 @@ public class UsuariServiceImpl implements UsuariService {
     private final LotProveidorRepository lotProveidorRepo;
     private final AlbaraProveidorRepository albaraProveidorRepo;
     private final ControlPhRepository controlPhRepo;
+    @Value("${app.superadmin.email}")
+    private String superAdminEmail;
 
     public UsuariServiceImpl(UsuariRepository usuariRepository, PasswordEncoder passwordEncoder,
             LotProveidorRepository lotProveidorRepo, AlbaraProveidorRepository albaraProveidorRepo,
@@ -90,6 +95,16 @@ public class UsuariServiceImpl implements UsuariService {
     public String deleteById(Long id) {
         Usuari usuari = usuariRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuari no trobat"));
+
+        if (usuari.getEmail().equalsIgnoreCase(superAdminEmail)) {
+            throw new RuntimeException("El superadministrador no es pot eliminar.");
+        }
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth != null && usuari.getEmail().equalsIgnoreCase(auth.getName())) {
+            throw new RuntimeException("No pots eliminar el teu propi usuari.");
+        }
 
         boolean teLots = lotProveidorRepo.existsByUsuariOberturaId(id);
         boolean teAlbaransProveidor = albaraProveidorRepo.existsByUsuariAltaId(id);

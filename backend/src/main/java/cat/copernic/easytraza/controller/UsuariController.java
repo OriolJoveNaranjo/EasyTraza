@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import cat.copernic.easytraza.utils.ValidacioEmail;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 
 /**
  *
@@ -32,13 +35,41 @@ public class UsuariController {
 
     private final UsuariService usuariService;
 
+    @Value("${app.superadmin.email}")
+    private String superAdminEmail;
+
     public UsuariController(UsuariService usuariService) {
         this.usuariService = usuariService;
     }
 
     @GetMapping("/usuaris")
-    public String mostrarUsuaris(Model model) {
-        model.addAttribute("usuaris", usuariService.findAll());
+    public String mostrarUsuaris(
+            @RequestParam(required = false) String nom,
+            @RequestParam(required = false) String rol,
+            Model model,
+            Authentication authentication) {
+
+        List<Usuari> usuaris = usuariService.findAll();
+
+        if (nom != null && !nom.isBlank()) {
+            String nomLower = nom.toLowerCase();
+            usuaris = usuaris.stream()
+                    .filter(u -> u.getNom() != null && u.getNom().toLowerCase().contains(nomLower))
+                    .toList();
+        }
+
+        if (rol != null && !rol.isBlank()) {
+            usuaris = usuaris.stream()
+                    .filter(u -> u.getRol() != null && u.getRol().name().equals(rol))
+                    .toList();
+        }
+
+        model.addAttribute("usuaris", usuaris);
+        model.addAttribute("nom", nom);
+        model.addAttribute("rol", rol);
+        model.addAttribute("emailActual", authentication.getName());
+        model.addAttribute("superAdminEmail", superAdminEmail);
+
         return "usuaris";
     }
 
