@@ -1,77 +1,62 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Productes finals</title>
-        <link rel="stylesheet" th:href="@{/css/layout.css}">
-        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
-        <link rel="stylesheet" th:href="@{/css/table.css}">
-        <link rel="stylesheet" th:href="@{/css/cataleg.css}">
+        <title th:text="#{ui.productes_finals}">Productes finals</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}"/>
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
+        <link rel="stylesheet" th:href="@{/css/table.css}"/>
+        <link rel="stylesheet" th:href="@{/css/cataleg.css}"/>
     </head>
     <body>
         <div class="app-layout">
-
             <div th:replace="~{fragments/sidebar :: sidebar('cataleg')}"></div>
-
             <main class="page-content">
                 <div class="page-header">
                     <div>
-                        <h1>Productes finals</h1>
-                        <p>Catàleg de productes finals</p>
+                        <h1 th:text="#{ui.productes_finals}">Productes finals</h1>
+                        <p th:text="#{ui.cataleg_de_productes_finals}">Catàleg de productes finals</p>
                     </div>
-
-                    <a th:href="@{/productes-finals/nou}" class="btn-primary">+ Afegir</a>
+                    <a class="btn-primary" th:href="@{/productes-finals/nou}" th:text="#{ui.afegir}">+ Afegir</a>
                 </div>
-                <div th:if="${error}" class="error-message">
+                <div class="error-message" th:if="${error}">
                     <p th:text="${error}"></p>
                 </div>
-
-                <div th:if="${success}" class="success-message">
+                <div class="success-message" th:if="${success}">
                     <p th:text="${success}"></p>
                 </div>
-
                 <div class="search-bar">
-                    <input type="text" placeholder="Buscar...">
+                    <input placeholder="Buscar..." th:placeholder="#{ui.buscar}" type="text"/>
                 </div>
-
                 <div class="catalog-tabs">
-                    <a th:href="@{/cataleg}" class="tab-btn">Matèries primeres</a>
-                    <a th:href="@{/productes-finals}" class="tab-btn active">Productes finals</a>
+                    <a class="tab-btn" th:href="@{/cataleg}" th:text="#{ui.materies_primeres}">Matèries primeres</a>
+                    <a class="tab-btn active" th:href="@{/productes-finals}" th:text="#{ui.productes_finals}">Productes finals</a>
                 </div>
-
                 <div class="content-card">
                     <table th:if="${not #lists.isEmpty(productesFinals)}">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Nom</th>
-                                <th>Descripció</th>
-                                <th>Accions</th>
+                                <th th:text="#{ui.id}">ID</th>
+                                <th th:text="#{ui.nom}">Nom</th>
+                                <th th:text="#{ui.descripcio}">Descripció</th>
+                                <th th:text="#{ui.accions}">Accions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="producte : ${productesFinals}"th:classappend="${!producte.actiu} ? ' fila-inactiva' : ''">
+                            <tr th:classappend="${!producte.actiu} ? ' fila-inactiva' : ''" th:each="producte : ${productesFinals}">
                                 <td th:text="${producte.id}"></td>
                                 <td th:text="${producte.nom}"></td>
                                 <td th:text="${producte.descripcio}"></td>
                                 <td>
-                                    <a th:if="${!producte.actiu}"
-                                       th:href="@{'/productes-finals/activar/' + ${producte.id}}"
-                                       class="btn-primary">
-                                        Activar
-                                    </a>
-                                    <a th:href="@{'/productes-finals/editar/' + ${producte.id}}" class="btn-edit">Editar</a>
-                                    <a th:if="${producte.actiu}" th:href="@{'/productes-finals/eliminar/' + ${producte.id}}"
-                                       class="btn-delete"
-                                       onclick="return confirm('Segur que vols eliminar aquest producte final?')">Eliminar</a>
+                                    <a class="btn-primary" th:href="@{'/productes-finals/activar/' + ${producte.id}}" th:if="${!producte.actiu}" th:text="#{ui.activar}">Activar</a>
+                                    <a class="btn-edit" th:href="@{'/productes-finals/editar/' + ${producte.id}}" th:text="#{ui.editar}">Editar</a>
+                                    <a class="btn-delete" onclick="return confirm('Segur que vols eliminar aquest producte final?')" th:href="@{'/productes-finals/eliminar/' + ${producte.id}}" th:if="${producte.actiu}" th:text="#{ui.eliminar}">Eliminar</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-
-                    <div th:if="${#lists.isEmpty(productesFinals)}" class="empty-state">
-                        No hi ha productes finals registrats
-                    </div>
+                    <div class="empty-state" th:if="${#lists.isEmpty(productesFinals)}" th:text="#{ui.no_hi_ha_productes_finals_registrats}">No hi ha productes finals registrats</div>
                 </div>
             </main>
         </div>

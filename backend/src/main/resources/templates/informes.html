@@ -1,41 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<html th:lang="${#locale.language}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
-        <title>Informes - EasyTraza</title>
-
-        <link rel="stylesheet" th:href="@{/css/layout.css}">
-        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+        <meta charset="utf-8"/>
+        <title th:text="#{ui.informes_easytraza}">Informes - EasyTraza</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}"/>
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
     </head>
-
     <body>
         <div class="app-layout">
-
             <div th:replace="~{fragments/sidebar :: sidebar('informes')}"></div>
-
             <main class="page-content">
-
                 <div class="page-header">
                     <div>
-                        <h1>Informes</h1>
-                        <p>Selecciona l’informe que vols consultar</p>
+                        <h1 th:text="#{ui.informes}">Informes</h1>
+                        <p th:text="#{ui.selecciona_linforme_que_vols_consultar}">Selecciona l’informe que vols consultar</p>
                     </div>
                 </div>
-
                 <div class="dashboard-cards">
-
-                    <a th:href="@{/informes/productes-mensual}" class="dashboard-card report-card">
-                        <h3>Informe mensual</h3>
+                    <a class="dashboard-card report-card" th:href="@{/informes/productes-mensual}">
+                        <h3 th:text="#{ui.informe_mensual}">Informe mensual</h3>
                         <strong>📈</strong>
-                        <p>Evolució diària de productes venuts durant un mes</p>
+                        <p th:text="#{ui.evolucio_diaria_de_productes_venuts_durant_un_mes}">Evolució diària de productes venuts durant un mes</p>
                     </a>
-
                 </div>
-
             </main>
-
         </div>
     </body>
 </html>

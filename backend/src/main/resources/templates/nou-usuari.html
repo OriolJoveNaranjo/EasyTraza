@@ -1,76 +1,54 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Nou usuari</title>
-        <link rel="stylesheet" th:href="@{/css/forms.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+        <title th:text="#{ui.nou_usuari}">Nou usuari</title>
+        <link rel="stylesheet" th:href="@{/css/forms.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
     </head>
     <body>
         <div class="standalone-form-page">
             <div class="form-card">
                 <h1 th:text="${usuari.id != null} ? 'Editar usuari' : 'Afegir usuari'"></h1>
-                <p class="form-subtitle">Introdueix les dades de l'usuari</p>
-
-                <p th:if="${error}" th:text="${error}" class="error-message"></p>
-
-                <form th:action="@{/usuaris/guardar}"
-                      th:object="${usuari}"
-                      method="post"
-                      enctype="multipart/form-data">
-                    <input type="hidden" th:field="*{id}"/>
-
+                <p class="form-subtitle" th:text="#{ui.introdueix_les_dades_de_l_usuari}">Introdueix les dades de l'usuari</p>
+                <p class="error-message" th:if="${error}" th:text="${error}"></p>
+                <form enctype="multipart/form-data" method="post" th:action="@{/usuaris/guardar}" th:object="${usuari}">
+                    <input th:field="*{id}" type="hidden"/>
                     <div class="form-group">
-                        <label for="fotoFile">Foto de perfil</label>
-
-                        <input id="fotoFile"
-                               type="file"
-                               name="fotoFile"
-                               accept="image/*"
-                               class="form-input">
+                        <label for="fotoFile" th:text="#{ui.foto_de_perfil}">Foto de perfil</label>
+                        <input accept="image/*" class="form-input" id="fotoFile" name="fotoFile" type="file"/>
                     </div>
-
                     <div class="field">
-                        <label>Nom *</label>
-                        <input type="text" th:field="*{nom}" required>
+                        <label th:text="#{ui.nom_4}">Nom *</label>
+                        <input required="" th:field="*{nom}" type="text"/>
                     </div>
-
                     <div class="field">
-                        <label>Email *</label>
-                        <input type="email"
-                               th:field="*{email}"
-                               th:readonly="${usuari.id != null}"
-                               required>
-                        <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                        <label th:text="#{ui.email_2}">Email *</label>
+                        <input required="" th:field="*{email}" th:readonly="${usuari.id != null}" type="email"/>
+                        <div class="text-danger" th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></div>
                     </div>
-
                     <div class="field">
-                        <label>Contrasenya *</label>                        
-                        <input type="password"
-                               th:field="*{password}"
-                               th:required="${usuari.id == null}"
-                               th:placeholder="${usuari.id != null} ? 'Deixa-ho buit per mantenir la contrasenya actual' : 'Introdueix una contrasenya'">
+                        <label th:text="#{ui.contrasenya_2}">Contrasenya *</label>
+                        <input th:field="*{password}" th:placeholder="${usuari.id != null} ? 'Deixa-ho buit per mantenir la contrasenya actual' : 'Introdueix una contrasenya'" th:required="${usuari.id == null}" type="password"/>
                     </div>
-
                     <div class="field">
-                        <label>Rol *</label>
-                        <select th:field="*{rol}" required>
-                            <option value="">Selecciona un rol</option>
-                            <option value="ADMIN">ADMIN</option>
-                            <option value="OPERARI">OPERARI</option>
+                        <label th:text="#{ui.rol}">Rol *</label>
+                        <select required="" th:field="*{rol}">
+                            <option th:text="#{ui.selecciona_un_rol}" value="">Selecciona un rol</option>
+                            <option th:text="#{ui.admin}" value="ADMIN">ADMIN</option>
+                            <option th:text="#{ui.operari}" value="OPERARI">OPERARI</option>
                         </select>
                     </div>
-
                     <div class="field">
-                        <label>Actiu *</label>
-                        <select th:field="*{actiu}" required>
-                            <option value="true">Sí</option>
-                            <option value="false">No</option>
+                        <label th:text="#{ui.actiu}">Actiu *</label>
+                        <select required="" th:field="*{actiu}">
+                            <option th:text="#{ui.si}" value="true">Sí</option>
+                            <option th:text="#{ui.no}" value="false">No</option>
                         </select>
                     </div>
-
                     <div class="form-actions">
-                        <a th:href="@{/usuaris}" class="btn-secondary">Cancel·lar</a>
-                        <button type="submit" class="btn-primary">Guardar</button>
+                        <a class="btn-secondary" th:href="@{/usuaris}" th:text="#{ui.cancellar}">Cancel·lar</a>
+                        <button class="btn-primary" th:text="#{ui.guardar}" type="submit">Guardar</button>
                     </div>
                 </form>
             </div>

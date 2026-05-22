@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import cat.copernic.easytraza.service.EmailService;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * @author orjon Controlador para recuperar y restablecer la contraseña de forma
@@ -23,6 +24,8 @@ public class RecuperarContrasenyaController {
     private final PasswordResetService passwordResetService;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    @Value("${app.base-url}")
+    private String baseUrl;
 
     public RecuperarContrasenyaController(
             UsuariRepository usuariRepository,
@@ -47,7 +50,7 @@ public class RecuperarContrasenyaController {
         if (usuari != null) {
             String token = passwordResetService.crearToken(usuari);
 
-            String enllac = "http://localhost:8080/restablir-contrasenya?token=" + token;
+            String enllac = baseUrl + "/restablir-contrasenya?token=" + token;
 
             emailService.enviarEnllacRecuperacio(usuari.getEmail(), enllac);
         }

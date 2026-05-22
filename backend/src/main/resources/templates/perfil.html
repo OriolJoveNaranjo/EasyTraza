@@ -1,106 +1,58 @@
 <!DOCTYPE html>
-<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
-        <title>Perfil - EasyTraza</title>
-
-        <link rel="stylesheet" th:href="@{/css/layout.css}">
-        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
-        <link rel="stylesheet" th:href="@{/css/perfil.css}">
+        <meta charset="utf-8"/>
+        <title th:text="#{ui.perfil_easytraza}">Perfil - EasyTraza</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}"/>
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
+        <link rel="stylesheet" th:href="@{/css/perfil.css}"/>
     </head>
-
     <body>
         <div class="app-layout">
-
             <div th:replace="~{fragments/sidebar :: sidebar('perfil')}"></div>
-
             <main class="page-content">
-
                 <div class="page-header">
                     <div>
-                        <h1>El meu perfil</h1>
-                        <p>Edita les teves dades personals</p>
+                        <h1 th:text="#{ui.el_meu_perfil}">El meu perfil</h1>
+                        <p th:text="#{ui.edita_les_teves_dades_personals}">Edita les teves dades personals</p>
                     </div>
                 </div>
-
-                <div th:if="${param.success}" class="profile-success">
-                    Perfil actualitzat correctament.
-                </div>
-
-                <form id="perfilForm"
-                      th:action="@{/perfil}"
-                      method="post"
-                      enctype="multipart/form-data"
-                      class="profile-card">
-
+                <div class="profile-success" th:if="${param.success}" th:text="#{ui.perfil_actualitzat_correctament}">Perfil actualitzat correctament.</div>
+                <form class="profile-card" enctype="multipart/form-data" id="perfilForm" method="post" th:action="@{/perfil}">
                     <div class="profile-photo-section">
-                        <img id="previewFoto"
-                             class="profile-photo"
-                             th:src="${usuari.foto != null and !#strings.isEmpty(usuari.foto)}
+                        <img alt="Foto de perfil" class="profile-photo" id="previewFoto" th:src="${usuari.foto != null and !#strings.isEmpty(usuari.foto)}
                              ? @{${'/uploads/usuaris/' + usuari.foto}}
-                             : @{/images/usuaris/fotoPerfil.png}"
-                             alt="Foto de perfil">
-
-                        <label for="foto" class="photo-button">
-                            Canviar foto
-                        </label>
-
-                        <input id="foto"
-                               type="file"
-                               name="foto"
-                               accept="image/*"
-                               hidden>
+                             : @{/images/usuaris/fotoPerfil.png}"/>
+                        <label class="photo-button" for="foto" th:text="#{ui.canviar_foto}">Canviar foto</label>
+                        <input accept="image/*" hidden="" id="foto" name="foto" type="file"/>
                     </div>
-
                     <div class="profile-fields">
                         <div class="form-group">
-                            <label>Nom</label>
-                            <input type="text"
-                                   name="nom"
-                                   th:value="${usuari.nom}"
-                                   required>
+                            <label th:text="#{ui.nom}">Nom</label>
+                            <input name="nom" required="" th:value="${usuari.nom}" type="text"/>
                         </div>
-
                         <div class="form-group">
-                            <label>Email</label>
-                            <input type="email"
-                                   th:value="${usuari.email}"
-                                   readonly
-                                   class="readonly-input">
+                            <label th:text="#{ui.email}">Email</label>
+                            <input class="readonly-input" readonly="" th:value="${usuari.email}" type="email"/>
                         </div>
-
                         <div class="form-group">
-                            <label>Rol</label>
-                            <input type="text"
-                                   th:value="${usuari.rol}"
-                                   readonly
-                                   class="readonly-input">
+                            <label th:text="#{ui.rol_2}">Rol</label>
+                            <input class="readonly-input" readonly="" th:value="${usuari.rol}" type="text"/>
                         </div>
-
                         <div class="form-group">
-                            <label>Nova contrasenya</label>
-                            <input type="password"
-                                   name="password"
-                                   placeholder="Deixa-ho buit si no la vols canviar">
+                            <label th:text="#{ui.nova_contrasenya}">Nova contrasenya</label>
+                            <input name="password" placeholder="Deixa-ho buit si no la vols canviar" th:placeholder="#{ui.deixa_ho_buit_si_no_la_vols_canviar}" type="password"/>
                         </div>
                     </div>
-
                     <div class="profile-actions">
-                        <button type="submit" class="btn-primary">
-                            Guardar canvis
-                        </button>
-
-                        <button type="button" id="cancelBtn" class="btn-secondary">
-                            Cancel·lar
-                        </button>
+                        <button class="btn-primary" th:text="#{ui.guardar_canvis}" type="submit">Guardar canvis</button>
+                        <button class="btn-secondary" id="cancelBtn" th:text="#{ui.cancellar}" type="button">Cancel·lar</button>
                     </div>
                 </form>
-
             </main>
-
         </div>
-
         <script>
             const form = document.getElementById("perfilForm");
             const cancelBtn = document.getElementById("cancelBtn");
@@ -160,6 +112,5 @@
                 window.location.href = "/panell";
             });
         </script>
-
     </body>
 </html>

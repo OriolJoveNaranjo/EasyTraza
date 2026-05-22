@@ -1,37 +1,33 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Nova matèria primera</title>
-    <link rel="stylesheet" th:href="@{/css/forms.css}">
-    <link rel="stylesheet" th:href="@{/css/buttons.css}">
-</head>
-<body>
-<div class="standalone-form-page">
-    <div class="form-card">
-        <h1 th:text="${materiaPrimera.id != null} ? 'Editar matèria primera' : 'Afegir matèria primera'"></h1>
-        <p class="form-subtitle">Afegeix un ingredient o producte base al catàleg</p>
 
-        <p th:if="${error}" th:text="${error}" class="error-message"></p>
-
-        <form th:action="@{/cataleg/materies-primeres/guardar}" th:object="${materiaPrimera}" method="post">
-            <input type="hidden" th:field="*{id}"/>
-
-            <div class="field">
-                <label>Nom *</label>
-                <input type="text" th:field="*{nom}" required>
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="#{ui.nova_materia_primera}">Nova matèria primera</title>
+        <link rel="stylesheet" th:href="@{/css/forms.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
+    </head>
+    <body>
+        <div class="standalone-form-page">
+            <div class="form-card">
+                <h1 th:text="${materiaPrimera.id != null} ? 'Editar matèria primera' : 'Afegir matèria primera'"></h1>
+                <p class="form-subtitle" th:text="#{ui.afegeix_un_ingredient_o_producte_base_al_cataleg}">Afegeix un ingredient o producte base al catàleg</p>
+                <p class="error-message" th:if="${error}" th:text="${error}"></p>
+                <form method="post" th:action="@{/cataleg/materies-primeres/guardar}" th:object="${materiaPrimera}">
+                    <input th:field="*{id}" type="hidden"/>
+                    <div class="field">
+                        <label th:text="#{ui.nom_4}">Nom *</label>
+                        <input required="" th:field="*{nom}" type="text"/>
+                    </div>
+                    <div class="field">
+                        <label th:text="#{ui.descripcio}">Descripció</label>
+                        <textarea maxlength="255" th:field="*{descripcio}"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <a class="btn-secondary" th:href="@{/cataleg}" th:text="#{ui.cancellar}">Cancel·lar</a>
+                        <button class="btn-primary" th:text="#{ui.guardar}" type="submit">Guardar</button>
+                    </div>
+                </form>
             </div>
-
-            <div class="field">
-                <label>Descripció</label>
-                <textarea th:field="*{descripcio}" maxlength="255"></textarea>
-            </div>
-
-            <div class="form-actions">
-                <a th:href="@{/cataleg}" class="btn-secondary">Cancel·lar</a>
-                <button type="submit" class="btn-primary">Guardar</button>
-            </div>
-        </form>
-    </div>
-</div>
-</body>
+        </div>
+    </body>
 </html>

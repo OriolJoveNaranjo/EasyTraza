@@ -54,4 +54,6 @@ public interface LotProveidorRepository extends JpaRepository<LotProveidor, Long
     long countByEstat(EstatLot estat);
 
     long countByDataCaducitatBetween(LocalDate dataInici, LocalDate dataFi);
+
+    List<LotProveidor> findByDataCaducitatBetween(LocalDate desde, LocalDate hasta);
 }

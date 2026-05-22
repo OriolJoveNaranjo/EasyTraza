@@ -1,224 +1,154 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Albarà amb OCR</title>
-        <link rel="stylesheet" th:href="@{/css/forms.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
-        <link rel="stylesheet" th:href="@{/css/layout.css}">
-        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-        <link rel="stylesheet" th:href="@{/css/ocr.css}">
+        <title th:text="#{ui.albara_amb_ocr}">Albarà amb OCR</title>
+        <link rel="stylesheet" th:href="@{/css/forms.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
+        <link rel="stylesheet" th:href="@{/css/layout.css}"/>
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}"/>
+        <link rel="stylesheet" th:href="@{/css/ocr.css}"/>
     </head>
     <body>
         <div class="app-layout">
-
             <div th:replace="~{fragments/sidebar :: sidebar('albarans-proveidor')}"></div>
-
             <main class="page-content">
                 <div class="page-header">
                     <div>
-                        <h1>Albarà amb OCR</h1>
-                        <p>Importa una imatge i completa automàticament el formulari</p>
+                        <h1 th:text="#{ui.albara_amb_ocr}">Albarà amb OCR</h1>
+                        <p th:text="#{ui.importa_una_imatge_i_completa_automaticament_el_fo}">Importa una imatge i completa automàticament el formulari</p>
                     </div>
                 </div>
-
                 <div class="ocr-layout">
-
                     <!-- PANEL OCR -->
                     <section class="ocr-card">
-                        <h2>Processar imatge</h2>
-
+                        <h2 th:text="#{ui.processar_imatge}">Processar imatge</h2>
                         <div class="field">
-                            <label>Selecciona una imatge</label>
-                            <input type="file"
-                                   id="ocrFile"
-                                   name="fitxersPujats"
-                                   form="albaraProveidorForm"
-                                   accept="image/*,.pdf">
+                            <label th:text="#{ui.selecciona_una_imatge}">Selecciona una imatge</label>
+                            <input accept="image/*,.pdf" form="albaraProveidorForm" id="ocrFile" name="fitxersPujats" type="file"/>
                         </div>
-
                         <div class="inline-actions">
-                            <button type="button" class="btn-primary" onclick="processarOCR()">Processar OCR</button>
-                            <a th:href="@{/albarans-proveidor}" class="btn-secondary">Tornar</a>
+                            <button class="btn-primary" onclick="processarOCR()" th:text="#{ui.processar_ocr}" type="button">Processar OCR</button>
+                            <a class="btn-secondary" th:href="@{/albarans-proveidor}" th:text="#{ui.tornar}">Tornar</a>
                         </div>
-
-                        <img id="ocrPreview" class="ocr-preview" style="display:none;" alt="Vista prèvia de la imatge">
-
+                        <img alt="Vista prèvia de la imatge" class="ocr-preview" id="ocrPreview" style="display:none;"/>
                         <div class="field" style="margin-top: 18px;">
-                            <label>Text detectat</label>
-                            <textarea id="ocrResult" class="ocr-textarea" readonly></textarea>
+                            <label th:text="#{ui.text_detectat}">Text detectat</label>
+                            <textarea class="ocr-textarea" id="ocrResult" readonly=""></textarea>
                         </div>
                     </section>
-
                     <!-- FORMULARIO -->
                     <section class="form-card">
-                        <h2>Dades de l'albarà</h2>
-                        <p th:if="${error}" th:text="${error}" class="error-message"></p>
-                        <form id="albaraProveidorForm" 
-                              th:action="@{/albarans-proveidor/guardar}"
-                              th:object="${albaraProveidor}"
-                              method="post"
-                              enctype="multipart/form-data">
-
-                            <input type="hidden" th:field="*{id}"/>
-                            <input type="hidden" name="formSource" value="ocr"> 
-                            <input type="hidden" id="ocrTextHidden" name="ocrTextHidden" th:value="${ocrTextHidden}">
-
+                        <h2 th:text="#{ui.dades_de_l_albara}">Dades de l'albarà</h2>
+                        <p class="error-message" th:if="${error}" th:text="${error}"></p>
+                        <form enctype="multipart/form-data" id="albaraProveidorForm" method="post" th:action="@{/albarans-proveidor/guardar}" th:object="${albaraProveidor}">
+                            <input th:field="*{id}" type="hidden"/>
+                            <input name="formSource" type="hidden" value="ocr">
+                            <input id="ocrTextHidden" name="ocrTextHidden" th:value="${ocrTextHidden}" type="hidden"/>
                             <div class="field">
-                                <label>Data recepció *</label>
-                                <input type="date"
-                                       id="dataRecepcio"
-                                       name="dataRecepcio"
-                                       th:value="${albaraProveidor.dataRecepcio != null ? #temporals.format(albaraProveidor.dataRecepcio, 'yyyy-MM-dd') : ''}"
-                                       required>
+                                <label th:text="#{ui.data_recepcio_2}">Data recepció *</label>
+                                <input id="dataRecepcio" name="dataRecepcio" required="" th:value="${albaraProveidor.dataRecepcio != null ? #temporals.format(albaraProveidor.dataRecepcio, 'yyyy-MM-dd') : ''}" type="date"/>
                             </div>
-
                             <div class="field">
-                                <label>Proveïdor *</label>
-                                <select id="proveidorSelect" name="proveidor.id" required>
-                                    <option value="">-- Selecciona proveïdor --</option>
-                                    <option th:each="proveidor : ${proveidors}"
-                                            th:value="${proveidor.id}"
-                                            th:text="${proveidor.nom}">
+                                <label th:text="#{ui.proveidor_4}">Proveïdor *</label>
+                                <select id="proveidorSelect" name="proveidor.id" required="">
+                                    <option th:text="#{ui.selecciona_proveidor}" value="">-- Selecciona proveïdor --</option>
+                                    <option th:each="proveidor : ${proveidors}" th:text="${proveidor.nom}" th:value="${proveidor.id}">
                                     </option>
                                 </select>
                                 <small id="proveidorOcrInfo"></small>
                             </div>
                             <div class="field">
-                                <label>CIF detectat per OCR</label>
-                                <input type="text" id="proveidorCifOcr" readonly>
+                                <label th:text="#{ui.cif_detectat_per_ocr}">CIF detectat per OCR</label>
+                                <input id="proveidorCifOcr" readonly="" type="text"/>
                             </div>
-
                             <div class="field">
-                                <label>Número d'albarà</label>
-                                <input type="text"
-                                       id="numeroAlbaraOcr"
-                                       name="numeroAlbara"
-                                       th:value="${albaraProveidor.numeroAlbara != null ? albaraProveidor.numeroAlbara : ''}">
-                            </div>                            
-
+                                <label th:text="#{ui.numero_d_albara}">Número d'albarà</label>
+                                <input id="numeroAlbaraOcr" name="numeroAlbara" th:value="${albaraProveidor.numeroAlbara != null ? albaraProveidor.numeroAlbara : ''}" type="text"/>
+                            </div>
                             <div style="margin-top: 24px;">
                                 <div class="inline-actions" style="justify-content: space-between;">
-                                    <h2 style="margin: 0;">Lots detectats</h2>
-                                    <button type="button" class="btn-secondary" onclick="afegirLinia()">+ Afegir lot</button>
+                                    <h2 style="margin: 0;" th:text="#{ui.lots_detectats}">Lots detectats</h2>
+                                    <button class="btn-secondary" onclick="afegirLinia()" th:text="#{ui.afegir_lot}" type="button">+ Afegir lot</button>
                                 </div>
-
                                 <div id="liniesContainer" style="margin-top: 16px;">
                                     <div class="linia-card">
-                                        <h3>Lot 1</h3>
-
+                                        <h3 th:text="#{ui.lot_1}">Lot 1</h3>
                                         <div class="field">
-                                            <label>Matèria primera</label>
-                                            <select name="linies[0].materiaPrimera.id" class="materia-select">
-                                                <option value="">-- Selecciona matèria primera --</option>
-                                                <option th:each="materia : ${materiesPrimeres}"
-                                                        th:value="${materia.id}"
-                                                        th:text="${materia.nom}">
+                                            <label th:text="#{ui.materia_primera}">Matèria primera</label>
+                                            <select class="materia-select" name="linies[0].materiaPrimera.id">
+                                                <option th:text="#{ui.selecciona_materia_primera}" value="">-- Selecciona matèria primera --</option>
+                                                <option th:each="materia : ${materiesPrimeres}" th:text="${materia.nom}" th:value="${materia.id}">
                                                 </option>
                                             </select>
                                         </div>
-
                                         <div class="field">
-                                            <label>Quantitat</label>
-                                            <input type="number"
-                                                   step="0.01"
-                                                   min="0"
-                                                   name="linies[0].quantitat"
-                                                   class="quantitat-input"
-                                                   th:value="${albaraProveidor.linies[0].quantitat}">
+                                            <label th:text="#{ui.quantitat_3}">Quantitat</label>
+                                            <input class="quantitat-input" min="0" name="linies[0].quantitat" step="0.01" th:value="${albaraProveidor.linies[0].quantitat}" type="number"/>
                                         </div>
-
                                         <div class="field">
-                                            <label>Unitat</label>
-                                            <input type="text"
-                                                   name="linies[0].unitat"
-                                                   class="unitat-input"
-                                                   list="unitatsList"
-                                                   th:value="${albaraProveidor.linies[0].unitat != null ? albaraProveidor.linies[0].unitat : 'KG'}"
-                                                   placeholder="Selecciona o escriu una unitat">
+                                            <label th:text="#{ui.unitat}">Unitat</label>
+                                            <input class="unitat-input" list="unitatsList" name="linies[0].unitat" placeholder="Selecciona o escriu una unitat" th:placeholder="#{ui.selecciona_o_escriu_una_unitat}" th:value="${albaraProveidor.linies[0].unitat != null ? albaraProveidor.linies[0].unitat : 'KG'}" type="text"/>
                                         </div>
-
                                         <div class="field">
-                                            <label>Identificador lot</label>
-                                            <input type="text"
-                                                   name="linies[0].lot.identificadorLot"
-                                                   class="lot-input"
-                                                   th:value="${albaraProveidor.linies[0].lot != null ? albaraProveidor.linies[0].lot.identificadorLot : ''}">
+                                            <label th:text="#{ui.identificador_lot}">Identificador lot</label>
+                                            <input class="lot-input" name="linies[0].lot.identificadorLot" th:value="${albaraProveidor.linies[0].lot != null ? albaraProveidor.linies[0].lot.identificadorLot : ''}" type="text"/>
                                         </div>
-
                                         <div class="field">
-                                            <label>Data caducitat</label>
-                                            <input type="date" name="linies[0].lot.dataCaducitat" 
-                                                   class="caducitat-input" th:value="${albaraProveidor.linies[0].lot != null && albaraProveidor.linies[0].lot.dataCaducitat != null ? #temporals.format(albaraProveidor.linies[0].lot.dataCaducitat, 'yyyy-MM-dd') : ''}">
+                                            <label th:text="#{ui.data_caducitat}">Data caducitat</label>
+                                            <input class="caducitat-input" name="linies[0].lot.dataCaducitat" th:value="${albaraProveidor.linies[0].lot != null &amp;&amp; albaraProveidor.linies[0].lot.dataCaducitat != null ? #temporals.format(albaraProveidor.linies[0].lot.dataCaducitat, 'yyyy-MM-dd') : ''}" type="date"/>
                                         </div>
-
                                         <div class="inline-actions">
-                                            <button type="button" class="btn-secondary" onclick="eliminarLinia(this)">Eliminar lot</button>
+                                            <button class="btn-secondary" onclick="eliminarLinia(this)" th:text="#{ui.eliminar_lot}" type="button">Eliminar lot</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-actions" style="margin-top: 24px;">
-                                <a th:href="@{/albarans-proveidor}" class="btn-secondary">Cancel·lar</a>
-                                <button type="submit" class="btn-primary">Guardar albarà</button>
+                                <a class="btn-secondary" th:href="@{/albarans-proveidor}" th:text="#{ui.cancellar}">Cancel·lar</a>
+                                <button class="btn-primary" th:text="#{ui.guardar_albara}" type="submit">Guardar albarà</button>
                             </div>
-                        </form>
+                            </input></form>
                     </section>
                 </div>
             </main>
         </div>
-
         <template id="liniaTemplate">
             <div class="linia-card">
-                <h3>Lot __INDEX_VISUAL__</h3>
-
+                <h3 th:text="#{ui.lot_index_visual}">Lot __INDEX_VISUAL__</h3>
                 <div class="field">
-                    <label>Matèria primera</label>
-                    <select name="linies[__INDEX__].materiaPrimera.id" class="materia-select">
-                        <option value="">-- Selecciona matèria primera --</option>
-                        <option th:each="materia : ${materiesPrimeres}"
-                                th:value="${materia.id}"
-                                th:text="${materia.nom}">
+                    <label th:text="#{ui.materia_primera}">Matèria primera</label>
+                    <select class="materia-select" name="linies[__INDEX__].materiaPrimera.id">
+                        <option th:text="#{ui.selecciona_materia_primera}" value="">-- Selecciona matèria primera --</option>
+                        <option th:each="materia : ${materiesPrimeres}" th:text="${materia.nom}" th:value="${materia.id}">
                         </option>
                     </select>
                 </div>
-
                 <div class="field">
-                    <label>Descripció OCR</label>
-                    <input type="text" class="materia-text-ocr">
+                    <label th:text="#{ui.descripcio_ocr}">Descripció OCR</label>
+                    <input class="materia-text-ocr" type="text"/>
                 </div>
-
                 <div class="field">
-                    <label>Quantitat</label>
-                    <input type="number" step="0.01" min="0" name="linies[__INDEX__].quantitat" class="quantitat-input">
+                    <label th:text="#{ui.quantitat_3}">Quantitat</label>
+                    <input class="quantitat-input" min="0" name="linies[__INDEX__].quantitat" step="0.01" type="number"/>
                 </div>
-
                 <div class="field">
-                    <label>Unitat</label>
-                    <input type="text"
-                           name="linies[__INDEX__].unitat"
-                           class="unitat-input"
-                           list="unitatsList"
-                           value="KG"
-                           placeholder="Selecciona o escriu una unitat">
+                    <label th:text="#{ui.unitat}">Unitat</label>
+                    <input class="unitat-input" list="unitatsList" name="linies[__INDEX__].unitat" placeholder="Selecciona o escriu una unitat" th:placeholder="#{ui.selecciona_o_escriu_una_unitat}" type="text" value="KG"/>
                 </div>
-
                 <div class="field">
-                    <label>Identificador lot</label>
-                    <input type="text" name="linies[__INDEX__].lot.identificadorLot" class="lot-input">
+                    <label th:text="#{ui.identificador_lot}">Identificador lot</label>
+                    <input class="lot-input" name="linies[__INDEX__].lot.identificadorLot" type="text"/>
                 </div>
-
                 <div class="field">
-                    <label>Data caducitat</label>
-                    <input type="date" name="linies[__INDEX__].lot.dataCaducitat" class="caducitat-input">
+                    <label th:text="#{ui.data_caducitat}">Data caducitat</label>
+                    <input class="caducitat-input" name="linies[__INDEX__].lot.dataCaducitat" type="date"/>
                 </div>
-
                 <div class="inline-actions">
-                    <button type="button" class="btn-secondary" onclick="eliminarLinia(this)">Eliminar lot</button>
+                    <button class="btn-secondary" onclick="eliminarLinia(this)" th:text="#{ui.eliminar_lot}" type="button">Eliminar lot</button>
                 </div>
             </div>
         </template>
-
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const ocrFile = document.getElementById('ocrFile');
