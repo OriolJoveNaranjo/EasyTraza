@@ -4,11 +4,13 @@
  */
 package cat.copernic.easytraza.controller;
 
+import cat.copernic.easytraza.entities.LotProveidor;
 import cat.copernic.easytraza.enums.EstatLot;
 import cat.copernic.easytraza.repository.ControlPhRepository;
 import cat.copernic.easytraza.repository.LotProveidorRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,6 +52,19 @@ public class PanellController {
         model.addAttribute("controlsPendents", controlsPendents);
 
         return "panell";
+    }
+
+    @GetMapping("/panell/caducitats")
+    public String veureCaducitats(Model model) {
+        LocalDate avui = LocalDate.now();
+        LocalDate limit = avui.plusDays(7);
+
+        List<LotProveidor> lotsCaducitat = lotProveidorRepository
+                .findByDataCaducitatBetween(avui, limit);
+
+        model.addAttribute("lotsCaducitat", lotsCaducitat);
+
+        return "caducitats-panell";
     }
 
 }

@@ -145,3 +145,15 @@ body {
     font-size: 42px;
     margin-top: 18px;
 }
+.dashboard-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.dashboard-link:hover {
+    text-decoration: none;
+    color: inherit;
+}
+.dashboard-link * {
+    text-decoration: none;
+}

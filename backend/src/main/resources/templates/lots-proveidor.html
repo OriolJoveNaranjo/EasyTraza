@@ -132,7 +132,10 @@
 
                             </form>
                             <a th:if="${lot.estat.name() == 'OBERT' or lot.estat.name() == 'ACABAT'}"
-                               th:href="@{/tracabilitat(lotId=${lot.id})}"
+                               th:href="@{/tracabilitat(
+                               lotId=${lot.id},
+                               cerca=${lot.identificadorLot + ' - ' + lot.materiaPrimera.nom}
+                               )}"
                                class="btn-secondary">
                                 Traçabilitat
                             </a>

@@ -22,28 +22,29 @@
                     <div>
                         <h1>Panell</h1>
                         <p>Activitat recent</p>
+                        <p>Pulsa qualsevol per navegar a la pàgina</p>
                     </div>
                 </div>
 
                 <div class="dashboard-cards">
 
-                    <div class="dashboard-card">
+                    <a th:href="@{/lots-proveidor(estat='OBERT')}" class="dashboard-card dashboard-link">
                         <h2>Lots actius</h2>
                         <strong th:text="${lotsActius}">0</strong>
-                        <a th:href="@{/lots-proveidor(estat='OBERT')}">Veure tots</a>
-                    </div>
+                        <p> Veure tots </p>
+                    </a>
 
-                    <div class="dashboard-card">
-                        <h2>Alertes de caducitat</h2>
+                    <a th:href="@{/panell/caducitats}" class="dashboard-card dashboard-link">
+                        <h2>Avís de caducitat</h2>
                         <strong th:text="${alertesCaducitat}">0</strong>
-                        <p>Pròxims 7 dies</p>
-                    </div>
+                        <p>Hi ha productes propers a caducar</p>
+                    </a>
 
-                    <div class="dashboard-card">
+                    <a th:href="@{/controls}" class="dashboard-card dashboard-link">
                         <h2>Controls pendents</h2>
                         <strong th:text="${controlsPendents}">0</strong>
                         <p th:text="${controlsPendents > 0 ? 'Control pH pendent' : 'Controls al dia'}"></p>
-                    </div>
+                    </a>
 
                 </div>
 

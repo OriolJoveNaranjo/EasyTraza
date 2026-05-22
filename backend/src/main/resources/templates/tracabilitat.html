@@ -25,24 +25,27 @@
                     </div>
                 </div>
 
-                <div class="filter-card">
-                    <form th:action="@{/tracabilitat}" method="get" class="filter-bar">
+                <div class="filter-card">                    
+                    <form th:action="@{/tracabilitat}" method="get" class="filter-bar"
+                          onsubmit="setTimeout(() => this.querySelector('[name=cerca]').value = '', 50)">
+                        <input
+                            type="text"
+                            name="cerca"
+                            list="lotsDisponibles"
+                            th:value="${lotSeleccionatId != null ? cerca : ''}"
+                            placeholder="Escriu el lot o la matèria primera"
+                            class="filter-input"
+                            />
 
-                        <select name="lotId" class="filter-input" required>
-                            <option value="">Selecciona un lot</option>
-
+                        <datalist id="lotsDisponibles">
                             <option th:each="lot : ${lots}"
-                                    th:value="${lot.id}"
-                                    th:selected="${lot.id == lotSeleccionatId}"
-                                    th:text="${lot.identificadorLot + ' - ' + lot.materiaPrimera.nom}">
+                                    th:value="${lot.identificadorLot + ' - ' + lot.materiaPrimera.nom}">
                             </option>
-
-                        </select>
+                        </datalist>
 
                         <button type="submit" class="btn-primary">
                             Consultar
                         </button>
-
                     </form>
                 </div>
 
