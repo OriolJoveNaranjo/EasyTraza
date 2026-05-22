@@ -11,6 +11,12 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Implementació de la lògica de negoci associada als clients.
+ *
+ * <p>Centralitza validacions com el NIF, l'activació/desactivació i el control
+ * de clients amb albarans associats abans d'eliminar-los.</p>
+ */
 @Service
 public class ClientServiceImpl implements ClientService {
 

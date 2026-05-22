@@ -6,12 +6,14 @@ package cat.copernic.easytraza.controller;
 
 import cat.copernic.easytraza.entities.ProducteFinal;
 import cat.copernic.easytraza.service.ProducteFinalService;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -28,8 +30,24 @@ public class ProducteFinalController {
     }
 
     @GetMapping("/productes-finals")
-    public String mostrarProductesFinals(Model model) {
-        model.addAttribute("productesFinals", producteFinalService.findAll());
+    public String mostrarProductesFinals(
+            @RequestParam(required = false) String nom,
+            Model model) {
+
+        List<ProducteFinal> productesFinals = producteFinalService.findAll();
+
+        if (nom != null && !nom.isBlank()) {
+            String nomLower = nom.toLowerCase();
+
+            productesFinals = productesFinals.stream()
+                    .filter(producte -> producte.getNom() != null
+                    && producte.getNom().toLowerCase().contains(nomLower))
+                    .toList();
+        }
+
+        model.addAttribute("productesFinals", productesFinals);
+        model.addAttribute("nom", nom);
+
         return "productes-finals";
     }
 

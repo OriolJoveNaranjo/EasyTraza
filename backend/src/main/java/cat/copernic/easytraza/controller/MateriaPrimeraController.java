@@ -2,12 +2,14 @@ package cat.copernic.easytraza.controller;
 
 import cat.copernic.easytraza.entities.MateriaPrimera;
 import cat.copernic.easytraza.service.MateriaPrimeraService;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -24,9 +26,25 @@ public class MateriaPrimeraController {
     }
 
     @GetMapping("/cataleg")
-    public String mostrarCataleg(Model model) {
-        model.addAttribute("materiesPrimeres", materiaPrimeraService.findAll());
-        return "/cataleg";
+    public String mostrarCataleg(
+            @RequestParam(required = false) String nom,
+            Model model) {
+
+        List<MateriaPrimera> materiesPrimeres = materiaPrimeraService.findAll();
+
+        if (nom != null && !nom.isBlank()) {
+            String nomLower = nom.toLowerCase();
+
+            materiesPrimeres = materiesPrimeres.stream()
+                    .filter(materia -> materia.getNom() != null
+                    && materia.getNom().toLowerCase().contains(nomLower))
+                    .toList();
+        }
+
+        model.addAttribute("materiesPrimeres", materiesPrimeres);
+        model.addAttribute("nom", nom);
+
+        return "cataleg";
     }
 
     @GetMapping("/cataleg/materies-primeres/nova")
