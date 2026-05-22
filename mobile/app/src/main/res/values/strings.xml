@@ -117,4 +117,9 @@
     <string name="close_lot_success">Lot tancat correctament</string>
     <string name="close_lot_failed">No s’ha pogut tancar el lot</string>
     <string name="close_lot_error">Error tancant el lot: %1$s</string>
+
+    <string name="exit_title">Sortir</string>
+    <string name="exit_question">Què vols fer?</string>
+    <string name="logout">Tancar sessió</string>
+    <string name="close_app">Tancar l\'aplicació</string>
 </resources>
