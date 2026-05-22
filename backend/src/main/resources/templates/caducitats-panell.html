@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8"/>
+        <title th:text="#{ui.productes_propers_a_caducar_easytraza}">Productes propers a caducar - EasyTraza</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}"/>
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
+        <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    </head>
+    <body>
+        <div class="app-layout">
+            <div th:replace="~{fragments/sidebar :: sidebar('panell')}"></div>
+            <main class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1 th:text="#{ui.productes_propers_a_caducar}">Productes propers a caducar</h1>
+                        <p th:text="#{ui.lots_que_caduquen_en_els_proxims_7_dies}">Lots que caduquen en els pròxims 7 dies</p>
+                    </div>
+                    <a class="btn-secondary" th:href="@{/panell}" th:text="#{ui.tornar_al_panell}">Tornar al panell</a>
+                </div>
+                <div class="content-card">
+                    <table th:if="${lotsCaducitat != null and not #lists.isEmpty(lotsCaducitat)}">
+                        <thead>
+                            <tr>
+                                <th th:text="#{ui.num_albara}">Núm. albarà</th>
+                                <th th:text="#{ui.num_lot}">Núm. lot</th>
+                                <th th:text="#{ui.materia_primera}">Matèria primera</th>
+                                <th th:text="#{ui.proveidor_2}">Proveïdor</th>
+                                <th th:text="#{ui.data_caducitat}">Data caducitat</th>
+                                <th th:text="#{ui.estat_2}">Estat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="lot : ${lotsCaducitat}">
+                                <td th:text="${lot.albaraProveidor != null ? lot.albaraProveidor.numeroAlbara : '-'}"></td>
+                                <td th:text="${lot.identificadorLot}"></td>
+                                <td th:text="${lot.materiaPrimera != null ? lot.materiaPrimera.nom : '-'}"></td>
+                                <td th:text="${lot.proveidor != null ? lot.proveidor.nom : '-'}"></td>
+                                <td th:text="${#temporals.format(lot.dataCaducitat, 'dd/MM/yyyy')}"></td>
+                                <td th:text="${lot.estat}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="empty-state" th:if="${lotsCaducitat == null or #lists.isEmpty(lotsCaducitat)}" th:text="#{ui.no_hi_ha_productes_propers_a_caducar}">No hi ha productes propers a caducar.</div>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>

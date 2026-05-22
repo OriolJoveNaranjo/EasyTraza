@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Albarans de proveïdor</title>
-        <link rel="stylesheet" th:href="@{/css/layout.css}">
-        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
-        <link rel="stylesheet" th:href="@{/css/table.css}">
+        <title th:text="#{ui.albarans_de_proveidor}">Albarans de proveïdor</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}"/>
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
+        <link rel="stylesheet" th:href="@{/css/table.css}"/>
     </head>
     <style>
         .inline-actions {
@@ -16,76 +17,60 @@
     </style>
     <body>
         <div class="app-layout">
-
             <div th:replace="~{fragments/sidebar :: sidebar('albarans-proveidor')}"></div>
-
             <main class="page-content">
                 <div class="page-header">
                     <div>
-                        <h1>Albarans de proveïdor</h1>
-                        <p>Recepció manual d'albarans amb lots</p>
+                        <h1 th:text="#{ui.albarans_de_proveidor}">Albarans de proveïdor</h1>
+                        <p th:text="#{ui.recepcio_manual_d_albarans_amb_lots}">Recepció manual d'albarans amb lots</p>
                     </div>
-
-                    <a th:href="@{/albarans-proveidor/nou}" class="btn-primary">+ Nou albarà</a>
-                    <a th:href="@{/albarans-proveidor/ocr}" class="btn-secondary">Albarà amb OCR</a>
-                </div> 
+                    <a class="btn-primary" th:href="@{/albarans-proveidor/nou}" th:text="#{ui.nou_albara}">+ Nou albarà</a>
+                    <a class="btn-secondary" th:href="@{/albarans-proveidor/ocr}" th:text="#{ui.albara_amb_ocr}">Albarà amb OCR</a>
+                </div>
                 <div class="filter-card">
-                    <form method="get" th:action="@{/albarans-proveidor}" class="filter-bar">
-
-                        <select name="proveidorId" class="filter-select">
-                            <option value="">-- Proveïdor --</option>
-                            <option th:each="p : ${proveidors}"
-                                    th:value="${p.id}"
-                                    th:text="${p.nom}"
-                                    th:selected="${proveidorId != null and proveidorId == p.id}">
+                    <form class="filter-bar" method="get" th:action="@{/albarans-proveidor}">
+                        <select class="filter-select" name="proveidorId">
+                            <option th:text="#{ui.proveidor}" value="">-- Proveïdor --</option>
+                            <option th:each="p : ${proveidors}" th:selected="${proveidorId != null and proveidorId == p.id}" th:text="${p.nom}" th:value="${p.id}">
                             </option>
                         </select>
-
-                        <select name="ordre" class="filter-select">
-                            <option value="">-- Ordenar --</option>
-                            <option value="dataAsc" th:selected="${ordre == 'dataAsc'}">Data ↑</option>
-                            <option value="dataDesc" th:selected="${ordre == 'dataDesc'}">Data ↓</option>
+                        <select class="filter-select" name="ordre">
+                            <option th:text="#{ui.ordenar}" value="">-- Ordenar --</option>
+                            <option th:selected="${ordre == 'dataAsc'}" th:text="#{ui.data}" value="dataAsc">Data ↑</option>
+                            <option th:selected="${ordre == 'dataDesc'}" th:text="#{ui.data_2}" value="dataDesc">Data ↓</option>
                         </select>
-
-                        <button type="submit" class="btn-primary">Filtrar</button>
-
-                        <a th:href="@{/albarans-proveidor}" class="btn-secondary">Reset</a>
-
+                        <button class="btn-primary" th:text="#{ui.filtrar}" type="submit">Filtrar</button>
+                        <a class="btn-secondary" th:href="@{/albarans-proveidor}" th:text="#{ui.reset}">Reset</a>
                     </form>
                 </div>
                 <div class="content-card">
                     <table th:if="${not #lists.isEmpty(albarans)}">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Data recepció</th>
-                                <th>Proveïdor</th>
+                                <th th:text="#{ui.id}">ID</th>
+                                <th th:text="#{ui.data_recepcio}">Data recepció</th>
+                                <th th:text="#{ui.proveidor_2}">Proveïdor</th>
                                 <th>Núm. albarà
-                                <th>Núm. línies</th>
-                                <th>Accions</th>
-                            </tr>
+                                <th th:text="#{ui.num_linies}">Núm. línies</th>
+                                <th th:text="#{ui.accions}">Accions</th>
+                                </th></tr>
                         </thead>
                         <tbody>
                             <tr th:each="albara : ${albarans}">
                                 <td th:text="${albara.id}"></td>
-                                <td th:text="${albara.dataRecepcio}"></td>                                
+                                <td th:text="${albara.dataRecepcio}"></td>
                                 <td th:text="${albara.proveidor != null ? albara.proveidor.nom : '-'}"></td>
                                 <td th:text="${albara.numeroAlbara != null ? albara.numeroAlbara : '-'}"></td>
                                 <td th:text="${albara.linies != null ? #lists.size(albara.linies) : 0}"></td>
                                 <td>
-                                    <a th:href="@{'/albarans-proveidor/veure/' + ${albara.id}}" class="btn-view">Veure</a>
-                                    <a th:href="@{'/albarans-proveidor/editar/' + ${albara.id}}" class="btn-edit">Editar</a>
-                                    <a th:href="@{'/albarans-proveidor/eliminar/' + ${albara.id}}"
-                                       class="btn-delete"
-                                       onclick="return confirm('Segur que vols eliminar aquest albarà de proveïdor?')">Eliminar</a>
+                                    <a class="btn-view" th:href="@{'/albarans-proveidor/veure/' + ${albara.id}}" th:text="#{ui.veure}">Veure</a>
+                                    <a class="btn-edit" th:href="@{'/albarans-proveidor/editar/' + ${albara.id}}" th:text="#{ui.editar}">Editar</a>
+                                    <a class="btn-delete" onclick="return confirm('Segur que vols eliminar aquest albarà de proveïdor?')" th:href="@{'/albarans-proveidor/eliminar/' + ${albara.id}}" th:text="#{ui.eliminar}">Eliminar</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-
-                    <div th:if="${#lists.isEmpty(albarans)}" class="empty-state">
-                        No hi ha albarans de proveïdor registrats
-                    </div>
+                    <div class="empty-state" th:if="${#lists.isEmpty(albarans)}" th:text="#{ui.no_hi_ha_albarans_de_proveidor_registrats}">No hi ha albarans de proveïdor registrats</div>
                 </div>
             </main>
         </div>
@@ -126,4 +111,3 @@
         }
     </script>
 </html>
-

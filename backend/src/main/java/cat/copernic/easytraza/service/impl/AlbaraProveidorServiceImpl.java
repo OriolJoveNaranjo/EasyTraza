@@ -172,12 +172,10 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
 
             String identificadorLotNet = linia.getLot().getIdentificadorLot().trim();
 
-            if (!lotsFormulari.add(identificadorLotNet)) {
-                throw new RuntimeException("No es poden repetir lots dins del mateix albarà");
-            }
+            String clauLot = identificadorLotNet + "|" + materia.getId();
 
-            if (lotRepo.existsByIdentificadorLotAndProveidorId(identificadorLotNet, proveidor.getId())) {
-                throw new RuntimeException("Ja existeix un lot amb aquest identificador per aquest proveïdor");
+            if (!lotsFormulari.add(clauLot)) {
+                throw new RuntimeException("No es pot repetir el mateix lot amb la mateixa matèria primera dins del mateix albarà");
             }
 
             linia.setAlbaraProveidor(albaraProveidor);
@@ -308,16 +306,10 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
 
                 String identificadorLotNet = liniaForm.getLot().getIdentificadorLot().trim();
 
-                if (!lotsFormulari.add(identificadorLotNet)) {
-                    throw new RuntimeException("No es poden repetir lots dins del mateix albarà");
-                }
+                String clauLot = identificadorLotNet + "|" + liniaForm.getMateriaPrimera().getId();
 
-                if (lotRepo.existsByIdentificadorLotAndProveidorIdAndAlbaraProveidorIdNot(
-                        identificadorLotNet,
-                        proveidor.getId(),
-                        id
-                )) {
-                    throw new RuntimeException("Ja existeix un lot amb aquest identificador per aquest proveïdor");
+                if (!lotsFormulari.add(clauLot)) {
+                    throw new RuntimeException("No es pot repetir el mateix lot amb la mateixa matèria primera dins del mateix albarà");
                 }
 
                 if (liniaForm.getLot().getDataCaducitat().isBefore(albaraProveidor.getDataRecepcio())) {

@@ -1,95 +1,70 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<html th:lang="${#locale.language}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Proveïdors</title>
-        <link rel="stylesheet" th:href="@{/css/layout.css}">
-        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
-        <link rel="stylesheet" th:href="@{/css/table.css}">
-        <link rel="stylesheet" th:href="@{/css/proveidors.css}">
+        <title th:text="#{ui.proveidors}">Proveïdors</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}"/>
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
+        <link rel="stylesheet" th:href="@{/css/table.css}"/>
+        <link rel="stylesheet" th:href="@{/css/proveidors.css}"/>
     </head>
     <body>
         <div class="app-layout">
-
             <div th:replace="~{fragments/sidebar :: sidebar('proveidors')}"></div>
-
             <main class="page-content">
                 <div class="page-header">
                     <div>
-                        <h1>Proveïdors</h1>
-                        <p>Gestión de proveedores</p>
+                        <h1 th:text="#{ui.proveidors}">Proveïdors</h1>
+                        <p th:text="#{ui.gestion_de_proveedores}">Gestión de proveedores</p>
                     </div>
-
-                    <a th:href="@{/proveidors/nou}" class="btn-primary">+ Afegir proveïdor</a>
+                    <a class="btn-primary" th:href="@{/proveidors/nou}" th:text="#{ui.afegir_proveidor}">+ Afegir proveïdor</a>
                 </div>
-                <div th:if="${error}" class="error-message">
+                <div class="error-message" th:if="${error}">
                     <p th:text="${error}"></p>
                 </div>
-
-                <div th:if="${success}" class="success-message">
+                <div class="success-message" th:if="${success}">
                     <p th:text="${success}"></p>
                 </div>
-
                 <div class="filter-card">
-                    <form method="get" th:action="@{/proveidors}" class="filter-bar">
-
-                        <input type="text"
-                               name="filtre"
-                               class="filter-input"
-                               placeholder="Buscar per nom o NIF/CIF"
-                               th:value="${filtre}">
-
-                        <select name="ordre" class="filter-select">
-                            <option value="">-- Ordenar --</option>
-                            <option value="nomAsc" th:selected="${ordre == 'nomAsc'}">Nom ↑</option>
-                            <option value="nomDesc" th:selected="${ordre == 'nomDesc'}">Nom ↓</option>
+                    <form class="filter-bar" method="get" th:action="@{/proveidors}">
+                        <input class="filter-input" name="filtre" placeholder="Buscar per nom o NIF/CIF" th:placeholder="#{ui.buscar_per_nom_o_nif_cif}" th:value="${filtre}" type="text"/>
+                        <select class="filter-select" name="ordre">
+                            <option th:text="#{ui.ordenar}" value="">-- Ordenar --</option>
+                            <option th:selected="${ordre == 'nomAsc'}" th:text="#{ui.nom_2}" value="nomAsc">Nom ↑</option>
+                            <option th:selected="${ordre == 'nomDesc'}" th:text="#{ui.nom_3}" value="nomDesc">Nom ↓</option>
                         </select>
-
-                        <button type="submit" class="btn-primary">Filtrar</button>
-
-                        <a th:href="@{/proveidors}" class="btn-secondary">Reset</a>
-
+                        <button class="btn-primary" th:text="#{ui.filtrar}" type="submit">Filtrar</button>
+                        <a class="btn-secondary" th:href="@{/proveidors}" th:text="#{ui.reset}">Reset</a>
                     </form>
                 </div>
-
                 <div class="content-card">
                     <table th:if="${not #lists.isEmpty(proveidors)}">
                         <thead>
                             <tr>
-                                <th>Nom</th>
-                                <th>CIF</th>
-                                <th>Telèfon</th>
-                                <th>Email</th>
-                                <th>Accions</th>
+                                <th th:text="#{ui.nom}">Nom</th>
+                                <th th:text="#{ui.cif}">CIF</th>
+                                <th th:text="#{ui.telefon}">Telèfon</th>
+                                <th th:text="#{ui.email}">Email</th>
+                                <th th:text="#{ui.accions}">Accions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="proveidor : ${proveidors}"
-                                th:classappend="${!proveidor.actiu} ? ' fila-inactiva' : ''">
+                            <tr th:classappend="${!proveidor.actiu} ? ' fila-inactiva' : ''" th:each="proveidor : ${proveidors}">
                                 <td th:text="${proveidor.nom}"></td>
                                 <td th:text="${proveidor.cif}"></td>
                                 <td th:text="${proveidor.telefon}"></td>
                                 <td th:text="${proveidor.email}"></td>
                                 <td>
-                                    <a th:if="${!proveidor.actiu}"
-                                       th:href="@{'/proveidors/activar/' + ${proveidor.id}}"
-                                       class="btn-primary">
-                                        Activar
-                                    </a>
-                                    <a th:href="@{'/proveidors/veure/' + ${proveidor.id}}" class="btn-view">Veure</a>
-                                    <a th:href="@{'/proveidors/editar/' + ${proveidor.id}}" class="btn-edit">Editar</a>
-                                    <a th:if="${proveidor.actiu}" th:href="@{'/proveidors/eliminar/' + ${proveidor.id}}"
-                                       class="btn-delete"
-                                       onclick="return confirm('Segur que vols eliminar aquest proveïdor?')">Eliminar</a>
+                                    <a class="btn-primary" th:href="@{'/proveidors/activar/' + ${proveidor.id}}" th:if="${!proveidor.actiu}" th:text="#{ui.activar}">Activar</a>
+                                    <a class="btn-view" th:href="@{'/proveidors/veure/' + ${proveidor.id}}" th:text="#{ui.veure}">Veure</a>
+                                    <a class="btn-edit" th:href="@{'/proveidors/editar/' + ${proveidor.id}}" th:text="#{ui.editar}">Editar</a>
+                                    <a class="btn-delete" onclick="return confirm('Segur que vols eliminar aquest proveïdor?')" th:href="@{'/proveidors/eliminar/' + ${proveidor.id}}" th:if="${proveidor.actiu}" th:text="#{ui.eliminar}">Eliminar</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-
-                    <div th:if="${#lists.isEmpty(proveidors)}" class="empty-state">
-                        No hi ha proveïdors registrats
-                    </div>
+                    <div class="empty-state" th:if="${#lists.isEmpty(proveidors)}" th:text="#{ui.no_hi_ha_proveidors_registrats}">No hi ha proveïdors registrats</div>
                 </div>
             </main>
         </div>

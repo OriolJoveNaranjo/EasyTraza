@@ -1,34 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Nou producte final</title>
-        <link rel="stylesheet" th:href="@{/css/forms.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+        <title th:text="#{ui.nou_producte_final}">Nou producte final</title>
+        <link rel="stylesheet" th:href="@{/css/forms.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
     </head>
     <body>
         <div class="standalone-form-page">
             <div class="form-card">
                 <h1 th:text="${producteFinal.id != null} ? 'Editar producte final' : 'Afegir producte final'"></h1>
-                <p class="form-subtitle">Introdueix les dades del producte final</p>
-
-                <p th:if="${error}" th:text="${error}" class="error-message"></p>
-
-                <form th:action="@{/productes-finals/guardar}" th:object="${producteFinal}" method="post">
-                    <input type="hidden" th:field="*{id}"/>
-
+                <p class="form-subtitle" th:text="#{ui.introdueix_les_dades_del_producte_final}">Introdueix les dades del producte final</p>
+                <p class="error-message" th:if="${error}" th:text="${error}"></p>
+                <form method="post" th:action="@{/productes-finals/guardar}" th:object="${producteFinal}">
+                    <input th:field="*{id}" type="hidden"/>
                     <div class="field">
-                        <label>Nom *</label>
-                        <input type="text" th:field="*{nom}" required>
+                        <label th:text="#{ui.nom_4}">Nom *</label>
+                        <input required="" th:field="*{nom}" type="text"/>
                     </div>
-
                     <div class="field">
-                        <label>Descripció *</label>
-                        <textarea th:field="*{descripcio}"  maxlength="255"></textarea>
+                        <label th:text="#{ui.descripcio_2}">Descripció *</label>
+                        <textarea maxlength="255" th:field="*{descripcio}"></textarea>
                     </div>
-
                     <div class="form-actions">
-                        <a th:href="@{/productes-finals}" class="btn-secondary">Cancel·lar</a>
-                        <button type="submit" class="btn-primary">Guardar</button>
+                        <a class="btn-secondary" th:href="@{/productes-finals}" th:text="#{ui.cancellar}">Cancel·lar</a>
+                        <button class="btn-primary" th:text="#{ui.guardar}" type="submit">Guardar</button>
                     </div>
                 </form>
             </div>

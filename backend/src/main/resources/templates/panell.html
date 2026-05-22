@@ -1,55 +1,43 @@
 <!DOCTYPE html>
-<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
-        <title>Panell - EasyTraza</title>
-
-        <link rel="stylesheet" th:href="@{/css/layout.css}">
-        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
-        <link rel="stylesheet" th:href="@{/css/table.css}">
+        <meta charset="utf-8"/>
+        <title th:text="#{ui.panell_easytraza}">Panell - EasyTraza</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}"/>
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
+        <link rel="stylesheet" th:href="@{/css/table.css}"/>
     </head>
-
     <body>
-
         <div class="app-layout">
-
             <div th:replace="~{fragments/sidebar :: sidebar('panell')}"></div>
-
             <main class="page-content">
-
                 <div class="page-header">
                     <div>
-                        <h1>Panell</h1>
-                        <p>Activitat recent</p>
+                        <h1 th:text="#{ui.panell}">Panell</h1>
+                        <p th:text="#{ui.activitat_recent}">Activitat recent</p>
+                        <p th:text="#{ui.pulsa_qualsevol_per_navegar_a_la_pagina}">Pulsa qualsevol per navegar a la pàgina</p>
                     </div>
                 </div>
-
                 <div class="dashboard-cards">
-
-                    <div class="dashboard-card">
-                        <h2>Lots actius</h2>
+                    <a class="dashboard-card dashboard-link" th:href="@{/lots-proveidor(estat='OBERT')}">
+                        <h2 th:text="#{ui.lots_actius}">Lots actius</h2>
                         <strong th:text="${lotsActius}">0</strong>
-                        <a th:href="@{/lots-proveidor(estat='OBERT')}">Veure tots</a>
-                    </div>
-
-                    <div class="dashboard-card">
-                        <h2>Alertes de caducitat</h2>
+                        <p th:text="#{ui.veure_tots}">Veure tots</p>
+                    </a>
+                    <a class="dashboard-card dashboard-link" th:href="@{/panell/caducitats}">
+                        <h2 th:text="#{ui.avis_de_caducitat}">Avís de caducitat</h2>
                         <strong th:text="${alertesCaducitat}">0</strong>
-                        <p>Pròxims 7 dies</p>
-                    </div>
-
-                    <div class="dashboard-card">
-                        <h2>Controls pendents</h2>
+                        <p th:text="#{ui.hi_ha_productes_propers_a_caducar}">Hi ha productes propers a caducar</p>
+                    </a>
+                    <a class="dashboard-card dashboard-link" th:href="@{/controls}">
+                        <h2 th:text="#{ui.controls_pendents}">Controls pendents</h2>
                         <strong th:text="${controlsPendents}">0</strong>
-                        <p th:text="${controlsPendents > 0 ? 'Control pH pendent' : 'Controls al dia'}"></p>
-                    </div>
-
+                        <p th:text="${controlsPendents &gt; 0 ? #messages.msg('dashboard.control_pending') : #messages.msg('dashboard.controls_ok')}"></p>
+                    </a>
                 </div>
-
             </main>
-
         </div>
-
     </body>
 </html>

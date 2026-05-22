@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Albarà de proveïdor</title>
-        <link rel="stylesheet" th:href="@{/css/forms.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+        <title th:text="#{ui.albara_de_proveidor}">Albarà de proveïdor</title>
+        <link rel="stylesheet" th:href="@{/css/forms.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
         <style>
             .linies-box {
                 margin-top: 24px;
@@ -72,159 +73,95 @@
     <body>
         <div class="standalone-form-page">
             <div class="form-card">
-
                 <h1 th:text="${mode == 'view'} 
                     ? 'Veure albarà de proveïdor' 
                     : (${albaraProveidor.id != null} ? 'Editar albarà de proveïdor' : 'Nou albarà de proveïdor')">
                 </h1>
-
-                <p th:if="${error}" th:text="${error}" class="error-message"></p>
-
-                <div th:if="${albaraProveidor.id != null 
+                <p class="error-message" th:if="${error}" th:text="${error}"></p>
+                <div class="fitxers-preview" th:if="${albaraProveidor.id != null 
                      and albaraProveidor.fitxers != null 
-                     and !albaraProveidor.fitxers.isEmpty()}"
-                     class="fitxers-preview">
-
-
-
-                    <h2>Document original</h2>
-
-                    <div th:each="fitxer : ${albaraProveidor.fitxers}" class="fitxer-preview-card">
-
-                        <img th:if="${fitxer.tipusFitxer != null and #strings.startsWith(fitxer.tipusFitxer, 'image/')}"
-                             th:src="@{'/albarans-proveidor/fitxer/' + ${fitxer.id}}"
-                             class="fitxer-preview-img"
-                             alt="Document de l'albarà">
-
-                        <iframe th:if="${fitxer.tipusFitxer == 'application/pdf'}"
-                                th:src="@{'/albarans-proveidor/fitxer/' + ${fitxer.id}}"
-                                class="fitxer-preview-pdf">
+                     and !albaraProveidor.fitxers.isEmpty()}">
+                    <h2 th:text="#{ui.document_original}">Document original</h2>
+                    <div class="fitxer-preview-card" th:each="fitxer : ${albaraProveidor.fitxers}">
+                        <img alt="Document de l'albarà" class="fitxer-preview-img" th:if="${fitxer.tipusFitxer != null and #strings.startsWith(fitxer.tipusFitxer, 'image/')}" th:src="@{'/albarans-proveidor/fitxer/' + ${fitxer.id}}"/>
+                        <iframe class="fitxer-preview-pdf" th:if="${fitxer.tipusFitxer == 'application/pdf'}" th:src="@{'/albarans-proveidor/fitxer/' + ${fitxer.id}}">
                         </iframe>
-
-                        <a th:href="@{'/albarans-proveidor/fitxer/' + ${fitxer.id}}"
-                           target="_blank"
-                           class="btn-secondary"
-                           th:text="'Obrir ' + ${fitxer.nomFitxer}">
+                        <a class="btn-secondary" target="_blank" th:href="@{'/albarans-proveidor/fitxer/' + ${fitxer.id}}" th:text="'Obrir ' + ${fitxer.nomFitxer}">
                         </a>
                     </div>
                 </div>
                 <div class="field" th:if="${mode != 'create'}">
-                    <label>Albarà donat d'alta per</label>
-                    <span class="readonly-value"
-                          th:text="${albaraProveidor.usuariAlta != null ? albaraProveidor.usuariAlta.email : '-'}">
+                    <label th:text="#{ui.albara_donat_d_alta_per}">Albarà donat d'alta per</label>
+                    <span class="readonly-value" th:text="${albaraProveidor.usuariAlta != null ? albaraProveidor.usuariAlta.email : '-'}">
                     </span>
                 </div>
-
                 <!-- MODO EDITAR / CREAR -->
-                <form th:if="${mode != 'view'}"
-                      th:action="@{/albarans-proveidor/guardar}"
-                      th:object="${albaraProveidor}"
-                      method="post"
-                      enctype="multipart/form-data">
-
-                    <input type="hidden" th:field="*{id}"/>
-                    <input type="hidden" name="formSource" value="manual">                    
-
+                <form enctype="multipart/form-data" method="post" th:action="@{/albarans-proveidor/guardar}" th:if="${mode != 'view'}" th:object="${albaraProveidor}">
+                    <input th:field="*{id}" type="hidden"/>
+                    <input name="formSource" type="hidden" value="manual"/>
                     <div class="field">
-                        <label>Data recepció *</label>
-                        <input type="date"
-                               name="dataRecepcio"
-                               th:value="${albaraProveidor.dataRecepcio != null ? #temporals.format(albaraProveidor.dataRecepcio, 'yyyy-MM-dd') : ''}"
-                               required>
+                        <label th:text="#{ui.data_recepcio_2}">Data recepció *</label>
+                        <input name="dataRecepcio" required="" th:value="${albaraProveidor.dataRecepcio != null ? #temporals.format(albaraProveidor.dataRecepcio, 'yyyy-MM-dd') : ''}" type="date"/>
                     </div>
-
                     <div class="field">
-                        <label>Proveïdor *</label>
-                        <select th:field="*{proveidor.id}" required>
-                            <option value="">-- Selecciona proveïdor --</option>
-                            <option th:each="proveidor : ${proveidors}"
-                                    th:value="${proveidor.id}"
-                                    th:text="${proveidor.nom}">
+                        <label th:text="#{ui.proveidor_4}">Proveïdor *</label>
+                        <select required="" th:field="*{proveidor.id}">
+                            <option th:text="#{ui.selecciona_proveidor}" value="">-- Selecciona proveïdor --</option>
+                            <option th:each="proveidor : ${proveidors}" th:text="${proveidor.nom}" th:value="${proveidor.id}">
                             </option>
                         </select>
                     </div>
                     <div class="field">
-                        <label>Número d'albarà</label>
-                        <input type="text"
-                               name="numeroAlbara"
-                               th:value="${albaraProveidor.numeroAlbara != null ? albaraProveidor.numeroAlbara : ''}">
+                        <label th:text="#{ui.numero_d_albara}">Número d'albarà</label>
+                        <input name="numeroAlbara" th:value="${albaraProveidor.numeroAlbara != null ? albaraProveidor.numeroAlbara : ''}" type="text"/>
                     </div>
                     <div class="field">
-                        <label>Fitxers de l'albarà</label>
-                        <input type="file"
-                               name="fitxersPujats"
-                               multiple
-                               accept="image/*,.pdf">
+                        <label th:text="#{ui.fitxers_de_l_albara}">Fitxers de l'albarà</label>
+                        <input accept="image/*,.pdf" multiple="" name="fitxersPujats" type="file"/>
                     </div>
-
                     <div class="linies-box">
-                        <h2>Lots</h2>
-
+                        <h2 th:text="#{ui.lots}">Lots</h2>
                         <div id="liniesContainer">
                             <div class="linia-card" th:each="linia, stat : *{linies}">
                                 <h3 th:text="'Lot ' + ${stat.index + 1}"></h3>
-
-                                <input type="hidden" th:field="*{linies[__${stat.index}__].id}" />
-                                <input type="hidden" th:field="*{linies[__${stat.index}__].lot.id}" />
-
+                                <input th:field="*{linies[__${stat.index}__].id}" type="hidden"/>
+                                <input th:field="*{linies[__${stat.index}__].lot.id}" type="hidden"/>
                                 <div class="field">
-                                    <label>Matèria primera</label>
+                                    <label th:text="#{ui.materia_primera}">Matèria primera</label>
                                     <select th:field="*{linies[__${stat.index}__].materiaPrimera.id}">
-                                        <option value="">-- Selecciona matèria primera --</option>
-                                        <option th:each="materia : ${materiesPrimeres}"
-                                                th:value="${materia.id}"
-                                                th:text="${materia.nom}">
+                                        <option th:text="#{ui.selecciona_materia_primera}" value="">-- Selecciona matèria primera --</option>
+                                        <option th:each="materia : ${materiesPrimeres}" th:text="${materia.nom}" th:value="${materia.id}">
                                         </option>
                                     </select>
                                 </div>
-
                                 <div class="field">
-                                    <label>Quantitat</label>
-                                    <input type="number"
-                                           step="0.01"
-                                           min="0"
-                                           th:field="*{linies[__${stat.index}__].quantitat}">
-                                </div>
-
+                                    <label th:text="#{ui.quantitat_3}">Quantitat</label>
+                                    <input min="0" step="0.01" th:field="*{linies[__${stat.index}__].quantitat}" type="number">
+                                    </input></div>
                                 <div class="field">
-                                    <label>Unitat</label>
-                                    <input type="text"
-                                           th:field="*{linies[__${stat.index}__].unitat}"
-                                           list="unitatsList"
-                                           placeholder="Selecciona o escriu una unitat">
-                                </div>
-
+                                    <label th:text="#{ui.unitat}">Unitat</label>
+                                    <input list="unitatsList" placeholder="Selecciona o escriu una unitat" th:field="*{linies[__${stat.index}__].unitat}" th:placeholder="#{ui.selecciona_o_escriu_una_unitat}" type="text">
+                                    </input></div>
                                 <div class="field">
-                                    <label>Identificador lot</label>
-                                    <input type="text"
-                                           th:field="*{linies[__${stat.index}__].lot.identificadorLot}">
+                                    <label th:text="#{ui.identificador_lot}">Identificador lot</label>
+                                    <input th:field="*{linies[__${stat.index}__].lot.identificadorLot}" type="text"/>
                                 </div>
-
                                 <div class="field">
-                                    <label>Data caducitat</label>
-                                    <input type="date"
-                                           th:name="'linies[' + ${stat.index} + '].lot.dataCaducitat'"
-                                           th:value="${linia.lot != null && linia.lot.dataCaducitat != null ? #temporals.format(linia.lot.dataCaducitat, 'yyyy-MM-dd') : ''}">
+                                    <label th:text="#{ui.data_caducitat}">Data caducitat</label>
+                                    <input th:name="'linies[' + ${stat.index} + '].lot.dataCaducitat'" th:value="${linia.lot != null &amp;&amp; linia.lot.dataCaducitat != null ? #temporals.format(linia.lot.dataCaducitat, 'yyyy-MM-dd') : ''}" type="date"/>
                                 </div>
-
                                 <div class="inline-actions">
-                                    <button type="button" class="btn-secondary" onclick="eliminarLinia(this)">
-                                        Eliminar lot
-                                    </button>
+                                    <button class="btn-secondary" onclick="eliminarLinia(this)" th:text="#{ui.eliminar_lot}" type="button">Eliminar lot</button>
                                 </div>
                             </div>
                         </div>
-
                         <div class="inline-actions">
-                            <button type="button" class="btn-primary" onclick="afegirLinia()">
-                                + Afegir lot
-                            </button>
+                            <button class="btn-primary" onclick="afegirLinia()" th:text="#{ui.afegir_lot}" type="button">+ Afegir lot</button>
                         </div>
                     </div>
-
                     <div class="form-actions">
-                        <a th:href="@{/albarans-proveidor}" class="btn-secondary">Cancel·lar</a>
-                        <button type="submit" class="btn-primary">Guardar</button>
+                        <a class="btn-secondary" th:href="@{/albarans-proveidor}" th:text="#{ui.cancellar}">Cancel·lar</a>
+                        <button class="btn-primary" th:text="#{ui.guardar}" type="submit">Guardar</button>
                     </div>
                 </form>
                 <datalist id="unitatsList">
@@ -236,130 +173,96 @@
                     <option value="UNITAT"></option>
                     <option value="GRAMS"></option>
                 </datalist>
-
                 <!-- MODO VER -->
                 <div th:if="${mode == 'view'}">
                     <div class="field">
-                        <label>ID</label>
+                        <label th:text="#{ui.id}">ID</label>
                         <span class="readonly-value" th:text="${albaraProveidor.id}"></span>
                     </div>
-
                     <div class="field">
-                        <label>Data recepció</label>
+                        <label th:text="#{ui.data_recepcio}">Data recepció</label>
                         <span class="readonly-value" th:text="${albaraProveidor.dataRecepcio}"></span>
                     </div>
-
                     <div class="field">
-                        <label>Proveïdor</label>
-                        <span class="readonly-value"
-                              th:text="${albaraProveidor.proveidor != null ? albaraProveidor.proveidor.nom : ''}">
+                        <label th:text="#{ui.proveidor_2}">Proveïdor</label>
+                        <span class="readonly-value" th:text="${albaraProveidor.proveidor != null ? albaraProveidor.proveidor.nom : ''}">
                         </span>
                     </div>
-
                     <div class="field">
-                        <label>Número d'albarà</label>
-                        <span class="readonly-value"
-                              th:text="${albaraProveidor.numeroAlbara != null ? albaraProveidor.numeroAlbara : ''}">
+                        <label th:text="#{ui.numero_d_albara}">Número d'albarà</label>
+                        <span class="readonly-value" th:text="${albaraProveidor.numeroAlbara != null ? albaraProveidor.numeroAlbara : ''}">
                         </span>
                     </div>
-
                     <div class="linies-box">
-                        <h2>Lots</h2>
-
+                        <h2 th:text="#{ui.lots}">Lots</h2>
                         <div class="linia-card" th:each="linia, stat : ${albaraProveidor.linies}">
                             <h3 th:text="'Lot ' + ${stat.index + 1}"></h3>
-
                             <div class="field">
-                                <label>Matèria primera</label>
-                                <span class="readonly-value"
-                                      th:text="${linia.materiaPrimera != null ? linia.materiaPrimera.nom : ''}">
+                                <label th:text="#{ui.materia_primera}">Matèria primera</label>
+                                <span class="readonly-value" th:text="${linia.materiaPrimera != null ? linia.materiaPrimera.nom : ''}">
                                 </span>
                             </div>
-
                             <div class="field">
-                                <label>Quantitat</label>
+                                <label th:text="#{ui.quantitat_3}">Quantitat</label>
                                 <span class="readonly-value" th:text="${linia.quantitat}"></span>
                             </div>
-
                             <div class="field">
-                                <label>Unitat</label>
+                                <label th:text="#{ui.unitat}">Unitat</label>
                                 <span class="readonly-value" th:text="${linia.unitat}"></span>
                             </div>
-
-
                             <div class="field">
-                                <label>Identificador lot</label>
-                                <span class="readonly-value"
-                                      th:text="${linia.lot != null ? linia.lot.identificadorLot : ''}">
+                                <label th:text="#{ui.identificador_lot}">Identificador lot</label>
+                                <span class="readonly-value" th:text="${linia.lot != null ? linia.lot.identificadorLot : ''}">
                                 </span>
                             </div>
-
                             <div class="field">
-                                <label>Data caducitat</label>
-                                <span class="readonly-value"
-                                      th:text="${linia.lot != null ? linia.lot.dataCaducitat : ''}">
+                                <label th:text="#{ui.data_caducitat}">Data caducitat</label>
+                                <span class="readonly-value" th:text="${linia.lot != null ? linia.lot.dataCaducitat : ''}">
                                 </span>
                             </div>
                         </div>
                     </div>
-
                     <div class="form-actions">
-                        <a th:href="@{/albarans-proveidor}" class="btn-secondary">Tornar</a>
+                        <a class="btn-secondary" th:href="@{/albarans-proveidor}" th:text="#{ui.tornar}">Tornar</a>
                     </div>
                 </div>
             </div>
         </div>
-
         <!-- SOLO se usa en create/edit -->
         <template id="liniaTemplate" th:if="${mode != 'view'}">
             <div class="linia-card">
-                <h3>Lot __INDEX_VISUAL__</h3>
-
-                <input type="hidden" name="linies[__INDEX__].id" />
-                <input type="hidden" name="linies[__INDEX__].lot.id" />
-
+                <h3 th:text="#{ui.lot_index_visual}">Lot __INDEX_VISUAL__</h3>
+                <input name="linies[__INDEX__].id" type="hidden"/>
+                <input name="linies[__INDEX__].lot.id" type="hidden"/>
                 <div class="field">
-                    <label>Matèria primera</label>
+                    <label th:text="#{ui.materia_primera}">Matèria primera</label>
                     <select name="linies[__INDEX__].materiaPrimera.id">
-                        <option value="">-- Selecciona matèria primera --</option>
-                        <option th:each="materia : ${materiesPrimeres}"
-                                th:value="${materia.id}"
-                                th:text="${materia.nom}">
+                        <option th:text="#{ui.selecciona_materia_primera}" value="">-- Selecciona matèria primera --</option>
+                        <option th:each="materia : ${materiesPrimeres}" th:text="${materia.nom}" th:value="${materia.id}">
                         </option>
                     </select>
                 </div>
-
                 <div class="field">
-                    <label>Quantitat</label>
-                    <input type="number" step="0.01" min="0" name="linies[__INDEX__].quantitat">
-                </div>
-
+                    <label th:text="#{ui.quantitat_3}">Quantitat</label>
+                    <input min="0" name="linies[__INDEX__].quantitat" step="0.01" type="number">
+                    </input></div>
                 <div class="field">
-                    <label>Unitat</label>
-                    <input type="text"
-                           name="linies[__INDEX__].unitat"
-                           list="unitatsList"
-                           placeholder="Selecciona o escriu una unitat">
-                </div>
-
+                    <label th:text="#{ui.unitat}">Unitat</label>
+                    <input list="unitatsList" name="linies[__INDEX__].unitat" placeholder="Selecciona o escriu una unitat" th:placeholder="#{ui.selecciona_o_escriu_una_unitat}" type="text">
+                    </input></div>
                 <div class="field">
-                    <label>Identificador lot</label>
-                    <input type="text" name="linies[__INDEX__].lot.identificadorLot">
+                    <label th:text="#{ui.identificador_lot}">Identificador lot</label>
+                    <input name="linies[__INDEX__].lot.identificadorLot" type="text"/>
                 </div>
-
                 <div class="field">
-                    <label>Data caducitat</label>
-                    <input type="date" name="linies[__INDEX__].lot.dataCaducitat">
+                    <label th:text="#{ui.data_caducitat}">Data caducitat</label>
+                    <input name="linies[__INDEX__].lot.dataCaducitat" type="date"/>
                 </div>
-
                 <div class="inline-actions">
-                    <button type="button" class="btn-secondary" onclick="eliminarLinia(this)">
-                        Eliminar lot
-                    </button>
+                    <button class="btn-secondary" onclick="eliminarLinia(this)" th:text="#{ui.eliminar_lot}" type="button">Eliminar lot</button>
                 </div>
             </div>
         </template>
-
         <script th:if="${mode != 'view'}">
             function afegirLinia() {
                 const container = document.getElementById('liniesContainer');

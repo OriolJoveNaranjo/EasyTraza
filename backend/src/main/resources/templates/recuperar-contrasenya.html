@@ -1,52 +1,30 @@
 <!DOCTYPE html>
-<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
-        <title>Recuperar contrasenya - EasyTraza</title>
-
-        <link rel="stylesheet" th:href="@{/css/layout.css}">
-        <link rel="stylesheet" th:href="@{/css/login.css}">
+        <meta charset="utf-8"/>
+        <title th:text="#{ui.recuperar_contrasenya_easytraza}">Recuperar contrasenya - EasyTraza</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}"/>
+        <link rel="stylesheet" th:href="@{/css/login.css}"/>
     </head>
-
     <body class="login-body">
-
         <main class="login-container">
-
             <div class="login-logo">
-                <img th:src="@{/images/LogoEasyTraza.PNG}" alt="EasyTraza">
+                <img alt="EasyTraza" th:src="@{/images/LogoEasyTraza.PNG}"/>
             </div>
-
             <section class="login-card">
-
-                <h2 class="login-title">Recuperar contrasenya</h2>
-
-                <div th:if="${error}" class="login-alert error" th:text="${error}"></div>
-
-                <div th:if="${success}" class="login-alert success" th:text="${success}"></div>
-
-                <form th:action="@{/recuperar-contrasenya}" method="post">
-
-                    <label class="login-label" for="email">Email</label>
-                    <input id="email"
-                           class="login-input"
-                           type="email"
-                           name="email"
-                           placeholder="correu@exemple.com"
-                           required>
-
-                    <button class="login-button" type="submit">
-                        Enviar enllaç de recuperació
-                    </button>
-
+                <h2 class="login-title" th:text="#{ui.recuperar_contrasenya}">Recuperar contrasenya</h2>
+                <div class="login-alert error" th:if="${error}" th:text="${error}"></div>
+                <div class="login-alert success" th:if="${success}" th:text="${success}"></div>
+                <form method="post" th:action="@{/recuperar-contrasenya}">
+                    <label class="login-label" for="email" th:text="#{ui.email}">Email</label>
+                    <input class="login-input" id="email" name="email" placeholder="correu@exemple.com" required="" th:placeholder="#{ui.correu_exemple_com}" type="email"/>
+                    <button class="login-button" th:text="#{ui.enviar_enllac_de_recuperacio}" type="submit">Enviar enllaç de recuperació</button>
                 </form>
-
                 <div class="login-footer">
-                    <a th:href="@{/login}">Tornar al login</a>
+                    <a th:href="@{/login}" th:text="#{ui.tornar_al_login}">Tornar al login</a>
                 </div>
-
             </section>
-
         </main>
-
     </body>
 </html>

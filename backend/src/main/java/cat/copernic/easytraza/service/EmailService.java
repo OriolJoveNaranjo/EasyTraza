@@ -5,8 +5,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 /**
- * @author orjon
- * Servicio para enviar correos electrónicos.
+ * @author orjon Servicio para enviar correos electrónicos.
  */
 @Service
 public class EmailService {
@@ -16,10 +15,12 @@ public class EmailService {
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
+    
 
     public void enviarEnllacRecuperacio(String destinatari, String enllac) {
         SimpleMailMessage missatge = new SimpleMailMessage();
 
+        missatge.setFrom("jove.naranjo.oriol@alumnat.copernic.cat");
         missatge.setTo(destinatari);
         missatge.setSubject("Recuperació de contrasenya - EasyTraza");
         missatge.setText(
@@ -30,6 +31,12 @@ public class EmailService {
                 + "Si no has sol·licitat aquest canvi, ignora aquest correu."
         );
 
-        mailSender.send(missatge);
+        try {
+            mailSender.send(missatge);
+            System.out.println("Correu enviat a: " + destinatari);
+        } catch (Exception e) {
+            System.out.println("ERROR ENVIANT CORREU:");
+            e.printStackTrace();
+        }
     }
 }

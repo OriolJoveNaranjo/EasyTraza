@@ -1,77 +1,44 @@
 <!DOCTYPE html>
-<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
-        <title>Nova traçabilitat - EasyTraza</title>
-
-        <link rel="stylesheet" th:href="@{/css/layout.css}">
-        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
-        <link rel="stylesheet" th:href="@{/css/table.css}">
+        <meta charset="utf-8"/>
+        <title th:text="#{ui.nova_tracabilitat_easytraza}">Nova traçabilitat - EasyTraza</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}"/>
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
+        <link rel="stylesheet" th:href="@{/css/table.css}"/>
     </head>
-
     <body>
         <div class="app-layout">
-
             <div th:replace="~{fragments/sidebar :: sidebar('tracabilitat')}"></div>
-
             <main class="page-content">
-
                 <div class="page-header">
                     <div>
-                        <h1>Nova traçabilitat</h1>
-                        <p>Registra quin lot de proveïdor s’ha utilitzat en una línia d’albarà client</p>
+                        <h1 th:text="#{ui.nova_tracabilitat}">Nova traçabilitat</h1>
+                        <p th:text="#{ui.registra_quin_lot_de_proveidor_sha_utilitzat_en_un}">Registra quin lot de proveïdor s’ha utilitzat en una línia d’albarà client</p>
                     </div>
                 </div>
-
                 <div class="content-card">
-
-                    <form th:action="@{/tracabilitat/guardar}" method="post">
-
+                    <form method="post" th:action="@{/tracabilitat/guardar}">
                         <div class="filter-bar">
-
-                            <select name="lotProveidorId" class="filter-input" required>
-                                <option value="">Selecciona un lot de proveïdor</option>
-
-                                <option th:each="lot : ${lots}"
-                                        th:value="${lot.id}"
-                                        th:text="${lot.identificadorLot + ' - ' + lot.materiaPrimera.nom + ' (' + lot.quantitat + ' ' + lot.unitat + ')'}">
+                            <select class="filter-input" name="lotProveidorId" required="">
+                                <option th:text="#{ui.selecciona_un_lot_de_proveidor}" value="">Selecciona un lot de proveïdor</option>
+                                <option th:each="lot : ${lots}" th:text="${lot.identificadorLot + ' - ' + lot.materiaPrimera.nom + ' (' + lot.quantitat + ' ' + lot.unitat + ')'}" th:value="${lot.id}">
                                 </option>
                             </select>
-
-                            <select name="liniaAlbaraClientId" class="filter-input" required>
-                                <option value="">Selecciona una línia d’albarà client</option>
-
-                                <option th:each="linia : ${linies}"
-                                        th:value="${linia.id}"
-                                        th:text="${'Albarà #' + linia.albaraClient.id + ' - ' + linia.albaraClient.client.nom + ' - ' + linia.producte.nom + ' (' + linia.quantitat + ')'}">
+                            <select class="filter-input" name="liniaAlbaraClientId" required="">
+                                <option th:text="#{ui.selecciona_una_linia_dalbara_client}" value="">Selecciona una línia d’albarà client</option>
+                                <option th:each="linia : ${linies}" th:text="${'Albarà #' + linia.albaraClient.id + ' - ' + linia.albaraClient.client.nom + ' - ' + linia.producte.nom + ' (' + linia.quantitat + ')'}" th:value="${linia.id}">
                                 </option>
                             </select>
-
-                            <input type="number"
-                                   name="quantitatUtilitzada"
-                                   class="filter-input"
-                                   step="0.01"
-                                   min="0"
-                                   placeholder="Quantitat utilitzada"
-                                   required>
-
-                            <button type="submit" class="btn-primary">
-                                Guardar
-                            </button>
-
-                            <a th:href="@{/tracabilitat}" class="btn-secondary">
-                                Cancel·lar
-                            </a>
-
+                            <input class="filter-input" min="0" name="quantitatUtilitzada" placeholder="Quantitat utilitzada" required="" step="0.01" th:placeholder="#{ui.quantitat_utilitzada}" type="number"/>
+                            <button class="btn-primary" th:text="#{ui.guardar}" type="submit">Guardar</button>
+                            <a class="btn-secondary" th:href="@{/tracabilitat}" th:text="#{ui.cancellar}">Cancel·lar</a>
                         </div>
-
                     </form>
-
                 </div>
-
             </main>
-
         </div>
     </body>
 </html>

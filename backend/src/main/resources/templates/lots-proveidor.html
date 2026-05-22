@@ -1,80 +1,50 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <head>
-        <title>Lots Proveïdor</title>
-        <link rel="stylesheet" th:href="@{/css/layout.css}">
-        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
-        <link rel="stylesheet" th:href="@{/css/lots-proveidor.css}">
-    </head>
 
+<html th:lang="${#locale.language}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="#{ui.lots_proveidor}">Lots Proveïdor</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}"/>
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
+        <link rel="stylesheet" th:href="@{/css/lots-proveidor.css}"/>
+    </head>
     <body>
         <div class="app-layout">
-
             <div th:replace="~{fragments/sidebar :: sidebar('lots-proveidor')}"></div>
-
             <main class="page-content">
                 <div class="page-header">
                     <div>
-                        <h1>Lots Proveïdor</h1>
-                        <p>Gestió de lots de proveïdors</p>
+                        <h1 th:text="#{ui.lots_proveidor}">Lots Proveïdor</h1>
+                        <p th:text="#{ui.gestio_de_lots_de_proveidors}">Gestió de lots de proveïdors</p>
                     </div>
                 </div>
-
-                <div th:if="${error}" class="error-message">
+                <div class="error-message" th:if="${error}">
                     <p th:text="${error}"></p>
-
-                    <form th:if="${lotPendentInici != null}"
-                          th:action="@{'/lots-proveidor/obrir/' + ${lotPendentInici}}"
-                          method="post">
-
-                        <input type="hidden" name="confirmar" value="true">
-
-                        <button type="submit" class="btn-primary">
-                            Confirmar i finalitzar lot anterior
-                        </button>
+                    <form method="post" th:action="@{'/lots-proveidor/obrir/' + ${lotPendentInici}}" th:if="${lotPendentInici != null}">
+                        <input name="confirmar" type="hidden" value="true"/>
+                        <button class="btn-primary" th:text="#{ui.confirmar_i_finalitzar_lot_anterior}" type="submit">Confirmar i finalitzar lot anterior</button>
                     </form>
                 </div>
-
-                <p th:if="${success}" th:text="${success}" class="success-message"></p>
-
+                <p class="success-message" th:if="${success}" th:text="${success}"></p>
                 <div class="filters-row">
-                    <form th:action="@{/lots-proveidor}" method="get" class="filter-bar">
-
-                        <input type="text"
-                               name="identificador"
-                               class="filter-select"
-                               placeholder="Identificador lot"
-                               th:value="${identificador}">
-
+                    <form class="filter-bar" method="get" th:action="@{/lots-proveidor}">
+                        <input class="filter-select" name="identificador" placeholder="Identificador lot" th:placeholder="#{ui.identificador_lot}" th:value="${identificador}" type="text"/>
                         <select class="filter-select" name="estat">
-                            <option value="">Tots els estats</option>
-                            <option value="EN_ESTOC" th:selected="${estatSeleccionat == 'EN_ESTOC'}">En estoc</option>
-                            <option value="OBERT" th:selected="${estatSeleccionat == 'OBERT'}">Obert</option>
-                            <option value="ACABAT" th:selected="${estatSeleccionat == 'ACABAT'}">Tancat</option>
+                            <option th:text="#{ui.tots_els_estats}" value="">Tots els estats</option>
+                            <option th:selected="${estatSeleccionat == 'EN_ESTOC'}" th:text="#{ui.en_estoc}" value="EN_ESTOC">En estoc</option>
+                            <option th:selected="${estatSeleccionat == 'OBERT'}" th:text="#{ui.obert}" value="OBERT">Obert</option>
+                            <option th:selected="${estatSeleccionat == 'ACABAT'}" th:text="#{ui.tancat}" value="ACABAT">Tancat</option>
                         </select>
-
                         <select class="filter-select" name="materiaId">
-                            <option value="">Totes les matèries</option>
-                            <option th:each="m : ${materies}"
-                                    th:value="${m.id}"
-                                    th:text="${m.nom}"
-                                    th:selected="${materiaId != null and materiaId == m.id}">
+                            <option th:text="#{ui.totes_les_materies}" value="">Totes les matèries</option>
+                            <option th:each="m : ${materies}" th:selected="${materiaId != null and materiaId == m.id}" th:text="${m.nom}" th:value="${m.id}">
                             </option>
                         </select>
-
-                        <input type="date"
-                               name="data"
-                               class="filter-select"
-                               th:value="${data}">
-
-                        <button type="submit" class="btn-primary">Filtrar</button>
-
-                        <a th:href="@{/lots-proveidor}" class="btn-secondary">Reset</a>
+                        <input class="filter-select" name="data" th:value="${data}" type="date"/>
+                        <button class="btn-primary" th:text="#{ui.filtrar}" type="submit">Filtrar</button>
+                        <a class="btn-secondary" th:href="@{/lots-proveidor}" th:text="#{ui.reset}">Reset</a>
                     </form>
                 </div>
-
                 <div class="lots-list">
                     <div class="lot-card" th:each="lot : ${lots}">
                         <div>
@@ -82,60 +52,47 @@
                                 <span th:text="${lot.materiaPrimera != null ? lot.materiaPrimera.nom : 'Matèria no indicada'}"></span>
                                 <span class="status-badge" th:text="${lot.estat}"></span>
                             </h2>
-
                             <p>
-                                <strong>Lot:</strong>
+                                <strong th:text="#{ui.lot}">Lot:</strong>
                                 <span th:text="${lot.identificadorLot}"></span>
                             </p>
-
                             <p>
-                                <strong>Proveïdor:</strong>
+                                <strong th:text="#{ui.proveidor_3}">Proveïdor:</strong>
                                 <span th:text="${lot.proveidor != null ? lot.proveidor.nom : '-'}"></span>
                             </p>
-
                             <p>
-                                <strong>Quantitat:</strong>
+                                <strong th:text="#{ui.quantitat}">Quantitat:</strong>
                                 <span th:text="${lot.quantitat}"></span>
                                 <span th:text="${lot.unitat}"></span>
                             </p>
-
                             <p>
-                                <strong>Caducitat:</strong>
+                                <strong th:text="#{ui.caducitat}">Caducitat:</strong>
                                 <span th:text="${lot.dataCaducitat != null ? #temporals.format(lot.dataCaducitat, 'dd/MM/yyyy') : '-'}"></span>
                             </p>
                             <p>
-                                <strong>Data obertura:</strong>
+                                <strong th:text="#{ui.data_obertura}">Data obertura:</strong>
                                 <span th:text="${lot.dataObertura != null ? #temporals.format(lot.dataObertura, 'dd/MM/yyyy HH:mm') : '-'}"></span>
                             </p>
-
                             <p>
-                                <strong>Data tancament:</strong>
+                                <strong th:text="#{ui.data_tancament}">Data tancament:</strong>
                                 <span th:text="${lot.dataAcabament != null ? #temporals.format(lot.dataAcabament, 'dd/MM/yyyy HH:mm') : '-'}"></span>
                             </p>
                             <p>
-                                <strong>Obert per:</strong>
+                                <strong th:text="#{ui.obert_per}">Obert per:</strong>
                                 <span th:text="${lot.usuariObertura != null ? lot.usuariObertura.nom : '-'}"></span>
                             </p>
-
                         </div>
-
                         <div class="lot-actions">
-                            <form th:if="${lot.estat.name() == 'EN_ESTOC'}"
-                                  th:action="@{/lots-proveidor/obrir/{id}(id=${lot.id})}"
-                                  method="post">
-                                <button type="submit" class="btn-primary">Obrir</button>
+                            <form method="post" th:action="@{/lots-proveidor/obrir/{id}(id=${lot.id})}" th:if="${lot.estat.name() == 'EN_ESTOC'}">
+                                <button class="btn-primary" th:text="#{ui.obrir}" type="submit">Obrir</button>
                             </form>
-                            <form th:if="${lot.estat.name() == 'OBERT'}"
-                                  th:action="@{/lots-proveidor/finalitzar/{id}(id=${lot.id})}"
-                                  method="post">
-                                <button type="submit" class="btn-finish">Finalitzar</button>
-
+                            <form method="post" th:action="@{/lots-proveidor/finalitzar/{id}(id=${lot.id})}" th:if="${lot.estat.name() == 'OBERT'}">
+                                <button class="btn-finish" th:text="#{ui.finalitzar}" type="submit">Finalitzar</button>
                             </form>
-                            <a th:if="${lot.estat.name() == 'OBERT' or lot.estat.name() == 'ACABAT'}"
-                               th:href="@{/tracabilitat(lotId=${lot.id})}"
-                               class="btn-secondary">
-                                Traçabilitat
-                            </a>
+                            <a class="btn-secondary" th:href="@{/tracabilitat(
+                               lotId=${lot.id},
+                               cerca=${lot.identificadorLot + ' - ' + lot.materiaPrimera.nom}
+                               )}" th:if="${lot.estat.name() == 'OBERT' or lot.estat.name() == 'ACABAT'}" th:text="#{ui.tracabilitat}">Traçabilitat</a>
                         </div>
                     </div>
                 </div>

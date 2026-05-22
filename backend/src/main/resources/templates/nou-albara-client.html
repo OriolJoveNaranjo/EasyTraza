@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Albarà de client</title>
-        <link rel="stylesheet" th:href="@{/css/forms.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
 
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="#{ui.albara_de_client}">Albarà de client</title>
+        <link rel="stylesheet" th:href="@{/css/forms.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
         <style>
             .linies-box {
                 margin-top: 24px;
@@ -56,94 +56,64 @@
             }
         </style>
     </head>
-
     <body>
         <div class="standalone-form-page">
             <div class="form-card">
-
                 <h1 th:text="${mode == 'view'} 
                     ? 'Veure albarà de client' 
                     : (${albaraClient.id != null} ? 'Editar albarà de client' : 'Nou albarà de client')">
                 </h1>
-
-                <p th:if="${error}" th:text="${error}" class="error-message"></p>
-
-                <form th:action="@{/albarans-client/guardar}"
-                      th:object="${albaraClient}"
-                      method="post">
-
-                    <input type="hidden" th:field="*{id}"/>
-
+                <p class="error-message" th:if="${error}" th:text="${error}"></p>
+                <form method="post" th:action="@{/albarans-client/guardar}" th:object="${albaraClient}">
+                    <input th:field="*{id}" type="hidden"/>
                     <div class="field">
-                        <label>Client *</label>
-                        <select th:field="*{client.id}" required th:disabled="${mode == 'view'}">
-                            <option value="">-- Selecciona client --</option>
-                            <option th:each="client : ${clients}"
-                                    th:value="${client.id}"
-                                    th:text="${client.nom}">
-
+                        <label th:text="#{ui.client_3}">Client *</label>
+                        <select required="" th:disabled="${mode == 'view'}" th:field="*{client.id}">
+                            <option th:text="#{ui.selecciona_client}" value="">-- Selecciona client --</option>
+                            <option th:each="client : ${clients}" th:text="${client.nom}" th:value="${client.id}">
                             </option>
                         </select>
                     </div>
-
                     <div class="field">
-                        <label>Data *</label>
-                        <input type="datetime-local"
-                               name="data"
-                               th:value="${albaraClient.data != null ? #temporals.format(albaraClient.data, 'yyyy-MM-dd''T''HH:mm') : ''}"
-                               th:disabled="${mode == 'view'}"
-                               required>
+                        <label th:text="#{ui.data_4}">Data *</label>
+                        <input name="data" required="" th:disabled="${mode == 'view'}" th:value="${albaraClient.data != null ? #temporals.format(albaraClient.data, 'yyyy-MM-dd''T''HH:mm') : ''}" type="datetime-local"/>
                     </div>
-
                     <div class="field">
-                        <label>Estat</label>
+                        <label th:text="#{ui.estat_2}">Estat</label>
                         <span class="readonly-value" th:text="${albaraClient.estat}"></span>
-                        <input type="hidden" th:field="*{estat}">
+                        <input th:field="*{estat}" type="hidden"/>
                     </div>
-
                     <div class="linies-box">
-                        <h2>Productes</h2>
-
+                        <h2 th:text="#{ui.productes}">Productes</h2>
                         <div id="liniesContainer">
                             <div class="linia-card" th:each="linia, stat : *{linies}">
                                 <h3 th:text="'Producte ' + ${stat.index + 1}"></h3>
-
-                                <input type="hidden" th:field="*{linies[__${stat.index}__].id}"/>
-
+                                <input th:field="*{linies[__${stat.index}__].id}" type="hidden">
                                 <div class="field">
-                                    <label>Producte *</label>
-                                    <select th:field="*{linies[__${stat.index}__].producte.id}" required th:disabled="${mode == 'view'}">
-                                        <option value="">-- Selecciona producte --</option>
-                                        <option th:each="producte : ${productes}"
-                                                th:value="${producte.id}"
-                                                th:text="${producte.nom}">
+                                    <label th:text="#{ui.producte}">Producte *</label>
+                                    <select required="" th:disabled="${mode == 'view'}" th:field="*{linies[__${stat.index}__].producte.id}">
+                                        <option th:text="#{ui.selecciona_producte}" value="">-- Selecciona producte --</option>
+                                        <option th:each="producte : ${productes}" th:text="${producte.nom}" th:value="${producte.id}">
                                         </option>
                                     </select>
                                 </div>
-
                                 <div class="field">
-                                    <label>Quantitat *</label>
-                                    <input type="number"
-                                           step="0.01"
-                                           min="0.01"
-                                           th:field="*{linies[__${stat.index}__].quantitat}"
-                                           th:disabled="${mode == 'view'}" 
-                                           required>
+                                    <label th:text="#{ui.quantitat_2}">Quantitat *</label>
+                                    <input min="0.01" required="" step="0.01" th:disabled="${mode == 'view'}" th:field="*{linies[__${stat.index}__].quantitat}" type="number"/>
                                 </div>
                                 <div class="linies-box" th:if="${mode == 'view'}">
-                                    <h2>Lots associats a aquest albarà</h2>
-
+                                    <h2 th:text="#{ui.lots_associats_a_aquest_albara}">Lots associats a aquest albarà</h2>
                                     <table class="data-table" th:if="${tracabilitats != null and !tracabilitats.isEmpty()}">
                                         <thead>
-                                            <tr>                                                
-                                                <th>Lot</th>
-                                                <th>Matèria primera</th>
-                                                <th>Estat actual del lot</th>
-                                                <th>Data registre</th>
+                                            <tr>
+                                                <th th:text="#{ui.lot_2}">Lot</th>
+                                                <th th:text="#{ui.materia_primera}">Matèria primera</th>
+                                                <th th:text="#{ui.estat_actual_del_lot}">Estat actual del lot</th>
+                                                <th th:text="#{ui.data_registre}">Data registre</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr th:each="t : ${tracabilitats}">                                                
+                                            <tr th:each="t : ${tracabilitats}">
                                                 <td th:text="${t.lotProveidor.identificadorLot}"></td>
                                                 <td th:text="${t.lotProveidor.materiaPrimera.nom}"></td>
                                                 <td th:text="${t.lotProveidor.estat}"></td>
@@ -152,70 +122,44 @@
                                         </tbody>
                                     </table>
                                 </div>
-
                                 <div class="inline-actions">
-                                    <button type="button" class="btn-secondary" onclick="eliminarLinia(this)" th:if="${mode != 'view'}">
-                                        Eliminar producte
-                                    </button>
+                                    <button class="btn-secondary" onclick="eliminarLinia(this)" th:if="${mode != 'view'}" th:text="#{ui.eliminar_producte}" type="button">Eliminar producte</button>
                                 </div>
-                            </div>
+                                </input></div>
                         </div>
-
                         <div class="inline-actions">
-                            <button type="button" class="btn-primary" onclick="afegirLinia()" th:if="${mode != 'view'}">
-                                + Afegir producte
-                            </button>
+                            <button class="btn-primary" onclick="afegirLinia()" th:if="${mode != 'view'}" th:text="#{ui.afegir_producte}" type="button">+ Afegir producte</button>
                         </div>
                     </div>
-
                     <div class="form-actions">
-                        <a th:href="@{/albarans-client}" class="btn-secondary"
-                           th:text="${mode == 'view'} ? 'Tornar' : 'Cancel·lar'">
+                        <a class="btn-secondary" th:href="@{/albarans-client}" th:text="${mode == 'view'} ? 'Tornar' : 'Cancel·lar'">
                         </a>
-
-                        <button type="submit" class="btn-primary" th:if="${mode != 'view'}">
-                            Guardar
-                        </button>
+                        <button class="btn-primary" th:if="${mode != 'view'}" th:text="#{ui.guardar}" type="submit">Guardar</button>
                     </div>
                 </form>
-
             </div>
         </div>
-
         <template id="liniaTemplate">
             <div class="linia-card">
-                <h3>Producte __INDEX_VISUAL__</h3>
-
-                <input type="hidden" name="linies[__INDEX__].id"/>
-
+                <h3 th:text="#{ui.producte_index_visual}">Producte __INDEX_VISUAL__</h3>
+                <input name="linies[__INDEX__].id" type="hidden">
                 <div class="field">
-                    <label>Producte *</label>
-                    <select name="linies[__INDEX__].producte.id" required>
-                        <option value="">-- Selecciona producte --</option>
-                        <option th:each="producte : ${productes}"
-                                th:value="${producte.id}"
-                                th:text="${producte.nom}">
+                    <label th:text="#{ui.producte}">Producte *</label>
+                    <select name="linies[__INDEX__].producte.id" required="">
+                        <option th:text="#{ui.selecciona_producte}" value="">-- Selecciona producte --</option>
+                        <option th:each="producte : ${productes}" th:text="${producte.nom}" th:value="${producte.id}">
                         </option>
                     </select>
-                </div>                
-
+                </div>
                 <div class="field">
-                    <label>Quantitat *</label>
-                    <input type="number"
-                           step="0.01"
-                           min="0.01"
-                           name="linies[__INDEX__].quantitat"
-                           required>
+                    <label th:text="#{ui.quantitat_2}">Quantitat *</label>
+                    <input min="0.01" name="linies[__INDEX__].quantitat" required="" step="0.01" type="number"/>
                 </div>
-
                 <div class="inline-actions">
-                    <button type="button" class="btn-secondary" onclick="eliminarLinia(this)">
-                        Eliminar producte
-                    </button>
+                    <button class="btn-secondary" onclick="eliminarLinia(this)" th:text="#{ui.eliminar_producte}" type="button">Eliminar producte</button>
                 </div>
-            </div>
+                </input></div>
         </template>
-
         <script>
             function afegirLinia() {
                 const container = document.getElementById('liniesContainer');
