@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Client</title>
-        <link rel="stylesheet" th:href="@{/css/forms.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
+        <title th:text="#{ui.client_2}">Client</title>
+        <link rel="stylesheet" th:href="@{/css/forms.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
         <style>
             .readonly-value {
                 display: block;
@@ -18,104 +19,80 @@
     <body>
         <div class="standalone-form-page">
             <div class="form-card">
-
-                <h1 th:if="${mode == 'view'}">Veure client</h1>
-                <h1 th:if="${mode != 'view' and client.id != null}">Editar client</h1>
-                <h1 th:if="${mode != 'view' and client.id == null}">Nou client</h1>
-
-                <p th:if="${error}" th:text="${error}" class="error-message"></p>
-
-                <form th:if="${mode != 'view'}"
-                      th:action="@{/clients/guardar}"
-                      th:object="${client}"
-                      method="post">
-
-                    <input type="hidden" th:field="*{id}"/>
-
+                <h1 th:if="${mode == 'view'}" th:text="#{ui.veure_client}">Veure client</h1>
+                <h1 th:if="${mode != 'view' and client.id != null}" th:text="#{ui.editar_client}">Editar client</h1>
+                <h1 th:if="${mode != 'view' and client.id == null}" th:text="#{ui.nou_client_2}">Nou client</h1>
+                <p class="error-message" th:if="${error}" th:text="${error}"></p>
+                <form method="post" th:action="@{/clients/guardar}" th:if="${mode != 'view'}" th:object="${client}">
+                    <input th:field="*{id}" type="hidden"/>
                     <div class="field">
-                        <label>NIF *</label>
-                        <input type="text" th:field="*{nif}" required>
+                        <label th:text="#{ui.nif_2}">NIF *</label>
+                        <input required="" th:field="*{nif}" type="text"/>
                     </div>
-
                     <div class="field">
-                        <label>Nom *</label>
-                        <input type="text" th:field="*{nom}" required>
+                        <label th:text="#{ui.nom_4}">Nom *</label>
+                        <input required="" th:field="*{nom}" type="text"/>
                     </div>
-
                     <div class="field">
-                        <label>Cognoms</label>
-                        <input type="text" th:field="*{cognoms}">
+                        <label th:text="#{ui.cognoms}">Cognoms</label>
+                        <input th:field="*{cognoms}" type="text"/>
                     </div>
-
                     <div class="field">
-                        <label>Adreça</label>
-                        <input type="text" th:field="*{adreca}">
+                        <label th:text="#{ui.adreca}">Adreça</label>
+                        <input th:field="*{adreca}" type="text"/>
                     </div>
-
                     <div class="field">
-                        <label>Registre sanitari</label>
-                        <input type="text" th:field="*{registreSanitari}">
+                        <label th:text="#{ui.registre_sanitari}">Registre sanitari</label>
+                        <input th:field="*{registreSanitari}" type="text"/>
                     </div>
-
                     <div class="field">
-                        <label>Telèfon</label>
-                        <input type="text" th:field="*{telefon}">
+                        <label th:text="#{ui.telefon}">Telèfon</label>
+                        <input th:field="*{telefon}" type="text"/>
                     </div>
-
                     <div class="field">
-                        <label>Email</label>
-                        <input type="email" th:field="*{email}">
+                        <label th:text="#{ui.email}">Email</label>
+                        <input th:field="*{email}" type="email"/>
                     </div>
-
                     <div class="form-actions">
-                        <a th:href="@{/clients}" class="btn-secondary">Cancel·lar</a>
-                        <button type="submit" class="btn-primary">Guardar</button>
+                        <a class="btn-secondary" th:href="@{/clients}" th:text="#{ui.cancellar}">Cancel·lar</a>
+                        <button class="btn-primary" th:text="#{ui.guardar}" type="submit">Guardar</button>
                     </div>
                 </form>
-
                 <div th:if="${mode == 'view'}">
                     <div class="field">
-                        <label>ID</label>
+                        <label th:text="#{ui.id}">ID</label>
                         <span class="readonly-value" th:text="${client.id}"></span>
                     </div>
-
                     <div class="field">
-                        <label>NIF</label>
+                        <label th:text="#{ui.nif}">NIF</label>
                         <span class="readonly-value" th:text="${client.nif}"></span>
                     </div>
-
                     <div class="field">
-                        <label>Nom</label>
+                        <label th:text="#{ui.nom}">Nom</label>
                         <span class="readonly-value" th:text="${client.nom}"></span>
                     </div>
-
                     <div class="field">
-                        <label>Cognoms</label>
+                        <label th:text="#{ui.cognoms}">Cognoms</label>
                         <span class="readonly-value" th:text="${client.cognoms}"></span>
                     </div>
-
                     <div class="field">
-                        <label>Adreça</label>
+                        <label th:text="#{ui.adreca}">Adreça</label>
                         <span class="readonly-value" th:text="${client.adreca}"></span>
                     </div>
-
                     <div class="field">
-                        <label>Registre sanitari</label>
+                        <label th:text="#{ui.registre_sanitari}">Registre sanitari</label>
                         <span class="readonly-value" th:text="${client.registreSanitari}"></span>
                     </div>
-
                     <div class="field">
-                        <label>Telèfon</label>
+                        <label th:text="#{ui.telefon}">Telèfon</label>
                         <span class="readonly-value" th:text="${client.telefon}"></span>
                     </div>
-
                     <div class="field">
-                        <label>Email</label>
+                        <label th:text="#{ui.email}">Email</label>
                         <span class="readonly-value" th:text="${client.email}"></span>
                     </div>
-
                     <div class="form-actions">
-                        <a th:href="@{/clients}" class="btn-secondary">Tornar</a>
+                        <a class="btn-secondary" th:href="@{/clients}" th:text="#{ui.tornar}">Tornar</a>
                     </div>
                 </div>
             </div>

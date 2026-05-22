@@ -1,52 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Registrar pH</title>
-        <link rel="stylesheet" th:href="@{/css/forms.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
-    </head>
 
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="#{ui.registrar_ph}">Registrar pH</title>
+        <link rel="stylesheet" th:href="@{/css/forms.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
+    </head>
     <body>
         <div class="standalone-form-page">
             <div class="form-card">
-
-                <h1>Registrar pH</h1>
-                <p>Registra el control de pH de l'aigua</p>
-
-                <form th:action="@{/controls/guardar}"
-                      th:object="${controlPh}"
-                      method="post">
-
+                <h1 th:text="#{ui.registrar_ph}">Registrar pH</h1>
+                <p th:text="#{ui.registra_el_control_de_ph_de_l_aigua}">Registra el control de pH de l'aigua</p>
+                <form method="post" th:action="@{/controls/guardar}" th:object="${controlPh}">
                     <div class="field">
-                        <label>Valor de pH *</label>
-                        <input type="number"
-                               th:field="*{valorPh}"
-                               step="0.1"
-                               min="0"
-                               max="14"
-                               required>
+                        <label th:text="#{ui.valor_de_ph}">Valor de pH *</label>
+                        <input max="14" min="0" required="" step="0.1" th:field="*{valorPh}" type="number"/>
                     </div>
-
                     <div class="field">
-                        <label>Observacions</label>
-                        <textarea th:field="*{observacions}"
-                                  rows="4"
-                                  maxlength="500"
-                                  placeholder="Escriu una observació si cal..."></textarea>
+                        <label th:text="#{ui.observacions}">Observacions</label>
+                        <textarea maxlength="500" placeholder="Escriu una observació si cal..." rows="4" th:field="*{observacions}" th:placeholder="#{ui.escriu_una_observacio_si_cal}"></textarea>
                     </div>
-
                     <div class="form-actions">
-                        <a th:href="@{/controls}" class="btn-secondary">
-                            Cancel·lar
-                        </a>
-
-                        <button type="submit" class="btn-primary">
-                            Guardar
-                        </button>
+                        <a class="btn-secondary" th:href="@{/controls}" th:text="#{ui.cancellar}">Cancel·lar</a>
+                        <button class="btn-primary" th:text="#{ui.guardar}" type="submit">Guardar</button>
                     </div>
-
                 </form>
-
             </div>
         </div>
     </body>

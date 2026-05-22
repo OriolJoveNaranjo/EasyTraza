@@ -1,68 +1,49 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <head>
-        <title>Controls</title>
-        <link rel="stylesheet" th:href="@{/css/layout.css}">
-        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
-        <link rel="stylesheet" th:href="@{/css/table.css}">
-    </head>
 
+<html th:lang="${#locale.language}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="#{ui.controls}">Controls</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}"/>
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
+        <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    </head>
     <body>
         <div class="app-layout">
-
             <div th:replace="~{fragments/sidebar :: sidebar('controls')}"></div>
-
             <main class="page-content">
-
                 <div class="page-header">
                     <div>
-                        <h1>Controls</h1>
-                        <p>Control de pH de l'aigua</p>
+                        <h1 th:text="#{ui.controls}">Controls</h1>
+                        <p th:text="#{ui.control_de_ph_de_l_aigua}">Control de pH de l'aigua</p>
                     </div>
-
-                    <a th:href="@{/controls/nou}" class="btn-primary">
-                        + Registrar pH
-                    </a>
+                    <a class="btn-primary" th:href="@{/controls/nou}" th:text="#{ui.registrar_ph_2}">+ Registrar pH</a>
                 </div>
-
                 <div class="content-card">
-
                     <table class="data-table" th:if="${controls != null and !controls.isEmpty()}">
                         <thead>
                             <tr>
-                                <th>Data</th>
-                                <th>Valor pH</th>
-                                <th>Observacions</th>
-                                <th>Usuari</th>
+                                <th th:text="#{ui.data_3}">Data</th>
+                                <th th:text="#{ui.valor_ph}">Valor pH</th>
+                                <th th:text="#{ui.observacions}">Observacions</th>
+                                <th th:text="#{ui.usuari}">Usuari</th>
                             </tr>
                         </thead>
-
                         <tbody>
                             <tr th:each="control : ${controls}">
                                 <td th:text="${control.dataControl != null ? #temporals.format(control.dataControl, 'dd/MM/yyyy HH:mm') : '-'}"></td>
-
                                 <td th:text="${control.valorPh}"></td>
-
                                 <td th:text="${control.observacions != null and !#strings.isEmpty(control.observacions) ? control.observacions : '-'}"></td>
-
                                 <td th:text="${control.usuari != null ? control.usuari.email : '-'}"></td>
                             </tr>
                         </tbody>
                     </table>
-
                     <div class="empty-state" th:if="${controls == null or controls.isEmpty()}">
-                        <h2>No hi ha controls registrats</h2>
-                        <p>Encara no s'ha registrat cap control de pH.</p>
-
-                        <a th:href="@{/controls/nou}" class="btn-primary">
-                            Registrar primer control
-                        </a>
+                        <h2 th:text="#{ui.no_hi_ha_controls_registrats}">No hi ha controls registrats</h2>
+                        <p th:text="#{ui.encara_no_s_ha_registrat_cap_control_de_ph}">Encara no s'ha registrat cap control de pH.</p>
+                        <a class="btn-primary" th:href="@{/controls/nou}" th:text="#{ui.registrar_primer_control}">Registrar primer control</a>
                     </div>
-
                 </div>
-
             </main>
         </div>
     </body>

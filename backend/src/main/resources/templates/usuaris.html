@@ -1,92 +1,65 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<html th:lang="${#locale.language}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Usuaris</title>
-        <link rel="stylesheet" th:href="@{/css/layout.css}">
-        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
-        <link rel="stylesheet" th:href="@{/css/table.css}">
+        <title th:text="#{ui.usuaris}">Usuaris</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}"/>
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
+        <link rel="stylesheet" th:href="@{/css/table.css}"/>
     </head>
     <body>
         <div class="app-layout">
-
             <div th:replace="~{fragments/sidebar :: sidebar('usuaris')}"></div>
-
             <main class="page-content">
                 <div class="page-header">
                     <div>
-                        <h1>Usuaris</h1>
-                        <p>Gestió d'usuaris del sistema</p>
+                        <h1 th:text="#{ui.usuaris}">Usuaris</h1>
+                        <p th:text="#{ui.gestio_d_usuaris_del_sistema}">Gestió d'usuaris del sistema</p>
                     </div>
-
-                    <a th:href="@{/usuaris/nou}" class="btn-primary">+ Afegir usuari</a>
+                    <a class="btn-primary" th:href="@{/usuaris/nou}" th:text="#{ui.afegir_usuari}">+ Afegir usuari</a>
                 </div>
-                <div th:if="${error}" class="error-message">
+                <div class="error-message" th:if="${error}">
                     <p th:text="${error}"></p>
                 </div>
-
-                <div th:if="${success}" class="success-message">
+                <div class="success-message" th:if="${success}">
                     <p th:text="${success}"></p>
                 </div>
-
                 <div class="search-bar">
-                    <input type="text" placeholder="Cercar usuaris...">
+                    <input placeholder="Cercar usuaris..." th:placeholder="#{ui.cercar_usuaris}" type="text"/>
                 </div>
-
                 <div class="content-card">
                     <table th:if="${not #lists.isEmpty(usuaris)}">
                         <thead>
                             <tr>
-                                <th>Foto</th>
-                                <th>Nom</th>
-                                <th>Email</th>
-                                <th>Rol</th>
-                                <th>Actiu</th>
-                                <th>Accions</th>
+                                <th th:text="#{ui.foto}">Foto</th>
+                                <th th:text="#{ui.nom}">Nom</th>
+                                <th th:text="#{ui.email}">Email</th>
+                                <th th:text="#{ui.rol_2}">Rol</th>
+                                <th th:text="#{ui.actiu_2}">Actiu</th>
+                                <th th:text="#{ui.accions}">Accions</th>
                             </tr>
                         </thead>
-
                         <tbody>
-                            <tr th:each="usuari : ${usuaris}"
-                                th:classappend="${!usuari.actiu} ? ' fila-inactiva' : ''">
+                            <tr th:classappend="${!usuari.actiu} ? ' fila-inactiva' : ''" th:each="usuari : ${usuaris}">
                                 <td>
-                                    <img th:src="${usuari.foto != null and !#strings.isEmpty(usuari.foto)}
+                                    <img height="50" style="object-fit: cover; border-radius: 50%;" th:src="${usuari.foto != null and !#strings.isEmpty(usuari.foto)}
                                          ? @{${'/uploads/usuaris/' + usuari.foto}}
-                                         : @{/images/usuaris/fotoPerfil.png}"
-                                         width="50"
-                                         height="50"
-                                         style="object-fit: cover; border-radius: 50%;">
+                                         : @{/images/usuaris/fotoPerfil.png}" width="50"/>
                                 </td>
-
                                 <td th:text="${usuari.nom}"></td>
                                 <td th:text="${usuari.email}"></td>
                                 <td th:text="${usuari.rol}"></td>
                                 <td th:text="${usuari.actiu ? 'Sí' : 'No'}"></td>
-
                                 <td>
-                                    <a th:if="${!usuari.actiu}"
-                                       th:href="@{'/usuaris/activar/' + ${usuari.id}}"
-                                       class="btn-primary">
-                                        Activar
-                                    </a>
-                                    <a th:href="@{'/usuaris/editar/' + ${usuari.id}}" class="btn-edit">Editar</a>
-
-                                    <a th:if="${usuari.actiu}"
-                                       th:href="@{'/usuaris/eliminar/' + ${usuari.id}}"
-                                       class="btn-delete"
-                                       onclick="return confirm('Segur que vols eliminar aquest usuari?')">
-                                        Eliminar
-                                    </a>
+                                    <a class="btn-primary" th:href="@{'/usuaris/activar/' + ${usuari.id}}" th:if="${!usuari.actiu}" th:text="#{ui.activar}">Activar</a>
+                                    <a class="btn-edit" th:href="@{'/usuaris/editar/' + ${usuari.id}}" th:text="#{ui.editar}">Editar</a>
+                                    <a class="btn-delete" onclick="return confirm('Segur que vols eliminar aquest usuari?')" th:href="@{'/usuaris/eliminar/' + ${usuari.id}}" th:if="${usuari.actiu}" th:text="#{ui.eliminar}">Eliminar</a>
                                 </td>
-
                             </tr>
                         </tbody>
                     </table>
-
-                    <div th:if="${#lists.isEmpty(usuaris)}" class="empty-state">
-                        No hi ha usuaris registrats
-                    </div>
+                    <div class="empty-state" th:if="${#lists.isEmpty(usuaris)}" th:text="#{ui.no_hi_ha_usuaris_registrats}">No hi ha usuaris registrats</div>
                 </div>
             </main>
         </div>

@@ -1,56 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<html th:lang="${#locale.language}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
-        <title>Traçabilitat - EasyTraza</title>
-
-        <link rel="stylesheet" th:href="@{/css/layout.css}">
-        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
-        <link rel="stylesheet" th:href="@{/css/table.css}">
+        <meta charset="utf-8"/>
+        <title th:text="#{ui.tracabilitat_easytraza}">Traçabilitat - EasyTraza</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}"/>
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
+        <link rel="stylesheet" th:href="@{/css/table.css}"/>
     </head>
-
     <body>
         <div class="app-layout">
-
             <div th:replace="~{fragments/sidebar :: sidebar('tracabilitat')}"></div>
-
             <main class="page-content">
-
                 <div class="page-header">
                     <div>
-                        <h1>Traçabilitat</h1>
-                        <p>Consulta quins productes i albarans estan relacionats amb un lot</p>
+                        <h1 th:text="#{ui.tracabilitat}">Traçabilitat</h1>
+                        <p th:text="#{ui.consulta_quins_productes_i_albarans_estan_relacion}">Consulta quins productes i albarans estan relacionats amb un lot</p>
                     </div>
                 </div>
-
-                <div class="filter-card">                    
-                    <form th:action="@{/tracabilitat}" method="get" class="filter-bar"
-                          onsubmit="setTimeout(() => this.querySelector('[name=cerca]').value = '', 50)">
-                        <input
-                            type="text"
-                            name="cerca"
-                            list="lotsDisponibles"
-                            th:value="${lotSeleccionatId != null ? cerca : ''}"
-                            placeholder="Escriu el lot o la matèria primera"
-                            class="filter-input"
-                            />
-
+                <div class="filter-card">
+                    <form class="filter-bar" method="get" onsubmit="setTimeout(() = & gt; this.querySelector('[name=cerca]').value = '', 50)" th:action="@{/tracabilitat}">
+                        <input class="filter-input" list="lotsDisponibles" name="cerca" placeholder="Escriu el lot o la matèria primera" th:placeholder="#{ui.escriu_el_lot_o_la_materia_primera}" th:value="${lotSeleccionatId != null ? cerca : ''}" type="text"/>
                         <datalist id="lotsDisponibles">
-                            <option th:each="lot : ${lots}"
-                                    th:value="${lot.identificadorLot + ' - ' + lot.materiaPrimera.nom}">
+                            <option th:each="lot : ${lots}" th:value="${lot.identificadorLot + ' - ' + lot.materiaPrimera.nom}">
                             </option>
                         </datalist>
-
-                        <button type="submit" class="btn-primary">
-                            Consultar
-                        </button>
+                        <button class="btn-primary" th:text="#{ui.consultar}" type="submit">Consultar</button>
                     </form>
                 </div>
-
                 <div class="content-card">
-
                     <table th:if="${resultats != null and not #lists.isEmpty(resultats)}">
                         <thead>
                             <tr>
@@ -60,49 +39,42 @@
                                         <span th:text="${ordre == 'lot' ? (direccio == 'asc' ? '↑' : '↓') : '↕'}"></span>
                                     </a>
                                 </th>
-
                                 <th>
                                     <a th:href="@{/tracabilitat(lotId=${lotSeleccionatId}, ordre='materia', direccio=${ordre == 'materia' and direccio == 'asc' ? 'desc' : 'asc'})}">
                                         Matèria primera
                                         <span th:text="${ordre == 'materia' ? (direccio == 'asc' ? '↑' : '↓') : '↕'}"></span>
                                     </a>
                                 </th>
-
                                 <th>
                                     <a th:href="@{/tracabilitat(lotId=${lotSeleccionatId}, ordre='producte', direccio=${ordre == 'producte' and direccio == 'asc' ? 'desc' : 'asc'})}">
                                         Producte
                                         <span th:text="${ordre == 'producte' ? (direccio == 'asc' ? '↑' : '↓') : '↕'}"></span>
                                     </a>
                                 </th>
-
                                 <th>
                                     <a th:href="@{/tracabilitat(lotId=${lotSeleccionatId}, ordre='quantitat', direccio=${ordre == 'quantitat' and direccio == 'asc' ? 'desc' : 'asc'})}">
                                         Quantitat
                                         <span th:text="${ordre == 'quantitat' ? (direccio == 'asc' ? '↑' : '↓') : '↕'}"></span>
                                     </a>
                                 </th>
-
                                 <th>
                                     <a th:href="@{/tracabilitat(lotId=${lotSeleccionatId}, ordre='client', direccio=${ordre == 'client' and direccio == 'asc' ? 'desc' : 'asc'})}">
                                         Client
                                         <span th:text="${ordre == 'client' ? (direccio == 'asc' ? '↑' : '↓') : '↕'}"></span>
                                     </a>
                                 </th>
-
                                 <th>
                                     <a th:href="@{/tracabilitat(lotId=${lotSeleccionatId}, ordre='albara', direccio=${ordre == 'albara' and direccio == 'asc' ? 'desc' : 'asc'})}">
                                         Núm. albarà
                                         <span th:text="${ordre == 'albara' ? (direccio == 'asc' ? '↑' : '↓') : '↕'}"></span>
                                     </a>
                                 </th>
-
                                 <th>
                                     <a th:href="@{/tracabilitat(lotId=${lotSeleccionatId}, ordre='data', direccio=${ordre == 'data' and direccio == 'asc' ? 'desc' : 'asc'})}">
                                         Data albarà
                                         <span th:text="${ordre == 'data' ? (direccio == 'asc' ? '↑' : '↓') : '↕'}"></span>
                                     </a>
                                 </th>
-
                                 <th>
                                     <a th:href="@{/tracabilitat(lotId=${lotSeleccionatId}, ordre='estat', direccio=${ordre == 'estat' and direccio == 'asc' ? 'desc' : 'asc'})}">
                                         Estat
@@ -111,7 +83,6 @@
                                 </th>
                             </tr>
                         </thead>
-
                         <tbody>
                             <tr th:each="t : ${resultats}">
                                 <td th:text="${t.lotProveidor.identificadorLot}"></td>
@@ -125,19 +96,10 @@
                             </tr>
                         </tbody>
                     </table>
-
-                    <div th:if="${resultats != null and #lists.isEmpty(resultats)}" class="empty-state">
-                        No s’ha trobat cap traçabilitat per aquest lot.
-                    </div>
-
-                    <div th:if="${resultats == null}" class="empty-state">
-                        Selecciona un lot per consultar la traçabilitat.
-                    </div>
-
+                    <div class="empty-state" th:if="${resultats != null and #lists.isEmpty(resultats)}" th:text="#{ui.no_sha_trobat_cap_tracabilitat_per_aquest_lot}">No s’ha trobat cap traçabilitat per aquest lot.</div>
+                    <div class="empty-state" th:if="${resultats == null}" th:text="#{ui.selecciona_un_lot_per_consultar_la_tracabilitat}">Selecciona un lot per consultar la traçabilitat.</div>
                 </div>
-
             </main>
-
         </div>
     </body>
 </html>

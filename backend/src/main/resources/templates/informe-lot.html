@@ -1,62 +1,45 @@
 <!DOCTYPE html>
-<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
-        <title>Informe per lot - EasyTraza</title>
-
-        <link rel="stylesheet" th:href="@{/css/layout.css}">
-        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
-        <link rel="stylesheet" th:href="@{/css/table.css}">
+        <meta charset="utf-8"/>
+        <title th:text="#{ui.informe_per_lot_easytraza}">Informe per lot - EasyTraza</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}"/>
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
+        <link rel="stylesheet" th:href="@{/css/table.css}"/>
     </head>
-
     <body>
         <div class="app-layout">
-
             <div th:replace="~{fragments/sidebar :: sidebar('informes')}"></div>
-
             <main class="page-content">
-
                 <div class="page-header">
                     <div>
-                        <h1>Informe per lot</h1>
-                        <p>Consulta els productes i albarans generats a partir d’un lot</p>
+                        <h1 th:text="#{ui.informe_per_lot}">Informe per lot</h1>
+                        <p th:text="#{ui.consulta_els_productes_i_albarans_generats_a_parti}">Consulta els productes i albarans generats a partir d’un lot</p>
                     </div>
                 </div>
-
                 <div class="filter-card">
-                    <form th:action="@{/informes/lot}" method="get" class="filter-bar">
-
-                        <select name="lotId" class="filter-input" required>
-                            <option value="">Selecciona un lot</option>
-
-                            <option th:each="lot : ${lots}"
-                                    th:value="${lot.id}"
-                                    th:selected="${lot.id == lotSeleccionatId}"
-                                    th:text="${lot.identificadorLot + ' - ' + lot.materiaPrimera.nom}">
+                    <form class="filter-bar" method="get" th:action="@{/informes/lot}">
+                        <select class="filter-input" name="lotId" required="">
+                            <option th:text="#{ui.selecciona_un_lot}" value="">Selecciona un lot</option>
+                            <option th:each="lot : ${lots}" th:selected="${lot.id == lotSeleccionatId}" th:text="${lot.identificadorLot + ' - ' + lot.materiaPrimera.nom}" th:value="${lot.id}">
                             </option>
                         </select>
-
-                        <button type="submit" class="btn-primary">
-                            Consultar
-                        </button>
-
+                        <button class="btn-primary" th:text="#{ui.consultar}" type="submit">Consultar</button>
                     </form>
                 </div>
-
                 <div class="content-card">
-
                     <table th:if="${resultats != null and not #lists.isEmpty(resultats)}">
                         <thead>
                             <tr>
-                                <th>Producte fabricat</th>
-                                <th>Quantitat fabricada</th>
-                                <th>Client</th>
-                                <th>Núm. albarà</th>
-                                <th>Data albarà</th>
+                                <th th:text="#{ui.producte_fabricat}">Producte fabricat</th>
+                                <th th:text="#{ui.quantitat_fabricada}">Quantitat fabricada</th>
+                                <th th:text="#{ui.client_2}">Client</th>
+                                <th th:text="#{ui.num_albara}">Núm. albarà</th>
+                                <th th:text="#{ui.data_albara}">Data albarà</th>
                             </tr>
                         </thead>
-
                         <tbody>
                             <tr th:each="linia : ${resultats}">
                                 <td th:text="${linia.producte.nom}"></td>
@@ -67,19 +50,10 @@
                             </tr>
                         </tbody>
                     </table>
-
-                    <div th:if="${resultats != null and #lists.isEmpty(resultats)}" class="empty-state">
-                        No s’han trobat resultats per aquest lot.
-                    </div>
-
-                    <div th:if="${resultats == null}" class="empty-state">
-                        Selecciona un lot per consultar l’informe.
-                    </div>
-
+                    <div class="empty-state" th:if="${resultats != null and #lists.isEmpty(resultats)}" th:text="#{ui.no_shan_trobat_resultats_per_aquest_lot}">No s’han trobat resultats per aquest lot.</div>
+                    <div class="empty-state" th:if="${resultats == null}" th:text="#{ui.selecciona_un_lot_per_consultar_linforme}">Selecciona un lot per consultar l’informe.</div>
                 </div>
-
             </main>
-
         </div>
     </body>
 </html>

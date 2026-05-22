@@ -1,77 +1,46 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<html th:lang="${#locale.language}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
     <body>
         <aside class="sidebar" th:fragment="sidebar(activePage)">
             <div class="brand">
-                <img th:src="@{/images/LogoEasyTraza.PNG}" alt="Logo EasyTraza" class="logo">
+                <img alt="Logo EasyTraza" class="logo" th:src="@{/images/LogoEasyTraza.PNG}"/>
                 <div class="brand-text">
                     <h2>EasyTraza</h2>
-                    <p>Traçabilitat</p>
+                    <p th:text="#{ui.tracabilitat}">Traçabilitat</p>
                 </div>
             </div>
-
             <nav class="menu">
-                <a sec:authorize="hasAnyRole('ADMIN','OPERARI')" th:href="@{/panell}"
-                   th:class="'menu-item' + (${activePage} == 'panell' ? ' active' : '')">
-                    Panell
-                </a>
-                <a sec:authorize="hasRole('ADMIN')" th:href="@{/clients}"
-                   th:class="'menu-item' + (${activePage} == 'clients' ? ' active' : '')">
-                    Clients
-                </a>
-                <a sec:authorize="hasRole('ADMIN')" th:href="@{/proveidors}" th:class="'menu-item' + (${activePage} == 'proveidors' ? ' active' : '')">Proveïdors</a>
-                <a sec:authorize="hasRole('ADMIN')" th:href="@{/cataleg}" th:class="'menu-item' + (${activePage} == 'cataleg' ? ' active' : '')">Catàleg</a>
-                <a sec:authorize="hasAnyRole('ADMIN','OPERARI')" th:href="@{/albarans-proveidor}"
-                   th:class="'menu-item' + (${activePage} == 'albarans-proveidor' ? ' active' : '')">
-                    Albarans proveïdor
-                </a>
-                <a sec:authorize="hasAnyRole('ADMIN','OPERARI')" th:href="@{/lots-proveidor}"
-                   th:class="'menu-item' + (${activePage} == 'lots-proveidor' ? ' active' : '')">
-                    Lots Proveïdor
-                </a>
-                <a sec:authorize="hasAnyRole('ADMIN','OPERARI')" th:href="@{/albarans-client}"
-                   th:class="'menu-item' + (${activePage} == 'albarans-client' ? ' active' : '')">
-                    Albarans Client
-                </a>
-                <a sec:authorize="hasAnyRole('ADMIN','OPERARI')" th:href="@{/tracabilitat}"
-                   th:class="'menu-item' + (${activePage} == 'tracabilitat' ? ' active' : '')">
-                    Traçabilitat
-                </a>
-                <a sec:authorize="hasAnyRole('ADMIN','OPERARI')"
-                   th:href="@{/controls}"
-                   th:class="'menu-item' + (${activePage} == 'controls' ? ' active' : '')">
-                    Controls
-                </a>
-                <a sec:authorize="hasAnyRole('ADMIN','OPERARI')" th:href="@{/informes}"
-                   th:class="'menu-item' + (${activePage} == 'informes' ? ' active' : '')">
-                    Informes
-                </a>
-                <a sec:authorize="hasRole('ADMIN')" th:href="@{/usuaris}" th:class="'menu-item' + (${activePage} == 'usuaris' ? ' active' : '')">Usuaris</a>
-            </nav>   
-            <div class="sidebar-footer">                
-
-                <a sec:authorize="hasAnyRole('ADMIN','OPERARI')" th:href="@{/perfil}" class="user-box" th:if="${usuariSessio != null}">
-
-                    <img th:src="${usuariSessio.foto != null and !#strings.isEmpty(usuariSessio.foto)}
+                <a sec:authorize="hasAnyRole('ADMIN','OPERARI')" th:class="'menu-item' + (${activePage} == 'panell' ? ' active' : '')" th:href="@{/panell}" th:text="#{ui.panell}">Panell</a>
+                <a sec:authorize="hasRole('ADMIN')" th:class="'menu-item' + (${activePage} == 'clients' ? ' active' : '')" th:href="@{/clients}" th:text="#{ui.clients}">Clients</a>
+                <a sec:authorize="hasRole('ADMIN')" th:class="'menu-item' + (${activePage} == 'proveidors' ? ' active' : '')" th:href="@{/proveidors}" th:text="#{ui.proveidors}">Proveïdors</a>
+                <a sec:authorize="hasRole('ADMIN')" th:class="'menu-item' + (${activePage} == 'cataleg' ? ' active' : '')" th:href="@{/cataleg}" th:text="#{ui.cataleg}">Catàleg</a>
+                <a sec:authorize="hasAnyRole('ADMIN','OPERARI')" th:class="'menu-item' + (${activePage} == 'albarans-proveidor' ? ' active' : '')" th:href="@{/albarans-proveidor}" th:text="#{ui.albarans_proveidor}">Albarans proveïdor</a>
+                <a sec:authorize="hasAnyRole('ADMIN','OPERARI')" th:class="'menu-item' + (${activePage} == 'lots-proveidor' ? ' active' : '')" th:href="@{/lots-proveidor}" th:text="#{ui.lots_proveidor}">Lots Proveïdor</a>
+                <a sec:authorize="hasAnyRole('ADMIN','OPERARI')" th:class="'menu-item' + (${activePage} == 'albarans-client' ? ' active' : '')" th:href="@{/albarans-client}" th:text="#{ui.albarans_client}">Albarans Client</a>
+                <a sec:authorize="hasAnyRole('ADMIN','OPERARI')" th:class="'menu-item' + (${activePage} == 'tracabilitat' ? ' active' : '')" th:href="@{/tracabilitat}" th:text="#{ui.tracabilitat}">Traçabilitat</a>
+                <a sec:authorize="hasAnyRole('ADMIN','OPERARI')" th:class="'menu-item' + (${activePage} == 'controls' ? ' active' : '')" th:href="@{/controls}" th:text="#{ui.controls}">Controls</a>
+                <a sec:authorize="hasAnyRole('ADMIN','OPERARI')" th:class="'menu-item' + (${activePage} == 'informes' ? ' active' : '')" th:href="@{/informes}" th:text="#{ui.informes}">Informes</a>
+                <a sec:authorize="hasRole('ADMIN')" th:class="'menu-item' + (${activePage} == 'usuaris' ? ' active' : '')" th:href="@{/usuaris}" th:text="#{ui.usuaris}">Usuaris</a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="language-switch" aria-label="Idioma">
+                    <a class="language-option" href="?lang=ca" th:text="#{lang.ca}">CAT</a>
+                    <a class="language-option" href="?lang=es" th:text="#{lang.es}">ESP</a>
+                </div>
+                <a class="user-box" sec:authorize="hasAnyRole('ADMIN','OPERARI')" th:href="@{/perfil}" th:if="${usuariSessio != null}">
+                    <img alt="Foto usuari" class="avatar" th:src="${usuariSessio.foto != null and !#strings.isEmpty(usuariSessio.foto)}
                          ? @{${'/uploads/usuaris/' + usuariSessio.foto}}
-                         : @{/images/usuaris/fotoPerfil.png}"
-                         alt="Foto usuari"
-                         class="avatar">
-
+                         : @{/images/usuaris/fotoPerfil.png}"/>
                     <div>
                         <strong th:text="${usuariSessio.nom}">Nom Usuari</strong>
                         <p th:text="${usuariSessio.rol}">Rol</p>
                     </div>
-
                 </a>
-
-                <form th:action="@{/logout}" method="post">
-                    <button class="logout-btn" type="submit">Tancar sessió</button>
+                <form method="post" th:action="@{/logout}">
+                    <button class="logout-btn" th:text="#{ui.tancar_sessio}" type="submit">Tancar sessió</button>
                 </form>
-
             </div>
-
         </aside>
     </body>
 </html>

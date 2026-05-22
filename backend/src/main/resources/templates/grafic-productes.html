@@ -1,73 +1,48 @@
 <!DOCTYPE html>
-<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
-        <title>Gràfic mensual de productes - EasyTraza</title>
-
-        <link rel="stylesheet" th:href="@{/css/layout.css}">
-        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-        <link rel="stylesheet" th:href="@{/css/buttons.css}">
-        <link rel="stylesheet" th:href="@{/css/table.css}">
-
+        <meta charset="utf-8"/>
+        <title th:text="#{ui.grafic_mensual_de_productes_easytraza}">Gràfic mensual de productes - EasyTraza</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}"/>
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}"/>
+        <link rel="stylesheet" th:href="@{/css/buttons.css}"/>
+        <link rel="stylesheet" th:href="@{/css/table.css}"/>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
-
     <body>
         <div class="app-layout">
-
             <div th:replace="~{fragments/sidebar :: sidebar('informes')}"></div>
-
             <main class="page-content">
-
                 <div class="page-header">
                     <div>
-                        <h1>Informe mensual</h1>
-                        <p>Evolució diària de productes venuts</p>
+                        <h1 th:text="#{ui.informe_mensual}">Informe mensual</h1>
+                        <p th:text="#{ui.evolucio_diaria_de_productes_venuts}">Evolució diària de productes venuts</p>
                     </div>
-
-                    <a th:href="@{/informes}" class="btn-secondary">Tornar</a>
+                    <a class="btn-secondary" th:href="@{/informes}" th:text="#{ui.tornar}">Tornar</a>
                 </div>
-
                 <div class="filter-card">
-                    <form id="filtersForm" th:action="@{/informes/productes-mensual}" method="get" class="filter-bar">
-
-                        <select name="mes" class="filter-input" onchange="this.form.submit()">
-                            <option th:each="m : ${mesos}"
-                                    th:value="${m}"
-                                    th:selected="${m.toString() == mesSeleccionat}"
-                                    th:text="${m}">
+                    <form class="filter-bar" id="filtersForm" method="get" th:action="@{/informes/productes-mensual}">
+                        <select class="filter-input" name="mes" onchange="this.form.submit()">
+                            <option th:each="m : ${mesos}" th:selected="${m.toString() == mesSeleccionat}" th:text="${m}" th:value="${m}">
                             </option>
                         </select>
-
-                        <select name="producteId" class="filter-input" onchange="this.form.submit()">
-                            <option value="">Tots els productes</option>
-
-                            <option th:each="producte : ${productes}"
-                                    th:value="${producte.id}"
-                                    th:selected="${producte.id == producteSeleccionat}"
-                                    th:text="${producte.nom}">
+                        <select class="filter-input" name="producteId" onchange="this.form.submit()">
+                            <option th:text="#{ui.tots_els_productes}" value="">Tots els productes</option>
+                            <option th:each="producte : ${productes}" th:selected="${producte.id == producteSeleccionat}" th:text="${producte.nom}" th:value="${producte.id}">
                             </option>
                         </select>
-
                     </form>
                 </div>
-
                 <div class="content-card">
-
-                    <h3>Total venut aquest mes</h3>
-                    <strong style="display:block; font-size:36px; margin:12px 0 24px;"
-                            th:text="${totalMes}">
+                    <h3 th:text="#{ui.total_venut_aquest_mes}">Total venut aquest mes</h3>
+                    <strong style="display:block; font-size:36px; margin:12px 0 24px;" th:text="${totalMes}">
                         0
                     </strong>
-
-                    <canvas id="productesChart" height="110"></canvas>
-
+                    <canvas height="110" id="productesChart"></canvas>
                 </div>
-
             </main>
-
         </div>
-
         <script th:inline="javascript">
             const dies = /*[[${dies}]]*/ [];
             const quantitats = /*[[${quantitats}]]*/ [];
@@ -110,6 +85,5 @@
                 }
             });
         </script>
-
     </body>
 </html>

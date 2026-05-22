@@ -1,73 +1,32 @@
 <!DOCTYPE html>
-<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
-        <title>Login - EasyTraza</title>
-
-        <link rel="stylesheet" th:href="@{/css/layout.css}">
-        <link rel="stylesheet" th:href="@{/css/login.css}">
+        <meta charset="utf-8"/>
+        <title th:text="#{ui.login_easytraza}">Login - EasyTraza</title>
+        <link rel="stylesheet" th:href="@{/css/layout.css}"/>
+        <link rel="stylesheet" th:href="@{/css/login.css}"/>
     </head>
-
     <body class="login-body">
-
         <main class="login-container">
-
             <div class="login-logo">
-                <img th:src="@{/images/LogoEasyTraza.PNG}" alt="EasyTraza">
+                <img alt="EasyTraza" th:src="@{/images/LogoEasyTraza.PNG}"/>
             </div>
-
             <section class="login-card">
-
-                <div th:if="${param.error}" class="login-alert error">
-                    Email o contrasenya incorrectes.
-                </div>
-                <div th:if="${param.passwordChanged}" class="login-alert success">
-                    Contrasenya actualitzada correctament. Ja pots iniciar sessió.
-                </div>
-
-                <div th:if="${param.disabled}" class="login-alert error">
-                    Aquest usuari no està operatiu.
-                </div>
-
-                <div th:if="${param.logout}" class="login-alert success">
-                    Sessió tancada correctament.
-                </div>
-
-                <form th:action="@{/login}" method="post">
-
-                    <label class="login-label" for="email">Email</label>
-                    <input id="email"
-                           class="login-input"
-                           type="email"
-                           name="email"
-                           placeholder="correu@exemple.com"
-                           required>
-
-                    <label class="login-label" for="password">Contrasenya</label>
-                    <input id="password"
-                           class="login-input"
-                           type="password"
-                           name="password"
-                           placeholder="••••••••"
-                           required>
-
-                    <a class="forgot-link" th:href="@{/recuperar-contrasenya}">
-                        Has oblidat la contrasenya?
-                    </a>
-
-                    <button class="login-button" type="submit">
-                        Iniciar sessió
-                    </button>
-
+                <div class="login-alert error" th:if="${param.error}" th:text="#{ui.email_o_contrasenya_incorrectes}">Email o contrasenya incorrectes.</div>
+                <div class="login-alert success" th:if="${param.passwordChanged}" th:text="#{ui.contrasenya_actualitzada_correctament_ja_pots_inic}">Contrasenya actualitzada correctament. Ja pots iniciar sessió.</div>
+                <div class="login-alert error" th:if="${param.disabled}" th:text="#{ui.aquest_usuari_no_esta_operatiu}">Aquest usuari no està operatiu.</div>
+                <div class="login-alert success" th:if="${param.logout}" th:text="#{ui.sessio_tancada_correctament}">Sessió tancada correctament.</div>
+                <form method="post" th:action="@{/login}">
+                    <label class="login-label" for="email" th:text="#{ui.email}">Email</label>
+                    <input class="login-input" id="email" name="email" placeholder="correu@exemple.com" required="" th:placeholder="#{ui.correu_exemple_com}" type="email"/>
+                    <label class="login-label" for="password" th:text="#{ui.contrasenya}">Contrasenya</label>
+                    <input class="login-input" id="password" name="password" placeholder="••••••••" required="" th:placeholder="#{ui.text_2}" type="password"/>
+                    <a class="forgot-link" th:href="@{/recuperar-contrasenya}" th:text="#{ui.has_oblidat_la_contrasenya}">Has oblidat la contrasenya?</a>
+                    <button class="login-button" th:text="#{ui.iniciar_sessio}" type="submit">Iniciar sessió</button>
                 </form>
-
-                <div class="login-footer">
-                    Gestió de lots i traçabilitat
-                </div>
-
+                <div class="login-footer" th:text="#{ui.gestio_de_lots_i_tracabilitat}">Gestió de lots i traçabilitat</div>
             </section>
-
         </main>
-
     </body>
 </html>
