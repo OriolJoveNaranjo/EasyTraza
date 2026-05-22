@@ -117,4 +117,9 @@
     <string name="close_lot_success">Lote cerrado correctamente</string>
     <string name="close_lot_failed">No se ha podido cerrar el lote</string>
     <string name="close_lot_error">Error cerrando el lote: %1$s</string>
+
+    <string name="exit_title">Salir</string>
+    <string name="exit_question">¿Qué quieres hacer?</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="close_app">Cerrar la aplicación</string>
 </resources>
