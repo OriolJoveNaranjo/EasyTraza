@@ -29,10 +29,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ProveidorController {
 
     private final ProveidorService proveidorService;
+    /**
+     * Executa l'operació ProveidorController.
+     */
 
     public ProveidorController(ProveidorService proveidorService) {
         this.proveidorService = proveidorService;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping
     public String mostrarProveidors(
@@ -48,6 +54,9 @@ public class ProveidorController {
 
         return "proveidors";
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/nou")
     public String mostrarFormulariNouProveidor(Model model) {
@@ -55,6 +64,9 @@ public class ProveidorController {
         model.addAttribute("mode", "create");
         return "nou-proveidor";
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute Proveidor proveidor, Model model) {
@@ -87,6 +99,9 @@ public class ProveidorController {
             return "nou-proveidor";
         }
     }
+    /**
+     * Actualitza una entitat existent amb les dades indicades.
+     */
 
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
@@ -100,6 +115,9 @@ public class ProveidorController {
         model.addAttribute("mode", "edit");
         return "nou-proveidor";
     }
+    /**
+     * Elimina o desactiva el registre indicat segons les regles de negoci.
+     */
 
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Long id, RedirectAttributes redirectAttributes) {
@@ -112,6 +130,9 @@ public class ProveidorController {
 
         return "redirect:/proveidors";
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/veure/{id}")
     public String veure(@PathVariable Long id, Model model) {
@@ -125,6 +146,9 @@ public class ProveidorController {
         model.addAttribute("mode", "view");
         return "nou-proveidor";
     }
+    /**
+     * Activa el registre indicat.
+     */
 
     @GetMapping("/activar/{id}")
     public String activar(@PathVariable Long id) {

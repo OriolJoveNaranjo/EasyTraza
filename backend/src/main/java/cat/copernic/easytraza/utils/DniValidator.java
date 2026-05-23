@@ -9,6 +9,9 @@ package cat.copernic.easytraza.utils;
  * @author orjon
  */
 public class DniValidator {
+    /**
+     * Executa l'operació validarDNI.
+     */
 
     public static boolean validarDNI(String dni) {
         if (dni == null || !dni.matches("^\\d{8}[A-Z]$")) {

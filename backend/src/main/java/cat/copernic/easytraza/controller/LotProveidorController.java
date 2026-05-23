@@ -25,11 +25,17 @@ public class LotProveidorController {
 
     private final LotProveidorService lotService;
     private final MateriaPrimeraRepository materiaPrimeraRepository;
+    /**
+     * Executa l'operació LotProveidorController.
+     */
 
     public LotProveidorController(LotProveidorService lotService, MateriaPrimeraRepository materiaPrimeraRepository) {
         this.lotService = lotService;
         this.materiaPrimeraRepository = materiaPrimeraRepository;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping
     public String llistar(
@@ -61,6 +67,9 @@ public class LotProveidorController {
 
         return "lots-proveidor";
     }
+    /**
+     * Inicia o obre l'element indicat segons el flux de treball.
+     */
 
     @PostMapping("/obrir/{id}")
     public String obrir(
@@ -79,6 +88,9 @@ public class LotProveidorController {
 
         return "redirect:/lots-proveidor";
     }
+    /**
+     * Finalitza o tanca l'element indicat segons el flux de treball.
+     */
 
     @PostMapping("/finalitzar/{id}")
     public String finalitzar(@PathVariable Long id, RedirectAttributes redirect) {

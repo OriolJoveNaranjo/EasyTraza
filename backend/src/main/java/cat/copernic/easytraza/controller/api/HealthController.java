@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class HealthController {
+    /**
+     * Executa l'operació health.
+     */
 
     @GetMapping("/health")
     public String health() {

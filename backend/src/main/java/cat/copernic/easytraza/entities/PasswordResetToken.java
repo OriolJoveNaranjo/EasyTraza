@@ -32,42 +32,72 @@ public class PasswordResetToken {
     @OneToOne
     @JoinColumn(name = "usuari_id", nullable = false)
     private Usuari usuari;
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public Long getId() {
         return id;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public String getToken() {
         return token;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public LocalDateTime getDataExpiracio() {
         return dataExpiracio;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public boolean isUtilitzat() {
         return utilitzat;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public Usuari getUsuari() {
         return usuari;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setId(Long id) {
         this.id = id;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setToken(String token) {
         this.token = token;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setDataExpiracio(LocalDateTime dataExpiracio) {
         this.dataExpiracio = dataExpiracio;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setUtilitzat(boolean utilitzat) {
         this.utilitzat = utilitzat;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setUsuari(Usuari usuari) {
         this.usuari = usuari;

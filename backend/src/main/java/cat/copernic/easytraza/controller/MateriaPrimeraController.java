@@ -20,10 +20,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MateriaPrimeraController {
 
     private final MateriaPrimeraService materiaPrimeraService;
+    /**
+     * Executa l'operació MateriaPrimeraController.
+     */
 
     public MateriaPrimeraController(MateriaPrimeraService materiaPrimeraService) {
         this.materiaPrimeraService = materiaPrimeraService;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/cataleg")
     public String mostrarCataleg(
@@ -46,12 +52,18 @@ public class MateriaPrimeraController {
 
         return "cataleg";
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/cataleg/materies-primeres/nova")
     public String mostrarFormulariNovaMateriaPrimera(Model model) {
         model.addAttribute("materiaPrimera", new MateriaPrimera());
         return "nova-materia-primera";
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @PostMapping("/cataleg/materies-primeres/guardar")
     public String guardar(@ModelAttribute MateriaPrimera materiaPrimera, Model model) {
@@ -71,6 +83,9 @@ public class MateriaPrimeraController {
             return "nova-materia-primera";
         }
     }
+    /**
+     * Elimina o desactiva el registre indicat segons les regles de negoci.
+     */
 
     @GetMapping("/cataleg/materies-primeres/eliminar/{id}")
     public String eliminar(@PathVariable Long id, RedirectAttributes redirectAttributes) {
@@ -83,6 +98,9 @@ public class MateriaPrimeraController {
 
         return "redirect:/cataleg";
     }
+    /**
+     * Actualitza una entitat existent amb les dades indicades.
+     */
 
     @GetMapping("/cataleg/materies-primeres/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
@@ -95,6 +113,9 @@ public class MateriaPrimeraController {
         model.addAttribute("materiaPrimera", materia);
         return "nova-materia-primera";
     }
+    /**
+     * Activa el registre indicat.
+     */
 
     @GetMapping("/cataleg/activar/{id}")
     public String activar(@PathVariable Long id, RedirectAttributes redirectAttributes) {

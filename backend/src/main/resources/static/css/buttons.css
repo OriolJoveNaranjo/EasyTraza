@@ -93,3 +93,45 @@
 .btn-finish:hover {
     background-color: #334155;
 }
+/* Iconografia lleugera per reforçar les accions sense dependre només del color. */
+.btn-edit,
+.btn-delete,
+.btn-danger,
+.btn-finish,
+.btn-view,
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-edit::before {
+    content: "✎";
+    font-weight: 700;
+}
+
+.btn-delete::before,
+.btn-danger::before {
+    content: "🗑";
+    font-size: 0.95em;
+}
+
+.btn-view::before {
+    content: "👁";
+    font-size: 0.95em;
+}
+
+.btn-finish::before {
+    content: "✓";
+    font-weight: 700;
+}
+
+.btn-secondary::before {
+    content: "↩";
+    font-weight: 700;
+}
+
+.btn-secondary[href*="tracabilitat"]::before {
+    content: "🔎";
+    font-size: 0.95em;
+}

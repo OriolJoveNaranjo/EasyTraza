@@ -22,10 +22,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ClientController {
 
     private final ClientService clientService;
+    /**
+     * Executa l'operació ClientController.
+     */
 
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping
     public String mostrarClients(
@@ -41,6 +47,9 @@ public class ClientController {
 
         return "clients";
     }
+    /**
+     * Executa l'operació nouClient.
+     */
 
     @GetMapping("/nou")
     public String nouClient(Model model) {
@@ -48,6 +57,9 @@ public class ClientController {
         model.addAttribute("mode", "create");
         return "nou-client";
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute Client client, Model model) {
@@ -80,6 +92,9 @@ public class ClientController {
             return "nou-client";
         }
     }
+    /**
+     * Actualitza una entitat existent amb les dades indicades.
+     */
 
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
@@ -93,6 +108,9 @@ public class ClientController {
         model.addAttribute("mode", "edit");
         return "nou-client";
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/veure/{id}")
     public String veure(@PathVariable Long id, Model model) {
@@ -106,6 +124,9 @@ public class ClientController {
         model.addAttribute("mode", "view");
         return "nou-client";
     }
+    /**
+     * Elimina o desactiva el registre indicat segons les regles de negoci.
+     */
 
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Long id, RedirectAttributes redirectAttributes) {
@@ -118,6 +139,9 @@ public class ClientController {
 
         return "redirect:/clients";
     }
+    /**
+     * Activa el registre indicat.
+     */
 
     @GetMapping("/activar/{id}")
     public String activar(@PathVariable Long id) {

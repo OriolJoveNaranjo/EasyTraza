@@ -32,42 +32,72 @@ public class MateriaPrimera {
     private String descripcio;
     
     private boolean actiu = true;
+    /**
+     * Executa l'operació MateriaPrimera.
+     */
 
     public MateriaPrimera() {
     }
+    /**
+     * Executa l'operació MateriaPrimera.
+     */
 
     public MateriaPrimera(String nom, String descripcio) {
         this.nom = nom;
         this.descripcio = descripcio;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public Long getId() {
         return id;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public String getNom() {
         return nom;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setNom(String nom) {
         this.nom = nom;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public String getDescripcio() {
         return descripcio;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setDescripcio(String descripcio) {
         this.descripcio = descripcio;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setId(Long id) {
         this.id = id;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public boolean isActiu() {
         return actiu;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setActiu(boolean actiu) {
         this.actiu = actiu;

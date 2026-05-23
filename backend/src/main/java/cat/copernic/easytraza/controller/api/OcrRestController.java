@@ -29,12 +29,18 @@ public class OcrRestController {
     private final OcrService ocrService;
     private final ProveidorService proveidorService;
     private final MateriaPrimeraService materiaPrimeraService;
+    /**
+     * Executa l'operació OcrRestController.
+     */
 
     public OcrRestController(OcrService ocrService, ProveidorService proveidorService,MateriaPrimeraService materiaPrimeraService ) {
         this.ocrService = ocrService;
         this.proveidorService = proveidorService;
         this.materiaPrimeraService = materiaPrimeraService;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/albarans-proveidor/ocr")
     public String mostrarFormulariOcr(Model model) {
@@ -56,6 +62,9 @@ public class OcrRestController {
 
         return "nou-proveidor-ocr";
     }
+    /**
+     * Executa l'operació processarAlbara.
+     */
 
     @PostMapping("/albara-proveidor")
     public ResponseEntity<?> processarAlbara(@RequestParam("file") MultipartFile file) {

@@ -21,17 +21,26 @@ public class ProducteFinalServiceImpl implements ProducteFinalService {
 
     private final ProducteFinalRepository producteFinalRepository;
     private final LiniaAlbaraClientRepository liniaRepo;
+    /**
+     * Executa l'operació ProducteFinalServiceImpl.
+     */
 
     public ProducteFinalServiceImpl(ProducteFinalRepository producteFinalRepository,
             LiniaAlbaraClientRepository liniaRepo) {
         this.producteFinalRepository = producteFinalRepository;
         this.liniaRepo = liniaRepo;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @Override
     public List<ProducteFinal> findAll() {
         return producteFinalRepository.findAll();
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @Override
     public ProducteFinal save(ProducteFinal producteFinal) {
@@ -41,6 +50,9 @@ public class ProducteFinalServiceImpl implements ProducteFinalService {
 
         return producteFinalRepository.save(producteFinal);
     }
+    /**
+     * Actualitza una entitat existent amb les dades indicades.
+     */
 
     @Override
     public ProducteFinal update(Long id, ProducteFinal producteFinal) {
@@ -60,11 +72,17 @@ public class ProducteFinalServiceImpl implements ProducteFinalService {
 
         return producteFinalRepository.save(actual);
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @Override
     public Optional<ProducteFinal> findById(Long id) {
         return producteFinalRepository.findById(id);
     }
+    /**
+     * Elimina o desactiva el registre indicat segons les regles de negoci.
+     */
 
     @Override
     public String deleteById(Long id) {
@@ -82,6 +100,9 @@ public class ProducteFinalServiceImpl implements ProducteFinalService {
         producteFinalRepository.deleteById(id);
         return "Producte final eliminat correctament.";
     }
+    /**
+     * Activa el registre indicat.
+     */
 
     @Override
     public void activar(Long id) {

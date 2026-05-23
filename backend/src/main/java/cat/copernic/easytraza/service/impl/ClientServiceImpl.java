@@ -22,21 +22,33 @@ public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepo;
     private final AlbaraClientRepository albaraCliRepo;
+    /**
+     * Executa l'operació ClientServiceImpl.
+     */
 
     public ClientServiceImpl(ClientRepository clientRepo, AlbaraClientRepository albaraCliRepo) {
         this.clientRepo = clientRepo;
         this.albaraCliRepo = albaraCliRepo;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @Override
     public List<Client> findAll() {
         return clientRepo.findAll();
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @Override
     public Optional<Client> findById(Long id) {
         return clientRepo.findById(id);
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @Override
     @Transactional
@@ -56,6 +68,9 @@ public class ClientServiceImpl implements ClientService {
         client.setEmail(emailNet);
         return clientRepo.save(client);
     }
+    /**
+     * Actualitza una entitat existent amb les dades indicades.
+     */
 
     @Override
     @Transactional
@@ -86,6 +101,9 @@ public class ClientServiceImpl implements ClientService {
 
         return clientRepo.save(existent);
     }
+    /**
+     * Elimina o desactiva el registre indicat segons les regles de negoci.
+     */
 
     
     @Override
@@ -148,6 +166,9 @@ public class ClientServiceImpl implements ClientService {
         String net = text.trim();
         return net.isEmpty() ? null : net;
     }
+    /**
+     * Executa l'operació filtrar.
+     */
 
     @Override
     public List<Client> filtrar(String filtre, String ordre) {
@@ -172,6 +193,9 @@ public class ClientServiceImpl implements ClientService {
 
         return clients;
     }
+    /**
+     * Activa el registre indicat.
+     */
 
     public void activar(Long id) {
         Client client = clientRepo.findById(id)

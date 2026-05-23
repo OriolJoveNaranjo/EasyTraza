@@ -9,6 +9,9 @@ package cat.copernic.easytraza.utils;
  * @author orjon
  */
 public class NifValidator {
+    /**
+     * Executa l'operació validarDocument.
+     */
 
     public static boolean validarDocument(String document) {
         if (document == null) {

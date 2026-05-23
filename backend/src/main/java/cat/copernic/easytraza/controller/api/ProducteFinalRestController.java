@@ -21,15 +21,24 @@ import org.springframework.web.bind.annotation.*;
 public class ProducteFinalRestController {
 
     private final ProducteFinalService producteFinalService;
+    /**
+     * Executa l'operació ProducteFinalRestController.
+     */
 
     public ProducteFinalRestController(ProducteFinalService producteFinalService) {
         this.producteFinalService = producteFinalService;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     @GetMapping
     public ResponseEntity<List<ProducteFinal>> getAll() {
         return ResponseEntity.ok(producteFinalService.findAll());
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     @GetMapping("/{id}")
     public ResponseEntity<ProducteFinal> getById(@PathVariable Long id) {
@@ -37,6 +46,9 @@ public class ProducteFinalRestController {
         return producteFinal.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody ProducteFinal producteFinal) {
@@ -47,6 +59,9 @@ public class ProducteFinalRestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    /**
+     * Actualitza una entitat existent amb les dades indicades.
+     */
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ProducteFinal producteFinal) {
@@ -57,6 +72,9 @@ public class ProducteFinalRestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    /**
+     * Elimina o desactiva el registre indicat segons les regles de negoci.
+     */
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

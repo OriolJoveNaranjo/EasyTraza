@@ -39,11 +39,17 @@ public class OcrServiceImpl implements OcrService {
 
     private final MateriaPrimeraRepository materiaRepo;
     private final ProveidorRepository proveidorRepo;
+    /**
+     * Executa l'operació OcrServiceImpl.
+     */
 
     public OcrServiceImpl(MateriaPrimeraRepository materiaRepo, ProveidorRepository proveidorRepo) {
         this.materiaRepo = materiaRepo;
         this.proveidorRepo = proveidorRepo;
     }
+    /**
+     * Executa l'operació extreureText.
+     */
 
     @Override
     public String extreureText(MultipartFile file) throws Exception {
@@ -81,6 +87,9 @@ public class OcrServiceImpl implements OcrService {
 
         return resultat;
     }
+    /**
+     * Executa l'operació processarAlbara.
+     */
 
     @Override
     public OcrAlbaraProveidorDto processarAlbara(MultipartFile file) throws Exception {

@@ -28,6 +28,9 @@ import java.util.List;
 @Table(
     uniqueConstraints = @UniqueConstraint(columnNames = {"client_id", "data"})
 )
+/**
+ * Entitat JPA que representa AlbaraClient dins del domini d'EasyTraza.
+ */
 @Entity
 public class AlbaraClient {
 
@@ -45,42 +48,72 @@ public class AlbaraClient {
 
     @OneToMany(mappedBy = "albaraClient", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LiniaAlbaraClient> linies = new ArrayList<>();
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public List<LiniaAlbaraClient> getLinies() {
         return linies;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setLinies(List<LiniaAlbaraClient> linies) {
         this.linies = linies;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public Long getId() {
         return id;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setId(Long id) {
         this.id = id;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public LocalDateTime getData() {
         return data;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setData(LocalDateTime data) {
         this.data = data;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public Client getClient() {
         return client;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setClient(Client client) {
         this.client = client;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public EstatAlbaraClient getEstat() {
         return estat;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setEstat(EstatAlbaraClient estat) {
         this.estat = estat;

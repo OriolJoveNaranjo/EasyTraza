@@ -47,9 +47,15 @@ public class Proveidor {
     private String observacions;
 
     private boolean actiu = true;
+    /**
+     * Executa l'operació Proveidor.
+     */
 
     public Proveidor() {
     }
+    /**
+     * Executa l'operació Proveidor.
+     */
 
     public Proveidor(String cif, String nom, String adreca, String observacions, String email, String telefon) {
         this.cif = cif;
@@ -59,66 +65,114 @@ public class Proveidor {
         this.email = email;
         this.telefon = telefon;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public Long getId() {
         return id;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setId(Long id) {
         this.id = id;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public String getCif() {
         return cif;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setCif(String cif) {
         this.cif = cif;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public String getNom() {
         return nom;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setNom(String nom) {
         this.nom = nom;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public String getAdreca() {
         return adreca;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setAdreca(String adreca) {
         this.adreca = adreca;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public String getTelefon() {
         return telefon;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setTelefon(String telefon) {
         this.telefon = telefon;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public String getEmail() {
         return email;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setEmail(String email) {
         this.email = email;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public String getObservacions() {
         return observacions;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setObservacions(String observacions) {
         this.observacions = observacions;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public boolean isActiu() {
         return actiu;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setActiu(boolean actiu) {
         this.actiu = actiu;

@@ -28,11 +28,17 @@ public class PerfilController {
 
     private final UsuariRepository usuariRepository;
     private final PasswordEncoder passwordEncoder;
+    /**
+     * Executa l'operació PerfilController.
+     */
 
     public PerfilController(UsuariRepository usuariRepository, PasswordEncoder passwordEncoder) {
         this.usuariRepository = usuariRepository;
         this.passwordEncoder = passwordEncoder;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/perfil")
     public String mostrarPerfil(Model model, Principal principal) {
@@ -43,6 +49,9 @@ public class PerfilController {
 
         return "perfil";
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @PostMapping("/perfil")
     public String guardarPerfil(

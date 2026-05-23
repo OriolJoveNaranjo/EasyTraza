@@ -20,15 +20,24 @@ import org.springframework.web.bind.annotation.*;
 public class UsuariRestController {
 
     private final UsuariService usuariService;
+    /**
+     * Executa l'operació UsuariRestController.
+     */
 
     public UsuariRestController(UsuariService usuariService) {
         this.usuariService = usuariService;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     @GetMapping
     public ResponseEntity<List<Usuari>> getAll() {
         return ResponseEntity.ok(usuariService.findAll());
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     @GetMapping("/{id}")
     public ResponseEntity<Usuari> getById(@PathVariable Long id) {
@@ -36,6 +45,9 @@ public class UsuariRestController {
         return usuari.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Usuari usuari) {
@@ -46,6 +58,9 @@ public class UsuariRestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    /**
+     * Actualitza una entitat existent amb les dades indicades.
+     */
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Usuari usuari) {
@@ -56,6 +71,9 @@ public class UsuariRestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    /**
+     * Elimina o desactiva el registre indicat segons les regles de negoci.
+     */
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

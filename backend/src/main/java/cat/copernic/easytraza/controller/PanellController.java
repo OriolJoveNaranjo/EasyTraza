@@ -24,12 +24,18 @@ public class PanellController {
 
     private final LotProveidorRepository lotProveidorRepository;
     private final ControlPhRepository controlPhRepository;
+    /**
+     * Executa l'operació PanellController.
+     */
 
     public PanellController(LotProveidorRepository lotProveidorRepository,
             ControlPhRepository controlPhRepository) {
         this.lotProveidorRepository = lotProveidorRepository;
         this.controlPhRepository = controlPhRepository;
     }
+    /**
+     * Executa l'operació panell.
+     */
 
     @GetMapping("/panell")
     public String panell(Model model) {
@@ -53,6 +59,9 @@ public class PanellController {
 
         return "panell";
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/panell/caducitats")
     public String veureCaducitats(Model model) {

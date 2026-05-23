@@ -24,10 +24,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ProducteFinalController {
 
     private final ProducteFinalService producteFinalService;
+    /**
+     * Executa l'operació ProducteFinalController.
+     */
 
     public ProducteFinalController(ProducteFinalService producteFinalService) {
         this.producteFinalService = producteFinalService;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/productes-finals")
     public String mostrarProductesFinals(
@@ -50,12 +56,18 @@ public class ProducteFinalController {
 
         return "productes-finals";
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/productes-finals/nou")
     public String mostrarFormulariNouProducteFinal(Model model) {
         model.addAttribute("producteFinal", new ProducteFinal());
         return "nou-producte";
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @PostMapping("/productes-finals/guardar")
     public String guardar(@ModelAttribute ProducteFinal producteFinal, Model model) {
@@ -73,6 +85,9 @@ public class ProducteFinalController {
             return "nou-producte";
         }
     }
+    /**
+     * Actualitza una entitat existent amb les dades indicades.
+     */
 
     @GetMapping("/productes-finals/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
@@ -85,6 +100,9 @@ public class ProducteFinalController {
         model.addAttribute("producteFinal", producteFinal);
         return "nou-producte";
     }
+    /**
+     * Elimina o desactiva el registre indicat segons les regles de negoci.
+     */
 
     @GetMapping("/productes-finals/eliminar/{id}")
     public String eliminar(@PathVariable Long id, RedirectAttributes redirectAttributes) {
@@ -97,6 +115,9 @@ public class ProducteFinalController {
 
         return "redirect:/productes-finals";
     }
+    /**
+     * Activa el registre indicat.
+     */
 
     @GetMapping("/productes-finals/activar/{id}")
     public String activar(@PathVariable Long id, RedirectAttributes redirectAttributes) {

@@ -20,21 +20,33 @@ public class ProveidorServiceImpl implements ProveidorService {
 
     private final ProveidorRepository proveidorRepository;
     private final AlbaraProveidorRepository alabaraProveidorRepo;
+    /**
+     * Executa l'operació ProveidorServiceImpl.
+     */
 
     public ProveidorServiceImpl(ProveidorRepository proveidorRepository, AlbaraProveidorRepository alabaraProveidorRepo) {
         this.proveidorRepository = proveidorRepository;
         this.alabaraProveidorRepo = alabaraProveidorRepo;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @Override
     public List<Proveidor> findAll() {
         return proveidorRepository.findAll();
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @Override
     public Optional<Proveidor> findById(Long id) {
         return proveidorRepository.findById(id);
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @Override
     public Proveidor save(Proveidor proveidor) {
@@ -49,6 +61,9 @@ public class ProveidorServiceImpl implements ProveidorService {
 
         return proveidorRepository.save(proveidor);
     }
+    /**
+     * Actualitza una entitat existent amb les dades indicades.
+     */
 
     @Override
     public Proveidor update(Long id, Proveidor proveidor) {
@@ -73,6 +88,9 @@ public class ProveidorServiceImpl implements ProveidorService {
 
         return proveidorRepository.save(actual);
     }
+    /**
+     * Elimina o desactiva el registre indicat segons les regles de negoci.
+     */
 
     @Override
     public String deleteById(Long id) {
@@ -126,6 +144,9 @@ public class ProveidorServiceImpl implements ProveidorService {
         String net = text.trim();
         return net.isEmpty() ? null : net;
     }
+    /**
+     * Executa l'operació filtrar.
+     */
 
     @Override
     public List<Proveidor> filtrar(String filtre, String ordre) {
@@ -151,6 +172,9 @@ public class ProveidorServiceImpl implements ProveidorService {
 
         return proveidors;
     }
+    /**
+     * Activa el registre indicat.
+     */
 
     @Override
     public void activar(Long id) {

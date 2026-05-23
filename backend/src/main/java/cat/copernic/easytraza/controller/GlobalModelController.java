@@ -18,10 +18,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 public class GlobalModelController {
 
     private final UsuariRepository usuariRepository;
+    /**
+     * Executa l'operació GlobalModelController.
+     */
 
     public GlobalModelController(UsuariRepository usuariRepository) {
         this.usuariRepository = usuariRepository;
     }
+    /**
+     * Executa l'operació usuariSessio.
+     */
 
     @ModelAttribute("usuariSessio")
     public Usuari usuariSessio(Principal principal) {

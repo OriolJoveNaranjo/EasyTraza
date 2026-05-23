@@ -26,12 +26,18 @@ public class GraficProductesController {
 
     private final LiniaAlbaraClientRepository liniaRepository;
     private final ProducteFinalRepository producteRepository;
+    /**
+     * Executa l'operació GraficProductesController.
+     */
 
     public GraficProductesController(LiniaAlbaraClientRepository liniaRepository,
             ProducteFinalRepository producteRepository) {
         this.liniaRepository = liniaRepository;
         this.producteRepository = producteRepository;
     }
+    /**
+     * Executa l'operació graficProductes.
+     */
 
     @GetMapping("/informes/productes-mensual")
     public String graficProductes(

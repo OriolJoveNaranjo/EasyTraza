@@ -35,6 +35,9 @@ public class UsuariServiceImpl implements UsuariService {
     private final ControlPhRepository controlPhRepo;
     @Value("${app.superadmin.email}")
     private String superAdminEmail;
+    /**
+     * Executa l'operació UsuariServiceImpl.
+     */
 
     public UsuariServiceImpl(UsuariRepository usuariRepository, PasswordEncoder passwordEncoder,
             LotProveidorRepository lotProveidorRepo, AlbaraProveidorRepository albaraProveidorRepo,
@@ -46,16 +49,25 @@ public class UsuariServiceImpl implements UsuariService {
         this.controlPhRepo = controlPhRepo;
         this.passwordResetTokenRepository = passwordResetTokenRepository;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @Override
     public List<Usuari> findAll() {
         return usuariRepository.findAll();
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @Override
     public Optional<Usuari> findById(Long id) {
         return usuariRepository.findById(id);
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @Override
     public Usuari save(Usuari usuari) {
@@ -66,6 +78,9 @@ public class UsuariServiceImpl implements UsuariService {
 
         return usuariRepository.save(usuari);
     }
+    /**
+     * Actualitza una entitat existent amb les dades indicades.
+     */
 
     @Override
     public Usuari update(Long id, Usuari usuari) {
@@ -89,6 +104,9 @@ public class UsuariServiceImpl implements UsuariService {
 
         return usuariRepository.save(actual);
     }
+    /**
+     * Elimina o desactiva el registre indicat segons les regles de negoci.
+     */
 
     @Override
     @Transactional
@@ -121,6 +139,9 @@ public class UsuariServiceImpl implements UsuariService {
         usuariRepository.deleteById(id);
         return "Usuari eliminat correctament.";
     }
+    /**
+     * Activa el registre indicat.
+     */
 
     @Override
     public void activar(Long id) {

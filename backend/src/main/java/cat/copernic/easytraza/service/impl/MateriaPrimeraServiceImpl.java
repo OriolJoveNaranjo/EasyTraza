@@ -22,21 +22,33 @@ public class MateriaPrimeraServiceImpl implements MateriaPrimeraService {
 
     private final MateriaPrimeraRepository materiaPrimeraRepository; 
     private final LotProveidorRepository lotProvRepo;
+    /**
+     * Executa l'operació MateriaPrimeraServiceImpl.
+     */
 
     public MateriaPrimeraServiceImpl(MateriaPrimeraRepository materiaPrimeraRepository,LotProveidorRepository lotProvRepo) {
         this.materiaPrimeraRepository = materiaPrimeraRepository;
         this.lotProvRepo = lotProvRepo;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @Override
     public List<MateriaPrimera> findAll() {
         return materiaPrimeraRepository.findAll();
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @Override
     public Optional<MateriaPrimera> findById(Long id) {
         return materiaPrimeraRepository.findById(id);
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @Override
     public MateriaPrimera save(MateriaPrimera materiaPrimera) {
@@ -46,6 +58,9 @@ public class MateriaPrimeraServiceImpl implements MateriaPrimeraService {
 
         return materiaPrimeraRepository.save(materiaPrimera);
     }
+    /**
+     * Actualitza una entitat existent amb les dades indicades.
+     */
 
     @Override
     public MateriaPrimera update(Long id, MateriaPrimera materiaPrimera) {
@@ -65,6 +80,9 @@ public class MateriaPrimeraServiceImpl implements MateriaPrimeraService {
 
         return materiaPrimeraRepository.save(actual);
     }
+    /**
+     * Elimina o desactiva el registre indicat segons les regles de negoci.
+     */
 
     @Override
     public String deleteById(Long id) {
@@ -82,6 +100,9 @@ public class MateriaPrimeraServiceImpl implements MateriaPrimeraService {
         materiaPrimeraRepository.deleteById(id);
         return "Matèria primera eliminada correctament.";
     }
+    /**
+     * Activa el registre indicat.
+     */
 
     public void activar(Long id) {
         MateriaPrimera materia = materiaPrimeraRepository.findById(id)

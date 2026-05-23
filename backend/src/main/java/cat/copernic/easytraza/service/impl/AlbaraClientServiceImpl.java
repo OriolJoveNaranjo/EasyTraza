@@ -31,6 +31,9 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
     private final AlbaraClientRepository repository;
     private final LotProveidorRepository lotProveidorRepository;
     private final TracabilitatRepository tracabilitatRepository;
+    /**
+     * Executa l'operació AlbaraClientServiceImpl.
+     */
 
     public AlbaraClientServiceImpl(AlbaraClientRepository repository, LotProveidorRepository lotProveidorRepository,
             TracabilitatRepository tracabilitatRepository) {
@@ -38,16 +41,25 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
         this.lotProveidorRepository = lotProveidorRepository;
         this.tracabilitatRepository = tracabilitatRepository;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @Override
     public List<AlbaraClient> findAll() {
         return repository.findAll();
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @Override
     public Optional<AlbaraClient> findById(Long id) {
         return repository.findById(id);
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @Override
     public AlbaraClient save(AlbaraClient albara) {
@@ -65,6 +77,9 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
 
         return repository.save(albara);
     }
+    /**
+     * Actualitza una entitat existent amb les dades indicades.
+     */
 
     @Override
     public AlbaraClient update(Long id, AlbaraClient albara) {
@@ -87,6 +102,9 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
 
         return repository.save(albara);
     }
+    /**
+     * Elimina o desactiva el registre indicat segons les regles de negoci.
+     */
 
     @Override
     @Transactional
@@ -102,6 +120,9 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
 
         repository.deleteById(id);
     }
+    /**
+     * Executa l'operació marcarComLliurat.
+     */
 
     @Override
     public void marcarComLliurat(Long id) {
@@ -111,6 +132,9 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
         albara.setEstat(EstatAlbaraClient.LLIURAT);
         repository.save(albara);
     }
+    /**
+     * Executa l'operació filtrar.
+     */
 
     @Override
     public List<AlbaraClient> filtrar(Long clientId, String estat, String ordre) {
@@ -144,6 +168,9 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
 
         return albarans;
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @Override
     @Transactional

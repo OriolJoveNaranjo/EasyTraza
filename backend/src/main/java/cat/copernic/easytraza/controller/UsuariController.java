@@ -37,10 +37,16 @@ public class UsuariController {
 
     @Value("${app.superadmin.email}")
     private String superAdminEmail;
+    /**
+     * Executa l'operació UsuariController.
+     */
 
     public UsuariController(UsuariService usuariService) {
         this.usuariService = usuariService;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/usuaris")
     public String mostrarUsuaris(
@@ -72,6 +78,9 @@ public class UsuariController {
 
         return "usuaris";
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/usuaris/nou")
     public String mostrarFormulariNouUsuari(Model model) {
@@ -79,6 +88,9 @@ public class UsuariController {
         model.addAttribute("mode", "create");
         return "nou-usuari";
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @PostMapping("/usuaris/guardar")
     public String guardar(@Valid @ModelAttribute Usuari usuari,
@@ -133,6 +145,9 @@ public class UsuariController {
             return "nou-usuari";
         }
     }
+    /**
+     * Actualitza una entitat existent amb les dades indicades.
+     */
 
     @GetMapping("/usuaris/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
@@ -146,6 +161,9 @@ public class UsuariController {
         model.addAttribute("mode", "edit");
         return "nou-usuari";
     }
+    /**
+     * Elimina o desactiva el registre indicat segons les regles de negoci.
+     */
 
     @GetMapping("/usuaris/eliminar/{id}")
     public String eliminar(@PathVariable Long id, RedirectAttributes redirectAttributes) {
@@ -158,6 +176,9 @@ public class UsuariController {
 
         return "redirect:/usuaris";
     }
+    /**
+     * Activa el registre indicat.
+     */
 
     @GetMapping("/usuaris/activar/{id}")
     public String activar(@PathVariable Long id, RedirectAttributes redirectAttributes) {

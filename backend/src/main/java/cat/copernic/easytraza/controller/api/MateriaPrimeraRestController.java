@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.*;
 public class MateriaPrimeraRestController {
 
     private final MateriaPrimeraService materiaPrimeraService;
+    /**
+     * Executa l'operació MateriaPrimeraRestController.
+     */
 
     public MateriaPrimeraRestController(MateriaPrimeraService materiaPrimeraService) {
         this.materiaPrimeraService = materiaPrimeraService;

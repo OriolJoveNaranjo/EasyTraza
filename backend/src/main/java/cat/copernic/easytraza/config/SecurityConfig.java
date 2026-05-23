@@ -18,10 +18,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfig {
 
+    /**
+     * Executa l'operació securityFilterChain.
+     */
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf
+                .ignoringRequestMatchers("/api/**")
+                )
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/**").permitAll()
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/**").permitAll()
@@ -76,6 +82,10 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+    /**
+     * Executa l'operació passwordEncoder.
+     */
 
     @Bean
     public PasswordEncoder passwordEncoder() {

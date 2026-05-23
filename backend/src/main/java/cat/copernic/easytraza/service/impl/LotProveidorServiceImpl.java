@@ -28,22 +28,34 @@ public class LotProveidorServiceImpl implements LotProveidorService {
 
     private final LotProveidorRepository lotRepo;
     private final UsuariRepository usuarirepo;
+    /**
+     * Executa l'operació LotProveidorServiceImpl.
+     */
 
     public LotProveidorServiceImpl(LotProveidorRepository lotRepo, UsuariRepository usuarirepo) {
         this.lotRepo = lotRepo;
         this.usuarirepo = usuarirepo;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @Override
     public List<LotProveidor> findAll() {
         return lotRepo.findAll();
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @Override
     public LotProveidor findById(Long id) {
         return lotRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("El lot no existeix"));
     }
+    /**
+     * Inicia o obre l'element indicat segons el flux de treball.
+     */
 
     @Override
     @Transactional
@@ -85,6 +97,9 @@ public class LotProveidorServiceImpl implements LotProveidorService {
 
         lotRepo.save(lot);
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @Override
     public List<LotProveidor> findByEstat(String estat) {
@@ -94,6 +109,9 @@ public class LotProveidorServiceImpl implements LotProveidorService {
 
         return lotRepo.findByEstat(EstatLot.valueOf(estat));
     }
+    /**
+     * Finalitza o tanca l'element indicat segons el flux de treball.
+     */
 
     @Transactional
     @Override
@@ -110,6 +128,9 @@ public class LotProveidorServiceImpl implements LotProveidorService {
 
         lotRepo.save(lot);
     }
+    /**
+     * Executa l'operació filtrarLots.
+     */
 
     @Override
     public List<LotProveidor> filtrarLots(String identificador, String estat, Long materiaId, LocalDate data) {
@@ -127,6 +148,9 @@ public class LotProveidorServiceImpl implements LotProveidorService {
                 data
         );
     }
+    /**
+     * Inicia o obre l'element indicat segons el flux de treball.
+     */
 
     @Override
     @Transactional

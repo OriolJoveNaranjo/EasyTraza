@@ -12,6 +12,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class EasyTraza {
+    /**
+     * Executa l'operació main.
+     */
     public static void main(String[] args) {
         SpringApplication.run(EasyTraza.class, args);
     }

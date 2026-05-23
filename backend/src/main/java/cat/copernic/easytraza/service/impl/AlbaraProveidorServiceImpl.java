@@ -44,6 +44,9 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
     private final MateriaPrimeraRepository materiaRepo;
     private final LotProveidorRepository lotRepo;
     private final UsuariRepository usuarirepo;
+    /**
+     * Executa l'operació AlbaraProveidorServiceImpl.
+     */
 
     public AlbaraProveidorServiceImpl(
             AlbaraProveidorRepository albaraRepo,
@@ -58,21 +61,33 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
         this.lotRepo = lotRepo;
         this.usuarirepo = usuarirepo;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @Override
     public List<AlbaraProveidor> findAll() {
         return albaraRepo.findAll();
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @Override
     public Optional<AlbaraProveidor> findById(Long id) {
         return albaraRepo.findById(id);
     }
+    /**
+     * Elimina o desactiva el registre indicat segons les regles de negoci.
+     */
 
     @Override
     public void deleteById(Long id) {
         albaraRepo.deleteById(id);
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @Override
     @Transactional
@@ -206,6 +221,9 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
 
         return albaraRepo.save(albaraProveidor);
     }
+    /**
+     * Actualitza una entitat existent amb les dades indicades.
+     */
 
     @Override
     @Transactional
@@ -352,6 +370,9 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
 
         return albaraRepo.save(existent);
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @Override
     @Transactional
@@ -359,6 +380,9 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
         afegirFitxers(albaraProveidor, fitxers);
         return save(albaraProveidor);
     }
+    /**
+     * Actualitza una entitat existent amb les dades indicades.
+     */
 
     @Override
     @Transactional
@@ -395,6 +419,9 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
             }
         }
     }
+    /**
+     * Executa l'operació filtrar.
+     */
 
     @Override
     public List<AlbaraProveidor> filtrar(Long proveidorId, String ordre) {

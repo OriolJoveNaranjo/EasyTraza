@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class LoginController {
+    /**
+     * Executa l'operació login.
+     */
 
     @GetMapping("/login")
     public String login() {

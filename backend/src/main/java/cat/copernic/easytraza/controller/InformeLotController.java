@@ -27,12 +27,18 @@ public class InformeLotController {
 
     private final LotProveidorRepository lotProveidorRepository;
     private final TracabilitatRepository tracabilitatRepository;
+    /**
+     * Executa l'operació InformeLotController.
+     */
 
     public InformeLotController(LotProveidorRepository lotProveidorRepository,
             TracabilitatRepository tracabilitatRepository) {
         this.lotProveidorRepository = lotProveidorRepository;
         this.tracabilitatRepository = tracabilitatRepository;
     }
+    /**
+     * Executa l'operació informeLot.
+     */
 
     @GetMapping("/informes/lot")
     public String informeLot(@RequestParam(required = false) Long lotId, Model model) {

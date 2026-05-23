@@ -26,6 +26,9 @@ public class RecuperarContrasenyaController {
     private final EmailService emailService;
     @Value("${app.base-url}")
     private String baseUrl;
+    /**
+     * Executa l'operació RecuperarContrasenyaController.
+     */
 
     public RecuperarContrasenyaController(
             UsuariRepository usuariRepository,
@@ -37,11 +40,17 @@ public class RecuperarContrasenyaController {
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/recuperar-contrasenya")
     public String mostrarFormulariRecuperacio() {
         return "recuperar-contrasenya";
     }
+    /**
+     * Executa l'operació enviarEnllacRecuperacio.
+     */
 
     @PostMapping("/recuperar-contrasenya")
     public String enviarEnllacRecuperacio(String email, Model model) {
@@ -60,6 +69,9 @@ public class RecuperarContrasenyaController {
 
         return "recuperar-contrasenya";
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/restablir-contrasenya")
     public String mostrarFormulariRestablir(@RequestParam String token, Model model) {
@@ -72,6 +84,9 @@ public class RecuperarContrasenyaController {
             return "login";
         }
     }
+    /**
+     * Executa l'operació restablirContrasenya.
+     */
 
     @PostMapping("/restablir-contrasenya")
     public String restablirContrasenya(

@@ -9,6 +9,9 @@ package cat.copernic.easytraza.utils;
  * @author orjon
  */
 public class CifValidator {
+    /**
+     * Executa l'operació validarCIF.
+     */
 
     public static boolean validarCIF(String cif) {
         if (cif == null || !cif.matches("^[A-HJNP-SUVW][0-9]{7}[0-9A-J]$")) {

@@ -21,10 +21,16 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UsuariRepository usuariRepository;
+    /**
+     * Executa l'operació CustomUserDetailsService.
+     */
 
     public CustomUserDetailsService(UsuariRepository usuariRepository) {
         this.usuariRepository = usuariRepository;
     }
+    /**
+     * Executa l'operació loadUserByUsername.
+     */
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

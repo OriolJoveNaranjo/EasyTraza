@@ -23,6 +23,9 @@ public class PasswordResetService {
     private final LotProveidorRepository lotProveidorRepo;
     private final AlbaraProveidorRepository albaraProveidorRepo;
     private final ControlPhRepository controlPhRepo;
+    /**
+     * Executa l'operació PasswordResetService.
+     */
 
     public PasswordResetService(PasswordResetTokenRepository tokenRepository, UsuariRepository userRepo,
             LotProveidorRepository lotProveidorRepo, AlbaraProveidorRepository albaraProveidorRepo, ControlPhRepository controlPhRepo) {
@@ -32,6 +35,9 @@ public class PasswordResetService {
         this.controlPhRepo = controlPhRepo;
         this.lotProveidorRepo = lotProveidorRepo;
     }
+    /**
+     * Executa l'operació crearToken.
+     */
 
     @Transactional
     public String crearToken(Usuari usuari) {
@@ -50,6 +56,9 @@ public class PasswordResetService {
 
         return token;
     }
+    /**
+     * Executa l'operació validarToken.
+     */
 
     public PasswordResetToken validarToken(String token) {
         PasswordResetToken resetToken = tokenRepository.findByToken(token)
@@ -65,11 +74,17 @@ public class PasswordResetService {
 
         return resetToken;
     }
+    /**
+     * Executa l'operació marcarComUtilitzat.
+     */
 
     public void marcarComUtilitzat(PasswordResetToken token) {
         token.setUtilitzat(true);
         tokenRepository.save(token);
     }
+    /**
+     * Elimina o desactiva el registre indicat segons les regles de negoci.
+     */
 
     @Transactional
     public String deleteById(Long id) {

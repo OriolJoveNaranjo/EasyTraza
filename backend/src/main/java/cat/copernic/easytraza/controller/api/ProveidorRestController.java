@@ -23,15 +23,24 @@ import org.springframework.web.bind.annotation.*;
 public class ProveidorRestController {
 
     private final ProveidorService proveidorService;
+    /**
+     * Executa l'operació ProveidorRestController.
+     */
 
     public ProveidorRestController(ProveidorService proveidorService) {
         this.proveidorService = proveidorService;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     @GetMapping
     public ResponseEntity<List<Proveidor>> getAll() {
         return ResponseEntity.ok(proveidorService.findAll());
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     @GetMapping("/{id}")
     public ResponseEntity<Proveidor> getById(@PathVariable Long id) {
@@ -39,6 +48,9 @@ public class ProveidorRestController {
         return proveidor.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Proveidor proveidor) {
@@ -49,6 +61,9 @@ public class ProveidorRestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    /**
+     * Actualitza una entitat existent amb les dades indicades.
+     */
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Proveidor proveidor) {
@@ -59,6 +74,9 @@ public class ProveidorRestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    /**
+     * Elimina o desactiva el registre indicat segons les regles de negoci.
+     */
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

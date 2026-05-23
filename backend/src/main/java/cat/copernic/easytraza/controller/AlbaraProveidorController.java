@@ -41,6 +41,9 @@ public class AlbaraProveidorController {
     private final ProveidorService proveidorService;
     private final MateriaPrimeraService materiaPrimeraService;
     private final FitxerAlbaraProveidorRepository fitxerAlbaraProveidorRepository;
+    /**
+     * Executa l'operació AlbaraProveidorController.
+     */
 
     public AlbaraProveidorController(
             AlbaraProveidorService albaraProveidorService,
@@ -53,6 +56,9 @@ public class AlbaraProveidorController {
         this.materiaPrimeraService = materiaPrimeraService;
         this.fitxerAlbaraProveidorRepository = fitxerAlbaraProveidorRepository;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/albarans-proveidor")
     public String mostrarAlbaransProveidor(
@@ -69,6 +75,9 @@ public class AlbaraProveidorController {
 
         return "albarans-proveidor";
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/albarans-proveidor/nou")
     public String mostrarFormulariNou(Model model) {
@@ -90,6 +99,9 @@ public class AlbaraProveidorController {
 
         return "nou-albara-proveidor";
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @PostMapping("/albarans-proveidor/guardar")
     public String guardar(
@@ -134,6 +146,9 @@ public class AlbaraProveidorController {
             return "nou-albara-proveidor";
         }
     }
+    /**
+     * Actualitza una entitat existent amb les dades indicades.
+     */
 
     @GetMapping("/albarans-proveidor/editar/{id}")
     public String editar(@PathVariable Long id, Model model
@@ -167,6 +182,9 @@ public class AlbaraProveidorController {
 
         return "nou-albara-proveidor";
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/albarans-proveidor/veure/{id}")
     public String veure(@PathVariable Long id, Model model
@@ -182,6 +200,9 @@ public class AlbaraProveidorController {
 
         return "nou-albara-proveidor";
     }
+    /**
+     * Elimina o desactiva el registre indicat segons les regles de negoci.
+     */
 
     @GetMapping("/albarans-proveidor/eliminar/{id}")
     public String eliminar(@PathVariable Long id
@@ -226,6 +247,9 @@ public class AlbaraProveidorController {
 
         albaraProveidor.setLinies(liniesNetes);
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/albarans-proveidor/ocr")
     public String mostrarFormulariOcr(Model model) {
@@ -247,6 +271,9 @@ public class AlbaraProveidorController {
 
         return "nou-albara-proveidor-ocr";
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/albarans-proveidor/fitxer/{id}")
     public ResponseEntity<byte[]> veureFitxer(@PathVariable Long id) {

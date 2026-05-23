@@ -24,12 +24,18 @@ public class TracabilitatController {
 
     private final LotProveidorRepository lotProveidorRepository;
     private final TracabilitatRepository tracabilitatRepository;
+    /**
+     * Executa l'operació TracabilitatController.
+     */
 
     public TracabilitatController(LotProveidorRepository lotProveidorRepository,
             TracabilitatRepository tracabilitatRepository) {
         this.lotProveidorRepository = lotProveidorRepository;
         this.tracabilitatRepository = tracabilitatRepository;
     }
+    /**
+     * Executa l'operació tracabilitat.
+     */
 
     @GetMapping("/tracabilitat")
     public String tracabilitat(

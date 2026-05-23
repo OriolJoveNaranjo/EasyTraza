@@ -39,6 +39,9 @@ public class AlbaraClientController {
     private final ProducteFinalService producteService;
     private final LotProveidorRepository lotProveidorRepository;
     private final TracabilitatRepository tracabilitatRepository;
+    /**
+     * Executa l'operació AlbaraClientController.
+     */
 
     public AlbaraClientController(
             AlbaraClientService service,
@@ -55,6 +58,9 @@ public class AlbaraClientController {
     }
 
     // FORM NUEVO
+    /**
+     * Executa l'operació nou.
+     */
     @GetMapping("/nou")
     public String nou(Model model) {
         AlbaraClient a = new AlbaraClient();
@@ -74,6 +80,9 @@ public class AlbaraClientController {
     }
 
     // GUARDAR
+    /**
+     * Valida i desa la informació rebuda.
+     */
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute AlbaraClient albara) {
         service.saveAmbTracabilitatAutomatica(albara);
@@ -81,6 +90,9 @@ public class AlbaraClientController {
     }
 
     // EDITAR
+    /**
+     * Actualitza una entitat existent amb les dades indicades.
+     */
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
         AlbaraClient a = service.findById(id)
@@ -96,17 +108,26 @@ public class AlbaraClientController {
     }
 
     // ELIMINAR
+    /**
+     * Elimina o desactiva el registre indicat segons les regles de negoci.
+     */
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Long id) {
         service.deleteById(id);
         return "redirect:/albarans-client";
     }
+    /**
+     * Executa l'operació marcarComLliurat.
+     */
 
     @GetMapping("/lliurar/{id}")
     public String marcarComLliurat(@PathVariable Long id) {
         service.marcarComLliurat(id);
         return "redirect:/albarans-client";
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping("/veure/{id}")
     public String veure(@PathVariable Long id, Model model) {
@@ -122,6 +143,9 @@ public class AlbaraClientController {
 
         return "nou-albara-client";
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping
     public String llistar(

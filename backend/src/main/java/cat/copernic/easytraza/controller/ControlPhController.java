@@ -24,18 +24,27 @@ public class ControlPhController {
 
     private final ControlPhRepository controlPhRepository;
     private final UsuariRepository usuariRepository;
+    /**
+     * Executa l'operació ControlPhController.
+     */
 
     public ControlPhController(ControlPhRepository controlPhRepository,
             UsuariRepository usuariRepository) {
         this.controlPhRepository = controlPhRepository;
         this.usuariRepository = usuariRepository;
     }
+    /**
+     * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     */
 
     @GetMapping
     public String llistar(Model model) {
         model.addAttribute("controls", controlPhRepository.findAllByOrderByDataControlDesc());
         return "controls";
     }
+    /**
+     * Executa l'operació nou.
+     */
 
     @GetMapping("/nou")
     public String nou(Model model) {
@@ -45,6 +54,9 @@ public class ControlPhController {
         model.addAttribute("controlPh", control);
         return "control-ph-form";
     }
+    /**
+     * Valida i desa la informació rebuda.
+     */
 
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute ControlPh controlPh,

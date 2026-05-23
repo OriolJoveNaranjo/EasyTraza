@@ -43,61 +43,106 @@ public class AlbaraProveidor {
     private List<FitxerAlbaraProveidor> fitxers = new ArrayList<>();
     @ManyToOne
     private Usuari usuariAlta;
+    /**
+     * Executa l'operació AlbaraProveidor.
+     */
 
     public AlbaraProveidor() {
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public Long getId() {
         return id;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setId(Long id) {
         this.id = id;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public LocalDate getDataRecepcio() {
         return dataRecepcio;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setDataRecepcio(LocalDate dataRecepcio) {
         this.dataRecepcio = dataRecepcio;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public Proveidor getProveidor() {
         return proveidor;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setProveidor(Proveidor proveidor) {
         this.proveidor = proveidor;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public List<LiniaAlbaraProveidor> getLinies() {
         return linies;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setLinies(List<LiniaAlbaraProveidor> linies) {
         this.linies = linies;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public String getNumeroAlbara() {
         return numeroAlbara;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setNumeroAlbara(String numeroAlbara) {
         this.numeroAlbara = numeroAlbara;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public List<FitxerAlbaraProveidor> getFitxers() {
         return fitxers;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setFitxers(List<FitxerAlbaraProveidor> fitxers) {
         this.fitxers = fitxers;
     }
+    /**
+     * Retorna el valor de la propietat indicada.
+     */
 
     public Usuari getUsuariAlta() {
         return usuariAlta;
     }
+    /**
+     * Actualitza el valor de la propietat indicada.
+     */
 
     public void setUsuariAlta(Usuari usuariAlta) {
         this.usuariAlta = usuariAlta;

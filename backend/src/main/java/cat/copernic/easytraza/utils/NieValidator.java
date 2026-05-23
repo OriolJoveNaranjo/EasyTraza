@@ -9,6 +9,9 @@ package cat.copernic.easytraza.utils;
  * @author orjon
  */
 public class NieValidator {
+    /**
+     * Executa l'operació validarNIE.
+     */
 
     public static boolean validarNIE(String nie) {
         if (nie == null || !nie.matches("^[XYZ]\\d{7}[A-Z]$")) {

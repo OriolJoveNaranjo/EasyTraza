@@ -17,6 +17,9 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
  */
 @Configuration
 public class LocaleConfig implements WebMvcConfigurer {
+    /**
+     * Executa l'operació localeResolver.
+     */
 
     @Bean
     public LocaleResolver localeResolver() {
@@ -24,6 +27,9 @@ public class LocaleConfig implements WebMvcConfigurer {
         resolver.setDefaultLocale(Locale.forLanguageTag("ca"));
         return resolver;
     }
+    /**
+     * Executa l'operació localeChangeInterceptor.
+     */
 
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
@@ -31,6 +37,9 @@ public class LocaleConfig implements WebMvcConfigurer {
         interceptor.setParamName("lang");
         return interceptor;
     }
+    /**
+     * Executa l'operació addInterceptors.
+     */
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
