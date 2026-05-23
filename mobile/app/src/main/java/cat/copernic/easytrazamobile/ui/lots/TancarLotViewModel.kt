@@ -78,6 +78,9 @@ class TancarLotViewModel(application: Application) : AndroidViewModel(applicatio
             }
         }
     }
+/**
+ * Compon la interfície de string i connecta els esdeveniments amb la lògica de pantalla.
+ */
 
     private fun string(id: Int, vararg args: Any): String =
         getApplication<Application>().getString(id, *args)

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package cat.copernic.easytraza.service.impl;
 
 import cat.copernic.easytraza.entities.AlbaraClient;
@@ -17,7 +13,6 @@ import cat.copernic.easytraza.enums.EstatLot;
 import cat.copernic.easytraza.repository.LotProveidorRepository;
 import cat.copernic.easytraza.repository.TracabilitatRepository;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
