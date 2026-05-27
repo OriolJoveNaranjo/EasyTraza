@@ -21,6 +21,7 @@
                 <div class="error-message" th:if="${error}">
                     <p th:text="${error}"></p>
                     <form method="post" th:action="@{'/lots-proveidor/obrir/' + ${lotPendentInici}}" th:if="${lotPendentInici != null}">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                         <input name="confirmar" type="hidden" value="true"/>
                         <button class="btn-primary" th:text="#{ui.confirmar_i_finalitzar_lot_anterior}" type="submit">Confirmar i finalitzar lot anterior</button>
                     </form>
@@ -40,7 +41,15 @@
                             <option th:each="m : ${materies}" th:selected="${materiaId != null and materiaId == m.id}" th:text="${m.nom}" th:value="${m.id}">
                             </option>
                         </select>
-                        <input class="filter-select" name="data" th:value="${data}" type="date"/>
+                        <select class="filter-select" name="proveidor">
+                            <option value="">Tots els proveïdors</option>
+
+                            <option th:each="p : ${proveidors}"
+                                    th:value="${p.nom}"
+                                    th:selected="${proveidor != null and proveidor == p.nom}"
+                                    th:text="${p.nom}">
+                            </option>
+                        </select>
                         <button class="btn-primary" th:text="#{ui.filtrar}" type="submit">Filtrar</button>
                         <a class="btn-secondary" th:href="@{/lots-proveidor}" th:text="#{ui.reset}">Reset</a>
                     </form>
@@ -49,12 +58,13 @@
                     <div class="lot-card" th:each="lot : ${lots}">
                         <div>
                             <h2>
-                                <span th:text="${lot.materiaPrimera != null ? lot.materiaPrimera.nom : 'Matèria no indicada'}"></span>
+                                <strong th:text="#{ui.lot}">Lot:</strong>
+                                <strong><span  th:text="${lot.identificadorLot}"></span></strong>
                                 <span class="status-badge" th:text="${lot.estat}"></span>
                             </h2>
-                            <p>
-                                <strong th:text="#{ui.lot}">Lot:</strong>
-                                <span th:text="${lot.identificadorLot}"></span>
+                            <p>                                
+                                <span th:text="${lot.materiaPrimera != null ? lot.materiaPrimera.nom : 'Matèria no indicada'}"></span>
+
                             </p>
                             <p>
                                 <strong th:text="#{ui.proveidor_3}">Proveïdor:</strong>
@@ -84,9 +94,11 @@
                         </div>
                         <div class="lot-actions">
                             <form method="post" th:action="@{/lots-proveidor/obrir/{id}(id=${lot.id})}" th:if="${lot.estat.name() == 'EN_ESTOC'}">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                                 <button class="btn-primary" th:text="#{ui.obrir}" type="submit">Obrir</button>
                             </form>
                             <form method="post" th:action="@{/lots-proveidor/finalitzar/{id}(id=${lot.id})}" th:if="${lot.estat.name() == 'OBERT'}">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                                 <button class="btn-finish" th:text="#{ui.finalitzar}" type="submit">Finalitzar</button>
                             </form>
                             <a class="btn-secondary" th:href="@{/tracabilitat(

@@ -13,6 +13,7 @@
                 <p class="form-subtitle" th:text="#{ui.informacio_del_proveidor}">Informació del proveïdor</p>
                 <p class="error-message" th:if="${error}" th:text="${error}"></p>
                 <form method="post" th:action="@{/proveidors/guardar}" th:if="${mode != 'view'}" th:object="${proveidor}">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                     <input th:field="*{id}" type="hidden"/>
                     <div class="field">
                         <label th:text="#{ui.nom_4}">Nom *</label>

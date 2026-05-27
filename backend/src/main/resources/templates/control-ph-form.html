@@ -12,6 +12,7 @@
                 <h1 th:text="#{ui.registrar_ph}">Registrar pH</h1>
                 <p th:text="#{ui.registra_el_control_de_ph_de_l_aigua}">Registra el control de pH de l'aigua</p>
                 <form method="post" th:action="@{/controls/guardar}" th:object="${controlPh}">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                     <div class="field">
                         <label th:text="#{ui.valor_de_ph}">Valor de pH *</label>
                         <input max="14" min="0" required="" step="0.1" th:field="*{valorPh}" type="number"/>

@@ -17,6 +17,7 @@
                 <div class="login-alert error" th:if="${error}" th:text="${error}"></div>
                 <div class="login-alert success" th:if="${success}" th:text="${success}"></div>
                 <form method="post" th:action="@{/recuperar-contrasenya}">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                     <label class="login-label" for="email" th:text="#{ui.email}">Email</label>
                     <input class="login-input" id="email" name="email" placeholder="correu@exemple.com" required="" th:placeholder="#{ui.correu_exemple_com}" type="email"/>
                     <button class="login-button" th:text="#{ui.enviar_enllac_de_recuperacio}" type="submit">Enviar enllaç de recuperació</button>

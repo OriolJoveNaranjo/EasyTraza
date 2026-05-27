@@ -15,6 +15,7 @@
             <section class="login-card">
                 <h2 class="login-title" th:text="#{ui.nova_contrasenya}">Nova contrasenya</h2>
                 <form method="post" th:action="@{/restablir-contrasenya}">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                     <input name="token" th:value="${token}" type="hidden"/>
                     <label class="login-label" for="novaContrasenya" th:text="#{ui.nova_contrasenya}">Nova contrasenya</label>
                     <input class="login-input" id="novaContrasenya" name="novaContrasenya" placeholder="Nova contrasenya" required="" th:placeholder="#{ui.nova_contrasenya}" type="password"/>

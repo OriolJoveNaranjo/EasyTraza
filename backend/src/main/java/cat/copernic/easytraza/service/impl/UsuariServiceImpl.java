@@ -31,8 +31,16 @@ public class UsuariServiceImpl implements UsuariService {
     private final ControlPhRepository controlPhRepo;
     @Value("${app.superadmin.email}")
     private String superAdminEmail;
+
     /**
      * Executa l'operació UsuariServiceImpl.
+     *
+     * @param usuariRepository
+     * @param passwordEncoder
+     * @param lotProveidorRepo
+     * @param controlPhRepo
+     * @param albaraProveidorRepo
+     * @param passwordResetTokenRepository
      */
 
     public UsuariServiceImpl(UsuariRepository usuariRepository, PasswordEncoder passwordEncoder,
@@ -45,24 +53,33 @@ public class UsuariServiceImpl implements UsuariService {
         this.controlPhRepo = controlPhRepo;
         this.passwordResetTokenRepository = passwordResetTokenRepository;
     }
+
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     *
+     * @return
      */
 
     @Override
     public List<Usuari> findAll() {
         return usuariRepository.findAll();
     }
+
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param id
+     * @return 
      */
 
     @Override
     public Optional<Usuari> findById(Long id) {
         return usuariRepository.findById(id);
     }
+
     /**
      * Valida i desa la informació rebuda.
+     * @param usuari
+     * @return 
      */
 
     @Override
@@ -74,8 +91,12 @@ public class UsuariServiceImpl implements UsuariService {
 
         return usuariRepository.save(usuari);
     }
+
     /**
      * Actualitza una entitat existent amb les dades indicades.
+     * @param id
+     * @param usuari
+     * @return 
      */
 
     @Override
@@ -91,17 +112,23 @@ public class UsuariServiceImpl implements UsuariService {
         }
 
         Usuari actual = existent.get();
+
         actual.setNom(usuari.getNom());
+        actual.setEmail(usuari.getEmail());
         actual.setRol(usuari.getRol());
         actual.setActiu(usuari.isActiu());
+
         if (usuari.getPassword() != null && !usuari.getPassword().trim().isEmpty()) {
             actual.setPassword(passwordEncoder.encode(usuari.getPassword()));
         }
 
         return usuariRepository.save(actual);
     }
+
     /**
      * Elimina o desactiva el registre indicat segons les regles de negoci.
+     * @param id
+     * @return 
      */
 
     @Override
@@ -135,8 +162,10 @@ public class UsuariServiceImpl implements UsuariService {
         usuariRepository.deleteById(id);
         return "Usuari eliminat correctament.";
     }
+
     /**
      * Activa el registre indicat.
+     * @param id
      */
 
     @Override

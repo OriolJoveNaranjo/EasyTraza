@@ -13,6 +13,7 @@
                 <p class="form-subtitle" th:text="#{ui.afegeix_un_ingredient_o_producte_base_al_cataleg}">Afegeix un ingredient o producte base al catàleg</p>
                 <p class="error-message" th:if="${error}" th:text="${error}"></p>
                 <form method="post" th:action="@{/cataleg/materies-primeres/guardar}" th:object="${materiaPrimera}">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                     <input th:field="*{id}" type="hidden"/>
                     <div class="field">
                         <label th:text="#{ui.nom_4}">Nom *</label>

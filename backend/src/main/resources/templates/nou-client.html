@@ -24,6 +24,7 @@
                 <h1 th:if="${mode != 'view' and client.id == null}" th:text="#{ui.nou_client_2}">Nou client</h1>
                 <p class="error-message" th:if="${error}" th:text="${error}"></p>
                 <form method="post" th:action="@{/clients/guardar}" th:if="${mode != 'view'}" th:object="${client}">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                     <input th:field="*{id}" type="hidden"/>
                     <div class="field">
                         <label th:text="#{ui.nif_2}">NIF *</label>

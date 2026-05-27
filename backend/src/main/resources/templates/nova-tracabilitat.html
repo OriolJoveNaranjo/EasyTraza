@@ -21,6 +21,7 @@
                 </div>
                 <div class="content-card">
                     <form method="post" th:action="@{/tracabilitat/guardar}">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                         <div class="filter-bar">
                             <select class="filter-input" name="lotProveidorId" required="">
                                 <option th:text="#{ui.selecciona_un_lot_de_proveidor}" value="">Selecciona un lot de proveïdor</option>

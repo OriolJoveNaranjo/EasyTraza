@@ -42,6 +42,7 @@
                         <h2 th:text="#{ui.dades_de_l_albara}">Dades de l'albarà</h2>
                         <p class="error-message" th:if="${error}" th:text="${error}"></p>
                         <form enctype="multipart/form-data" id="albaraProveidorForm" method="post" th:action="@{/albarans-proveidor/guardar}" th:object="${albaraProveidor}">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                             <input th:field="*{id}" type="hidden"/>
                             <input name="formSource" type="hidden" value="ocr">
                             <input id="ocrTextHidden" name="ocrTextHidden" th:value="${ocrTextHidden}" type="hidden"/>

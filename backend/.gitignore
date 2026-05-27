@@ -1,1 +1,4 @@
 /target/
+logs/*.log
+logs/*.gz
+logs/*.tmp

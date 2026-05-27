@@ -65,6 +65,7 @@
                 </h1>
                 <p class="error-message" th:if="${error}" th:text="${error}"></p>
                 <form method="post" th:action="@{/albarans-client/guardar}" th:object="${albaraClient}">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                     <input th:field="*{id}" type="hidden"/>
                     <div class="field">
                         <label th:text="#{ui.client_3}">Client *</label>

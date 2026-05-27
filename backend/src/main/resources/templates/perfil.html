@@ -21,6 +21,7 @@
                 </div>
                 <div class="profile-success" th:if="${param.success}" th:text="#{ui.perfil_actualitzat_correctament}">Perfil actualitzat correctament.</div>
                 <form class="profile-card" enctype="multipart/form-data" id="perfilForm" method="post" th:action="@{/perfil}">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                     <div class="profile-photo-section">
                         <img alt="Foto de perfil" class="profile-photo" id="previewFoto" th:src="${usuari.foto != null and !#strings.isEmpty(usuari.foto)}
                              ? @{${'/uploads/usuaris/' + usuari.foto}}

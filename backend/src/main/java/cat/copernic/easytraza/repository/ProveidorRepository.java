@@ -25,4 +25,5 @@ public interface ProveidorRepository extends JpaRepository<Proveidor, Long> {
     List<Proveidor> findAllByOrderByNomAsc();
 
     List<Proveidor> findAllByOrderByNomDesc();
+    
 }
