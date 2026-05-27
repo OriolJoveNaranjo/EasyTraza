@@ -328,3 +328,129 @@ En general, crec que aquest sprint ha estat bastant intens perquè ja s’acosta
 Tot i això, considero que he avançat bastant aquests últims dies. He pogut completar funcionalitats importants tant a la part web com a la part mòbil, especialment la recepció d’albarans manual i amb OCR, així com les funcionalitats d’obrir i tancar lots. També he dedicat temps a millorar la usabilitat general de l’aplicació perquè de cara a l’entrega final el projecte tingui una sensació més completa i funcional.
 
 De cara a l’última setmana abans de l’entrega, l’objectiu principal serà acabar de polir errors, millorar el funcionament de l’OCR mòbil i revisar el projecte en general per assegurar que totes les funcionalitats funcionin correctament. En resum, aquest sprint ha estat molt enfocat a estabilitzar i preparar el projecte per a la fase final d’entrega.
+= EasyTraza - Documentació Tècnica
+
+= Documentació Tècnica
+
+=== 1. Justificació de decisions de disseny i implementació
+
+Durant el desenvolupament del projecte s’han pres diverses decisions tècniques i de disseny amb l’objectiu de garantir una aplicació funcional, escalable i fàcil d’utilitzar.
+
+* S’ha utilitzat Spring Boot al backend per facilitar la separació de capes i la creació d’una API REST robusta.
+* Per a la persistència de dades s’ha escollit MySQL, ja que és una base de dades relacional àmpliament utilitzada i adequada per gestionar la traçabilitat.
+* L’aplicació mòbil s’ha desenvolupat amb Kotlin i Jetpack Compose per disposar d’una interfície moderna i reactiva.
+* A la part web s’ha utilitzat Thymeleaf per integrar de forma senzilla el backend amb les vistes HTML.
+* S’ha implementat Spring Security per gestionar autenticació, autorització i protecció d’accessos.
+* S’ha incorporat internacionalització en català i castellà per millorar l’experiència d’usuari.
+* El sistema de traçabilitat s’ha desenvolupat relacionant lots de proveïdor amb productes finals i albarans de client.
+* S’ha implementat un sistema de logs en fitxers per registrar errors i incidències del sistema.
+* S’ha decidit utilitzar filtres i cercadors en les pantalles principals per millorar la usabilitat i agilitzar la cerca d’informació.
+
+=== 2. Llista final de requeriments implementats
+
+==== 2.1. Requeriments no funcionals
+
+* RN01: Arquitectura client-servidor basada en API REST amb backend Spring Boot, client web amb Thymeleaf i client Android amb Kotlin i Jetpack Compose.
+* RN02: Comunicació REST desacoblada entre aplicació Android i backend.
+* RN03: Execució del backend compatible amb entorns Windows.
+* RN04: Backend estructurat en capes (controladors, serveis, persistència i API REST).
+* RN05: Aplicació desenvolupada seguint bones pràctiques i reducció de redundàncies.
+* RN06: Organització del codi mitjançant classes, interfícies, serveis i paquets separats.
+* RN07: Documentació amb JavaDoc al backend i KDoc a l’aplicació Android.
+* RN08: Sistema de logs en fitxers per registrar errors, excepcions i avisos.
+* RN09: Gestió d’excepcions amb missatges comprensibles i internacionalitzats.
+* RN10: Gestió del projecte amb Git i GitLab seguint estructura de branques.
+* RN11: Integració controlada de funcionalitats a develop.
+* RN12: Commits descriptius i orientats a funcionalitats concretes.
+* RN13: Repositori estructurat en carpetes backend, mobile i documentació.
+* RN14: README amb descripció del projecte, captures i vídeo explicatiu.
+* RN20: Aplicació Android desenvolupada amb Android Studio, Kotlin i Jetpack Compose.
+* RN21: Arquitectura Feature Layer i Clean Architecture a mobile.
+* RN22: Arquitectura MVVM amb gestió d’estat moderna.
+* RN23: Compatibilitat amb dispositius Android i emuladors.
+* RN25: Interfície coherent i homogènia visualment.
+* RN26: Aplicació enfocada a la usabilitat i accessibilitat.
+* RN27: Interfície reactiva i fluïda mitjançant operacions asíncrones.
+* RN28: Adaptació responsive a diferents mides de pantalla.
+* RN29: Internacionalització en català i castellà.
+* RN61: Sistema d’autenticació amb usuari i contrasenya.
+* RN62: Protecció de rutes no autoritzades al backend.
+* RN63: Emmagatzematge segur de contrasenyes mitjançant hash.
+* RN64: Protecció de dades personals segons permisos d’usuari.
+* RN65: Sessions amb expiració automàtica.
+* RN66: Comunicació xifrada via HTTPS/TLS al client web.
+* RN67: Sistema d’identificació d’usuaris a mobile.
+* RN68: Comunicació xifrada entre mobile i backend via HTTPS/TLS.
+
+==== 2.2. Requeriments funcionals
+
+* RF01: CRUD de productes finals.
+* RF02: CRUD de clients.
+* RF03: CRUD d’usuaris.
+* RF04: CRUD de matèries primeres.
+* RF05: CRUD d’albarans de client amb línies de producció.
+* RF07: CRUD d’albarans de proveïdor amb línies de lots.
+* RF08: CRUD de proveïdors.
+* RF10: Funcionalitat d’iniciar lot.
+* RF11: Funcionalitat de finalitzar lot.
+* RF15: Configuració persistent de la IP del backend al client Android.
+* RF20: Llistat de traçabilitat per lot.
+* RF21: Ordenació del llistat de traçabilitat per columnes.
+* RF22: Filtres per identificador, estat, matèria primera, proveïdor i data.
+* RF23: Gràfic mensual de productes venuts.
+* RF25: Login amb correu electrònic i contrasenya.
+* RF26: Recuperació de contrasenya via correu electrònic.
+* RF27: Edició del perfil d’usuari.
+* RF28: Logout.
+* RF29: Identificació sense contrasenya a l’aplicació Android.
+
+==== 2.3. Requeriments opcionals no implementats
+
+* RF30: CRUD de comandes (funcionalitat opcional no implementada).
+
+=== 3. Desviacions respecte a la planificació inicial
+
+Durant el desenvolupament s’han produït algunes desviacions respecte a la planificació inicial:
+
+* La implementació de la traçabilitat ha requerit més temps del previst a causa de la complexitat de les relacions entre entitats.
+* La internacionalització no estava prevista inicialment i es va decidir afegir durant les últimes fases del projecte.
+* S’ha dedicat més temps del previst a millorar la interfície i l’experiència d’usuari.
+* Es van realitzar canvis en l’estructura de filtres i navegació per facilitar l’ús de l’aplicació.
+
+=== 4. Incidències trobades durant el desenvolupament
+
+* Problemes amb la configuració de Spring Security i CSRF.
+* Errors de connexió entre aplicació mòbil i backend en xarxa local.
+* Problemes de serialització JSON entre backend i aplicació Android.
+* Gestió incorrecta inicial de la modificació de contrasenyes d’usuaris.
+* Dificultats en la implementació del sistema de recuperació de contrasenya via correu electrònic.
+* Problemes amb filtres i actualització de dades en algunes pantalles.
+* Errors relacionats amb la gestió de lots duplicats.
+* Configuració de logs i tractament d’excepcions no controlades.
+
+== 5. Propostes de Millora
+
+=== 5.1. Millores futures i funcionalitats no implementades
+
+* Implementació de gràfics i estadístiques avançades.
+* Exportació de dades a PDF i Excel.
+* Sistema de notificacions en temps real.
+* Escaneig de codis QR o codis de barres.
+* Implementació de tests automàtics complets.
+* Gestió avançada d’estoc.
+* Sistema de permisos més detallat.
+* Dashboard amb mètriques de producció.
+* Desplegament al núvol.
+* Compatibilitat amb múltiples empreses.
+* Integració amb APIs externes.
+* Sistema de còpies de seguretat automàtiques.
+
+== 4. Conclusió
+
+El desenvolupament d’EasyTraza ha permès aplicar coneixements de backend, frontend i desenvolupament mòbil dins d’un projecte real i complet.
+
+Durant el projecte s’han treballat tecnologies com Spring Boot, MySQL, Spring Security, Kotlin, Jetpack Compose i Thymeleaf, així com aspectes relacionats amb arquitectura de software, traçabilitat, seguretat i experiència d’usuari.
+
+A nivell personal, el projecte ha servit per millorar la capacitat de resolució de problemes, organització del desenvolupament i integració entre diferents tecnologies.
+
+El resultat final és una aplicació funcional orientada a la gestió de traçabilitat alimentària amb possibilitat de continuar evolucionant en futures versions.
