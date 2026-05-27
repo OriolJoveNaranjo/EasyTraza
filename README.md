@@ -1,93 +1,198 @@
-# EasyTraza
+# 🍞 EasyTraza
 
+Aplicació multiplataforma de traçabilitat alimentària desenvolupada amb **Spring Boot**, **Kotlin** i **Jetpack Compose**.
 
+EasyTraza permet gestionar lots, matèries primeres, albarans i traçabilitat de productes alimentaris tant des d’una aplicació web com des d’una aplicació Android.
 
-## Getting started
+---
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+# 📹 Vídeo demostració
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+[![Veure vídeo](./Documentació/Imatges/Miniatura.PNG)](https://youtu.be/P0cYzjCrlS0D)
 
-## Add your files
+---
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+# 📌 Característiques principals
 
+## 🔐 Seguretat i autenticació
+- Login amb usuari i contrasenya
+- Recuperació de contrasenya via correu electrònic
+- Sessions segures
+- Contrasenyes encriptades
+- Control d’accés segons rol
+
+---
+
+## 👥 Gestió d’usuaris
+- CRUD complet d’usuaris
+- Activació/desactivació d’usuaris
+- Edició de perfil
+- Rol administrador i operari
+- Protecció del super administrador
+
+---
+
+## 🏭 Gestió de producció
+- CRUD de matèries primeres
+- CRUD de productes finals
+- CRUD de proveïdors
+- CRUD de clients
+
+---
+
+## 📦 Gestió de lots
+- Entrada d’albarans de proveïdor
+- Creació automàtica de lots
+- Inici de lots
+- Finalització de lots
+- Control d’estats:
+  - En estoc
+  - Obert
+  - Acabat
+
+---
+
+## 🚚 Albarans
+### Albarans de proveïdor
+- Creació i modificació
+- Línies de lots
+- Pujada de fitxers
+
+### Albarans de client
+- Creació amb múltiples línies
+- Associació automàtica de lots oberts
+- Estat pendent / lliurat
+
+---
+
+## 🔎 Traçabilitat
+- Consulta completa de traçabilitat per lot
+- Ordenació per columnes
+- Filtres avançats
+- Relació entre:
+  - lots
+  - productes
+  - clients
+  - albarans
+
+---
+
+## 📊 Estadístiques
+- Gràfic mensual de productes venuts
+- Resums de producció
+
+---
+
+## 🌍 Internacionalització
+- Català
+- Castellà
+
+---
+
+## 📱 Aplicació Android
+- Desenvolupada amb Kotlin i Jetpack Compose
+- Arquitectura MVVM + Clean Architecture
+- Configuració persistent de la IP del servidor
+- Compatible amb emuladors i dispositius físics
+
+---
+
+# 🛠️ Tecnologies utilitzades
+
+## Backend
+- Java
+- Spring Boot
+- Spring Security
+- Spring Data JPA
+- Hibernate
+- Maven
+- MySQL
+
+## Frontend Web
+- HTML
+- CSS
+- Thymeleaf
+
+## Frontend Mobile
+- Kotlin
+- Jetpack Compose
+- Retrofit
+- StateFlow
+- MVVM
+
+---
+
+# 📂 Estructura del projecte
+
+```text
+EasyTraza/
+│
+├── backend/
+│   └── Aplicació Spring Boot
+│
+├── mobile/
+│   └── Aplicació Android Kotlin
+│
+├── documentacio/
+│   └── Documentació AsciiDoc
+│
+└── README.md
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/orioljove/easytraza.git
-git branch -M main
-git push -uf origin main
+
+---
+
+# 🚀 Execució del projecte
+
+## Backend
+
+Configurar la base de dades a:
+
+```properties
+application.properties
 ```
 
-## Integrate with your tools
+Executar:
 
-* [Set up project integrations](https://gitlab.com/orioljove/easytraza/-/settings/integrations)
+```bash
+mvn spring-boot:run
+```
 
-## Collaborate with your team
+---
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+## Mobile
 
-## Test and Deploy
+1. Obrir carpeta `mobile` amb Android Studio
+2. Configurar la IP del backend
+3. Executar en emulador o dispositiu Android
 
-Use the built-in continuous integration in GitLab.
+---
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
 
-***
+# 📖 Documentació
 
-# Editing this README
+La documentació completa del projecte es troba a la carpeta:
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+```text
+/documentacio
+```
 
-## Suggestions for a good README
+Inclou:
+- planificació
+- sprints
+- incidències
+- justificacions tècniques
+- propostes de millora
+- conclusions
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+---
 
-## Name
-Choose a self-explaining name for your project.
+# 👨‍💻 Autor
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+**Oriol Naranjo**  
+DAM 2 - Projecte EasyTraza
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+---
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+# 📜 Llicència
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Projecte acadèmic desenvolupat amb finalitats educatives.
