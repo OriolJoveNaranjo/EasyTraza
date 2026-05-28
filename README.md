@@ -167,6 +167,52 @@ mvn spring-boot:run
 
 ---
 
+## 📸 Captures de pantalla
+
+### 🖥️ Panell principal PC
+![Panell Principal](Documentaci%C3%B3/Imatges/CapturasReadme/PaginaPrincipalPC.PNG)
+
+---
+
+### 📦 Lots proveïdor PC
+![Lots Proveïdor](Documentaci%C3%B3/Imatges/CapturasReadme/LotsProveidorPC.PNG)
+
+---
+
+### 📊 Informe i traçabilitat
+![Informe](Documentaci%C3%B3/Imatges/CapturasReadme/Informe.PNG)
+
+---
+
+### 🌐 Configuració IP Mobile
+![IP Mobile](Documentaci%C3%B3/Imatges/CapturasReadme/IP.PNG)
+
+---
+
+### 📱 Login Mobile
+![Login Mobile](Documentaci%C3%B3/Imatges/CapturasReadme/LoginMobile.PNG)
+
+---
+
+### 📱 Menú principal Mobile
+![Menú Principal Mobile](Documentaci%C3%B3/Imatges/CapturasReadme/MenuPrincipalMobile.PNG)
+
+---
+
+### 📱 Rebre albarà Mobile
+![Rebre Albarà Mobile](Documentaci%C3%B3/Imatges/CapturasReadme/RebreAlbaraMobile.PNG)
+
+---
+
+### 🖥️ Rebre albarà PC
+![Rebre Albarà PC](Documentaci%C3%B3/Imatges/CapturasReadme/RebreAlbaraPC.PNG)
+
+---
+
+### 📱 Tancar lot Mobile
+![Tancar Lot Mobile](Documentaci%C3%B3/Imatges/CapturasReadme/TancarLotMobile.PNG)
+
+---
 
 # 📖 Documentació
 
