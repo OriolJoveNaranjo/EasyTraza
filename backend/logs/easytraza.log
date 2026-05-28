@@ -2808,3 +2808,46 @@ org.springframework.web.servlet.resource.NoResourceFoundException: No static res
 2026-05-28 18:15:39.390 INFO  [https-jsse-nio-8443-exec-3] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2026-05-28 18:15:39.390 INFO  [https-jsse-nio-8443-exec-3] org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 2026-05-28 18:15:39.390 INFO  [https-jsse-nio-8443-exec-3] org.springframework.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-05-28 19:27:15.137 INFO  [restartedMain] cat.copernic.easytraza.EasyTraza - Starting EasyTraza using Java 24.0.2 with PID 4548 (C:\Users\orjon\OneDrive\Documentos\NetBeansProjects\EasyTraza_PC\backend\target\classes started by orjon in C:\Users\orjon\OneDrive\Documentos\NetBeansProjects\EasyTraza_PC\backend)
+2026-05-28 19:27:15.141 INFO  [restartedMain] cat.copernic.easytraza.EasyTraza - No active profile set, falling back to 1 default profile: "default"
+2026-05-28 19:27:15.226 INFO  [restartedMain] o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-05-28 19:27:15.226 INFO  [restartedMain] o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-05-28 19:27:15.501 INFO  [background-preinit] org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-05-28 19:27:16.945 INFO  [restartedMain] o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-28 19:27:17.142 INFO  [restartedMain] o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 179 ms. Found 14 JPA repository interfaces.
+2026-05-28 19:27:18.708 INFO  [restartedMain] org.springframework.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8443 (https)
+2026-05-28 19:27:18.735 INFO  [restartedMain] org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["https-jsse-nio-8443"]
+2026-05-28 19:27:18.738 INFO  [restartedMain] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2026-05-28 19:27:18.739 INFO  [restartedMain] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-05-28 19:27:18.803 INFO  [restartedMain] o.s.b.w.c.servlet.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 3575 ms
+2026-05-28 19:27:19.186 INFO  [restartedMain] org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-05-28 19:27:19.315 INFO  [restartedMain] org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.1.Final
+2026-05-28 19:27:20.168 INFO  [restartedMain] o.s.o.j.persistenceunit.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-05-28 19:27:20.210 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-05-28 19:27:22.519 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@60dfc884
+2026-05-28 19:27:22.521 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-05-28 19:27:23.519 INFO  [restartedMain] org.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/easytraza?createDatabaseIfNotExist=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.4.7
+	Default catalog/schema: easytraza/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-05-28 19:27:24.918 INFO  [restartedMain] org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-05-28 19:27:25.319 INFO  [restartedMain] o.s.orm.jpa.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-28 19:27:25.444 INFO  [restartedMain] o.s.d.jpa.repository.query.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-05-28 19:27:27.622 WARN  [restartedMain] o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-05-28 19:27:28.573 INFO  [restartedMain] o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-05-28 19:27:28.647 INFO  [restartedMain] org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["https-jsse-nio-8443"]
+2026-05-28 19:27:28.788 INFO  [restartedMain] o.apache.tomcat.util.net.NioEndpoint.certificate - Connector [https-jsse-nio-8443], TLS virtual host [_default_], certificate type [UNDEFINED] configured from keystore [Set directly - location unknown] using alias [easytraza] with trust store [null]
+2026-05-28 19:27:28.807 INFO  [restartedMain] org.springframework.boot.tomcat.TomcatWebServer - Tomcat started on port 8443 (https) with context path '/'
+2026-05-28 19:27:28.820 INFO  [restartedMain] cat.copernic.easytraza.EasyTraza - Started EasyTraza in 14.633 seconds (process running for 16.288)
+2026-05-28 19:27:29.383 INFO  [restartedMain] cat.copernic.easytraza.config.DataInitializer - Dades de demostració verificades correctament.
+2026-05-28 19:40:17.166 INFO  [https-jsse-nio-8443-exec-7] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-28 19:40:17.167 INFO  [https-jsse-nio-8443-exec-7] org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-05-28 19:40:17.169 INFO  [https-jsse-nio-8443-exec-7] org.springframework.web.servlet.DispatcherServlet - Completed initialization in 2 ms
