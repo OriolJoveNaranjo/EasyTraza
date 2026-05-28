@@ -31,6 +31,7 @@ public class ControlPh {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Long getId() {
@@ -38,6 +39,7 @@ public class ControlPh {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Double getValorPh() {
@@ -45,6 +47,7 @@ public class ControlPh {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public LocalDateTime getDataControl() {
@@ -52,6 +55,7 @@ public class ControlPh {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getObservacions() {
@@ -59,6 +63,7 @@ public class ControlPh {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Usuari getUsuari() {
@@ -66,6 +71,7 @@ public class ControlPh {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param id
      */
 
     public void setId(Long id) {
@@ -73,6 +79,7 @@ public class ControlPh {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param valorPh
      */
 
     public void setValorPh(Double valorPh) {
@@ -80,6 +87,7 @@ public class ControlPh {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param dataControl
      */
 
     public void setDataControl(LocalDateTime dataControl) {
@@ -87,6 +95,7 @@ public class ControlPh {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param observacions
      */
 
     public void setObservacions(String observacions) {
@@ -94,6 +103,7 @@ public class ControlPh {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param usuari
      */
 
     public void setUsuari(Usuari usuari) {

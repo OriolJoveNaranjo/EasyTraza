@@ -16,6 +16,7 @@ public class GlobalModelController {
     private final UsuariRepository usuariRepository;
     /**
      * Executa l'operació GlobalModelController.
+     * @param usuariRepository
      */
 
     public GlobalModelController(UsuariRepository usuariRepository) {
@@ -23,6 +24,8 @@ public class GlobalModelController {
     }
     /**
      * Executa l'operació usuariSessio.
+     * @param principal
+     * @return 
      */
 
     @ModelAttribute("usuariSessio")

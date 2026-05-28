@@ -22,6 +22,7 @@ public class ProducteFinalController {
     private final ProducteFinalService producteFinalService;
     /**
      * Executa l'operació ProducteFinalController.
+     * @param producteFinalService
      */
 
     public ProducteFinalController(ProducteFinalService producteFinalService) {
@@ -29,6 +30,9 @@ public class ProducteFinalController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param nom
+     * @param model
+     * @return 
      */
 
     @GetMapping("/productes-finals")
@@ -54,6 +58,8 @@ public class ProducteFinalController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param model
+     * @return 
      */
 
     @GetMapping("/productes-finals/nou")
@@ -63,6 +69,9 @@ public class ProducteFinalController {
     }
     /**
      * Valida i desa la informació rebuda.
+     * @param producteFinal
+     * @param model
+     * @return 
      */
 
     @PostMapping("/productes-finals/guardar")
@@ -83,6 +92,9 @@ public class ProducteFinalController {
     }
     /**
      * Actualitza una entitat existent amb les dades indicades.
+     * @param id
+     * @param model
+     * @return 
      */
 
     @GetMapping("/productes-finals/editar/{id}")

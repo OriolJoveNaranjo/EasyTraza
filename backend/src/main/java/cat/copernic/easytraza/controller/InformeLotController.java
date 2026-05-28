@@ -23,6 +23,8 @@ public class InformeLotController {
     private final TracabilitatRepository tracabilitatRepository;
     /**
      * Executa l'operació InformeLotController.
+     * @param lotProveidorRepository
+     * @param tracabilitatRepository
      */
 
     public InformeLotController(LotProveidorRepository lotProveidorRepository,
@@ -32,6 +34,9 @@ public class InformeLotController {
     }
     /**
      * Executa l'operació informeLot.
+     * @param lotId
+     * @param model
+     * @return 
      */
 
     @GetMapping("/informes/lot")

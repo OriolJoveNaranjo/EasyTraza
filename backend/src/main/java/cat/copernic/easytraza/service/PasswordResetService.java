@@ -25,6 +25,11 @@ public class PasswordResetService {
     private final ControlPhRepository controlPhRepo;
     /**
      * Executa l'operació PasswordResetService.
+     * @param tokenRepository
+     * @param userRepo
+     * @param lotProveidorRepo
+     * @param albaraProveidorRepo
+     * @param controlPhRepo
      */
 
     public PasswordResetService(PasswordResetTokenRepository tokenRepository, UsuariRepository userRepo,
@@ -37,6 +42,8 @@ public class PasswordResetService {
     }
     /**
      * Executa l'operació crearToken.
+     * @param usuari
+     * @return 
      */
 
     @Transactional
@@ -58,6 +65,8 @@ public class PasswordResetService {
     }
     /**
      * Executa l'operació validarToken.
+     * @param token
+     * @return 
      */
 
     public PasswordResetToken validarToken(String token) {
@@ -76,6 +85,7 @@ public class PasswordResetService {
     }
     /**
      * Executa l'operació marcarComUtilitzat.
+     * @param token
      */
 
     public void marcarComUtilitzat(PasswordResetToken token) {
@@ -84,6 +94,8 @@ public class PasswordResetService {
     }
     /**
      * Elimina o desactiva el registre indicat segons les regles de negoci.
+     * @param id
+     * @return 
      */
 
     @Transactional

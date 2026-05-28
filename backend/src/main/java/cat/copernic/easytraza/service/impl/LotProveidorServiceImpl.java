@@ -26,6 +26,8 @@ public class LotProveidorServiceImpl implements LotProveidorService {
     private final UsuariRepository usuarirepo;
     /**
      * Executa l'operació LotProveidorServiceImpl.
+     * @param lotRepo
+     * @param usuarirepo
      */
 
     public LotProveidorServiceImpl(LotProveidorRepository lotRepo, UsuariRepository usuarirepo) {
@@ -34,6 +36,7 @@ public class LotProveidorServiceImpl implements LotProveidorService {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @return 
      */
 
     @Override
@@ -42,6 +45,8 @@ public class LotProveidorServiceImpl implements LotProveidorService {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param id
+     * @return 
      */
 
     @Override
@@ -51,6 +56,8 @@ public class LotProveidorServiceImpl implements LotProveidorService {
     }
     /**
      * Inicia o obre l'element indicat segons el flux de treball.
+     * @param lotId
+     * @param confirmarTancarAnterior
      */
 
     @Override
@@ -95,6 +102,8 @@ public class LotProveidorServiceImpl implements LotProveidorService {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param estat
+     * @return 
      */
 
     @Override
@@ -107,6 +116,7 @@ public class LotProveidorServiceImpl implements LotProveidorService {
     }
     /**
      * Finalitza o tanca l'element indicat segons el flux de treball.
+     * @param id
      */
 
     @Transactional
@@ -126,6 +136,11 @@ public class LotProveidorServiceImpl implements LotProveidorService {
     }
     /**
      * Executa l'operació filtrarLots.
+     * @param identificador
+     * @param estat
+     * @param materiaId
+     * @param data
+     * @return 
      */
 
     @Override
@@ -146,6 +161,9 @@ public class LotProveidorServiceImpl implements LotProveidorService {
     }
     /**
      * Inicia o obre l'element indicat segons el flux de treball.
+     * @param lotId
+     * @param confirmarTancarAnterior
+     * @param usuariId
      */
 
     @Override

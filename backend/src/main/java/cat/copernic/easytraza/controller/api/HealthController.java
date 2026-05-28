@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HealthController {
     /**
      * Executa l'operació health.
+     * @return 
      */
 
     @GetMapping("/health")

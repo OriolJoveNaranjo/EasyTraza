@@ -24,6 +24,8 @@ public class ClientServiceImpl implements ClientService {
     private final AlbaraClientRepository albaraCliRepo;
     /**
      * Executa l'operació ClientServiceImpl.
+     * @param clientRepo
+     * @param albaraCliRepo
      */
 
     public ClientServiceImpl(ClientRepository clientRepo, AlbaraClientRepository albaraCliRepo) {
@@ -32,6 +34,7 @@ public class ClientServiceImpl implements ClientService {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @return 
      */
 
     @Override
@@ -40,6 +43,8 @@ public class ClientServiceImpl implements ClientService {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param id
+     * @return 
      */
 
     @Override
@@ -48,6 +53,8 @@ public class ClientServiceImpl implements ClientService {
     }
     /**
      * Valida i desa la informació rebuda.
+     * @param client
+     * @return 
      */
 
     @Override
@@ -70,6 +77,9 @@ public class ClientServiceImpl implements ClientService {
     }
     /**
      * Actualitza una entitat existent amb les dades indicades.
+     * @param id
+     * @param client
+     * @return 
      */
 
     @Override
@@ -103,6 +113,8 @@ public class ClientServiceImpl implements ClientService {
     }
     /**
      * Elimina o desactiva el registre indicat segons les regles de negoci.
+     * @param id
+     * @return 
      */
 
     
@@ -168,6 +180,9 @@ public class ClientServiceImpl implements ClientService {
     }
     /**
      * Executa l'operació filtrar.
+     * @param filtre
+     * @param ordre
+     * @return 
      */
 
     @Override
@@ -195,8 +210,10 @@ public class ClientServiceImpl implements ClientService {
     }
     /**
      * Activa el registre indicat.
+     * @param id
      */
 
+    @Override
     public void activar(Long id) {
         Client client = clientRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Client no trobat"));

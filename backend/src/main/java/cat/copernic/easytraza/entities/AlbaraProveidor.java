@@ -47,6 +47,7 @@ public class AlbaraProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Long getId() {
@@ -54,6 +55,7 @@ public class AlbaraProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param id
      */
 
     public void setId(Long id) {
@@ -61,6 +63,7 @@ public class AlbaraProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public LocalDate getDataRecepcio() {
@@ -68,6 +71,7 @@ public class AlbaraProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param dataRecepcio
      */
 
     public void setDataRecepcio(LocalDate dataRecepcio) {
@@ -75,6 +79,7 @@ public class AlbaraProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Proveidor getProveidor() {
@@ -82,6 +87,7 @@ public class AlbaraProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param proveidor
      */
 
     public void setProveidor(Proveidor proveidor) {
@@ -89,6 +95,7 @@ public class AlbaraProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public List<LiniaAlbaraProveidor> getLinies() {
@@ -96,6 +103,7 @@ public class AlbaraProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param linies
      */
 
     public void setLinies(List<LiniaAlbaraProveidor> linies) {
@@ -103,6 +111,7 @@ public class AlbaraProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getNumeroAlbara() {
@@ -110,6 +119,7 @@ public class AlbaraProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param numeroAlbara
      */
 
     public void setNumeroAlbara(String numeroAlbara) {
@@ -117,6 +127,7 @@ public class AlbaraProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public List<FitxerAlbaraProveidor> getFitxers() {
@@ -124,6 +135,7 @@ public class AlbaraProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param fitxers
      */
 
     public void setFitxers(List<FitxerAlbaraProveidor> fitxers) {
@@ -131,6 +143,7 @@ public class AlbaraProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Usuari getUsuariAlta() {
@@ -138,6 +151,7 @@ public class AlbaraProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param usuariAlta
      */
 
     public void setUsuariAlta(Usuari usuariAlta) {

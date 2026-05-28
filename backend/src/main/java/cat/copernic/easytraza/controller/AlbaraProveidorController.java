@@ -38,6 +38,10 @@ public class AlbaraProveidorController {
     private final FitxerAlbaraProveidorRepository fitxerAlbaraProveidorRepository;
     /**
      * Executa l'operació AlbaraProveidorController.
+     * @param albaraProveidorService
+     * @param proveidorService
+     * @param materiaPrimeraService
+     * @param fitxerAlbaraProveidorRepository
      */
 
     public AlbaraProveidorController(
@@ -53,6 +57,10 @@ public class AlbaraProveidorController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param proveidorId
+     * @param ordre
+     * @param model
+     * @return 
      */
 
     @GetMapping("/albarans-proveidor")
@@ -72,6 +80,8 @@ public class AlbaraProveidorController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param model
+     * @return 
      */
 
     @GetMapping("/albarans-proveidor/nou")
@@ -96,6 +106,12 @@ public class AlbaraProveidorController {
     }
     /**
      * Valida i desa la informació rebuda.
+     * @param albaraProveidor
+     * @param formSource
+     * @param ocrTextHidden
+     * @param fitxers
+     * @param model
+     * @return 
      */
 
     @PostMapping("/albarans-proveidor/guardar")
@@ -143,6 +159,9 @@ public class AlbaraProveidorController {
     }
     /**
      * Actualitza una entitat existent amb les dades indicades.
+     * @param id
+     * @param model
+     * @return 
      */
 
     @GetMapping("/albarans-proveidor/editar/{id}")
@@ -179,6 +198,9 @@ public class AlbaraProveidorController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param id
+     * @param model
+     * @return 
      */
 
     @GetMapping("/albarans-proveidor/veure/{id}")
@@ -197,6 +219,8 @@ public class AlbaraProveidorController {
     }
     /**
      * Elimina o desactiva el registre indicat segons les regles de negoci.
+     * @param id
+     * @return 
      */
 
     @GetMapping("/albarans-proveidor/eliminar/{id}")
@@ -206,44 +230,10 @@ public class AlbaraProveidorController {
         return "redirect:/albarans-proveidor";
     }
 
-    private void netejarLiniesBuides(AlbaraProveidor albaraProveidor) {
-        if (albaraProveidor.getLinies() == null) {
-            albaraProveidor.setLinies(new ArrayList<>());
-            return;
-        }
-
-        List<LiniaAlbaraProveidor> liniesNetes = new ArrayList<>();
-
-        for (LiniaAlbaraProveidor linia : albaraProveidor.getLinies()) {
-            if (linia == null) {
-                continue;
-            }
-            if (linia.getMateriaPrimera() == null) {
-                continue;
-            }
-            if (linia.getLot() == null) {
-                continue;
-            }
-            if (linia.getLot().getIdentificadorLot() == null || linia.getLot().getIdentificadorLot().isBlank()) {
-                continue;
-            }
-            if (linia.getQuantitat() == null || linia.getQuantitat() <= 0) {
-                continue;
-            }
-
-            linia.getLot().setAlbaraProveidor(albaraProveidor);
-            linia.getLot().setMateriaPrimera(linia.getMateriaPrimera());
-            linia.getLot().setProveidor(albaraProveidor.getProveidor());
-            linia.getLot().setQuantitat(linia.getQuantitat());
-            linia.getLot().setUnitat(linia.getUnitat());
-
-            liniesNetes.add(linia);
-        }
-
-        albaraProveidor.setLinies(liniesNetes);
-    }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param model
+     * @return 
      */
 
     @GetMapping("/albarans-proveidor/ocr")
@@ -268,6 +258,8 @@ public class AlbaraProveidorController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param id
+     * @return 
      */
 
     @GetMapping("/albarans-proveidor/fitxer/{id}")

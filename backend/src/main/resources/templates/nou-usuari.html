@@ -30,8 +30,12 @@
                     </div>
                     <div class="field">
                         <label th:text="#{ui.contrasenya_2}">Contrasenya *</label>
-                        <input th:field="*{password}" th:placeholder="${usuari.id != null} ? 'Deixa-ho buit per mantenir la contrasenya actual' : 'Introdueix una contrasenya'" th:required="${usuari.id == null}" type="password"/>
+                        <input name="password"
+                               th:placeholder="${usuari.id != null} ? 'Deixa-ho buit per mantenir la contrasenya actual' : 'Introdueix una contrasenya'"
+                               th:required="${usuari.id == null}"
+                               type="password"/>
                     </div>
+
                     <div class="field">
                         <label th:text="#{ui.rol}">Rol *</label>
                         <select required="" th:field="*{rol}">

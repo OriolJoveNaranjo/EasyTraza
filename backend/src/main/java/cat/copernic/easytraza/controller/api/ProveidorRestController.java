@@ -21,6 +21,7 @@ public class ProveidorRestController {
     private final ProveidorService proveidorService;
     /**
      * Executa l'operació ProveidorRestController.
+     * @param proveidorService
      */
 
     public ProveidorRestController(ProveidorService proveidorService) {
@@ -28,6 +29,7 @@ public class ProveidorRestController {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     @GetMapping
@@ -36,6 +38,8 @@ public class ProveidorRestController {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @param id
+     * @return 
      */
 
     @GetMapping("/{id}")
@@ -46,6 +50,8 @@ public class ProveidorRestController {
     }
     /**
      * Valida i desa la informació rebuda.
+     * @param proveidor
+     * @return 
      */
 
     @PostMapping
@@ -59,6 +65,9 @@ public class ProveidorRestController {
     }
     /**
      * Actualitza una entitat existent amb les dades indicades.
+     * @param id
+     * @param proveidor
+     * @return 
      */
 
     @PutMapping("/{id}")
@@ -72,6 +81,8 @@ public class ProveidorRestController {
     }
     /**
      * Elimina o desactiva el registre indicat segons les regles de negoci.
+     * @param id
+     * @return 
      */
 
     @DeleteMapping("/{id}")

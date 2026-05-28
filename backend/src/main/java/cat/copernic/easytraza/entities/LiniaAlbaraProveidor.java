@@ -34,6 +34,7 @@ public class LiniaAlbaraProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Long getId() {
@@ -41,6 +42,7 @@ public class LiniaAlbaraProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param id
      */
 
     public void setId(Long id) {
@@ -48,6 +50,7 @@ public class LiniaAlbaraProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public AlbaraProveidor getAlbaraProveidor() {
@@ -55,6 +58,7 @@ public class LiniaAlbaraProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param albaraProveidor
      */
 
     public void setAlbaraProveidor(AlbaraProveidor albaraProveidor) {
@@ -62,6 +66,7 @@ public class LiniaAlbaraProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public MateriaPrimera getMateriaPrimera() {
@@ -69,6 +74,7 @@ public class LiniaAlbaraProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param materiaPrimera
      */
 
     public void setMateriaPrimera(MateriaPrimera materiaPrimera) {
@@ -76,6 +82,7 @@ public class LiniaAlbaraProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Double getQuantitat() {
@@ -83,6 +90,7 @@ public class LiniaAlbaraProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param quantitat
      */
 
     public void setQuantitat(Double quantitat) {
@@ -90,6 +98,7 @@ public class LiniaAlbaraProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getUnitat() {
@@ -97,6 +106,7 @@ public class LiniaAlbaraProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param unitat
      */
 
     public void setUnitat(String unitat) {
@@ -104,6 +114,7 @@ public class LiniaAlbaraProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public LotProveidor getLot() {
@@ -111,6 +122,7 @@ public class LiniaAlbaraProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param lot
      */
 
     public void setLot(LotProveidor lot) {

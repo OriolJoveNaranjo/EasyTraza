@@ -37,6 +37,8 @@ public class ProducteFinal {
     }
     /**
      * Executa l'operació ProducteFinal.
+     * @param nom
+     * @param descripcio
      */
 
     public ProducteFinal(String nom, String descripcio) {
@@ -46,6 +48,7 @@ public class ProducteFinal {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Long getId() {
@@ -53,6 +56,7 @@ public class ProducteFinal {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param id
      */
 
     public void setId(Long id) {
@@ -60,6 +64,7 @@ public class ProducteFinal {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getNom() {
@@ -67,6 +72,7 @@ public class ProducteFinal {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param nom
      */
 
     public void setNom(String nom) {
@@ -74,6 +80,7 @@ public class ProducteFinal {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getDescripcio() {
@@ -81,6 +88,7 @@ public class ProducteFinal {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param descripcio
      */
 
     public void setDescripcio(String descripcio) {
@@ -88,6 +96,7 @@ public class ProducteFinal {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public boolean isActiu() {
@@ -95,6 +104,7 @@ public class ProducteFinal {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param actiu
      */
 
     public void setActiu(boolean actiu) {

@@ -37,6 +37,8 @@ public class OcrServiceImpl implements OcrService {
     private final ProveidorRepository proveidorRepo;
     /**
      * Executa l'operació OcrServiceImpl.
+     * @param materiaRepo
+     * @param proveidorRepo
      */
 
     public OcrServiceImpl(MateriaPrimeraRepository materiaRepo, ProveidorRepository proveidorRepo) {
@@ -45,6 +47,9 @@ public class OcrServiceImpl implements OcrService {
     }
     /**
      * Executa l'operació extreureText.
+     * @param file
+     * @return 
+     * @throws java.lang.Exception
      */
 
     @Override
@@ -85,6 +90,9 @@ public class OcrServiceImpl implements OcrService {
     }
     /**
      * Executa l'operació processarAlbara.
+     * @param file
+     * @return 
+     * @throws java.lang.Exception
      */
 
     @Override
@@ -196,54 +204,6 @@ public class OcrServiceImpl implements OcrService {
         }
 
         return null;
-    }
-
-    /*private OcrLiniaDto parseLinia(String line) {
-        OcrLiniaDto linia = new OcrLiniaDto();
-
-        String materia = extractMateria(line, null);
-        linia.setMateriaPrimeraText(materia);
-
-        String[] parts = line.trim().split("\\s+");
-
-        // Cantidad: en este formato suele aparecer antes de "SR"
-        for (int i = 0; i < parts.length; i++) {
-            if (parts[i].equalsIgnoreCase("SR") && i > 0) {
-                linia.setQuantitatText(parts[i - 1]);
-                break;
-            }
-        }
-
-        return linia;
-    }*/
-    private String extractMateria(String line, String fecha) {
-        if (line == null || line.trim().isEmpty()) {
-            return "";
-        }
-
-        String resultat = line.trim();
-
-        // Quitar código inicial tipo 02173 o DS107
-        resultat = resultat.replaceFirst("^[A-Z]{1,5}\\d{2,}\\s*", "");
-        resultat = resultat.replaceFirst("^\\d{4,}\\s*", "");
-
-        // Si hay fecha, cortar antes de la fecha
-        if (fecha != null && !fecha.isEmpty()) {
-            int posFecha = resultat.indexOf(fecha);
-            if (posFecha > 0) {
-                resultat = resultat.substring(0, posFecha).trim();
-            }
-        }
-
-        // Cortar antes de cantidad/formato típico: "2 2,00 SR..."
-        resultat = resultat.replaceFirst("\\s+\\d+\\s+\\d+[,.]\\d+\\s+SR.*$", "");
-
-        // Cortar antes de "SR"
-        resultat = resultat.replaceFirst("\\s+SR\\s+.*$", "");
-
-        resultat = resultat.replaceAll("\\s+", " ").trim();
-
-        return resultat;
     }
 
     private BufferedImage preprocessarImatge(BufferedImage original) {

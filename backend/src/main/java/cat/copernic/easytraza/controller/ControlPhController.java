@@ -22,6 +22,8 @@ public class ControlPhController {
     private final UsuariRepository usuariRepository;
     /**
      * Executa l'operació ControlPhController.
+     * @param controlPhRepository
+     * @param usuariRepository
      */
 
     public ControlPhController(ControlPhRepository controlPhRepository,
@@ -31,6 +33,8 @@ public class ControlPhController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param model
+     * @return 
      */
 
     @GetMapping
@@ -40,6 +44,8 @@ public class ControlPhController {
     }
     /**
      * Executa l'operació nou.
+     * @param model
+     * @return 
      */
 
     @GetMapping("/nou")
@@ -52,6 +58,9 @@ public class ControlPhController {
     }
     /**
      * Valida i desa la informació rebuda.
+     * @param controlPh
+     * @param authentication
+     * @return 
      */
 
     @PostMapping("/guardar")

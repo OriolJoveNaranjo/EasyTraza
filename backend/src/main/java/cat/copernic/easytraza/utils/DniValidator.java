@@ -7,6 +7,8 @@ package cat.copernic.easytraza.utils;
 public class DniValidator {
     /**
      * Executa l'operació validarDNI.
+     * @param dni
+     * @return 
      */
 
     public static boolean validarDNI(String dni) {

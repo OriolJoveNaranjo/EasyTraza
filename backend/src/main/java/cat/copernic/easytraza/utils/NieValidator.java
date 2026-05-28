@@ -7,6 +7,8 @@ package cat.copernic.easytraza.utils;
 public class NieValidator {
     /**
      * Executa l'operació validarNIE.
+     * @param nie
+     * @return 
      */
 
     public static boolean validarNIE(String nie) {

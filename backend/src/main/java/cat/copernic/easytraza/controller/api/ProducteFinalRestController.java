@@ -19,6 +19,7 @@ public class ProducteFinalRestController {
     private final ProducteFinalService producteFinalService;
     /**
      * Executa l'operació ProducteFinalRestController.
+     * @param producteFinalService
      */
 
     public ProducteFinalRestController(ProducteFinalService producteFinalService) {
@@ -26,6 +27,7 @@ public class ProducteFinalRestController {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     @GetMapping
@@ -34,6 +36,8 @@ public class ProducteFinalRestController {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @param id
+     * @return 
      */
 
     @GetMapping("/{id}")
@@ -44,6 +48,8 @@ public class ProducteFinalRestController {
     }
     /**
      * Valida i desa la informació rebuda.
+     * @param producteFinal
+     * @return 
      */
 
     @PostMapping
@@ -57,6 +63,9 @@ public class ProducteFinalRestController {
     }
     /**
      * Actualitza una entitat existent amb les dades indicades.
+     * @param id
+     * @param producteFinal
+     * @return 
      */
 
     @PutMapping("/{id}")
@@ -70,6 +79,8 @@ public class ProducteFinalRestController {
     }
     /**
      * Elimina o desactiva el registre indicat segons les regles de negoci.
+     * @param id
+     * @return 
      */
 
     @DeleteMapping("/{id}")

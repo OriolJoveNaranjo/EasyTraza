@@ -30,6 +30,7 @@ public class PasswordResetToken {
     private Usuari usuari;
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Long getId() {
@@ -37,6 +38,7 @@ public class PasswordResetToken {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getToken() {
@@ -44,6 +46,7 @@ public class PasswordResetToken {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public LocalDateTime getDataExpiracio() {
@@ -51,6 +54,7 @@ public class PasswordResetToken {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public boolean isUtilitzat() {
@@ -58,6 +62,7 @@ public class PasswordResetToken {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Usuari getUsuari() {
@@ -65,6 +70,7 @@ public class PasswordResetToken {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param id
      */
 
     public void setId(Long id) {
@@ -72,6 +78,7 @@ public class PasswordResetToken {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param token
      */
 
     public void setToken(String token) {
@@ -79,6 +86,7 @@ public class PasswordResetToken {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param dataExpiracio
      */
 
     public void setDataExpiracio(LocalDateTime dataExpiracio) {
@@ -86,6 +94,7 @@ public class PasswordResetToken {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param utilitzat
      */
 
     public void setUtilitzat(boolean utilitzat) {
@@ -93,6 +102,7 @@ public class PasswordResetToken {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param usuari
      */
 
     public void setUsuari(Usuari usuari) {

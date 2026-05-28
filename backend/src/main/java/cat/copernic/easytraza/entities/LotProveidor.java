@@ -52,6 +52,7 @@ public class LotProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Long getId() {
@@ -59,6 +60,7 @@ public class LotProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param id
      */
 
     public void setId(Long id) {
@@ -66,6 +68,7 @@ public class LotProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getIdentificadorLot() {
@@ -73,6 +76,7 @@ public class LotProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param identificadorLot
      */
 
     public void setIdentificadorLot(String identificadorLot) {
@@ -80,6 +84,7 @@ public class LotProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Proveidor getProveidor() {
@@ -87,6 +92,7 @@ public class LotProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param proveidor
      */
 
     public void setProveidor(Proveidor proveidor) {
@@ -94,6 +100,7 @@ public class LotProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public MateriaPrimera getMateriaPrimera() {
@@ -101,6 +108,7 @@ public class LotProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param materiaPrimera
      */
 
     public void setMateriaPrimera(MateriaPrimera materiaPrimera) {
@@ -108,6 +116,7 @@ public class LotProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Double getQuantitat() {
@@ -115,6 +124,7 @@ public class LotProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param quantitat
      */
 
     public void setQuantitat(Double quantitat) {
@@ -122,6 +132,7 @@ public class LotProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getUnitat() {
@@ -129,6 +140,7 @@ public class LotProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param unitat
      */
 
     public void setUnitat(String unitat) {
@@ -136,6 +148,7 @@ public class LotProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public LocalDate getDataCaducitat() {
@@ -143,6 +156,7 @@ public class LotProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param dataCaducitat
      */
 
     public void setDataCaducitat(LocalDate dataCaducitat) {
@@ -150,6 +164,7 @@ public class LotProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public LocalDateTime getDataObertura() {
@@ -157,6 +172,7 @@ public class LotProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param dataObertura
      */
 
     public void setDataObertura(LocalDateTime dataObertura) {
@@ -164,6 +180,7 @@ public class LotProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public LocalDateTime getDataAcabament() {
@@ -171,6 +188,7 @@ public class LotProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param dataAcabament
      */
 
     public void setDataAcabament(LocalDateTime dataAcabament) {
@@ -178,6 +196,7 @@ public class LotProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public EstatLot getEstat() {
@@ -185,6 +204,7 @@ public class LotProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param estat
      */
 
     public void setEstat(EstatLot estat) {
@@ -192,6 +212,7 @@ public class LotProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public AlbaraProveidor getAlbaraProveidor() {
@@ -199,6 +220,7 @@ public class LotProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param albaraProveidor
      */
 
     public void setAlbaraProveidor(AlbaraProveidor albaraProveidor) {
@@ -206,6 +228,7 @@ public class LotProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Usuari getUsuariObertura() {
@@ -213,6 +236,7 @@ public class LotProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param usuariObertura
      */
 
     public void setUsuariObertura(Usuari usuariObertura) {

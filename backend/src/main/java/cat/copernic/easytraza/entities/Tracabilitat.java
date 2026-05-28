@@ -36,6 +36,7 @@ public class Tracabilitat {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Long getId() {
@@ -43,6 +44,7 @@ public class Tracabilitat {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public LotProveidor getLotProveidor() {
@@ -50,6 +52,7 @@ public class Tracabilitat {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public ProducteFinal getProducteFinal() {
@@ -57,6 +60,7 @@ public class Tracabilitat {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public LiniaAlbaraClient getLiniaAlbaraClient() {
@@ -64,6 +68,7 @@ public class Tracabilitat {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public LocalDateTime getDataRegistre() {
@@ -71,6 +76,7 @@ public class Tracabilitat {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param id
      */
 
     public void setId(Long id) {
@@ -78,6 +84,7 @@ public class Tracabilitat {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param lotProveidor
      */
 
     public void setLotProveidor(LotProveidor lotProveidor) {
@@ -85,6 +92,7 @@ public class Tracabilitat {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param producteFinal
      */
 
     public void setProducteFinal(ProducteFinal producteFinal) {
@@ -92,6 +100,7 @@ public class Tracabilitat {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param liniaAlbaraClient
      */
 
     public void setLiniaAlbaraClient(LiniaAlbaraClient liniaAlbaraClient) {
@@ -99,6 +108,7 @@ public class Tracabilitat {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param dataRegistre
      */
 
     public void setDataRegistre(LocalDateTime dataRegistre) {

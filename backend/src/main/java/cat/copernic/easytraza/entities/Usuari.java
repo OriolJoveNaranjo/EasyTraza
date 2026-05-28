@@ -51,6 +51,11 @@ public class Usuari {
     }
     /**
      * Executa l'operació Usuari.
+     * @param nom
+     * @param email
+     * @param password
+     * @param rol
+     * @param actiu
      */
 
     public Usuari(String nom, String email, String password, RolUsuari rol, boolean actiu) {
@@ -62,6 +67,7 @@ public class Usuari {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Long getId() {
@@ -69,6 +75,7 @@ public class Usuari {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param id
      */
 
     public void setId(Long id) {
@@ -76,6 +83,7 @@ public class Usuari {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getNom() {
@@ -83,6 +91,7 @@ public class Usuari {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param nom
      */
 
     public void setNom(String nom) {
@@ -90,6 +99,7 @@ public class Usuari {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getEmail() {
@@ -97,6 +107,7 @@ public class Usuari {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param email
      */
 
     public void setEmail(String email) {
@@ -104,6 +115,7 @@ public class Usuari {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getPassword() {
@@ -111,6 +123,7 @@ public class Usuari {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param password
      */
 
     public void setPassword(String password) {
@@ -118,6 +131,7 @@ public class Usuari {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public RolUsuari getRol() {
@@ -125,6 +139,7 @@ public class Usuari {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param rol
      */
 
     public void setRol(RolUsuari rol) {
@@ -132,6 +147,7 @@ public class Usuari {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public boolean isActiu() {
@@ -139,6 +155,7 @@ public class Usuari {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param actiu
      */
 
     public void setActiu(boolean actiu) {
@@ -146,6 +163,7 @@ public class Usuari {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getFoto() {
@@ -153,6 +171,7 @@ public class Usuari {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param foto
      */
 
     public void setFoto(String foto) {

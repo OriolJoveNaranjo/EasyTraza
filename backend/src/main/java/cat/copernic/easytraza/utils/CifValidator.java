@@ -7,6 +7,8 @@ package cat.copernic.easytraza.utils;
 public class CifValidator {
     /**
      * Executa l'operació validarCIF.
+     * @param cif
+     * @return 
      */
 
     public static boolean validarCIF(String cif) {

@@ -22,6 +22,8 @@ public class TracabilitatController {
     private final TracabilitatRepository tracabilitatRepository;
     /**
      * Executa l'operació TracabilitatController.
+     * @param lotProveidorRepository
+     * @param tracabilitatRepository
      */
 
     public TracabilitatController(LotProveidorRepository lotProveidorRepository,
@@ -31,6 +33,12 @@ public class TracabilitatController {
     }
     /**
      * Executa l'operació tracabilitat.
+     * @param lotId
+     * @param cerca
+     * @param ordre
+     * @param direccio
+     * @param model
+     * @return 
      */
 
     @GetMapping("/tracabilitat")
@@ -41,33 +49,6 @@ public class TracabilitatController {
             @RequestParam(required = false, defaultValue = "asc") String direccio,
             Model model) {
 
-        List<?> lots = lotProveidorRepository.findAll()
-                .stream()
-                .filter(lot -> {
-                    if (cerca == null || cerca.isBlank()) {
-                        return true;
-                    }
-
-                    String cercaLower = cerca.toLowerCase().trim();
-
-                    String identificadorLot = lot.getIdentificadorLot() != null
-                            ? lot.getIdentificadorLot().toLowerCase()
-                            : "";
-
-                    String materia = lot.getMateriaPrimera() != null
-                            && lot.getMateriaPrimera().getNom() != null
-                            ? lot.getMateriaPrimera().getNom().toLowerCase()
-                            : "";
-
-                    String opcioCompleta = identificadorLot + " - " + materia;
-
-                    return identificadorLot.contains(cercaLower)
-                            || materia.contains(cercaLower)
-                            || opcioCompleta.contains(cercaLower)
-                            || cercaLower.contains(identificadorLot)
-                            || cercaLower.contains(materia);
-                })
-                .toList();
         model.addAttribute("lots", lotProveidorRepository.findAll());
         model.addAttribute("lotSeleccionatId", lotId);
         model.addAttribute("cerca", cerca);

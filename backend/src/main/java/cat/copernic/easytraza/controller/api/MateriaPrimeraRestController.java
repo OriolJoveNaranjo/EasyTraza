@@ -19,6 +19,7 @@ public class MateriaPrimeraRestController {
     private final MateriaPrimeraService materiaPrimeraService;
     /**
      * Executa l'operació MateriaPrimeraRestController.
+     * @param materiaPrimeraService
      */
 
     public MateriaPrimeraRestController(MateriaPrimeraService materiaPrimeraService) {

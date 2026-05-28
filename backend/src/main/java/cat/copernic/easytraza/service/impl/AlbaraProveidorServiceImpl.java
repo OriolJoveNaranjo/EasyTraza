@@ -38,10 +38,14 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
     private final AlbaraProveidorRepository albaraRepo;
     private final ProveidorRepository proveidorRepo;
     private final MateriaPrimeraRepository materiaRepo;
-    private final LotProveidorRepository lotRepo;
     private final UsuariRepository usuarirepo;
     /**
      * Executa l'operació AlbaraProveidorServiceImpl.
+     * @param albaraRepo
+     * @param proveidorRepo
+     * @param materiaRepo
+     * @param lotRepo
+     * @param usuarirepo
      */
 
     public AlbaraProveidorServiceImpl(
@@ -54,11 +58,11 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
         this.albaraRepo = albaraRepo;
         this.proveidorRepo = proveidorRepo;
         this.materiaRepo = materiaRepo;
-        this.lotRepo = lotRepo;
         this.usuarirepo = usuarirepo;
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @return 
      */
 
     @Override
@@ -67,6 +71,8 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param id
+     * @return 
      */
 
     @Override
@@ -75,6 +81,7 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
     }
     /**
      * Elimina o desactiva el registre indicat segons les regles de negoci.
+     * @param id
      */
 
     @Override
@@ -83,6 +90,8 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
     }
     /**
      * Valida i desa la informació rebuda.
+     * @param albaraProveidor
+     * @return 
      */
 
     @Override
@@ -219,6 +228,9 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
     }
     /**
      * Actualitza una entitat existent amb les dades indicades.
+     * @param id
+     * @param albaraProveidor
+     * @return 
      */
 
     @Override
@@ -368,6 +380,9 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
     }
     /**
      * Valida i desa la informació rebuda.
+     * @param albaraProveidor
+     * @param fitxers
+     * @return 
      */
 
     @Override
@@ -378,6 +393,10 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
     }
     /**
      * Actualitza una entitat existent amb les dades indicades.
+     * @param id
+     * @param albaraProveidor
+     * @param fitxers
+     * @return 
      */
 
     @Override
@@ -388,11 +407,6 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
         return albaraRepo.save(actualitzat);
     }
 
-    private void prepararLinies(AlbaraProveidor albaraProveidor) {
-        if (albaraProveidor.getLinies() != null) {
-            albaraProveidor.getLinies().forEach(linia -> linia.setAlbaraProveidor(albaraProveidor));
-        }
-    }
 
     private void afegirFitxers(AlbaraProveidor albaraProveidor, MultipartFile[] fitxers) {
         if (fitxers == null) {
@@ -417,6 +431,9 @@ public class AlbaraProveidorServiceImpl implements AlbaraProveidorService {
     }
     /**
      * Executa l'operació filtrar.
+     * @param proveidorId
+     * @param ordre
+     * @return 
      */
 
     @Override

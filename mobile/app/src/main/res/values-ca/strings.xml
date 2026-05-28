@@ -22,7 +22,7 @@
     <string name="screen_server_subtitle">Configura la IP del backend abans de carregar dades.</string>
     <string name="server_ip_label">IP del servidor</string>
     <string name="server_ip_placeholder">Exemple: 192.168.1.50</string>
-    <string name="server_port_hint">El port 8080 s’afegeix automàticament.</string>
+    <string name="server_port_hint">El port 8443 s’afegeix automàticament.</string>
     <string name="server_save_button">Guardar configuració</string>
     <string name="server_test_button">Provar connexió</string>
     <string name="server_connecting">Connectant...</string>

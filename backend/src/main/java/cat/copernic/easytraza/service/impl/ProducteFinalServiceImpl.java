@@ -19,6 +19,8 @@ public class ProducteFinalServiceImpl implements ProducteFinalService {
     private final LiniaAlbaraClientRepository liniaRepo;
     /**
      * Executa l'operació ProducteFinalServiceImpl.
+     * @param producteFinalRepository
+     * @param liniaRepo
      */
 
     public ProducteFinalServiceImpl(ProducteFinalRepository producteFinalRepository,
@@ -28,6 +30,7 @@ public class ProducteFinalServiceImpl implements ProducteFinalService {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @return 
      */
 
     @Override
@@ -36,6 +39,8 @@ public class ProducteFinalServiceImpl implements ProducteFinalService {
     }
     /**
      * Valida i desa la informació rebuda.
+     * @param producteFinal
+     * @return 
      */
 
     @Override
@@ -48,6 +53,9 @@ public class ProducteFinalServiceImpl implements ProducteFinalService {
     }
     /**
      * Actualitza una entitat existent amb les dades indicades.
+     * @param id
+     * @param producteFinal
+     * @return 
      */
 
     @Override
@@ -70,6 +78,8 @@ public class ProducteFinalServiceImpl implements ProducteFinalService {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param id
+     * @return 
      */
 
     @Override
@@ -78,6 +88,8 @@ public class ProducteFinalServiceImpl implements ProducteFinalService {
     }
     /**
      * Elimina o desactiva el registre indicat segons les regles de negoci.
+     * @param id
+     * @return 
      */
 
     @Override
@@ -98,6 +110,7 @@ public class ProducteFinalServiceImpl implements ProducteFinalService {
     }
     /**
      * Activa el registre indicat.
+     * @param id
      */
 
     @Override

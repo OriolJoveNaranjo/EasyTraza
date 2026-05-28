@@ -28,6 +28,10 @@ public class RecuperarContrasenyaController {
     private String baseUrl;
     /**
      * Executa l'operació RecuperarContrasenyaController.
+     * @param usuariRepository
+     * @param passwordResetService
+     * @param passwordEncoder
+     * @param emailService
      */
 
     public RecuperarContrasenyaController(
@@ -42,6 +46,7 @@ public class RecuperarContrasenyaController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @return 
      */
 
     @GetMapping("/recuperar-contrasenya")
@@ -50,6 +55,9 @@ public class RecuperarContrasenyaController {
     }
     /**
      * Executa l'operació enviarEnllacRecuperacio.
+     * @param email
+     * @param model
+     * @return 
      */
 
     @PostMapping("/recuperar-contrasenya")
@@ -71,6 +79,9 @@ public class RecuperarContrasenyaController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param token
+     * @param model
+     * @return 
      */
 
     @GetMapping("/restablir-contrasenya")
@@ -86,6 +97,10 @@ public class RecuperarContrasenyaController {
     }
     /**
      * Executa l'operació restablirContrasenya.
+     * @param token
+     * @param novaContrasenya
+     * @param model
+     * @return 
      */
 
     @PostMapping("/restablir-contrasenya")

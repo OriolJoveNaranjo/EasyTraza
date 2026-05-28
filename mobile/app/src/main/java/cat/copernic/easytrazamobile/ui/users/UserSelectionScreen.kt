@@ -99,10 +99,12 @@ fun UserSelectionScreen(
                 .fillMaxWidth()
         ) {
             items(usuaris) { usuari ->
+                val cleanBaseUrl = if (baseUrl.endsWith("/")) baseUrl else "$baseUrl/"
+
                 val imageUrl = if (!usuari.foto.isNullOrBlank()) {
-                    "$baseUrl/uploads/usuaris/${usuari.foto}"
+                    "${cleanBaseUrl}uploads/usuaris/${usuari.foto}"
                 } else {
-                    "$baseUrl/images/usuaris/fotoPerfil.png"
+                    "${cleanBaseUrl}images/usuaris/fotoPerfil.png"
                 }
 
                 Card(

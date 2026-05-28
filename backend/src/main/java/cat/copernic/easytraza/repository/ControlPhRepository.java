@@ -16,6 +16,7 @@ public interface ControlPhRepository extends JpaRepository<ControlPh, Long> {
     boolean existsByUsuariId(Long usuariId);
 
     
+    @Override
     boolean existsById(Long id);
 
     boolean existsByDataControlAfter(LocalDateTime data);

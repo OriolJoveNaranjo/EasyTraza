@@ -33,6 +33,7 @@ public class FitxerAlbaraProveidor {
     private AlbaraProveidor albaraProveidor;
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Long getId() {
@@ -40,6 +41,7 @@ public class FitxerAlbaraProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param id
      */
 
     public void setId(Long id) {
@@ -47,6 +49,7 @@ public class FitxerAlbaraProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getNomFitxer() {
@@ -54,6 +57,7 @@ public class FitxerAlbaraProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param nomFitxer
      */
 
     public void setNomFitxer(String nomFitxer) {
@@ -61,6 +65,7 @@ public class FitxerAlbaraProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getTipusFitxer() {
@@ -68,6 +73,7 @@ public class FitxerAlbaraProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param tipusFitxer
      */
 
     public void setTipusFitxer(String tipusFitxer) {
@@ -75,6 +81,7 @@ public class FitxerAlbaraProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public byte[] getDades() {
@@ -82,6 +89,7 @@ public class FitxerAlbaraProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param dades
      */
 
     public void setDades(byte[] dades) {
@@ -89,6 +97,7 @@ public class FitxerAlbaraProveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public AlbaraProveidor getAlbaraProveidor() {
@@ -96,6 +105,7 @@ public class FitxerAlbaraProveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param albaraProveidor
      */
 
     public void setAlbaraProveidor(AlbaraProveidor albaraProveidor) {

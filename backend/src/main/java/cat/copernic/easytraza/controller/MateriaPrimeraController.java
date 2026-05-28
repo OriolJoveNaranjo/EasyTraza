@@ -22,6 +22,7 @@ public class MateriaPrimeraController {
     private final MateriaPrimeraService materiaPrimeraService;
     /**
      * Executa l'operació MateriaPrimeraController.
+     * @param materiaPrimeraService
      */
 
     public MateriaPrimeraController(MateriaPrimeraService materiaPrimeraService) {
@@ -29,6 +30,8 @@ public class MateriaPrimeraController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param model
+     * @return 
      */
 
     @GetMapping("/cataleg")
@@ -54,6 +57,8 @@ public class MateriaPrimeraController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param model
+     * @return 
      */
 
     @GetMapping("/cataleg/materies-primeres/nova")
@@ -63,6 +68,9 @@ public class MateriaPrimeraController {
     }
     /**
      * Valida i desa la informació rebuda.
+     * @param materiaPrimera
+     * @param model
+     * @return 
      */
 
     @PostMapping("/cataleg/materies-primeres/guardar")
@@ -85,6 +93,9 @@ public class MateriaPrimeraController {
     }
     /**
      * Elimina o desactiva el registre indicat segons les regles de negoci.
+     * @param id
+     * @param redirectAttributes
+     * @return 
      */
 
     @GetMapping("/cataleg/materies-primeres/eliminar/{id}")
@@ -100,6 +111,9 @@ public class MateriaPrimeraController {
     }
     /**
      * Actualitza una entitat existent amb les dades indicades.
+     * @param id
+     * @param model
+     * @return 
      */
 
     @GetMapping("/cataleg/materies-primeres/editar/{id}")
@@ -115,6 +129,9 @@ public class MateriaPrimeraController {
     }
     /**
      * Activa el registre indicat.
+     * @param id
+     * @param redirectAttributes
+     * @return 
      */
 
     @GetMapping("/cataleg/activar/{id}")

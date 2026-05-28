@@ -36,6 +36,11 @@ public class AlbaraClientController {
     private final TracabilitatRepository tracabilitatRepository;
     /**
      * Executa l'operació AlbaraClientController.
+     * @param service
+     * @param clientService
+     * @param producteService
+     * @param tracabilitatRepository
+     * @param lotProveidorRepository
      */
 
     public AlbaraClientController(
@@ -55,6 +60,8 @@ public class AlbaraClientController {
     // FORM NUEVO
     /**
      * Executa l'operació nou.
+     * @param model
+     * @return 
      */
     @GetMapping("/nou")
     public String nou(Model model) {
@@ -77,6 +84,8 @@ public class AlbaraClientController {
     // GUARDAR
     /**
      * Valida i desa la informació rebuda.
+     * @param albara
+     * @return 
      */
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute AlbaraClient albara) {
@@ -87,6 +96,9 @@ public class AlbaraClientController {
     // EDITAR
     /**
      * Actualitza una entitat existent amb les dades indicades.
+     * @param id
+     * @param model
+     * @return 
      */
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
@@ -105,6 +117,8 @@ public class AlbaraClientController {
     // ELIMINAR
     /**
      * Elimina o desactiva el registre indicat segons les regles de negoci.
+     * @param id
+     * @return 
      */
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Long id) {
@@ -113,6 +127,8 @@ public class AlbaraClientController {
     }
     /**
      * Executa l'operació marcarComLliurat.
+     * @param id
+     * @return 
      */
 
     @GetMapping("/lliurar/{id}")
@@ -122,6 +138,9 @@ public class AlbaraClientController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param id
+     * @param model
+     * @return 
      */
 
     @GetMapping("/veure/{id}")
@@ -140,6 +159,11 @@ public class AlbaraClientController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param clientId
+     * @param estat
+     * @param ordre
+     * @param model
+     * @return 
      */
 
     @GetMapping

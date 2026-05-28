@@ -19,6 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UsuariRepository usuariRepository;
     /**
      * Executa l'operació CustomUserDetailsService.
+     * @param usuariRepository
      */
 
     public CustomUserDetailsService(UsuariRepository usuariRepository) {
@@ -26,6 +27,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
     /**
      * Executa l'operació loadUserByUsername.
+     * @param email
+     * @return 
      */
 
     @Override

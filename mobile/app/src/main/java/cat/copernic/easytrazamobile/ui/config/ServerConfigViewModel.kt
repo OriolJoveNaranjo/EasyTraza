@@ -42,13 +42,13 @@ class ServerConfigViewModel(application: Application) : AndroidViewModel(applica
 
     /** Normalizes a plain IP into the backend base URL expected by Retrofit. */
     private fun buildServerUrl(ip: String): String {
-        val cleanIp = ip
-            .trim()
-            .removePrefix("http://")
-            .removePrefix("https://")
-            .substringBefore(":")
+        val value = ip.trim()
 
-        return "http://$cleanIp:8080"
+        if (value.startsWith("http://") || value.startsWith("https://")) {
+            return if (value.endsWith("/")) value else "$value/"
+        }
+
+        return "https://$value:8443/"
     }
 
     /** Validates and saves the backend URL, then invokes [onSaved] when successful. */

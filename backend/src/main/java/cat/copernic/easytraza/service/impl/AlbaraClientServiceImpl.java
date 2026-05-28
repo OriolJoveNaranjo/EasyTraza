@@ -28,6 +28,9 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
     private final TracabilitatRepository tracabilitatRepository;
     /**
      * Executa l'operació AlbaraClientServiceImpl.
+     * @param repository
+     * @param lotProveidorRepository
+     * @param tracabilitatRepository
      */
 
     public AlbaraClientServiceImpl(AlbaraClientRepository repository, LotProveidorRepository lotProveidorRepository,
@@ -38,6 +41,7 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @return 
      */
 
     @Override
@@ -46,6 +50,8 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param id
+     * @return 
      */
 
     @Override
@@ -54,6 +60,8 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
     }
     /**
      * Valida i desa la informació rebuda.
+     * @param albara
+     * @return 
      */
 
     @Override
@@ -74,6 +82,9 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
     }
     /**
      * Actualitza una entitat existent amb les dades indicades.
+     * @param id
+     * @param albara
+     * @return 
      */
 
     @Override
@@ -99,6 +110,7 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
     }
     /**
      * Elimina o desactiva el registre indicat segons les regles de negoci.
+     * @param id
      */
 
     @Override
@@ -117,6 +129,7 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
     }
     /**
      * Executa l'operació marcarComLliurat.
+     * @param id
      */
 
     @Override
@@ -129,6 +142,10 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
     }
     /**
      * Executa l'operació filtrar.
+     * @param clientId
+     * @param estat
+     * @param ordre
+     * @return 
      */
 
     @Override
@@ -165,6 +182,8 @@ public class AlbaraClientServiceImpl implements AlbaraClientService {
     }
     /**
      * Valida i desa la informació rebuda.
+     * @param albara
+     * @return 
      */
 
     @Override

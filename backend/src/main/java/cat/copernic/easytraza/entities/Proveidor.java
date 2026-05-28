@@ -51,6 +51,12 @@ public class Proveidor {
     }
     /**
      * Executa l'operació Proveidor.
+     * @param cif
+     * @param nom
+     * @param adreca
+     * @param observacions
+     * @param email
+     * @param telefon
      */
 
     public Proveidor(String cif, String nom, String adreca, String observacions, String email, String telefon) {
@@ -63,6 +69,7 @@ public class Proveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Long getId() {
@@ -70,6 +77,7 @@ public class Proveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param id
      */
 
     public void setId(Long id) {
@@ -77,6 +85,7 @@ public class Proveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getCif() {
@@ -84,6 +93,7 @@ public class Proveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param cif
      */
 
     public void setCif(String cif) {
@@ -91,6 +101,7 @@ public class Proveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getNom() {
@@ -98,6 +109,7 @@ public class Proveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param nom
      */
 
     public void setNom(String nom) {
@@ -105,6 +117,7 @@ public class Proveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getAdreca() {
@@ -112,6 +125,7 @@ public class Proveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param adreca
      */
 
     public void setAdreca(String adreca) {
@@ -119,6 +133,7 @@ public class Proveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getTelefon() {
@@ -126,6 +141,7 @@ public class Proveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param telefon
      */
 
     public void setTelefon(String telefon) {
@@ -133,6 +149,7 @@ public class Proveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getEmail() {
@@ -140,6 +157,7 @@ public class Proveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param email
      */
 
     public void setEmail(String email) {
@@ -147,6 +165,7 @@ public class Proveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getObservacions() {
@@ -154,6 +173,7 @@ public class Proveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param observacions
      */
 
     public void setObservacions(String observacions) {
@@ -161,6 +181,7 @@ public class Proveidor {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public boolean isActiu() {
@@ -168,6 +189,7 @@ public class Proveidor {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param actiu
      */
 
     public void setActiu(boolean actiu) {

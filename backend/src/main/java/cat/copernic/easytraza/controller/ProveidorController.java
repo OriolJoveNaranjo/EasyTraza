@@ -27,6 +27,7 @@ public class ProveidorController {
     private final ProveidorService proveidorService;
     /**
      * Executa l'operació ProveidorController.
+     * @param proveidorService
      */
 
     public ProveidorController(ProveidorService proveidorService) {
@@ -34,6 +35,9 @@ public class ProveidorController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param filtre
+     * @param ordre
+     * @return 
      */
 
     @GetMapping
@@ -52,6 +56,8 @@ public class ProveidorController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param model
+     * @return 
      */
 
     @GetMapping("/nou")
@@ -62,6 +68,9 @@ public class ProveidorController {
     }
     /**
      * Valida i desa la informació rebuda.
+     * @param proveidor
+     * @param model
+     * @return 
      */
 
     @PostMapping("/guardar")
@@ -97,6 +106,9 @@ public class ProveidorController {
     }
     /**
      * Actualitza una entitat existent amb les dades indicades.
+     * @param id
+     * @param model
+     * @return 
      */
 
     @GetMapping("/editar/{id}")
@@ -113,6 +125,9 @@ public class ProveidorController {
     }
     /**
      * Elimina o desactiva el registre indicat segons les regles de negoci.
+     * @param id
+     * @param redirectAttributes
+     * @return 
      */
 
     @GetMapping("/eliminar/{id}")
@@ -128,6 +143,9 @@ public class ProveidorController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param id
+     * @param model
+     * @return 
      */
 
     @GetMapping("/veure/{id}")
@@ -144,6 +162,8 @@ public class ProveidorController {
     }
     /**
      * Activa el registre indicat.
+     * @param id
+     * @return 
      */
 
     @GetMapping("/activar/{id}")

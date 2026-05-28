@@ -74,7 +74,12 @@
                                 <td th:text="${usuari.actiu ? 'Sí' : 'No'}"></td>
                                 <td>
                                     <a class="btn-primary" th:href="@{'/usuaris/activar/' + ${usuari.id}}" th:if="${!usuari.actiu}" th:text="#{ui.activar}">Activar</a>
-                                    <a class="btn-edit" th:href="@{'/usuaris/editar/' + ${usuari.id}}" th:text="#{ui.editar}">Editar</a>
+                                    <a class="btn-edit"
+                                       th:href="@{'/usuaris/editar/' + ${usuari.id}}"
+                                       th:if="${usuari.email != superAdminEmail or emailActual == superAdminEmail}"
+                                       th:text="#{ui.editar}">
+                                        Editar
+                                    </a>
                                     <a class="btn-delete"
                                        onclick="return confirm('Segur que vols eliminar aquest usuari?')"
                                        th:href="@{'/usuaris/eliminar/' + ${usuari.id}}"

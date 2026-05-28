@@ -26,6 +26,7 @@ public class LiniaAlbaraClient {
     private Double quantitat;
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     
@@ -36,6 +37,7 @@ public class LiniaAlbaraClient {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param id
      */
 
     public void setId(Long id) {
@@ -43,6 +45,7 @@ public class LiniaAlbaraClient {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public AlbaraClient getAlbaraClient() {
@@ -50,6 +53,7 @@ public class LiniaAlbaraClient {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param albaraClient
      */
 
     public void setAlbaraClient(AlbaraClient albaraClient) {
@@ -57,6 +61,7 @@ public class LiniaAlbaraClient {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public ProducteFinal getProducte() {
@@ -64,6 +69,7 @@ public class LiniaAlbaraClient {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param producte
      */
 
     public void setProducte(ProducteFinal producte) {
@@ -71,6 +77,7 @@ public class LiniaAlbaraClient {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Double getQuantitat() {
@@ -78,6 +85,7 @@ public class LiniaAlbaraClient {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param quantitat
      */
 
     public void setQuantitat(Double quantitat) {

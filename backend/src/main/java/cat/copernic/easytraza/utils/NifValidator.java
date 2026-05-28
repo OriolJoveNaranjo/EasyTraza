@@ -7,6 +7,8 @@ package cat.copernic.easytraza.utils;
 public class NifValidator {
     /**
      * Executa l'operació validarDocument.
+     * @param document
+     * @return 
      */
 
     public static boolean validarDocument(String document) {

@@ -20,6 +20,7 @@ public class ClientController {
     private final ClientService clientService;
     /**
      * Executa l'operació ClientController.
+     * @param clientService
      */
 
     public ClientController(ClientService clientService) {
@@ -27,6 +28,10 @@ public class ClientController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param filtre
+     * @param ordre
+     * @param model
+     * @return 
      */
 
     @GetMapping
@@ -45,6 +50,8 @@ public class ClientController {
     }
     /**
      * Executa l'operació nouClient.
+     * @param model
+     * @return 
      */
 
     @GetMapping("/nou")
@@ -55,6 +62,9 @@ public class ClientController {
     }
     /**
      * Valida i desa la informació rebuda.
+     * @param client
+     * @param model
+     * @return 
      */
 
     @PostMapping("/guardar")
@@ -90,6 +100,9 @@ public class ClientController {
     }
     /**
      * Actualitza una entitat existent amb les dades indicades.
+     * @param id
+     * @param model
+     * @return 
      */
 
     @GetMapping("/editar/{id}")
@@ -106,6 +119,9 @@ public class ClientController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param id
+     * @param model
+     * @return 
      */
 
     @GetMapping("/veure/{id}")
@@ -122,6 +138,9 @@ public class ClientController {
     }
     /**
      * Elimina o desactiva el registre indicat segons les regles de negoci.
+     * @param id
+     * @param redirectAttributes
+     * @return 
      */
 
     @GetMapping("/eliminar/{id}")
@@ -137,6 +156,8 @@ public class ClientController {
     }
     /**
      * Activa el registre indicat.
+     * @param id
+     * @return 
      */
 
     @GetMapping("/activar/{id}")

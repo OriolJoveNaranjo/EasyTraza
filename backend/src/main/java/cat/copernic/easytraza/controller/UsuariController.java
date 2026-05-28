@@ -35,6 +35,7 @@ public class UsuariController {
     private String superAdminEmail;
     /**
      * Executa l'operació UsuariController.
+     * @param usuariService
      */
 
     public UsuariController(UsuariService usuariService) {
@@ -42,6 +43,11 @@ public class UsuariController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param nom
+     * @param rol
+     * @param model
+     * @param authentication
+     * @return 
      */
 
     @GetMapping("/usuaris")
@@ -76,6 +82,8 @@ public class UsuariController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param model
+     * @return 
      */
 
     @GetMapping("/usuaris/nou")
@@ -86,6 +94,11 @@ public class UsuariController {
     }
     /**
      * Valida i desa la informació rebuda.
+     * @param usuari
+     * @param result
+     * @param fotoFile
+     * @param model
+     * @return 
      */
 
     @PostMapping("/usuaris/guardar")
@@ -143,6 +156,9 @@ public class UsuariController {
     }
     /**
      * Actualitza una entitat existent amb les dades indicades.
+     * @param id
+     * @param model
+     * @return 
      */
 
     @GetMapping("/usuaris/editar/{id}")
@@ -159,6 +175,9 @@ public class UsuariController {
     }
     /**
      * Elimina o desactiva el registre indicat segons les regles de negoci.
+     * @param id
+     * @param redirectAttributes
+     * @return 
      */
 
     @GetMapping("/usuaris/eliminar/{id}")
@@ -174,6 +193,9 @@ public class UsuariController {
     }
     /**
      * Activa el registre indicat.
+     * @param id
+     * @param redirectAttributes
+     * @return 
      */
 
     @GetMapping("/usuaris/activar/{id}")

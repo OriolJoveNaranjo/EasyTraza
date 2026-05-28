@@ -46,6 +46,7 @@ public class AlbaraClient {
     private List<LiniaAlbaraClient> linies = new ArrayList<>();
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public List<LiniaAlbaraClient> getLinies() {
@@ -53,6 +54,7 @@ public class AlbaraClient {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param linies
      */
 
     public void setLinies(List<LiniaAlbaraClient> linies) {
@@ -60,6 +62,7 @@ public class AlbaraClient {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Long getId() {
@@ -67,6 +70,7 @@ public class AlbaraClient {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param id
      */
 
     public void setId(Long id) {
@@ -74,6 +78,7 @@ public class AlbaraClient {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public LocalDateTime getData() {
@@ -81,6 +86,7 @@ public class AlbaraClient {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param data
      */
 
     public void setData(LocalDateTime data) {
@@ -88,6 +94,7 @@ public class AlbaraClient {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Client getClient() {
@@ -95,6 +102,7 @@ public class AlbaraClient {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param client
      */
 
     public void setClient(Client client) {
@@ -102,6 +110,7 @@ public class AlbaraClient {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public EstatAlbaraClient getEstat() {
@@ -109,6 +118,7 @@ public class AlbaraClient {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param estat
      */
 
     public void setEstat(EstatAlbaraClient estat) {

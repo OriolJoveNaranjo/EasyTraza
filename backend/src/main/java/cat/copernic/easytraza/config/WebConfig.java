@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     /**
      * Executa l'operació addResourceHandlers.
+     * @param registry
      */
 
     @Override

@@ -36,6 +36,8 @@ public class MateriaPrimera {
     }
     /**
      * Executa l'operació MateriaPrimera.
+     * @param nom
+     * @param descripcio
      */
 
     public MateriaPrimera(String nom, String descripcio) {
@@ -44,6 +46,7 @@ public class MateriaPrimera {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Long getId() {
@@ -51,6 +54,7 @@ public class MateriaPrimera {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getNom() {
@@ -58,6 +62,7 @@ public class MateriaPrimera {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param nom
      */
 
     public void setNom(String nom) {
@@ -65,6 +70,7 @@ public class MateriaPrimera {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getDescripcio() {
@@ -72,6 +78,7 @@ public class MateriaPrimera {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param descripcio
      */
 
     public void setDescripcio(String descripcio) {
@@ -79,6 +86,7 @@ public class MateriaPrimera {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param id
      */
 
     public void setId(Long id) {
@@ -86,6 +94,7 @@ public class MateriaPrimera {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public boolean isActiu() {
@@ -93,6 +102,7 @@ public class MateriaPrimera {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param actiu
      */
 
     public void setActiu(boolean actiu) {

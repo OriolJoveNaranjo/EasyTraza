@@ -26,6 +26,9 @@ public class OcrRestController {
     private final MateriaPrimeraService materiaPrimeraService;
     /**
      * Executa l'operació OcrRestController.
+     * @param ocrService
+     * @param proveidorService
+     * @param materiaPrimeraService
      */
 
     public OcrRestController(OcrService ocrService, ProveidorService proveidorService,MateriaPrimeraService materiaPrimeraService ) {
@@ -35,6 +38,8 @@ public class OcrRestController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param model
+     * @return 
      */
 
     @GetMapping("/albarans-proveidor/ocr")
@@ -59,6 +64,8 @@ public class OcrRestController {
     }
     /**
      * Executa l'operació processarAlbara.
+     * @param file
+     * @return 
      */
 
     @PostMapping("/albara-proveidor")

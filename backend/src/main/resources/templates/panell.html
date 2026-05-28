@@ -36,6 +36,11 @@
                         <strong th:text="${controlsPendents}">0</strong>
                         <p th:text="${controlsPendents &gt; 0 ? #messages.msg('dashboard.control_pending') : #messages.msg('dashboard.controls_ok')}"></p>
                     </a>
+                </div>                
+                <div class="warning-message" th:if="${esSuperAdmin}">
+                    <strong>Avís de seguretat:</strong>
+                    Has iniciat sessió amb el compte de superadministrador creat per defecte.
+                    <a th:href="@{/perfil}">Canvia la contrasenya immediatament.</a>
                 </div>
             </main>
         </div>

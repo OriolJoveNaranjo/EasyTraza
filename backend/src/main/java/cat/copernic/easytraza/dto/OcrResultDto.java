@@ -15,6 +15,7 @@ public class OcrResultDto {
     }
     /**
      * Executa l'operació OcrResultDto.
+     * @param textDetectat
      */
 
     public OcrResultDto(String textDetectat) {
@@ -22,6 +23,7 @@ public class OcrResultDto {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getTextDetectat() {
@@ -29,6 +31,7 @@ public class OcrResultDto {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param textDetectat
      */
 
     public void setTextDetectat(String textDetectat) {

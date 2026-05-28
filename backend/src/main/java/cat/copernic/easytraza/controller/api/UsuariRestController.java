@@ -18,6 +18,7 @@ public class UsuariRestController {
     private final UsuariService usuariService;
     /**
      * Executa l'operació UsuariRestController.
+     * @param usuariService
      */
 
     public UsuariRestController(UsuariService usuariService) {
@@ -25,6 +26,7 @@ public class UsuariRestController {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     @GetMapping
@@ -33,6 +35,8 @@ public class UsuariRestController {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @param id
+     * @return 
      */
 
     @GetMapping("/{id}")
@@ -43,6 +47,8 @@ public class UsuariRestController {
     }
     /**
      * Valida i desa la informació rebuda.
+     * @param usuari
+     * @return 
      */
 
     @PostMapping
@@ -56,6 +62,9 @@ public class UsuariRestController {
     }
     /**
      * Actualitza una entitat existent amb les dades indicades.
+     * @param id
+     * @param usuari
+     * @return 
      */
 
     @PutMapping("/{id}")
@@ -69,6 +78,8 @@ public class UsuariRestController {
     }
     /**
      * Elimina o desactiva el registre indicat segons les regles de negoci.
+     * @param id
+     * @return 
      */
 
     @DeleteMapping("/{id}")

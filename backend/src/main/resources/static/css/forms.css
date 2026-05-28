@@ -110,3 +110,7 @@ body {
     color: #6f6257;
     cursor: not-allowed;
 }
+.password {
+    margin-bottom: 20px;
+    max-width: 640px;
+}

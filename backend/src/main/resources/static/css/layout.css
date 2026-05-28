@@ -157,3 +157,13 @@ body {
 .dashboard-link * {
     text-decoration: none;
 }
+.warning-message {
+    background: #fff3cd;
+    color: #5c3b00;
+    border: 1px solid #e6c36a;
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}

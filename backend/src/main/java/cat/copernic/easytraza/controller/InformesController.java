@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class InformesController {
     /**
      * Executa l'operació informes.
+     * @return 
      */
 
     @GetMapping("/informes")

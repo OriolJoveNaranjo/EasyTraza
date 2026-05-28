@@ -20,6 +20,8 @@ public class MateriaPrimeraServiceImpl implements MateriaPrimeraService {
     private final LotProveidorRepository lotProvRepo;
     /**
      * Executa l'operació MateriaPrimeraServiceImpl.
+     * @param materiaPrimeraRepository
+     * @param lotProvRepo
      */
 
     public MateriaPrimeraServiceImpl(MateriaPrimeraRepository materiaPrimeraRepository,LotProveidorRepository lotProvRepo) {
@@ -28,6 +30,7 @@ public class MateriaPrimeraServiceImpl implements MateriaPrimeraService {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @return 
      */
 
     @Override
@@ -36,6 +39,8 @@ public class MateriaPrimeraServiceImpl implements MateriaPrimeraService {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param id
+     * @return 
      */
 
     @Override
@@ -44,6 +49,8 @@ public class MateriaPrimeraServiceImpl implements MateriaPrimeraService {
     }
     /**
      * Valida i desa la informació rebuda.
+     * @param materiaPrimera
+     * @return 
      */
 
     @Override
@@ -56,6 +63,9 @@ public class MateriaPrimeraServiceImpl implements MateriaPrimeraService {
     }
     /**
      * Actualitza una entitat existent amb les dades indicades.
+     * @param id
+     * @param materiaPrimera
+     * @return 
      */
 
     @Override
@@ -78,6 +88,8 @@ public class MateriaPrimeraServiceImpl implements MateriaPrimeraService {
     }
     /**
      * Elimina o desactiva el registre indicat segons les regles de negoci.
+     * @param id
+     * @return 
      */
 
     @Override
@@ -98,8 +110,10 @@ public class MateriaPrimeraServiceImpl implements MateriaPrimeraService {
     }
     /**
      * Activa el registre indicat.
+     * @param id
      */
 
+    @Override
     public void activar(Long id) {
         MateriaPrimera materia = materiaPrimeraRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Matèria primera no trobada"));

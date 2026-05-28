@@ -26,6 +26,8 @@ public class PerfilController {
     private final PasswordEncoder passwordEncoder;
     /**
      * Executa l'operació PerfilController.
+     * @param usuariRepository
+     * @param passwordEncoder
      */
 
     public PerfilController(UsuariRepository usuariRepository, PasswordEncoder passwordEncoder) {
@@ -34,6 +36,9 @@ public class PerfilController {
     }
     /**
      * Consulta dades i retorna la informació necessària per a la vista o l'API.
+     * @param model
+     * @param principal
+     * @return 
      */
 
     @GetMapping("/perfil")
@@ -47,6 +52,12 @@ public class PerfilController {
     }
     /**
      * Valida i desa la informació rebuda.
+     * @param nom
+     * @param password
+     * @param foto
+     * @param principal
+     * @return 
+     * @throws java.io.IOException 
      */
 
     @PostMapping("/perfil")

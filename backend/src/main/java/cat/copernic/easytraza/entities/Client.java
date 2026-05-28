@@ -41,6 +41,7 @@ public class Client {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Long getId() {
@@ -48,6 +49,7 @@ public class Client {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getNif() {
@@ -55,6 +57,7 @@ public class Client {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param nif
      */
 
     public void setNif(String nif) {
@@ -62,6 +65,7 @@ public class Client {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param id
      */
 
     public void setId(Long id) {
@@ -69,6 +73,7 @@ public class Client {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getNom() {
@@ -76,6 +81,7 @@ public class Client {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param nom
      */
 
     public void setNom(String nom) {
@@ -83,6 +89,7 @@ public class Client {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getCognoms() {
@@ -90,6 +97,7 @@ public class Client {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param cognoms
      */
 
     public void setCognoms(String cognoms) {
@@ -97,6 +105,7 @@ public class Client {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getAdreca() {
@@ -104,6 +113,7 @@ public class Client {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param adreca
      */
 
     public void setAdreca(String adreca) {
@@ -111,6 +121,7 @@ public class Client {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getRegistreSanitari() {
@@ -118,6 +129,7 @@ public class Client {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param registreSanitari
      */
 
     public void setRegistreSanitari(String registreSanitari) {
@@ -125,6 +137,7 @@ public class Client {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getTelefon() {
@@ -132,6 +145,7 @@ public class Client {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param telefon
      */
 
     public void setTelefon(String telefon) {
@@ -139,6 +153,7 @@ public class Client {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getEmail() {
@@ -146,6 +161,7 @@ public class Client {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param email
      */
 
     public void setEmail(String email) {
@@ -153,6 +169,7 @@ public class Client {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public boolean isActiu() {
@@ -160,6 +177,7 @@ public class Client {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param actiu
      */
 
     public void setActiu(boolean actiu) {

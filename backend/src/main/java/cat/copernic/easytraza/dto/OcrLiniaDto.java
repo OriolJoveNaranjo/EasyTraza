@@ -15,6 +15,7 @@ public class OcrLiniaDto {
     private String unitat;
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getMateriaPrimeraText() {
@@ -22,6 +23,7 @@ public class OcrLiniaDto {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param materiaPrimeraText
      */
 
     public void setMateriaPrimeraText(String materiaPrimeraText) {
@@ -29,6 +31,7 @@ public class OcrLiniaDto {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getDataCaducitat() {
@@ -36,6 +39,7 @@ public class OcrLiniaDto {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param dataCaducitat
      */
 
     public void setDataCaducitat(String dataCaducitat) {
@@ -43,6 +47,7 @@ public class OcrLiniaDto {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getIdentificadorLot() {
@@ -50,6 +55,7 @@ public class OcrLiniaDto {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param identificadorLot
      */
 
     public void setIdentificadorLot(String identificadorLot) {
@@ -57,6 +63,7 @@ public class OcrLiniaDto {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getQuantitatText() {
@@ -64,6 +71,7 @@ public class OcrLiniaDto {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param quantitatText
      */
 
     public void setQuantitatText(String quantitatText) {
@@ -71,6 +79,7 @@ public class OcrLiniaDto {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Long getMateriaPrimeraId() {
@@ -78,6 +87,7 @@ public class OcrLiniaDto {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param materiaPrimeraId
      */
 
     public void setMateriaPrimeraId(Long materiaPrimeraId) {
@@ -85,6 +95,7 @@ public class OcrLiniaDto {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getUnitat() {
@@ -92,6 +103,7 @@ public class OcrLiniaDto {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param unitat
      */
 
     public void setUnitat(String unitat) {

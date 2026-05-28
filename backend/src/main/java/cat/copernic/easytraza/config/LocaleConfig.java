@@ -19,6 +19,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 public class LocaleConfig implements WebMvcConfigurer {
     /**
      * Executa l'operació localeResolver.
+     * @return 
      */
 
     @Bean
@@ -29,6 +30,7 @@ public class LocaleConfig implements WebMvcConfigurer {
     }
     /**
      * Executa l'operació localeChangeInterceptor.
+     * @return 
      */
 
     @Bean
@@ -39,6 +41,7 @@ public class LocaleConfig implements WebMvcConfigurer {
     }
     /**
      * Executa l'operació addInterceptors.
+     * @param registry
      */
 
     @Override

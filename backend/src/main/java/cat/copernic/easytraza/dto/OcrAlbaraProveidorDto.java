@@ -19,6 +19,7 @@ public class OcrAlbaraProveidorDto {
     private List<OcrLiniaDto> linies = new ArrayList<>();
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getTextDetectat() {
@@ -26,6 +27,7 @@ public class OcrAlbaraProveidorDto {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param textDetectat
      */
 
     public void setTextDetectat(String textDetectat) {
@@ -33,6 +35,7 @@ public class OcrAlbaraProveidorDto {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getProveidorNom() {
@@ -40,6 +43,7 @@ public class OcrAlbaraProveidorDto {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param proveidorNom
      */
 
     public void setProveidorNom(String proveidorNom) {
@@ -47,6 +51,7 @@ public class OcrAlbaraProveidorDto {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getNumeroAlbara() {
@@ -54,6 +59,7 @@ public class OcrAlbaraProveidorDto {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param numeroAlbara
      */
 
     public void setNumeroAlbara(String numeroAlbara) {
@@ -61,6 +67,7 @@ public class OcrAlbaraProveidorDto {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getDataRecepcio() {
@@ -68,6 +75,7 @@ public class OcrAlbaraProveidorDto {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param dataRecepcio
      */
 
     public void setDataRecepcio(String dataRecepcio) {
@@ -75,6 +83,7 @@ public class OcrAlbaraProveidorDto {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public List<OcrLiniaDto> getLinies() {
@@ -82,6 +91,7 @@ public class OcrAlbaraProveidorDto {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param linies
      */
 
     public void setLinies(List<OcrLiniaDto> linies) {
@@ -89,6 +99,7 @@ public class OcrAlbaraProveidorDto {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Long getProveidorId() {
@@ -96,6 +107,7 @@ public class OcrAlbaraProveidorDto {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param proveidorId
      */
 
     public void setProveidorId(Long proveidorId) {
@@ -103,6 +115,7 @@ public class OcrAlbaraProveidorDto {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public Integer getProveidorConfidence() {
@@ -110,6 +123,7 @@ public class OcrAlbaraProveidorDto {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param proveidorConfidence
      */
 
     public void setProveidorConfidence(Integer proveidorConfidence) {
@@ -117,6 +131,7 @@ public class OcrAlbaraProveidorDto {
     }
     /**
      * Retorna el valor de la propietat indicada.
+     * @return 
      */
 
     public String getProveidorDocument() {
@@ -124,6 +139,7 @@ public class OcrAlbaraProveidorDto {
     }
     /**
      * Actualitza el valor de la propietat indicada.
+     * @param proveidorDocument
      */
 
     public void setProveidorDocument(String proveidorDocument) {

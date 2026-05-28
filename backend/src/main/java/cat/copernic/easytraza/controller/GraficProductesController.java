@@ -23,6 +23,8 @@ public class GraficProductesController {
     private final ProducteFinalRepository producteRepository;
     /**
      * Executa l'operació GraficProductesController.
+     * @param liniaRepository
+     * @param producteRepository
      */
 
     public GraficProductesController(LiniaAlbaraClientRepository liniaRepository,
@@ -32,6 +34,10 @@ public class GraficProductesController {
     }
     /**
      * Executa l'operació graficProductes.
+     * @param mes
+     * @param producteId
+     * @param model
+     * @return 
      */
 
     @GetMapping("/informes/productes-mensual")

@@ -10,6 +10,8 @@ public class ValidacioEmail {
             = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
     /**
      * Executa l'operació emailNoValid.
+     * @param email
+     * @return 
      */
 
     public static boolean emailNoValid(String email) {

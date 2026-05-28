@@ -45,7 +45,8 @@ public class SecurityConfig {
                         "/js/**",
                         "/uploads/**",
                         "/error",
-                        "/error/**"
+                        "/error/**",
+                        "/acces-denegat"
                 ).permitAll()
                 .requestMatchers(
                         "/cataleg/**",
@@ -75,6 +76,9 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/panell", true)
                 .permitAll()
                 )
+                .exceptionHandling(exception -> exception
+                .accessDeniedPage("/acces-denegat")
+                )
                 .logout(logout -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
@@ -87,7 +91,8 @@ public class SecurityConfig {
     }
 
     /**
-     * Proporciona el codificador de contrasenyes utilitzat per desar i validar usuaris.
+     * Proporciona el codificador de contrasenyes utilitzat per desar i validar
+     * usuaris.
      *
      * @return codificador BCrypt
      */
